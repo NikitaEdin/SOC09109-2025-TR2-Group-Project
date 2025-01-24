@@ -1,15 +1,20 @@
 # SOC09109-2025-TR2---Group-Project
 Napier University Group Project TR2 2025 - Drone Operations
 
+This project is being undertaken by Napier University students, using Python and the Flask library to create a web application for our client. The application will allow them to import their flight data and export it into a PDF format.
+
 ## Badges
-![GitHub License](https://img.shields.io/github/license/NikitaEdin/https%3A%2F%2Fgithub.com%2FNikitaEdin%2FSOC09109-2025-TR2-Group-Project)
-![GitHub Release](https://img.shields.io/github/v/release/NikitaEdin/https%3A%2F%2Fgithub.com%2FNikitaEdin%2FSOC09109-2025-TR2-Group-Project?include_prereleases)
+![GitHub License](https://img.shields.io/github/license/NikitaEdin/SOC09109-2025-TR2-Group-Project)
+![GitHub Release](https://img.shields.io/github/v/release/NikitaEdin/SOC09109-2025-TR2-Group-Project?include_prereleases)
+
 
 ## Team Members
 - **James Anderson**
 - **Ramsay Foy**
 - **Nikita Lanetsky**
 - **Thomas Smith**
+- **Rachael Banks**
+- **Aaron Whiteside**
 
 ## Links
 - [Project Brief](https://projex.napier.ac.uk/project/409)
