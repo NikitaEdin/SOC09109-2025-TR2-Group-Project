@@ -1,0 +1,1 @@
+# To be used to store structures of database entities

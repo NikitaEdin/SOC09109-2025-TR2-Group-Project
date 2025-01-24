@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <!-- Welcome Section -->
+    <div class="text-center my-5">
+        <h2 class="display-4">Welcome to the Drone Operations Web App</h2>
+        <p class="lead">This web app is designed to replace manual Word documents and streamline drone operation processes.</p>
+        <p>The system supports role-based security, allowing administrators, remote pilots, and other users to access tailored features. Data can also be exported in Excel and PDF formats for greater efficiency.</p>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row text-center">
+        <!-- Role-Based -->
+        <div class="col-md-4 mb-4">
+            <h4><i class="fas fa-user-shield fa-3x text-primary"></i></h4>
+            <h5>Role-Based Security</h5>
+            <p>Different access levels for administrators, pilots, and users, ensuring controlled access to sensitive data.</p>
+        </div>
+        <!-- Streamlined Data -->
+        <div class="col-md-4 mb-4">
+            <h4><i class="fas fa-clipboard-list fa-3x text-success"></i></h4>
+            <h5>Streamlined Data</h5>
+            <p>Replace inconsistent Word documents with a structured database, reducing manual entry and errors.</p>
+        </div>
+        <!-- Export Data -->
+        <div class="col-md-4 mb-4">
+            <h4><i class="fas fa-file-export fa-3x text-warning"></i></h4> 
+            <h5>Export Data</h5>
+            <p>Easily export operation data to Excel or PDF, saving time and improving data sharing.</p>
+        </div>
+    </div>
+
+{% endblock %}

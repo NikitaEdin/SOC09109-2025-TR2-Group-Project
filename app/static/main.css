@@ -1,0 +1,93 @@
+:root {
+    --accent-colour: #269aff;
+    --accent-hover-colour: #2980B9; 
+    --accent-press-colour: #275F80;
+
+    --success-colour: #03BD5B;
+    --danger-colour: #dc3545;
+}
+
+
+/* ///////////////////// Primary Buttons ///////////////////// */
+.btn-primary {
+    background-color: var(--accent-colour) !important; 
+    border-color: var(--accent-colour) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover-colour) !important;
+    border-color: var(--accent-hover-colour) !important;
+}
+
+.btn-primary:active {
+    background-color: var(--accent-press-colour) !important;
+    border-color: var(--accent-press-colour) !important;
+}
+
+.btn-primary:visited {
+    background-color:  var(--accent-press-colour);
+}
+
+
+
+.btn-primary.focus,
+.btn-primary:focus {
+    box-shadow:  0 0 0 0.25rem #275F80 !important;
+}
+
+.btn-primary:active {
+    color: #fff;
+    background-color: var(--accent-press-colour) !important; 
+    border-color: var(--accent-press-colour) !important;
+}
+
+
+
+/* /////////////////// GLOBAL ///////////////////*/
+
+/* ///////////////////// Footer alignment ///////////////////// */
+html, body {
+    height: 100%;
+    margin: 0; 
+}
+
+body{
+    background-color: #F6F6F6
+}
+
+.content {
+    flex: 1; /* Allow the content area to grow */
+}
+
+/* ///////////////////// Footer Links ///////////////////// */ 
+.footer a {
+    text-decoration: none;  
+    color: #343a40;
+}
+
+.footer a:hover,
+.footer a:focus,
+.footer a:active {
+    color: #403434;
+    text-decoration: none; 
+}
+
+
+/* Nav Bar  */
+
+.sticky-top {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+
+.navbar-scrolled {
+    transition: all 0.5s;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.active {
+    font-weight: 600 !important;
+}
