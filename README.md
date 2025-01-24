@@ -17,7 +17,7 @@ This project is being undertaken by Napier University students, using Python and
 - **Aaron Whiteside**
 
 ## Links
-- [Project Brief](https://projex.napier.ac.uk/project/409)
+- [Project Brief](Documents/projectBrief.md)
 - [Code of Conduct](./CODE_OF_CONDUCT.md)
 - [Task Board](https://zube.io/napier-366/drone-operations/w/workspace-1/kanban)
 - [Moodle Link](https://moodle.napier.ac.uk/course/view.php?id=49743)
