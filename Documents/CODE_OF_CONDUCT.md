@@ -15,4 +15,4 @@ The purpose of this document is to define the standards expected of team members
    - Delays that may occur due to unexpected diffuculties must be communicated so that the relevant resources can be allocated to the task.
 
 4. **Create a Collaborative and Respectful Environment**
-   - Treat all team members with respect, valuing their contributions and perspectives.  Work collaboratively, communicate openly, and support one another."
+   - Treat all team members with respect, valuing their contributions and perspectives.  Work collaboratively, communicate openly, and support one another.
