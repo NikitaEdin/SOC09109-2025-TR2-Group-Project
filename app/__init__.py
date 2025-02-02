@@ -21,10 +21,11 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
 # Login Manager
-# login_manager = LoginManager(app)
+login_manager = LoginManager(app)
 # login_manager.login_view = 'login'
 # login_manager.login_message_category = 'info'
 
 
 # Import routes
 from app import routes
+from app import routes_auth

@@ -2,6 +2,12 @@ import os
 import secrets
 from dotenv import load_dotenv
 from app import app, db
+from app.models import User, Role
+
+# Generate default roles
+GEN_ROLES = True
+# Generate default users
+GEN_USERS = True
 
 env_path = '.env'
 
@@ -29,6 +35,32 @@ def create_database():
         try:
             db.create_all()
             print(f"Database created successfully.")
+
+            if GEN_ROLES:
+                if not Role.query.first():  # Check roles exist
+                    print("Adding roles...")
+                    admin_role = Role(title='Responsible Officer', description='Admin', power=90)
+                    user_role = Role(title='Pilot', description='Remote Pilot', power=20)
+                    
+                    db.session.add(admin_role)
+                    db.session.add(user_role)
+                    db.session.commit()
+                    print("Roles added.")
+
+            if GEN_ROLES and GEN_USERS:
+                if not User.query.first():  # Check if users exist
+                    print("Adding users...")
+                    admin_user = User(username='admin', email='admin@example.com', role_id=admin_role.id)
+                    admin_user.set_password('adminpass')
+
+                    regular_user = User(username='user', email='user@example.com', role_id=user_role.id)
+                    regular_user.set_password('userpass')
+
+                    db.session.add(admin_user)
+                    db.session.add(regular_user)
+                    db.session.commit()
+                    print("Users added.")
+
         except Exception as e:
             print(f"Error creating database: {e}")
 

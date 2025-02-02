@@ -10,13 +10,34 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <!-- Home -->
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Home</a>
+                    <a class="nav-link" aria-current="page" href="{{url_for('home')}}">Home</a>
                 </li>
                 <!-- Item -->
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="#">Item</a>
                 </li> -->
             </ul>
+        </div>
+
+        <!-- Guest: show register and login buttons  -->
+        <div class="navbar-nav">
+            {% if current_user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ current_user.username }} ({{current_user.role.title}})
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                    {% if current_user.is_admin() %}
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cogs me-2"></i> Admin Panel</a></li>
+                        
+                     {% endif %}
+                    <li><a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                </ul>
+            </li>
+        {% else %}
+            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+        {% endif %}
+        
         </div>
     </div>
 </nav>
