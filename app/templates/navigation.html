@@ -1,16 +1,19 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top navbar-light">
+<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top navbar-light" style="background-color: var(--accent-colour) !important; ">
     <div class="container-fluid col-10">
         <!-- Logo -->
-        <a class="navbar-brand" href="{{ url_for('home') }}" style="font-weight: 700; color: var(--accent-colour);">
-            <i class="fas fa-plane" style="font-size: 20px; color: var(--accent-colour);"></i>
-            DroneOp</a>
+        <a class="navbar-brand" href="{{ url_for('home') }}" style="font-weight: 700; color: var(--text-light-colour);">
+            <img src="{{ url_for('static', filename='Images/UAS.svg') }}" alt="DroneOp Logo" class="pb-1"
+                 style="width: 30px; height: 30px; vertical-align: middle; filter: invert(1);">
+            UAS Drones Operations
+        </a>
+        
 
        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <!-- Home -->
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{url_for('home')}}">Home</a>
+                    <a class="nav-link" aria-current="page" href="{{url_for('home')}}" style="color: var(--text-light-colour);">Home</a>
                 </li>
                 <!-- Item -->
                 <!-- <li class="nav-item">
@@ -23,7 +26,7 @@
         <div class="navbar-nav">
             {% if current_user.is_authenticated %}
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: var(--text-light-colour);">
                     {{ current_user.username }} ({{current_user.role.title}})
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
@@ -35,7 +38,7 @@
                 </ul>
             </li>
         {% else %}
-            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+            <a class="nav-link" href="{{ url_for('login') }}" style="color: var(--text-light-colour);">Login</a>
         {% endif %}
         
         </div>
