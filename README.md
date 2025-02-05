@@ -21,3 +21,16 @@ This project is being undertaken by Napier University students, using Python and
 - [Code of Conduct](Documents/CODE_OF_CONDUCT.md)
 - [Task Board](https://zube.io/napier-366/drone-operations/w/workspace-1/kanban)
 - [Moodle Link](https://moodle.napier.ac.uk/course/view.php?id=49743)
+
+## Docker Commands
+To build and run the Docker container:
+
+### Build the Docker image
+```
+docker build -t dockerfile .
+```
+
+### Run the Docker container
+```
+docker run -p 5000:5000 dockerfile
+```
