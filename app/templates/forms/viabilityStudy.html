@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}Viability Study{% endblock %}
+
+{% block content %}
+    <h2 class="text-center">Viability Study</h2>
+
+    <div class="container d-flex justify-content-center align-items-center">
+        <form method="POST" class="rounded border border-danger-subtle p-3 w-75" novalidate>
+            {{ form.csrf_token }}
+
+            <h3 class="text-center">Enter Here</h3>
+
+            <div class="mb-3">
+                {{ form.flightCode.label(class="form-label") }}
+                {{ form.flightCode(class="form-control form-control-sm") }}
+                {% if form.flightCode.errors %}
+                    <ul class="text-danger">
+                        {% for error in form.flightCode.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.summary.label(class="form-label") }}
+                {{ form.summary(class="form-control form-control-sm") }}
+                {% if form.summary.errors %}
+                    <ul class="text-danger">
+                        {% for error in form.summary.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="mb-3 col-12 col-md-6 col-lg-4">
+                {{ form.flightDate.label(class="form-label") }}
+                {{ form.flightDate(class="form-control form-control-sm") }}
+                {% if form.flightDate.errors %}
+                    <ul class="text-danger">
+                        {% for error in form.flightDate.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.preparedBy.label(class="form-label") }}
+                {{ form.preparedBy(class="form-control form-control-sm") }}
+                {% if form.preparedBy.errors %}
+                    <ul class="text-danger">
+                        {% for error in form.preparedBy.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="mb-3 col-12 col-md-6 col-lg-4">
+                {{ form.preparedDate.label(class="form-label") }}
+                {{ form.preparedDate(class="form-control form-control-sm") }}
+                {% if form.preparedDate.errors %}
+                    <ul class="text-danger">
+                        {% for error in form.preparedDate.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.airSpaceClass.label(class="form-label") }}
+                {{ form.airSpaceClass(class="form-control form-control-sm") }}
+                {% if form.airSpaceClass.errors %}
+                    <ul class="text-danger">
+                        {% for error in form.airSpaceClass.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.airspaceObservations.label(class="form-label") }}
+                {{ form.airspaceObservations(class="form-control form-control-sm") }}
+                {% if form.airspaceObservations.errors %}
+                    <ul class="text-danger">
+                        {% for error in form.airspaceObservations.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.airspaceSources.label(class="form-label") }}
+                {{ form.airspaceSources(class="form-control form-control-sm") }}
+                {% if form.airspaceSources.errors %}
+                    <ul class="text-danger">
+                        {% for error in form.airspaceSources.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.groundObservations.label(class="form-label") }}
+                {{ form.groundObservations(class="form-control form-control-sm") }}
+                {% if form.groundObservations.errors %}
+                    <ul class="text-danger">
+                        {% for error in form.groundObservations.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.groundSources.label(class="form-label") }}
+                {{ form.groundSources(class="form-control form-control-sm") }}
+                {% if form.groundSources.errors %}
+                    <ul class="text-danger">
+                        {% for error in form.groundSources.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.weatherObservations.label(class="form-label") }}
+                {{ form.weatherObservations(class="form-control form-control-sm") }}
+                {% if form.weatherObservations.errors %}
+                    <ul class="text-danger">
+                        {% for error in form.weatherObservations.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.weatherSources.label(class="form-label") }}
+                {{ form.weatherSources(class="form-control form-control-sm") }}
+                {% if form.weatherSources.errors %}
+                    <ul class="text-danger">
+                        {% for error in form.weatherSources.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+
+            <br>
+            {{ form.submit(class="form-control btn btn-danger border border-black") }}
+            <br>
+            <br>
+            {{ form.saveChanges(class="form-control btn btn-danger border border-black") }}
+
+
+
+        </form>
+
+    </div>
+
+
+{% endblock %}
