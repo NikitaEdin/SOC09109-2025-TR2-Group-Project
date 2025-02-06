@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Plot Flight Location{% endblock %}
+
+{% block content %}
+
+<div id="map-container" class="container d-flex flex-column justify-content-center align-items-center" style="height: 80vh;">
+    <div id="map" class="map-box">
+        <div class="d-flex flex-column" style="position: fixed; top: 20px; right: 20px;">
+            <button>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                          d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6zM8 9h8v10H8zm7.5-5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <p>Click two points to draw the flight area</p>
+
+    <button id="submit-button" class="btn btn-primary">Confirm Flight</button>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+<script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+
+<script src="/static/js/plot.js" type="module"></script>
+
+{% endblock %}

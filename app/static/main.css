@@ -98,3 +98,29 @@ body{
 .active {
     font-weight: 600 !important;
 }
+
+/* Maps */
+
+.map-box {
+    position: relative;
+    max-width: 500px;
+    max-height: 500px;
+    width: 100%;
+    height: 100%;
+    margin: 10px;
+    overflow: auto;
+}
+
+/* Checklists */
+
+.checklist-container {
+    padding: 1rem;
+    border: var(--accent-colour) solid 1px;
+    border-radius: 1rem;
+    width: fit-content;
+}
+
+.checklist-item p {
+    color: rgb(from black r g b / 50%);
+    margin: 0;
+}
