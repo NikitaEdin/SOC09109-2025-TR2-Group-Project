@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Rural Area Flights{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
+    <h1>Rural Area Flights</h1>
+
+    <p>This page is for creating a rural project</p>
+
+    <form class="container d-flex flex-column gap-4 align-items-center" method="post">
+        <div class="d-flex flex-wrap align-items-center justify-content-center" style="gap: 5rem;">
+            <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
+                {% for key in checks.keys() %}
+                {% set value = checks[key] %}
+
+                <div class="d-flex align-items-center gap-4 checklist-item">
+                    <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif %}>
+                    <div style="max-width: 25rem;">
+                        <label for="{{ key }}">{{ value.title }}</label>
+                        <p>{{ value.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <button
+            class="btn btn-primary"
+            type="submit"
+        >
+            Optional Forms
+        </button>
+    </form>
+</div>
+
+{% endblock %}

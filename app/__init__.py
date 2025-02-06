@@ -29,3 +29,4 @@ login_manager = LoginManager(app)
 # Import routes
 from app import routes
 from app import routes_auth
+from app import routes_wizard
