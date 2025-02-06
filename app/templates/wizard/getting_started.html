@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Getting Started{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
+    <h1>Get Started</h1>
+    <h3>Different Types of Flights</h3>
+
+    <div class="container d-flex flex-row justify-content-around align-items-center">
+        <div class="m-3">
+            <a href="">
+                <img src="{{ url_for('static', filename='Images/DroneCityEdited.jpg') }}" alt="DroneOp Logo" class="img-fluid rounded">
+            </a>
+        </div>
+
+        <div class="m-3">
+            <a href="">
+                <img src="{{ url_for('static', filename='Images/DroneRuralEdited.jpg') }}" alt="DroneOp Logo" class="img-fluid rounded">
+            </a>
+        </div>
+    </div>
+
+
+    <button class="btn btn-danger border border-black px-5">View Past Flights</button>
+
+</div>
+
+{% endblock %}

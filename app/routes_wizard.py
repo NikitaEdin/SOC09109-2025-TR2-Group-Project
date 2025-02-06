@@ -114,3 +114,7 @@ def wizard_create_project():
     }
 
     return render_template('/wizard/create_project.html', checks=checks)
+
+@app.route("/wizard/getting_started", methods=['GET', 'POST'])
+def wizard_getting_started():
+    return render_template('/wizard/getting_started.html')

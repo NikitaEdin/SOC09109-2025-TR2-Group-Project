@@ -30,3 +30,4 @@ login_manager = LoginManager(app)
 from app import routes
 from app import routes_auth
 from app import routes_wizard
+from app import routes_forms

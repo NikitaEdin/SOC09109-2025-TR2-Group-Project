@@ -3,10 +3,11 @@
 {% block title %}Viability Study{% endblock %}
 
 {% block content %}
-    <h2 class="text-center">Viability Study</h2>
 
-    <div class="container d-flex justify-content-center align-items-center">
-        <form method="POST" class="rounded border border-danger-subtle p-3 w-75" novalidate>
+    <div class="container d-flex flex-column justify-content-center align-items-center">
+        <h2>Viability Study</h2>
+
+        <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3" novalidate>
             {{ form.csrf_token }}
 
             <h3 class="text-center">Enter Here</h3>
