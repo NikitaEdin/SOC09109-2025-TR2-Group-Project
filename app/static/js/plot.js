@@ -110,7 +110,7 @@ map.on("click", (e) => {
 });
 
 // Bind the clear selection button
-const clearSelectionButton = L.easyButton("<img src='/static/Icons/BinIcon.svg' />", () => {
+const clearSelectionButton = L.easyButton("<img src='/static/Images/Icons/BinIcon.svg' />", () => {
     clearSelection();
 });
 
