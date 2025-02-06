@@ -15,4 +15,4 @@ def viability_study():
         if form.submit.data and form.validate_on_submit():
             print("Form Submitted")
 
-    return render_template("/forms/viabilityStudy.html", form=form)
+    return render_template("/forms/viability_study.html", form=form)

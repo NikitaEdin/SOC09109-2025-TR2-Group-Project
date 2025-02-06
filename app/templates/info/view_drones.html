@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}View Drones{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% for drone in drones %}
+                <div class="col-12 col-md-4 col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ drone.name }}</h5>
+                        </div>
+                        <img src="{{ url_for('static', filename='drone.path') }}" alt="image of a drone" class="img-fluid rounded">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}
