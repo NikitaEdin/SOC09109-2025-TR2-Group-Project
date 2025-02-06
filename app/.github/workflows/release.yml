@@ -1,0 +1,43 @@
+name: Create Release on Push to release
+
+on:
+  push:
+    branches:
+      - release
+      - feature/GitHub-Actions
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Delete existing release 
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        TAG_NAME="latest"
+        
+        # Check if the latest release exists and delete it if it does
+        if gh release view "$TAG_NAME" &>/dev/null; then
+          echo "Deleting existing release with tag $TAG_NAME..."
+          gh release delete "$TAG_NAME" -y
+        else
+          echo "No existing release found with tag $TAG_NAME."
+        fi
+
+    - name: Create a new release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        TAG_NAME="latest"
+        RELEASE_NAME="Latest Release"
+        RELEASE_BODY=":Latest Release from pushing to release branch."
+
+        echo "Creating a new release with tag $TAG_NAME..."
+        gh release create "$TAG_NAME" --title "$RELEASE_NAME" --notes "$RELEASE_BODY" --latest
