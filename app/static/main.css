@@ -1,7 +1,14 @@
 :root {
-    --accent-colour: #269aff;
+    /* --accent-colour: #269aff;
     --accent-hover-colour: #2980B9; 
-    --accent-press-colour: #275F80;
+    --accent-press-colour: #275F80; */
+
+    --accent-colour: #E5233F;
+    --accent-hover-colour: #F03B55; 
+    --accent-press-colour: #C71E36 ;
+
+    --text-light-colour: #f4f4f4;
+    --text-dark-colour: #121212;
 
     --success-colour: #03BD5B;
     --danger-colour: #dc3545;
