@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - release
-      - feature/GitHub-Actions
 
 permissions:
   contents: write
