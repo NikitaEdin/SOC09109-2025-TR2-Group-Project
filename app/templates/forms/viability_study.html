@@ -3,9 +3,10 @@
 {% block title %}Viability Study{% endblock %}
 
 {% block content %}
-
-    <div class="container d-flex flex-column justify-content-center align-items-center">
-        <h2>Viability Study</h2>
+    <div class="text-center m-3">
+        <h2><strong>Viability Study</strong></h2>
+    </div>
+    <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
 
         <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3" novalidate>
             {{ form.csrf_token }}

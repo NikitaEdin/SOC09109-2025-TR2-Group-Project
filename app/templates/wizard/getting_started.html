@@ -4,18 +4,21 @@
 
 {% block content %}
 
-<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
-    <h1>Get Started</h1>
-    <h3>Different Types of Flights</h3>
+    <div class="text-center m-3">
+        <h1><strong>Get Started</strong></h1>
+     <h3>Different Types of Flights</h3>
+    </div>
 
-    <div class="container d-flex flex-row justify-content-around align-items-center">
-        <div class="m-3">
+    <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 60vh;">
+
+    <div class="container d-flex flex-column flex-md-row justify-content-around align-items-center">
+        <div class="m-3 col-12 col-md-6 col-lg-4">
             <a href="">
                 <img src="{{ url_for('static', filename='Images/DroneCityEdited.jpg') }}" alt="Image of drone flying in the city" class="img-fluid rounded">
             </a>
         </div>
 
-        <div class="m-3">
+        <div class="m-3 col-12 col-md-6 col-lg-4">
             <a href="">
                 <img src="{{ url_for('static', filename='Images/DroneRuralEdited.jpg') }}" alt="Image of drone flying in a rural setting" class="img-fluid rounded">
             </a>
@@ -23,8 +26,12 @@
     </div>
 
 
-    <button class="btn btn-danger border border-black px-5">View Past Flights</button>
+    </div>
 
-</div>
+    <div class="d-flex justify-content-center m-3">
+        <div class="col-12 col-md-4">
+            <button class="form-control btn btn-danger border border-black px-5">View Past Flights</button>
+        </div>
+    </div>
 
 {% endblock %}

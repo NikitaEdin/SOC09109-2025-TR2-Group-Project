@@ -4,20 +4,30 @@
 
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            {% for drone in drones %}
+    <div class="text-center m-3">
+        <h1><strong>View Our Drones</strong></h1>
+            <h4>Currently Deployed Drones</h4>
+    </div>>
+
+    <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 60vh;">
+
+        <div class="row justify-content-center">
+            {% for drone in drones.values() %}
                 <div class="col-12 col-md-4 col-sm-6">
-                    <div class="card">
+                    <div class="card mb-3 mx-3 mx-xl-5 bg-transparent border-0 text-center">
                         <div class="card-body">
                             <h5 class="card-title">{{ drone.name }}</h5>
                         </div>
-                        <img src="{{ url_for('static', filename='drone.path') }}" alt="image of a drone" class="img-fluid rounded">
+                        <img src="{{ url_for('static', filename=drone.image_path) }}" alt="image of a drone" class="img-fluid rounded">
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
 
-
+    <div class="d-flex justify-content-center m-3">
+        <div class="col-12 col-md-4">
+            <button class="form-control btn btn-danger border border-black">Show More</button>
+        </div>
+    </div>
 {% endblock %}
