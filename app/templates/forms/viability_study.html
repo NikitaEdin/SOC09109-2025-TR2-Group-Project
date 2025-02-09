@@ -8,11 +8,12 @@
     </div>
     <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
 
-        <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3" novalidate>
+        <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3 card" novalidate>
             {{ form.csrf_token }}
 
-            <h3 class="text-center">Enter Here</h3>
+            <h3 class="text-center fw-light fs-4">Analysing risks, requirements, and operational feasibility</h3>
 
+            <!-- Fight Code -->
             <div class="mb-3">
                 {{ form.flightCode.label(class="form-label") }}
                 {{ form.flightCode(class="form-control form-control-sm") }}
@@ -25,9 +26,10 @@
                 {% endif %}
             </div>
 
+            <!-- Summary -->
             <div class="mb-3">
                 {{ form.summary.label(class="form-label") }}
-                {{ form.summary(class="form-control form-control-sm") }}
+                {{ form.summary(class="form-control form-control-sm", style="max-height: 250px;") }}
                 {% if form.summary.errors %}
                     <ul class="text-danger">
                         {% for error in form.summary.errors %}
@@ -157,15 +159,9 @@
                 {% endif %}
             </div>
 
-
-            <br>
-            {{ form.submit(class="form-control btn btn-danger border border-black") }}
-            <br>
-            <br>
-            {{ form.saveChanges(class="form-control btn btn-danger border border-black") }}
-
-
-
+            <!-- Submit and Save changes -->
+            {{ form.submit(class="form-control btn btn-primary my-3") }}
+            {{ form.saveChanges(class="form-control btn btn-primary") }}
         </form>
 
     </div>
