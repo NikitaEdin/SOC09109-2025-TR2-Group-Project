@@ -1,0 +1,71 @@
+{
+    "flight_code": 123,
+    "preparedBy": 923,
+    "preparedDate": "2025-02-05T14:30:00Z",
+    "crew": [
+        {
+            "name": "John Doe",
+            "role": "pilot",
+            "phone_num": "07412345678",
+            "email": "johndoe12@gmail.com",
+            "called": true
+        },
+        {
+            "name": "John Doe",
+            "role": "pilot",
+            "phone_num": "07412345678",
+            "email": "johndoe12@gmail.com",
+            "called": false
+        }
+    ],
+
+    "equipment": {
+            "food": true,
+            "radios": true,
+            "clothing": false,
+            "map": true,
+            "checklists_manuals_logbooks": false,
+            "notepad": true,
+            "transmitter_battery_packs": true,
+            "camera_battery_packs": false,
+            "monitor_battery_packs": true,
+            "charger_battery_packs": true,
+            "camera_mount": true,
+            "camera": true,
+            "camera_leads": false,
+            "charger_leads": false,
+            "battery_charger": true
+        },
+
+    "maintanence_kit": {
+        "spare_props": true,
+        "spare_cables": true,
+        "allen_key": false,
+        "screwdriver": true,
+        "calibration_platform": true
+    },
+
+    "safety_kit": {
+        "first_aid_kit": true,
+        "extinguisher": true,
+        "ppe": false,
+        "anemometer": true,
+        "landing_pad": true,
+        "cones": false,
+        "radios": true,
+        "mobile_phones": true
+    },  
+    
+    "ground_equipment": [
+        {
+            "item": "tripod",
+            "action": "setup",
+            "tick": true
+        },
+        {
+            "item": "batteries",
+            "action": "Charging batteries.",
+            "tick": false
+        }
+    ]
+}
