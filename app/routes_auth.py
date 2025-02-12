@@ -22,7 +22,7 @@ def login():
             next_page = request.args.get('next')
             flash('Welcome back ' + user.username + '!', 'success')
 
-            return redirect(next_page) if next_page else redirect(url_for('home'))
+            return redirect(next_page) if next_page else redirect(url_for('dashboard'))
         else:
             flash('Failed to login.', 'danger')
 
