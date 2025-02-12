@@ -112,8 +112,40 @@ def wizard_create_project():
             'value': False
         },
     }
-
+    
     return render_template('/wizard/create_project.html', checks=checks)
+
+@app.route("/wizard/create-urban", methods=['GET','POST'])
+def wizard_create_project_urban():
+    checks = {
+        'viability_study': {
+            'title': 'Complete Viability Study',
+            'description': 'Complete the form and checkbox ticks',
+            'value': False
+        },
+        'site_eval': {
+            'title': 'Complete Site Evaluation',
+            'description': 'Complete the form and checkbox ticks',
+            'value': False
+        },
+        'loading_list': {
+            'title': 'Loading List',
+            'description': 'Complete the form and checkbox ticks',
+            'value': False
+        },
+        'risk_analysis':{
+            'title': 'Risk Analysis',
+            'description': 'Complete the form and checkbox ticks',
+            'value': False
+        },
+        'post_flight':{
+            'title': 'Post Flight',
+            'description': 'Complete the form and checkbox ticks',
+            'value': False
+        }     
+    }
+    
+    return render_template('/wizard/create_project_urban.html', checks=checks)
 
 @app.route("/wizard/getting_started", methods=['GET', 'POST'])
 def wizard_getting_started():
