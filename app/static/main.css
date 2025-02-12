@@ -5,13 +5,18 @@
 
     --accent-colour: #E5233F;
     --accent-hover-colour: #F03B55; 
-    --accent-press-colour: #C71E36 ;
+    --accent-press-colour: #C71E36;
+
+    --text-secondary-colour:rgb(93, 93, 93);
 
     --text-light-colour: #f4f4f4;
     --text-dark-colour: #121212;
 
     --success-colour: #03BD5B;
+    --success-colour-hover: #14d26d;
+    --success-colour-press: #07a651;
     --danger-colour: #dc3545;
+
 }
 
 
@@ -33,6 +38,26 @@
 
 .btn-primary:visited {
     background-color:  var(--accent-press-colour);
+}
+
+/* ///////////////////// Success Buttons ///////////////////// */
+.btn-success {
+    background-color: var(--success-colour) !important; 
+    border-color: var(--success-colour) !important;
+}
+
+.btn-success:hover {
+    background-color: var(--success-colour-hover) !important;
+    border-color: var(--success-colour-hover) !important;
+}
+
+.btn-success:active {
+    background-color: var(--success-colour-press) !important;
+    border-color: var(--success-colour-press) !important;
+}
+
+.btn-success:visited {
+    background-color:  var(--success-colour-press);
 }
 
 

@@ -1,0 +1,250 @@
+<!-- Dashboard: home/root page of the dashboard, the first page the user see after logging-in -->
+
+{% extends "/dashboard/dashboard_base.html" %}
+
+{% block main_content %}
+  <div class="home-container">
+
+    <!-- New Project -->
+    <div class="d-flex justify-content-end">
+      <a href="#" class="btn btn-success">+ New Project</a>
+    </div>
+
+    <!-- Upper cards -->
+    <div class="row d-flex justify-content-center">
+
+
+      <!-- Project Card -->
+      <div class="card mx-3" style="width: 15rem;">
+        <div class="card-body">
+          <p class="fs-2 card-title text-center">5</p>
+          <p class="card-text text-center">Projects</p>
+        </div>
+      </div>
+  
+      <!-- Project Card -->
+      <div class="card mx-3" style="width: 15rem;">
+        <div class="card-body">
+          <p class="fs-2 card-title text-center">2</p>
+          <p class="card-text text-center">Pending Projects</p>
+        </div>
+      </div>
+  
+      <!-- Project Card -->
+      <div class="card mx-3" style="width: 15rem;">
+        <div class="card-body">
+          <p class="fs-2 card-title text-center">3</p>
+          <p class="card-text text-center">Part Projects</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Pending Projects -->
+    <div class="row mt-5">
+      <p class="fs-5" >Pending Projects</p>
+      <div class="divider"></div>
+
+      <div class="list-group">
+        <!-- Item 1 -->
+        <div class="card mb-2">
+          <div class="row mx-2 my-1">
+            <!-- Title -->
+            <div class="col-3">
+              <p class="mb-0">Project Title</p>
+            </div>
+            <!-- Date -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Date: 11/2/2025</p>
+            </div>
+            <!-- Pilot -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Pilot: John Smith</p>
+            </div>
+            <!-- Drone -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Drone: DJI</p>
+            </div>
+            <!-- View Project -->
+            <div class="col d-flex justify-content-end">
+              <a href="{{url_for('project')}}" class="btn btn-primary">View Project</a>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Item 2 -->
+        <div class="card mb-2">
+          <div class="row mx-2 my-1">
+            <!-- Title -->
+            <div class="col-3">
+              <p class="mb-0">Project Title 2</p>
+            </div>
+            <!-- Date -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Date: 11/2/2025</p>
+            </div>
+            <!-- Pilot -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Pilot: John Smith</p>
+            </div>
+            <!-- Drone -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Drone: DJI</p>
+            </div>
+            <!-- View Project -->
+            <div class="col d-flex justify-content-end">
+              <button class="btn btn-primary">View Project</button>
+            </div>
+          </div>
+        </div>
+
+       
+        
+        <!-- Item 3 -->
+        <div class="card mb-2">
+          <div class="row mx-2 my-1">
+            <!-- Title -->
+            <div class="col-3">
+              <p class="mb-0">Project Title 3</p>
+            </div>
+            <!-- Date -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Date: 11/2/2025</p>
+            </div>
+            <!-- Pilot -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Pilot: John Smith</p>
+            </div>
+            <!-- Drone -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Drone: DJI</p>
+            </div>
+            <!-- View Project -->
+            <div class="col d-flex justify-content-end">
+              <button class="btn btn-primary">View Project</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- View More - Pending Projects -->
+        <div class="text-center mt-3">
+          <a href="#" style="color: var(--text-secondary-colour);">View More</a>
+        </div>
+      </div>
+      
+
+
+    </div>
+    
+    <!-- Past Projects -->
+    <div class="row mt-5">
+      <p class="fs-5" >Past Projects</p>
+      <div class="divider"></div>
+
+      <div class="list-group">
+        <!-- Item 1 -->
+        <div class="card mb-2">
+          <div class="row mx-2 my-1">
+            <!-- Title -->
+            <div class="col-3">
+              <p class="mb-0">Project Title</p>
+            </div>
+            <!-- Date -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Date: 11/2/2025</p>
+            </div>
+            <!-- Pilot -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Pilot: John Smith</p>
+            </div>
+            <!-- Drone -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Drone: DJI</p>
+            </div>
+            <!-- View Project -->
+            <div class="col d-flex justify-content-end">
+              <button class="btn btn-primary">View Project</button>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Item 2 -->
+        <div class="card mb-2">
+          <div class="row mx-2 my-1">
+            <!-- Title -->
+            <div class="col-3">
+              <p class="mb-0">Project Title 2</p>
+            </div>
+            <!-- Date -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Date: 11/2/2025</p>
+            </div>
+            <!-- Pilot -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Pilot: John Smith</p>
+            </div>
+            <!-- Drone -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Drone: DJI</p>
+            </div>
+            <!-- View Project -->
+            <div class="col d-flex justify-content-end">
+              <button class="btn btn-primary">View Project</button>
+            </div>
+          </div>
+        </div>
+
+       
+        
+        <!-- Item 3 -->
+        <div class="card mb-2">
+          <div class="row mx-2 my-1 align-items-center">
+            <!-- Title -->
+            <div class="col-3">
+              <p class="mb-0">Project Title 3</p>
+            </div>
+            <!-- Date -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Date: 11/2/2025</p>
+            </div>
+            <!-- Pilot -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Pilot: John Smith</p>
+            </div>
+            <!-- Drone -->
+            <div class="col align-content-center">
+              <p class="mb-0" style="color: var(--text-secondary-colour);">Drone: DJI</p>
+            </div>
+            <!-- View Project -->
+            <div class="col d-flex justify-content-end">
+              <button class="btn btn-primary">View Project</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- View More - Pending Projects -->
+        <div class="text-center mt-3">
+          <a href="#" style="color: var(--text-secondary-colour);">View More</a>
+        </div>
+      </div>
+      
+
+
+    </div>
+    
+    
+  </div>
+
+  <style>
+    .home-container {
+      padding: 20px;
+    }
+
+    .divider {
+      border-top: 1px solid rgb(228, 228, 228);
+      margin-left: 0.5rem;
+      margin-top: -0.5rem;
+    }
+  </style>
+{% endblock %}

@@ -1,0 +1,72 @@
+<!-- Dashboard: view of the user projects -->
+{% extends "dashboard/dashboard_base.html" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block main_content %}
+  <div class="projects-container">
+    <h2>Projects</h2>
+    <p>Here is a list of all the projects.</p>
+
+    <!-- Projects List -->
+    <div class="projects-list">
+      {% for project in projects %}
+        <div class="project-card">
+          <h4>{{ project.name }}</h4>
+          <p>{{ project.description }}</p>
+          <a href="{{ url_for('project_details', project_id=project.id) }}" class="btn btn-info">View Details</a>
+        </div>
+      {% else %}
+        <p>No projects found.</p>
+      {% endfor %}
+    </div>
+
+  </div>
+
+  <style>
+    .projects-container {
+      padding: 20px;
+    }
+
+    .projects-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .project-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 20px;
+      width: 30%;
+      box-sizing: border-box;
+      border-radius: 5px;
+    }
+
+    .project-card h4 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .project-card p {
+      margin-bottom: 15px;
+      font-size: 1rem;
+      color: #555;
+    }
+
+    .project-card a {
+      text-decoration: none;
+    }
+
+    .pagination {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .pagination .btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin: 0 5px;
+    }
+  </style>
+{% endblock %}
