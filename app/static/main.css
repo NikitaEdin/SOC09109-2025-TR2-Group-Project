@@ -114,6 +114,7 @@ body{
 /* Checklists */
 
 .checklist-container {
+    background-color: #FFFFFF;
     padding: 1rem;
     border: var(--accent-colour) solid 1px;
     border-radius: 1rem;

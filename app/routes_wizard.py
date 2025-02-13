@@ -96,7 +96,7 @@ def wizard_rural_checklist():
 @app.route("/wizard/create-rural", methods=['GET', 'POST'])
 def wizard_create_project_rural():
     checks = {
-        'viability_study': {
+         'viability_study': {
             'title': 'Complete Viability Study',
             'description': 'Complete the form and checkbox ticks',
             'value': False
@@ -111,6 +111,16 @@ def wizard_create_project_rural():
             'description': 'Complete the form and checkbox ticks',
             'value': False
         },
+        'risk_analysis':{
+            'title': 'Risk Analysis',
+            'description': 'Complete the form and checkbox ticks',
+            'value': False
+        },
+        'post_flight':{
+            'title': 'Post Flight',
+            'description': 'Complete the form and checkbox ticks',
+            'value': False
+        }
     }
     
     return render_template('/wizard/create_project_rural.html', checks=checks)
@@ -142,7 +152,12 @@ def wizard_create_project_urban():
             'title': 'Post Flight',
             'description': 'Complete the form and checkbox ticks',
             'value': False
-        }     
+        },
+        'advanced_flight':{
+            'title':'Advanced Flight Permission',
+            'description':'This is to apply to fly in restricted areas',
+            'value': False
+        }    
     }
     
     return render_template('/wizard/create_project_urban.html', checks=checks)
