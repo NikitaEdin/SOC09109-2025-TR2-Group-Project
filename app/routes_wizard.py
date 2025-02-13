@@ -93,8 +93,8 @@ def wizard_populated_checklist():
 def wizard_rural_checklist():
     return render_template('/wizard/rural_checklist.html', mandatory_checks=mandatory_checks, optional_checks=optional_checks)
 
-@app.route("/wizard/create", methods=['GET', 'POST'])
-def wizard_create_project():
+@app.route("/wizard/create-rural", methods=['GET', 'POST'])
+def wizard_create_project_rural():
     checks = {
         'viability_study': {
             'title': 'Complete Viability Study',
@@ -113,7 +113,7 @@ def wizard_create_project():
         },
     }
     
-    return render_template('/wizard/create_project.html', checks=checks)
+    return render_template('/wizard/create_project_rural.html', checks=checks)
 
 @app.route("/wizard/create-urban", methods=['GET','POST'])
 def wizard_create_project_urban():
