@@ -22,7 +22,7 @@ def optional_forms_checks():
     checks={
         'leaflet_drop': {
         'title': 'Leaflet Drop',
-        'description': 'Carry out a leaflet drop and/or a door-to-door advisory campaign if the flight operation is to take place in a highly populated area, such as a housing estate',
+        'description': 'Carry out a leaflet drop and/or a door-to-door advisory campaign',
         'value': False
     },
     'inform_police': {
