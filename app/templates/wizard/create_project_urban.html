@@ -26,12 +26,16 @@
                         <label for="{{ key }}">{{ value.title }}</label>
                         <p>{{ value.description }}</p>
                     </div>
+                    <div class="d-flex align-items-end ms-auto">
+                        <!-- Create If statement to show update state if there is a form in progress -->
+                        <button type="button" class="btn btn-secondary ms">View</button>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
         </div>
 
-        <a href="#" class="btn btn-primary">Optional Forms</a>
+        <a href="{{url_for('optional')}}" class="btn btn-primary">Optional Forms</a>
     </form>
 </div>
 

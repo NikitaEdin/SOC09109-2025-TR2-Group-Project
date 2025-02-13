@@ -18,7 +18,7 @@ def viability_study():
     return render_template("/forms/viability_study.html", form=form)
 
 @app.route('/forms/optional', methods =['GET','POST'])
-def optional_forms_checks():
+def optional():
     checks={
         'leaflet_drop': {
         'title': 'Leaflet Drop',
