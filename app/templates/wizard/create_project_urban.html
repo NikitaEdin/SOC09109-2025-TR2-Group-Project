@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container text-center">
-    <h1 class="mb-2">Rural Area Flights</h1>
+    <h1 class="mb-2">Urban Area Flights</h1>
     <h3>This page is for creating an urban project</h3>
 </div>
 
@@ -32,8 +32,7 @@
                 {% endfor %}
             </div>
         </div>
-
-        <a href="{{url_for('optional')}}" class="btn btn-primary">Optional Forms</a>
+        <a href="{{ url_for('optional', urban='True') }}" class="btn btn-primary">Optional Forms</a>
     </form>
 </div>
 {% endblock %}

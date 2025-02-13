@@ -32,8 +32,7 @@
                 {% endfor %}
             </div>
         </div>
-
-        <a href="{{url_for('optional')}}" class="btn btn-primary">Optional Forms</a>
+        <a href="{{ url_for('optional', rural='True') }}" class="btn btn-primary">Optional Forms</a>
     </form>
 </div>
 {% endblock %}

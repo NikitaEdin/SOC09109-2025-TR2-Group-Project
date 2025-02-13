@@ -74,4 +74,6 @@ def optional():
         'value':False
     }
     }
-    return render_template("/forms/optional_forms.html", checks=checks, forms=forms)
+    urban = request.args.get('urban', 'False')
+    rural = request.args.get('rural', 'False')
+    return render_template("/forms/optional_forms.html", checks=checks, forms=forms, urban=urban,rural=rural)
