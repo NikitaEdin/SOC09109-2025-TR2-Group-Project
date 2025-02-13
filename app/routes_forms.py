@@ -39,8 +39,10 @@ def optional_forms_checks():
         'title': 'Monitor Weather',
         'description': 'Monitor the weather conditions on the day of the proposed flight operation',
         'value': False
-    },
-    'customise_loading_list': {
+    }
+    }
+    forms={
+        'customise_loading_list': {
         'title': 'Customise Loading List',
         'description': 'Customise the loading list to suit the flight operation',
         'value': False
@@ -71,6 +73,5 @@ def optional_forms_checks():
         'description': 'Enter details into form',
         'value':False
     }
-    
     }
-    return render_template("/forms/optional_forms.html", checks=checks)
+    return render_template("/forms/optional_forms.html", checks=checks, forms=forms)
