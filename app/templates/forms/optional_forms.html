@@ -13,48 +13,53 @@
 
 <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 40vh">
     <div class="row justify-content-between">
-    <!-- Left column -->
-    <div class="col">
-    <form class="container d-flex flex-column gap-4 align-items-start" method="post">
-        <div class="d-flex flex-wrap align-items-center justify-content-start" style="gap: 5rem;">
-            <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
-                {% for key in forms.keys() %}
-                {% set value = forms[key] %}
+        <!-- Left column -->
+        <div class="col">
+            <form class="container d-flex flex-column gap-4 align-items-start" method="post">
+                <div class="d-flex flex-wrap align-items-center justify-content-start" style="gap: 5rem;">
+                    <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
+                        {% for key in forms.keys() %}
+                        {% set value = forms[key] %}
 
-                <div class="d-flex align-items-center gap-4 checklist-item">
-                    <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif %}>
-                    <div style="max-width: 25rem;">
-                        <label for="{{ key }}">{{ value.title }}</label>
-                        <p>{{ value.description }}</p>
+                        <div class="d-flex align-items-center gap-4 checklist-item">
+                            <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif %}>
+                            <div style="max-width: 25rem;">
+                                <label for="{{ key }}">{{ value.title }}</label>
+                                <p>{{ value.description }}</p>
+                            </div>
+                            <div class="d-flex align-items-end ms-auto">
+                                <!-- Create If statement to show update state if there is a form in progress -->
+                                <button type="button" class="btn btn-secondary ms">View</button>
+                            </div>
+                        </div>
+                        
+                        {% endfor %}
                     </div>
                 </div>
-                {% endfor %}
-            </div>
         </div>
-    </div>
-    </form>
+        </form>
 
-    <!-- Right Column -->
-    <div class="col">
-    <form class="container d-flex flex-column gap-4 align-items-end" method="post">
-        <div class="d-flex flex-wrap align-items-center justify-content-end" style="gap: 5rem;">
-            <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
-                {% for key in checks.keys() %}
-                {% set value = checks[key] %}
+        <!-- Right Column -->
+        <div class="col">
+            <form class="container d-flex flex-column gap-4 align-items-end" method="post">
+                <div class="d-flex flex-wrap align-items-center justify-content-end" style="gap: 5rem;">
+                    <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
+                        {% for key in checks.keys() %}
+                        {% set value = checks[key] %}
 
-                <div class="d-flex align-items-center gap-4 checklist-item">
-                    <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif %}>
-                    <div style="max-width: 25rem;">
-                        <label for="{{ key }}">{{ value.title }}</label>
-                        <p>{{ value.description }}</p>
+                        <div class="d-flex align-items-center gap-4 checklist-item">
+                            <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif
+                                %}>
+                            <div style="max-width: 25rem;">
+                                <label for="{{ key }}">{{ value.title }}</label>
+                                <p>{{ value.description }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
-                {% endfor %}
-            </div>
         </div>
-                </div>
     </div>
-
 
     </form>
     <a href="#" class="btn btn-primary mt-3">Back</a>
