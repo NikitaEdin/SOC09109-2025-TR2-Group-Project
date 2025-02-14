@@ -66,14 +66,26 @@ def optional():
     'pre_flight_check':{
         'title':'Pre flight form',
         'description': 'Form for pre flight data',
-        'value':False
+        'value': False
     },
     'notam_form':{
         'title':'Notam Form',
         'description': 'Enter details into form',
-        'value':False
+        'value': False
     }
+    }
+    IncidentsEmergencies={
+        'ECCAIRS':{
+            'title': 'ECCAIRS Incident Link',
+            'description': 'Click the button & fill the form',
+            'value': False
+        },
+        'AIRPROX':{
+            'title': 'AIRPROX Incident Link',
+            'description':'Click the button & fill the form',
+            'value': False
+        }
     }
     urban = request.args.get('urban', 'False')
     rural = request.args.get('rural', 'False')
-    return render_template("/forms/optional_forms.html", checks=checks, forms=forms, urban=urban,rural=rural)
+    return render_template("/forms/optional_forms.html", checks=checks, forms=forms, urban=urban,rural=rural,IncidentsEmergencies=IncidentsEmergencies )
