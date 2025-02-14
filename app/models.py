@@ -71,7 +71,7 @@ class Project(db.Model):
 
     # Location
     longitude = db.Column(db.Float, nullable=False)
-    altitude = db.Column(db.Float, nullable=False)
+    latitude = db.Column(db.Float, nullable=False)
 
     # Project type
     projectType = db.Column(db.String(50), nullable=False) 
