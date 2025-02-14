@@ -86,6 +86,7 @@ def optional():
             'value': False
         }
     }
+    
 #  This is to tidy up and only pass in only one variable into the template
     content = {
     "checks": checks,
