@@ -34,7 +34,7 @@ def projects():
     per_page = 10
 
     # User projects
-    projects = Project.query.filter_by(authorID=current_user.id).paginate(page=page, per_page=per_page)
+    projects = Project.query.filter_by(authorID=current_user.id).order_by(Project.created_at.desc()).paginate(page=page, per_page=per_page)
     return render_template('/dashboard/projects.html', title='projects',  use_container=False, 
                            projects=projects)
 
