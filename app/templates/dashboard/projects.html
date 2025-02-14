@@ -6,20 +6,46 @@
 {% block main_content %}
   <div class="projects-container">
     <h2>Projects</h2>
-    <p>Here is a list of all the projects.</p>
 
     <!-- Projects List -->
-    <div class="projects-list">
-      {% for project in projects %}
-        <div class="project-card">
-          <h4>{{ project.name }}</h4>
-          <p>{{ project.description }}</p>
-          <a href="{{ url_for('project_details', project_id=project.id) }}" class="btn btn-info">View Details</a>
-        </div>
+    <div class="list-group">
+      {% if projects %}
+
+          {% for project in projects %}
+          <!-- Project Card -->
+          <div class="card mb-2">
+              <div class="row mx-2 my-1">
+                  <!-- Title -->
+                  <div class="col-3">
+                      <p class="mb-0">{{ project.title }}</p>
+                  </div>
+                  <!-- Date -->
+                  <div class="col align-content-center">
+                      <p class="mb-0" style="color: var(--text-secondary-colour);">
+                          Date: {{ project.dateOfFlight.strftime('%d/%m/%Y') }}
+                      </p>
+                  </div>
+                  <!-- View Project -->
+                  <div class="col d-flex justify-content-end">
+                      <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary">View Project</a>
+                  </div>
+              </div>
+            </div>
+          {% endfor %}
       {% else %}
-        <p>No projects found.</p>
-      {% endfor %}
+          <p>No projects.</p>
+      {% endif %}
+       
+      
+      
     </div>
+
+
+    
+    <!-- Pagination -->
+    {% set pagination = projects %}
+    {% include 'pagination.html' %}
+
 
   </div>
 

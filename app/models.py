@@ -41,6 +41,10 @@ class User(db.Model, UserMixin):
     # Return true if user has enough power for admin role
     def is_admin(self):
         return self.role.power >= ADMIN_MIN_POWER
+    
+    # Get all projects by this user
+    def get_projects(self):
+        return Project.query.filter_by(authorID=self.id).all()
 
 
 ###### ROLES ######
@@ -58,10 +62,6 @@ class Role(db.Model):
     # Check if this user has more power than the given user
     def has_higher_power_than(self, other_role):
         return self.power > other_role.power
-    
-    # Get all projects by this user
-    def get_projects(self):
-        return Project.query.filter_by(authorID=self.id).all()
     
 
 ###### Project ######
