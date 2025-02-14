@@ -84,6 +84,7 @@ class Project(db.Model):
     flightCode = db.Column(db.String(50), nullable=True ) # nullable for now.
     pilotID = db.Column(db.Integer, nullable=True) # can be linked to User model later
     lastEdited = db.Column(db.DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
     # JSON fields
     viabilityStudy = db.Column(db.JSON, nullable=True)

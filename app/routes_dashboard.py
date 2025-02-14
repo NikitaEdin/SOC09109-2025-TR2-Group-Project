@@ -16,10 +16,10 @@ def dashboard():
     today = date.today()
 
     # Pending projects (future dates)
-    pendingProjects = Project.query.filter(Project.dateOfFlight > today).limit(3).all()
+    pendingProjects = Project.query.filter(Project.dateOfFlight > today).order_by(Project.created_at.desc()).limit(3).all()
 
     # Past projects (past dates)
-    pastProjects = Project.query.filter(Project.dateOfFlight < today).limit(3).all()
+    pastProjects = Project.query.filter(Project.dateOfFlight < today).order_by(Project.created_at.desc()).limit(3).all()
 
     
     return render_template('/dashboard/dashboard.html', title='dashboard', use_container=False, footer=False, 

@@ -23,15 +23,20 @@
   </div>
 
     <!-- New Project -->
-    <div class="d-flex justify-content-end">
-      <a href="{{url_for('new_project_location')}}" class="btn btn-success">+ New Project</a>
+    <div class="row align-items-center">
+      <div class="col">
+          <p class="fs-2">Welcome, {{ current_user.username }}!</p>
+      </div>
+      <div class="col d-flex justify-content-end">
+          <a href="{{ url_for('new_project_location') }}" class="btn btn-success">+ New Project</a>
+      </div>
     </div>
 
     <!-- Upper cards -->
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex justify-content-center mb-sm-0 mb-lg-5">
       
       <!-- Project Card -->
-      <div class="card mx-3" style="width: 15rem;">
+      <div class="card mx-3 my-2" style="width: 15rem;">
         <div class="card-body">
           <p class="fs-2 card-title text-center">{{projects|length}}</p>
           <p class="card-text text-center">Projects</p>
@@ -39,7 +44,7 @@
       </div>
   
       <!-- Project Card -->
-      <div class="card mx-3" style="width: 15rem;">
+      <div class="card mx-3 my-2" style="width: 15rem;">
         <div class="card-body">
           <p class="fs-2 card-title text-center">{{pendingProjects|length}}</p>
           <p class="card-text text-center">Pending Projects</p>
@@ -47,10 +52,10 @@
       </div>
   
       <!-- Project Card -->
-      <div class="card mx-3" style="width: 15rem;">
+      <div class="card mx-3 my-2" style="width: 15rem;">
         <div class="card-body">
           <p class="fs-2 card-title text-center">{{pastProjects|length}}</p>
-          <p class="card-text text-center">Part Projects</p>
+          <p class="card-text text-center">Past Projects</p>
         </div>
       </div>
     </div>
@@ -63,18 +68,29 @@
       <div class="list-group">
         {% if pendingProjects %}
           {% for project in pendingProjects %}
-          <!-- Project Card -->
-          <div class="card mb-2">
+            <!-- Project Card -->
+            <div class="card mb-2">
               <div class="row mx-2 my-1">
                   <!-- Title -->
-                  <div class="col-3">
+                  <div class="col-3 align-content-center">
                       <p class="mb-0">{{ project.title }}</p>
+                  </div>
+                  <!-- Type -->
+                  <div class="col align-content-center">
+                    <p class="mb-0" style="color: var(--text-secondary-colour);">Type: {{ project.projectType }}</p>
                   </div>
                   <!-- Date -->
                   <div class="col align-content-center">
                       <p class="mb-0" style="color: var(--text-secondary-colour);">
-                          Date: {{ project.dateOfFlight.strftime('%d/%m/%Y') }}
+                          Date of Flight: {{ project.dateOfFlight.strftime('%d/%m/%Y') }}
                       </p>
+                  </div>
+
+                  <!-- Last modified -->
+                  <div class="col align-content-center">
+                    <p class="mb-0" style="color: var(--text-secondary-colour);">
+                        Last Edit: {{ project.lastEdited.strftime('%d/%m/%Y') }}
+                    </p>
                   </div>
                   <!-- View Project -->
                   <div class="col d-flex justify-content-end">
@@ -109,14 +125,25 @@
             <div class="card mb-2">
                 <div class="row mx-2 my-1">
                     <!-- Title -->
-                    <div class="col-3">
+                    <div class="col-3 align-content-center">
                         <p class="mb-0">{{ project.title }}</p>
+                    </div>
+                    <!-- Type -->
+                    <div class="col align-content-center">
+                      <p class="mb-0" style="color: var(--text-secondary-colour);">Type: {{ project.projectType }}</p>
                     </div>
                     <!-- Date -->
                     <div class="col align-content-center">
                         <p class="mb-0" style="color: var(--text-secondary-colour);">
-                            Date: {{ project.dateOfFlight.strftime('%d/%m/%Y') }}
+                            Date of Flight: {{ project.dateOfFlight.strftime('%d/%m/%Y') }}
                         </p>
+                    </div>
+
+                    <!-- Last modified -->
+                    <div class="col align-content-center">
+                      <p class="mb-0" style="color: var(--text-secondary-colour);">
+                          Last Edit: {{ project.lastEdited.strftime('%d/%m/%Y') }}
+                      </p>
                     </div>
                     <!-- View Project -->
                     <div class="col d-flex justify-content-end">
