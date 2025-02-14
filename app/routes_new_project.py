@@ -6,23 +6,32 @@ from flask_login import current_user, login_required
 from app.forms.createProject import ProjectLocation, ProjectType, ProjectDetails
 from app.models import Project
 
+
 # Step 1: Get location of the project
 @app.route("/create_project/location", methods=['GET','POST'])
 @login_required
 def new_project_location():
     form = ProjectLocation()
     
+    # Reset session values
     session.pop('longitude', None)
-    session.pop('altitude', None)
+    session.pop('latitude', None)
     session.pop('projectType', None)
+
+    # Default Map location - Merchiston Campus
+    default_latitude = 55.932850
+    default_longitude = -3.213431
+    default_zoom = 15
 
     # on form submit
     if form.validate_on_submit():
         session['longitude'] = form.longitude.data
-        session['altitude'] = form.altitude.data
+        session['latitude'] = form.latitude.data
         return redirect(url_for('new_project_type'))
     
-    return render_template('/create_project/new_project_location.html', form=form, footer=False, title='Where?')
+    
+    return render_template('/create_project/new_project_location.html', form=form, footer=False, title='Where?',
+                           default_latitude=default_latitude, default_longitude=default_longitude, default_zoom=default_zoom)
 
 # Step 2: Get project type
 @app.route("/create_project/type", methods=['GET','POST'])
@@ -31,7 +40,7 @@ def new_project_type():
     form = ProjectType()
 
     # Was step 1 skipped?
-    if not session.get('longitude') and not session.get('altitude'):
+    if not session.get('longitude') and not session.get('latitude'):
         flash('You must specify project location first.', 'danger')
         return redirect(url_for('new_project_location'))
 
@@ -48,14 +57,14 @@ def new_project_type():
 def new_project_details():
     form = ProjectDetails()
 
-    if not session.get('longitude') and not session.get('altitude') and not session.get('projectType'):
+    if not session.get('longitude') and not session.get('latitude') and not session.get('projectType'):
         flash('Project creation steps were not completed correctly.', 'danger')
         return redirect(url_for('new_project_location'))
 
     if form.validate_on_submit():
         # Retrieve session data
         longitude = session.get('longitude')
-        altitude = session.get('altitude')
+        latitude = session.get('latitude')
         project_type = session.get('projectType')
 
         # Get dataOfFlight to correct format
@@ -64,7 +73,7 @@ def new_project_details():
         project = Project(
             authorID=current_user.id,
             longitude=float(longitude),
-            altitude=float(altitude),
+            latitude=float(latitude),
             projectType=project_type,
             title=form.title.data,
             description=form.description.data,
@@ -78,7 +87,7 @@ def new_project_details():
 
         # Clear session data
         session.pop('longitude', None)
-        session.pop('altitude', None)
+        session.pop('latitude', None)
         session.pop('projectType', None)
 
         # Flash and redirect

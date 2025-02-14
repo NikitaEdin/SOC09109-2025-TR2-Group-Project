@@ -1,0 +1,140 @@
+<!-- {% raw %}
+ Interactive map for retrieving clicked location in both longitude and latitude.
+
+ __Usage__
+add the following to html page
+{% include '/create_project/map_location.html' %}
+
+The code will auto-populate document IDs "latitude", "longitude", and "dmsLocation"
+
+__Configuration__
+- Set the default map location
+{% set latitude = default_latitude %}
+{% set longitude = default_longitude %}
+{% set zoom = default_zoom %}
+
+- Set an optional default marker (for visualising a saved position)
+{% set default_marker_latitude = 55.936844 %}
+{% set default_marker_longitude = -3.207321 %}
+
+- Move the map to the default marker (if any)
+{% set reset_to_default_marker = 1 %}
+
+- Hide map form (should be hidden)
+{% set hidden_form = True %} 
+
+{% endraw %}-->
+
+
+
+<!-- Map Row -->
+<div class="row justify-content-center">
+    <div class="">
+        <!-- col-md-8 col-lg-6 -->
+        <!-- Map Container -->
+        <div id="map" class="rounded shadow-sm"></div>
+    </div>
+</div>
+
+
+<!-- Show self form? -->
+{% if not hidden_form %}
+<!-- Form to display coordinates -->
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8 col-lg-6">
+
+        <form action="/" method="POST" class="bg-white p-4 rounded shadow-sm">
+            <h4 class="mb-3 text-center">Coordinates</h4>
+            <div class="mb-3">
+                <input type="text" id="lat_lng" name="lat_lng" class="form-control" placeholder="Coordinates (DD)"
+                    readonly>
+            </div>
+            <div class="mb-3">
+                <input type="text" id="dms_location" name="dms_location" class="form-control"
+                    placeholder="Coordinates (DMS)" readonly>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+
+    </div>
+</div>
+{% endif %}
+
+<!-- Leaflet.js CDN -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    // Initialise the map 
+    var lat = parseFloat("{{ latitude | default(55.9533)}}");
+    var lng = parseFloat("{{ longitude  | default(-3.1883)}}");
+    var zoom = parseFloat("{{ zoom | default(13) }}");
+    var map = L.map('map').setView([lat, lng], zoom);
+
+    // Adding OpenStreetMap tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    var marker;
+
+    // Function to convert decimal degrees to DMS (Degrees, Minutes, Seconds)
+    function toDMS(lat, lon) {
+        function convertToDMS(degrees) {
+            var absDeg = Math.abs(degrees);
+            var d = Math.floor(absDeg);
+            var min = Math.floor((absDeg - d) * 60);
+            var sec = ((absDeg - d - (min / 60)) * 3600).toFixed(2);
+            return { degrees: d, minutes: min, seconds: sec };
+        }
+
+        var latDMS = convertToDMS(lat);
+        var lonDMS = convertToDMS(lon);
+
+        var latDir = lat >= 0 ? "N" : "S";
+        var lonDir = lon >= 0 ? "E" : "W";
+
+        return `${latDMS.degrees}°${latDMS.minutes}'${latDMS.seconds}" ${latDir}, ${lonDMS.degrees}°${lonDMS.minutes}'${lonDMS.seconds}" ${lonDir}`;
+    }
+
+    // Add click event listener on map to get clicked location
+    map.on('click', function (e) {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+        marker = L.marker(e.latlng).addTo(map);
+
+        // Get the latitude and longitude in decimal degrees (DD)
+        var lat = e.latlng.lat.toFixed(6);
+        var lng = e.latlng.lng.toFixed(6);
+        var latLngText = `Lat: ${lat}, Lng: ${lng}`;
+
+        // Get DMS format of clicked location
+        var dmsLocation = toDMS(e.latlng.lat, e.latlng.lng);
+
+        // Update hidden fields
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = lng;
+        document.getElementById('dmsLocation').value = dmsLocation;
+
+        // Update input fields coordinates
+        document.getElementById('lat_lng').value = latLngText;
+        document.getElementById('dms_location').value = dmsLocation;
+    });
+
+    var default_marker_latitude = parseFloat("{{ default_marker_latitude }}");
+    var default_marker_longitude = parseFloat("{{ default_marker_longitude }}");
+
+    // Check if default marker is valid (if any)
+    if (default_marker_latitude !== null && default_marker_longitude !== null && !isNaN(default_marker_latitude) && !isNaN(default_marker_longitude)) {
+        var default_marker = L.marker([default_marker_latitude, default_marker_longitude]).addTo(map);
+        default_marker.bindPopup("<b>Default Location</b>").openPopup(); // Popup text
+
+        // Move to marker?
+        var reset_to_default_marker = parseFloat("{{ reset_to_default_marker }}");
+        console.log(reset_to_default_marker)
+        if (reset_to_default_marker !== null && reset_to_default_marker == 1) {
+            map.setView([default_marker_latitude, default_marker_longitude], 15);
+        }
+    }
+</script>

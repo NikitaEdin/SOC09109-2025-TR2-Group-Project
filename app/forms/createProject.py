@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 # Step 1: Get location of the project
 class ProjectLocation(FlaskForm):
     longitude = FloatField('Longitude',validators=[DataRequired()])
-    altitude = FloatField('Altitude',validators=[DataRequired()])
+    latitude = FloatField('Latitude',validators=[DataRequired()])
     submit = SubmitField('Next')
 
 

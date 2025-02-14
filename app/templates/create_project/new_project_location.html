@@ -18,28 +18,59 @@
     {% endwith %}
 </div>
 
-<div class="card shadow-sm p-4">
+<div class="card shadow-sm p-2 mx-auto w-auto text-center" style="max-width: 800px;">
     <h2 class="mb-4">Pick the operation location</h2>
+    <p class="text-muted my-0">Select the location on the map by clicking on the desired point. </p>
+    <p class="text-muted">Latitude and longitude values will be automatically filled in below.</p>
+    <p class="text-muted">Once you're done, click "Next" to proceed, or "Reset" to clear your selections.</p>
+
     <form method="POST">
         {{ form.hidden_tag() }}
 
-        <div class="mb-3">
-            {{ form.longitude.label(class="form-label") }}
-            {{ form.longitude(class="form-control") }}
-            {% for error in form.longitude.errors %}
-                <div class="text-danger">{{ error }}</div>
-            {% endfor %}
+        <!---------------- MAP ---------------->
+        <!-- Default map pos and zoom is configured in route def -->
+        {% set latitude = default_latitude %}
+        {% set longitude = default_longitude %}
+        {% set zoom = default_zoom %}
+        {% set hidden_form = True %}
+        <div class="col-md-8 col-lg-12 justify-content-center">
+            {% include '/create_project/map_location.html' %}
         </div>
 
-        <div class="mb-3">
-            {{ form.altitude.label(class="form-label") }}
-            {{ form.altitude(class="form-control") }}
-            {% for error in form.altitude.errors %}
-                <div class="text-danger">{{ error }}</div>
-            {% endfor %}
+
+        <div class="row mt-3">
+            <div class="col">
+                <div class="mb-3">
+                    {{ form.longitude.label(class="form-label") }}
+                    {{ form.longitude(class="form-control", id="latitude", readonly=True, style="user-select:none; pointer-events:none;") }}
+                    {% for error in form.longitude.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+       
+        
+            <div class="col">
+                <div class="mb-3">
+                    {{ form.latitude.label(class="form-label") }}
+                    {{ form.latitude(class="form-control",  id="longitude", readonly=True, style="user-select:none; pointer-events:none;") }}
+                    {% for error in form.latitude.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Next</button>
+        <div class="row justify-content-between">
+            <div class="col">
+                <button type="reset" class="btn btn-secondary w-100">Reset</button>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary w-100" id="sumbit-button">Next</button>
+            </div>
+          
+        </div>
+        
     </form>
 </div>
 {% endblock %}
