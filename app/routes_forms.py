@@ -9,10 +9,27 @@ def viability_study():
     if request.method == "POST":
         # saves changes only for finalising later
         if form.saveChanges.data:
-            print("Form Saved")
+            print("viability study form saved for later")
 
         # submits completed form
         if form.submit.data and form.validate_on_submit():
-            print("Form Submitted")
+            print("viability study form submitted")
 
     return render_template("/forms/viability_study.html", form=form)
+
+@app.route('/forms/site-evaluation', methods=['GET', 'POST'])
+def site_evaluation():
+    """
+    form = siteEvaluationForm()
+
+    if request.method == "POST":
+        # saves changes only for finalising later
+        if form.saveChanges.data:
+            print("site evaluation form saved for later")
+
+        # submits completed form
+        if form.submit.data and form.validate_on_submit():
+            print("site evaluation form submitted")
+    """
+
+    return render_template("/forms/site_evaluation.html")

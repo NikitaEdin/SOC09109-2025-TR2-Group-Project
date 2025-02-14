@@ -1,0 +1,324 @@
+{% extends "base.html" %}
+
+{% block title %}Site Evaluation{% endblock %}
+
+{% block content %}
+    <div class="text-center m-3">
+        <h2><strong>Site Evaluation</strong></h2>
+    </div>
+    <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
+
+        <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3" novalidate>
+
+
+            <h3 class="text-center">title here</h3>
+
+
+            <div class="card my-3">
+                <div class="card-body">
+                    <h3 class="card-title">2.1 Flight details</h3>
+                    <div class="mb-3">
+                        <label class="form-label" for="flightCode">Flight Code: 98465</label>
+                    </div>
+
+                    <div class="mb-3 col-12 col-md-6 col-lg-4">
+                        <label class="form-label" for="dateOfFlight">Date of Flight: 26/02/25</label>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="remotePilot">Remote Pilot:</label>
+                        <input class="form-control form-control-sm" type="text" id="remotePilot" name="remotePilot">
+                    </div>
+
+                    <div class="mb-3 col-12 col-md-6 col-lg-4">
+                        <label class="form-label" for="dateCompleted">Date Completed:</label>
+                        <input class="form-control form-control-sm" type="date" id="dateCompleted" name="dateCompleted">
+                    </div>
+                </div>
+            </div>
+             <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+            <div class="card my-3">
+                <div class="card-body">
+                    <h3 class="card-title">2.2 Pre-site visit</h3>
+                    <div class="mb-3">
+                        <label class="form-label" for="locationInformation">Location Information:</label><br>
+
+                        <label class="form-label">Latitude: 56°04'02.6"N</label><br>
+                        <label class="form-label">Longitude: 3°27'58.0"W</label>
+
+                        <textarea class="form-control form-control-sm" id="locationInformation" name="locationInformation" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="sensitivities">Sensitivities:</label>
+
+                        <textarea class="form-control form-control-sm" id="sensitivities" name="sensitivities" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                     <div class="mb-3">
+                        <label class="form-label" for="airspace">Airspace:</label>
+
+                        <textarea class="form-control form-control-sm" id="airspace" name="airspace" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="restrictions">Restrictions:</label>
+
+                        <textarea class="form-control form-control-sm" id="restrictions" name="restrictions" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                     <div class="mb-3">
+                        <label class="form-label" for="terrain">Terrain:</label>
+
+                        <textarea class="form-control form-control-sm" id="terrain" name="terrain" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="aviationProximities">Aviation Proximities:</label>
+
+                        <textarea class="form-control form-control-sm" id="aviationProximities" name="aviationProximities" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="permissions">Permissions:</label>
+
+                        <textarea class="form-control form-control-sm" id="permissions" name="permissions" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="notams">NOTAMS:</label>
+
+                        <textarea class="form-control form-control-sm" id="notams" name="notams" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="ppeRequirements">PPE Requirements:</label>
+
+                        <textarea class="form-control form-control-sm" id="ppeRequirements" name="ppeRequirements" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="livestock">Livestock:</label>
+
+                        <textarea class="form-control form-control-sm" id="livestock" name="livestock" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="people">People:</label>
+
+                        <textarea class="form-control form-control-sm" id="people" name="people" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="hazards">Hazards:</label>
+
+                        <textarea class="form-control form-control-sm" id="hazards" name="hazards" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="footpaths">Footpaths:</label>
+
+                        <textarea class="form-control form-control-sm" id="footpaths" name="footpaths" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="vehicleAccess">Vehicle Access:</label>
+
+                        <textarea class="form-control form-control-sm" id="vehicleAccess" name="vehicleAccess" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="mobilePhoneCoverage">Mobile phone coverage:</label>
+
+                        <textarea class="form-control form-control-sm" id="mobilePhoneCoverage" name="mobilePhoneCoverage" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+            <div class="card  my-3">
+                <div class="card-body">
+                    <h3 class="card-title">2.3 Emergency contact details</h3>
+                    <div class="mb-3">
+                        <label class="form-label" for="localPolice">Local Police:</label>
+
+                        <textarea class="form-control form-control-sm" id="localPolice" name="localPolice" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="localATC">Local ATC:</label>
+
+                        <textarea class="form-control form-control-sm" id="localATC" name="localATC" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="militaryLowFlyingBookingCell">Military Low flying booking cell:</label>
+
+                        <textarea class="form-control form-control-sm" id="militaryLowFlyingBookingCell" name="militaryLowFlyingBookingCell" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="localHospital">Local Hospital:</label>
+
+                        <textarea class="form-control form-control-sm" id="localHospital" name="localHospital" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="localHospital">Local Hospital:</label>
+
+                        <textarea class="form-control form-control-sm" id="localHospital" name="localHospital" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+            <div class="card my-3">
+                <div class="card-body">
+                    <h3 class="card-title">2.4 Airspace and Environment diagrams</h3>
+                    <div class="mb-3">
+                        <label class="form-label" for="localHospital">Diagram:</label>
+
+                        <input class="form-control form-control-sm" type="file" id="confirmPreSiteVisitInfo" name="confirmPreSiteVisitInfo">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+            <div class="card my-3">
+                <div class="card-body">
+                    <h3 class="card-title">2.5 Site Survey</h3>
+                    <div class="mb-3 col-12 col-md-6 col-lg-4">
+                        <label class="form-label" for="confirmPreSiteVisitInfo">Confirm date and time of 2.2 Pre-Site Visit Info:</label>
+
+                        <input class="form-control form-control-sm" type="datetime-local" id="confirmPreSiteVisitInfo" name="confirmPreSiteVisitInfo">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="obstructions">Obstructions:</label>
+
+                        <textarea class="form-control form-control-sm" id="obstructions" name="obstructions" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                     <div class="mb-3">
+                        <label class="form-label" for="people">People:</label>
+
+                        <textarea class="form-control form-control-sm" id="people" name="people" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="livestock">Livestock:</label>
+
+                        <textarea class="form-control form-control-sm" id="livestock" name="livestock" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="proximity">Proximity:</label>
+
+                        <textarea class="form-control form-control-sm" id="proximity" name="proximity" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="primaryTOLZ">Primary TOLZ:</label>
+
+                        <textarea class="form-control form-control-sm" id="primaryTOLZ" name="primaryTOLZ" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="secondaryTOLZ">Secondary TOLZ:</label>
+
+                        <textarea class="form-control form-control-sm" id="secondaryTOLZ" name="secondaryTOLZ" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="comms">Comms:</label>
+
+                        <textarea class="form-control form-control-sm" id="comms" name="comms" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="other">Other:</label>
+
+                        <textarea class="form-control form-control-sm" id="other" name="other" rows="4" cols="50">
+
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="form-control btn btn-primary my-3">Submit</button>
+            <button type="submit" class="form-control btn btn-primary">Save</button>
+
+
+<!--
+
+            form.submit(class="form-control btn btn-danger")
+
+            form.saveChanges(class="form-control btn btn-danger border border-black")
+-->
+
+
+        </form>
+
+    </div>
+
+
+{% endblock %}
