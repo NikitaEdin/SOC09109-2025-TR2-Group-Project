@@ -16,8 +16,8 @@
             <form class="container d-flex flex-column gap-4 align-items-start" method="post">
                 <div class="d-flex flex-wrap align-items-center justify-content-start" style="gap: 5rem;">
                     <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
-                        {% for key in forms.keys() %}
-                        {% set value = forms[key] %}
+                        {% for key in content.forms.keys() %}
+                        {% set value = content.forms[key] %}
 
                         <div class="d-flex align-items-center gap-4 checklist-item">
                             <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif %}>
@@ -42,8 +42,8 @@
             <form class="container d-flex flex-column gap-4 align-items-end" method="post">
                 <div class="d-flex flex-wrap align-items-center justify-content-end" style="gap: 5rem;">
                     <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
-                        {% for key in checks.keys() %}
-                        {% set value = checks[key] %}
+                        {% for key in content.checks.keys() %}
+                        {% set value = content.checks[key] %}
 
                         <div class="d-flex align-items-center gap-4 checklist-item">
                             <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif
@@ -60,9 +60,9 @@
     </div>
 
     </form>
-    {% if rural == 'True' %}
+    {% if content.rural == 'True' %}
         <a href="{{ url_for('wizard_create_project_rural') }}" class="btn btn-primary mt-3">Back</a>
-    {% elif urban == 'True'  %}
+    {% elif content.urban == 'True'  %}
         <a href="{{ url_for('wizard_create_project_urban') }}" class="btn btn-primary mt-3">Back</a>
     {% else %}
     <a href="{{ url_for('home') }}" class="btn btn-primary mt-3">home</a>

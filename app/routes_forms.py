@@ -86,6 +86,12 @@ def optional():
             'value': False
         }
     }
-    urban = request.args.get('urban', 'False')
-    rural = request.args.get('rural', 'False')
-    return render_template("/forms/optional_forms.html", checks=checks, forms=forms, urban=urban,rural=rural,IncidentsEmergencies=IncidentsEmergencies )
+#  This is to tidy up and only pass in only one variable into the template
+    content = {
+    "checks": checks,
+    "forms": forms,
+    "IncidentsEmergencies": IncidentsEmergencies,
+    "urban": request.args.get('urban', 'False'),
+    "rural": request.args.get('rural', 'False')
+}
+    return render_template("/forms/optional_forms.html", content=content )
