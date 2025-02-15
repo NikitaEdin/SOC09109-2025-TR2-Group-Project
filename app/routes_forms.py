@@ -32,4 +32,31 @@ def site_evaluation():
             print("site evaluation form submitted")
     """
 
-    return render_template("/forms/site_evaluation.html")
+    placeholderMessages = {
+        'locationInformation': {
+            'placeholder': """ 
+                · Elevation in feet above mean sea level 
+                · 6-figure grid reference 
+                · Address including postcode 
+                · What3words could be useful in some instances
+                            """,
+        },
+        'sensitivities': {
+
+            'placeholder': """  
+                This could include things like schools, cemeteries, government buildings where
+                flying a drone in the vicinity could cause issues or concerns with the public.  
+                This may help you to decide if it would be worth informing the police via 101
+                            """,
+        },
+        'airspace': {
+            'placeholder': """
+                Example 1 – No ATC Permission required Class G airspace uncontrolled            
+                Example 2 – No ATC Permission required, ATC Notification if deemed necessary   
+                Class D airspace Leeds Bradford CTR – Surface – 4500ft amsl             
+                Example 3 – ATC Permission required Leeds Bradford Flight restriction zone
+                            """,
+        },
+    }
+
+    return render_template("/forms/site_evaluation.html", placeholders = placeholderMessages)
