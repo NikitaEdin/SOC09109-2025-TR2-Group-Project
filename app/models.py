@@ -93,9 +93,15 @@ class Project(db.Model):
     loadingList = db.Column(db.JSON, nullable=True)
     postFlight = db.Column(db.JSON, nullable=True)
 
+    author = db.relationship('User', backref='projects')
+
     # Returns true if given user is the owner of this project
     def is_owner(self, user):
         return self.authorID == user.id
+
+    # Returns the User obj fro the project's author
+    def get_author(self):
+        return self.author
 
     def __repr__(self):
         return f'<Project {self.title} by {self.author.username}>'

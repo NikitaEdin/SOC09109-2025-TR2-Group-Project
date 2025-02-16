@@ -1,6 +1,8 @@
-from datetime import date
+from datetime import date, datetime
+
+import humanize
 from app import app
-from flask import render_template, request
+from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from app.models import Project, User, Role
@@ -16,7 +18,7 @@ def dashboard():
     today = date.today()
 
     # Pending projects (future dates)
-    pendingProjects = Project.query.filter(Project.dateOfFlight > today).order_by(Project.created_at.desc()).limit(3).all()
+    pendingProjects = Project.query.filter(Project.dateOfFlight >= today).order_by(Project.created_at.desc()).limit(3).all()
 
     # Past projects (past dates)
     pastProjects = Project.query.filter(Project.dateOfFlight < today).order_by(Project.created_at.desc()).limit(3).all()
@@ -38,8 +40,32 @@ def projects():
     return render_template('/dashboard/projects.html', title='projects',  use_container=False, 
                            projects=projects)
 
-# Example page (frontend only) for a single project item.
-@app.route("/dashboard/project")
+# Single project item
+@app.route("/dashboard/project/<int:project_id>")
 @login_required
-def project():
-    return render_template('/dashboard/project.html')
+def project(project_id):
+    # Query by id
+    project = Project.query.get_or_404(project_id)
+
+    # Check ownership
+    if project.authorID != current_user.id:
+        flash('You do not have permission to view this project.', 'danger')
+        return redirect(url_for('dashboard'))
+
+    # Convert datetime to human-readable format
+    created_at_humanized = humanize.naturaltime(project.created_at)
+    last_edited_humanized = humanize.naturaltime(project.lastEdited)
+
+    # Determine the status (today, in x days, x days ago)
+    delta = project.dateOfFlight - datetime.now().date()
+    
+    if delta.days == 0:
+        date_status = "today"
+    elif delta.days > 0:
+        date_status = f"in {delta.days} day{'s' if delta.days != 1 else ''}"
+    else:
+        date_status = f"{abs(delta.days)} day{'s' if abs(delta.days) != 1 else ''} ago"
+
+    return render_template('/dashboard/project.html', project=project, use_container=False, title=project.title, footer=False,
+                           created_at_humanized=created_at_humanized, last_edited_humanized=last_edited_humanized,
+                           date_status=date_status)

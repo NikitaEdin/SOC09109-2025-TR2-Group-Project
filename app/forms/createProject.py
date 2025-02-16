@@ -22,3 +22,10 @@ class ProjectDetails(FlaskForm):
 
     submit = SubmitField('Create Project')
 
+
+
+class EditProject(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[Optional()])
+   
+    submit = SubmitField('Update Project')

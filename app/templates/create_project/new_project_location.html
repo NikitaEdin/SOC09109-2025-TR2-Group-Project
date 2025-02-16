@@ -42,7 +42,7 @@
             <div class="col">
                 <div class="mb-3">
                     {{ form.longitude.label(class="form-label") }}
-                    {{ form.longitude(class="form-control", id="latitude", readonly=True, style="user-select:none; pointer-events:none;") }}
+                    {{ form.longitude(class="form-control", id="longitude", readonly=True, style="user-select:none; pointer-events:none;") }}
                     {% for error in form.longitude.errors %}
                         <div class="text-danger">{{ error }}</div>
                     {% endfor %}
@@ -53,7 +53,7 @@
             <div class="col">
                 <div class="mb-3">
                     {{ form.latitude.label(class="form-label") }}
-                    {{ form.latitude(class="form-control",  id="longitude", readonly=True, style="user-select:none; pointer-events:none;") }}
+                    {{ form.latitude(class="form-control",  id="latitude", readonly=True, style="user-select:none; pointer-events:none;") }}
                     {% for error in form.latitude.errors %}
                         <div class="text-danger">{{ error }}</div>
                     {% endfor %}
