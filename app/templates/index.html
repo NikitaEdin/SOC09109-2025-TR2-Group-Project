@@ -22,35 +22,68 @@
     </div>
 
     <!-- Welcome Section -->
-    <div class="text-center my-5">
-        <h2 class="display-4">Welcome to the Drone Operations Web App</h2>
-        <p class="lead">This web app is designed to replace manual Word documents and streamline drone operation processes.</p>
-        <p>The system supports role-based security, allowing administrators, remote pilots, and other users to access tailored features. Data can also be exported in Excel and PDF formats for greater efficiency.</p>
-
-
-        <a href="{{ url_for('login') }}" class="btn btn-lg btn-primary fs-6 w-25 mb-5">GET STARTED</a>
+    <div class="text-center position-relative">
+        <img src="{{ url_for('static', filename='images/hero-background.jpg') }}" alt="hero background" class="w-100" style="height: 400px">
+        <div class="position-absolute top-50 start-50 translate-middle text-center text-white" style="margin-top: -10px">
+        <h2 class="display-4">Optimising Drone Flight Data</h2>
+        <p class="lead">Create and manage drone flights - all in one place</p>
+        <a href="{{ url_for('login') }}" class="btn btn-lg btn-primary fs-6 w-25 mb-5" style="margin-top: 120px">GET STARTED</a>
+    </div>
     </div>
 
     <!-- Features Section -->
     <div class="row text-center ">
-        <!-- Role-Based -->
+
         <div class="col-md-4 mb-4">
-            <h4><i class="fas fa-user-shield fa-3x text-primary"></i></h4>
-            <h5>Role-Based Security</h5>
-            <p>Different access levels for administrators, pilots, and users, ensuring controlled access to sensitive data.</p>
+            <h4><img src="{{ url_for('static', filename='images/icons/feature_pin.png') }}" alt="icon" style="width: 120px; height: 120px;"></h4>
+            <p>Organise and manage your drone flights as individual projects</p>
         </div>
-        <!-- Streamlined Data -->
+
         <div class="col-md-4 mb-4">
-            <h4><i class="fas fa-clipboard-list fa-3x text-success"></i></h4>
-            <h5>Streamlined Data</h5>
-            <p>Replace inconsistent Word documents with a structured database, reducing manual entry and errors.</p>
+            <h4><img src="{{ url_for('static', filename='images/icons/feature_drone.png') }}" alt="icon" style="width: 120px; height: 120px;"></h4>
+            <p>Manage all project documentation and flight records</p>
         </div>
-        <!-- Export Data -->
+
         <div class="col-md-4 mb-4">
-            <h4><i class="fas fa-file-export fa-3x text-warning"></i></h4> 
-            <h5>Export Data</h5>
-            <p>Easily export operation data to Excel or PDF, saving time and improving data sharing.</p>
+            <h4><img src="{{ url_for('static', filename='images/icons/feature_document.png') }}" alt="icon" style="width: 120px; height: 120px;"></h4>
+            <p>Generate detailed reports of your projects</p>
         </div>
     </div>
 
+<!-- Drones -->
+<section class="container my-5">
+<div class="d-flex justify-content-between align-items-center">
+    <h3 class="fw-bold">Our Drones</h3>
+    <span class="text-muted">More models coming soon</span>
+</div>
+<div class="row mt-3">
+    <div class="col-md-4">
+        <img src="{{ url_for('static', filename='images/drone3.png') }}" class="card-img-top" alt="drone">
+        <div class="card-body">
+            <h5 class="card-title">DJI Mini 3 Pro</h5>
+            <p class="text-muted">Weight: 249g</p>
+            <a href="#">Product Page</a>
+            <a href="#">User Guide</a>
+        </div>
+    </div>
+        <div class="col-md-4">
+        <img src="{{ url_for('static', filename='images/drone1.png') }}" class="card-img-top" alt="drone">
+        <div class="card-body">
+            <h5 class="card-title">DJI Matrice 30 RTK</h5>
+            <p class="text-muted">Weight: 9.2kg</p>
+            <a href="#">Product Page</a>
+            <a href="#">User Guide</a>
+        </div>
+    </div>
+        <div class="col-md-4">
+        <img src="{{ url_for('static', filename='images/drone2.png') }}" class="card-img-top" alt="drone">
+        <div class="card-body">
+            <h5 class="card-title">DJI Mavic 3E</h5>
+            <p class="text-muted">Weight: 1.05kg</p>
+            <a href="#">Product Page</a>
+            <a href="#">User Guide</a>
+        </div>
+    </div>
+</div>
+    </section>
 {% endblock %}
