@@ -3,16 +3,29 @@
 {% block title %}Site Evaluation{% endblock %}
 
 {% block content %}
+
+    <script type="text/javascript">
+      function previewImage(event, imageLocation) {
+         var input = event.target;
+         var image = document.getElementById(imageLocation);
+         if (input.files && input.files[0]) {
+             console.log("File selected:", input.files[0].name);
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                console.log("Image loaded successfully!");
+               image.src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+         }
+      }
+   </script>
+
     <div class="text-center m-3">
         <h2><strong>Site Evaluation</strong></h2>
     </div>
     <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
 
         <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3" novalidate>
-
-
-            <h3 class="text-center">title here</h3>
-
 
             <div class="card my-3">
                 <div class="card-body">
@@ -275,14 +288,20 @@
 
                         <label class="form-label" for="screenshotDrawingAirspace"><strong>Insert screenshot/drawing of airspace (dronesafetymap.com or equivalent tool):</strong></label>
 
-                        <input class="form-control form-control-sm my-2" type="file" id="screenshotDrawingAirspace" name="screenshotDrawingAirspace">
+                        <input class="form-control form-control-sm my-2" type="file" onchange="previewImage(event, 'airspaceImagePreview')" id="screenshotDrawingAirspace" name="screenshotDrawingAirspace">
 
+                        <img id="airspaceImagePreview" alt="Airspace Image Preview" style="max-width: 100%; height: auto;"><br>
+
+                        <label class="form-label" for="airspaceNotes"><strong>Airspace Notes:</strong></label>
                         <textarea class="form-control form-control-sm" id="airspaceNotes" name="airspaceNotes" rows="4" cols="50"></textarea>
 
                         <label class="form-label" for="screenshotDrawingEnvironment"><strong>Insert screenshot/drawing of local environment (gridreferencefinder.com or equivalent tool:</strong></label>
 
-                        <input class="form-control form-control-sm my-2" type="file" id="screenshotDrawingEnvironment" name="screenshotDrawingEnvironment">
+                        <input class="form-control form-control-sm my-2" type="file" onchange="previewImage(event, 'environmentImagePreview')" id="screenshotDrawingEnvironment" name="screenshotDrawingEnvironment">
 
+                        <img id="environmentImagePreview" alt="Environment Image Preview" style="max-width: 100%; height: auto;"><br>
+
+                        <label class="form-label" for="environmentNotes"><strong>Environment Notes:</strong></label>
                         <textarea class="form-control form-control-sm" id="environmentNotes" name="environmentNotes" rows="4" cols="50"></textarea>
 
                     </div>
