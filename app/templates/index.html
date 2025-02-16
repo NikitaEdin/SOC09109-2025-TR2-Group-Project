@@ -21,29 +21,31 @@
     {% endwith %}
     </div>
 
-    <!-- Welcome Section -->
-    <div class="text-center position-relative">
-        <img src="{{ url_for('static', filename='images/hero-background.jpg') }}" alt="hero background" class="w-100" style="height: 400px">
-        <div class="position-absolute top-50 start-50 translate-middle text-center text-white" style="margin-top: -10px">
-        <h2 class="display-4">Optimising Drone Flight Data</h2>
-        <p class="lead">Create and manage drone flights - all in one place</p>
-        <a href="{{ url_for('login') }}" class="btn btn-lg btn-primary fs-6 w-25 mb-5" style="margin-top: 120px">GET STARTED</a>
+
+
+<!-- Welcome Section -->
+<section class="hero" style="margin-top: -16px; margin-bottom: 90px;">
+    <div class="position-relative w-100">
+        <img src="{{ url_for('static', filename='images/hero-background.jpg') }}" alt="hero background" class="w-100" style="height: 360px; width: 100%;">
+        <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
+            <h2 class="display-4" style="white-space: nowrap;">Optimising Drone Flight Data</h2>
+            <p class="lead">Create and manage drone flights - all in one place</p>
+            <a href="{{ url_for('login') }}" class="btn btn-lg btn-primary fs-6 w-25 mb-5" style="margin-top: 120px">GET STARTED</a>
+        </div>
     </div>
-    </div>
+</section>
+
 
     <!-- Features Section -->
     <div class="row text-center ">
-
         <div class="col-md-4 mb-4">
             <h4><img src="{{ url_for('static', filename='images/icons/feature_pin.png') }}" alt="icon" style="width: 120px; height: 120px;"></h4>
             <p>Organise and manage your drone flights as individual projects</p>
         </div>
-
         <div class="col-md-4 mb-4">
             <h4><img src="{{ url_for('static', filename='images/icons/feature_drone.png') }}" alt="icon" style="width: 120px; height: 120px;"></h4>
             <p>Manage all project documentation and flight records</p>
         </div>
-
         <div class="col-md-4 mb-4">
             <h4><img src="{{ url_for('static', filename='images/icons/feature_document.png') }}" alt="icon" style="width: 120px; height: 120px;"></h4>
             <p>Generate detailed reports of your projects</p>
@@ -51,39 +53,48 @@
     </div>
 
 <!-- Drones -->
-<section class="container my-5">
-<div class="d-flex justify-content-between align-items-center">
-    <h3 class="fw-bold">Our Drones</h3>
-    <span class="text-muted">More models coming soon</span>
-</div>
+<section class="container my-5" style="background-color: #f0f0f0;">
+    <h3>Our Drones <span class="text-muted fs-6" style="margin-left: 10px;">More models coming soon</span></h3>
 <div class="row mt-3">
     <div class="col-md-4">
-        <img src="{{ url_for('static', filename='images/drone3.png') }}" class="card-img-top" alt="drone">
-        <div class="card-body">
-            <h5 class="card-title">DJI Mini 3 Pro</h5>
-            <p class="text-muted">Weight: 249g</p>
-            <a href="#">Product Page</a>
-            <a href="#">User Guide</a>
+        <div class="card" style="max-width: 310px; margin: 0 auto;">
+            <img src="{{ url_for('static', filename='images/drone3.png') }}" class="card-img-top" alt="drone">
+            <div class="card-body">
+                <h5 class="card-title">DJI Mini 3 Pro</h5>
+                <p class="text-muted">Weight: 249g</p>
+                <div style="display: flex; justify-content: space-between;">
+                    <a href="#">Product Page</a>
+                    <a href="#">User Guide</a>
+                </div>
+            </div>
         </div>
     </div>
-        <div class="col-md-4">
-        <img src="{{ url_for('static', filename='images/drone1.png') }}" class="card-img-top" alt="drone">
-        <div class="card-body">
-            <h5 class="card-title">DJI Matrice 30 RTK</h5>
-            <p class="text-muted">Weight: 9.2kg</p>
-            <a href="#">Product Page</a>
-            <a href="#">User Guide</a>
+    <div class="col-md-4">
+        <div class="card" style="max-width: 310px; margin: 0 auto;">
+            <img src="{{ url_for('static', filename='images/drone1.png') }}" class="card-img-top" alt="drone">
+            <div class="card-body">
+                <h5 class="card-title">DJI Matrice 30 RTK</h5>
+                <p class="text-muted">Weight: 9.2kg</p>
+                <div style="display: flex; justify-content: space-between;">
+                    <a href="#">Product Page</a>
+                    <a href="#">User Guide</a>
+                </div>
+            </div>
         </div>
     </div>
-        <div class="col-md-4">
-        <img src="{{ url_for('static', filename='images/drone2.png') }}" class="card-img-top" alt="drone">
-        <div class="card-body">
-            <h5 class="card-title">DJI Mavic 3E</h5>
-            <p class="text-muted">Weight: 1.05kg</p>
-            <a href="#">Product Page</a>
-            <a href="#">User Guide</a>
+    <div class="col-md-4">
+        <div class="card" style="max-width: 310px; margin: 0 auto;">
+            <img src="{{ url_for('static', filename='images/drone2.png') }}" class="card-img-top" alt="drone">
+            <div class="card-body">
+                <h5 class="card-title">DJI Mavic 3E</h5>
+                <p class="text-muted">Weight: 1.05kg</p>
+                <div style="display: flex; justify-content: space-between;">
+                    <a href="#">Product Page</a>
+                    <a href="#">User Guide</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-    </section>
+</section>
 {% endblock %}
