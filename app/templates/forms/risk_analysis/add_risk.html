@@ -11,9 +11,10 @@
         <div class="rounded border border-danger-subtle p-3 w-75 my-3 card">
             <div class="card-body">
                 <h3 class="text-center fw-light fs-4 pb-2">
-                    Analyze a possible risk to mitigate dangers.
+                    Analyse a possible risk to mitigate dangers.
                 </h3>
                 <form>
+                <!-- User should describe hazard and what is at risk from it -->
                 <div class="row">
                     <div class="col-md-4 fw-bold">
                         <p>Hazard</p>
@@ -30,6 +31,7 @@
                     </div>
                 </div>
                 <hr>
+                <!-- User will analyse the risk with only exsisting control measures in place -->
                 <div class="row">
                     <div class="col-md-4 fw-bold">
                         <p>Risk Before Mitigation</p>
@@ -42,31 +44,35 @@
 
                         <div class="mb-3">
                             <label class="form-label" for="beforeSeverity">Severity</label>
-                            <select class="form-control" name="beforeSeverity">
+                            <select class="form-select" aria-label="severity">
+                                <option selected>Select severity rating</option>
                                 {% for i in range(1, 11) %}
                                     <option value="{{ i }}">{{ i }}</option>
                                 {% endfor %}
-                            </select>
+                              </select>
                         </div>  
                         <div class="mb-3">
                             <label class="form-label" for="beforeProbability">Probability</label>
-                            <select class="form-control" name="beforeProbability">
+                            <select class="form-select" aria-label="probability">
+                                <option selected>Select probability rating</option>
                                 {% for i in range(1, 11) %}
                                     <option value="{{ i }}">{{ i }}</option>
                                 {% endfor %}
-                            </select>
-                        </div>
+                              </select>
+                        </div>  
                         <div class="mb-3">
                             <label class="form-label" for="beforeRisk">Risk</label>
-                            <select class="form-control" name="beforeRisk">
+                            <select class="form-select" aria-label="risk">
+                                <option selected>Select risk rating</option>
                                 {% for i in range(1, 11) %}
                                     <option value="{{ i }}">{{ i }}</option>
                                 {% endfor %}
-                            </select>
-                        </div>  
+                              </select>
+                        </div>    
                     </div>
                 </div>
                 <hr>
+                <!-- User will now input their anaylsis of expectations if further control measures are taken -->
                 <div class="row">
                     <div class="col-md-4 fw-bold">
                         <p>Risk After Mitigation</p>
@@ -78,30 +84,34 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="afterSeverity">Severity</label>
-                            <select class="form-control" name="afterSeverity">
+                            <select class="form-select" aria-label="severity">
+                                <option selected>Select severity rating</option>
                                 {% for i in range(1, 11) %}
                                     <option value="{{ i }}">{{ i }}</option>
                                 {% endfor %}
-                            </select>
+                              </select>
                         </div>  
                         <div class="mb-3">
                             <label class="form-label" for="afterProbability">Probability</label>
-                            <select class="form-control" name="afterProbability">
+                            <select class="form-select" aria-label="probability">
+                                <option selected>Select probability rating</option>
                                 {% for i in range(1, 11) %}
                                     <option value="{{ i }}">{{ i }}</option>
                                 {% endfor %}
-                            </select>
-                        </div>
+                              </select>
+                        </div>  
                         <div class="mb-3">
                             <label class="form-label" for="afterRisk">Risk</label>
-                            <select class="form-control" name="afterRisk">
+                            <select class="form-select" aria-label="risk">
+                                <option selected>Select risk rating</option>
                                 {% for i in range(1, 11) %}
                                     <option value="{{ i }}">{{ i }}</option>
                                 {% endfor %}
-                            </select>
-                        </div>    
+                              </select>
+                        </div>     
                     </div>
                 </div>
+                <!-- Buttons to submit or save changes -->
                 <div class="d-flex justify-content-left gap-3 mt-4">
                     <button type="button" class="btn btn-primary">Submit</button>
                     <button type="button" class="btn btn-success">Save Changes</button>
