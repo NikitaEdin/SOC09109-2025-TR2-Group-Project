@@ -1,0 +1,117 @@
+<!-- Dashboard: view of the user projects -->
+{% extends "dashboard/dashboard_base.html" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block main_content %}
+  <div class="projects-container">
+    <!-- New Project -->
+    <div class="row align-items-center mb-2">
+      <div class="col">
+        <p class="fs-2">Projects</p>
+      </div>
+      <div class="col d-flex justify-content-end">
+          <a href="{{ url_for('new_project_location') }}" class="btn btn-success">+ New Project</a>
+      </div>
+    </div>
+
+    <!-- Projects List -->
+    <div class="list-group">
+      {% if projects %}
+
+          {% for project in projects %}
+          <!-- Project Card -->
+          <div class="card mb-2">
+            <div class="row mx-2 my-1">
+                <!-- Title -->
+                <div class="col-3 align-content-center">
+                    <p class="mb-0">{{ project.title }}</p>
+                </div>
+                <!-- Type -->
+                <div class="col align-content-center">
+                  <p class="mb-0" style="color: var(--text-secondary-colour);">Type: {{ project.projectType }}</p>
+                </div>
+                <!-- Date -->
+                <div class="col align-content-center">
+                    <p class="mb-0" style="color: var(--text-secondary-colour);">
+                        Date of Flight: {{ project.dateOfFlight.strftime('%d/%m/%Y') }}
+                    </p>
+                </div>
+
+                <!-- Last modified -->
+                <div class="col align-content-center">
+                  <p class="mb-0" style="color: var(--text-secondary-colour);">
+                      Last Edit: {{ project.lastEdited.strftime('%d/%m/%Y') }}
+                  </p>
+                </div>
+                <!-- View Project -->
+                <div class="col d-flex justify-content-end">
+                    <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary">View Project</a>
+                </div>
+            </div>
+          </div>
+          {% endfor %}
+      {% else %}
+          <p>No projects.</p>
+      {% endif %}
+       
+      
+      
+    </div>
+
+
+    
+    <!-- Pagination -->
+    {% set pagination = projects %}
+    {% include 'pagination.html' %}
+
+
+  </div>
+
+  <style>
+    .projects-container {
+      padding: 20px;
+    }
+
+    .projects-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .project-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 20px;
+      width: 30%;
+      box-sizing: border-box;
+      border-radius: 5px;
+    }
+
+    .project-card h4 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .project-card p {
+      margin-bottom: 15px;
+      font-size: 1rem;
+      color: #555;
+    }
+
+    .project-card a {
+      text-decoration: none;
+    }
+
+    .pagination {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .pagination .btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin: 0 5px;
+    }
+  </style>
+{% endblock %}

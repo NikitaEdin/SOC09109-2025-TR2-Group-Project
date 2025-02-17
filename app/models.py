@@ -41,6 +41,10 @@ class User(db.Model, UserMixin):
     # Return true if user has enough power for admin role
     def is_admin(self):
         return self.role.power >= ADMIN_MIN_POWER
+    
+    # Get all projects by this user
+    def get_projects(self):
+        return Project.query.filter_by(authorID=self.id).all()
 
 
 ###### ROLES ######
@@ -59,3 +63,45 @@ class Role(db.Model):
     def has_higher_power_than(self, other_role):
         return self.power > other_role.power
     
+
+###### Project ######
+class Project(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    authorID = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    # Location
+    longitude = db.Column(db.Float, nullable=False)
+    latitude = db.Column(db.Float, nullable=False)
+
+    # Project type
+    projectType = db.Column(db.String(50), nullable=False) 
+
+    # Project details
+    title = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    dateOfFlight = db.Column(db.Date,  nullable=False)
+    
+    flightCode = db.Column(db.String(50), nullable=True ) # nullable for now.
+    pilotID = db.Column(db.Integer, nullable=True) # can be linked to User model later
+    lastEdited = db.Column(db.DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+
+    # JSON fields
+    viabilityStudy = db.Column(db.JSON, nullable=True)
+    siteEvaluation = db.Column(db.JSON, nullable=True)
+    riskAnalysis = db.Column(db.JSON, nullable=True)
+    loadingList = db.Column(db.JSON, nullable=True)
+    postFlight = db.Column(db.JSON, nullable=True)
+
+    author = db.relationship('User', backref='projects')
+
+    # Returns true if given user is the owner of this project
+    def is_owner(self, user):
+        return self.authorID == user.id
+
+    # Returns the User obj fro the project's author
+    def get_author(self):
+        return self.author
+
+    def __repr__(self):
+        return f'<Project {self.title} by {self.author.username}>'

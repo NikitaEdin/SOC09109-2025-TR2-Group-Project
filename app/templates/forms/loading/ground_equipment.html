@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Loading List{% endblock %}
+
+{% block content %}
+    <div class="text-center m-3">
+        <h2><strong>Loading List - Ground Equipment</strong></h2>
+    </div>
+    
+    <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="w-75 text-start">
+            <a href="{{ url_for('loading_list') }}" class="btn btn-secondary my-3">
+                ← Back to Forms Page
+            </a>
+        </div>
+        <div class="rounded border border-danger-subtle p-3 w-75 my-3 card">
+            <div class="card-body">
+                <h3 class="text-center fw-light fs-4 pb-2">
+                    Ensure all items are checked before proceeding.
+                </h3>
+
+                <hr>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle table-striped custom-form-table" id="itemTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Item</th>
+                                <th>Action</th>
+                                <th>Check</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" class="form-control" name="item[]"></td>
+                                <td><input type="text" class="form-control" name="action[]"></td>
+                                <td class="text-center"><input type="checkbox" class="form-check-input" name="check[]"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Add More Items Button -->
+                <div class="text-center mb-3">
+                    <button type="button" class="btn btn-primary" onclick="addRow()">Add More Items</button>
+                </div>
+                <div class="d-flex justify-content-left gap-3 mt-4">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-success">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addRow() {
+            let table = document.getElementById("itemTable").getElementsByTagName('tbody')[0];
+            let newRow = table.insertRow();
+            
+            let cell1 = newRow.insertCell(0);
+            let cell2 = newRow.insertCell(1);
+            let cell3 = newRow.insertCell(2);
+            
+            cell1.innerHTML = '<input type="text" class="form-control" name="item[]">';
+            cell2.innerHTML = '<input type="text" class="form-control" name="action[]">';
+            cell3.innerHTML = '<input type="checkbox" class="form-check-input" name="check[]">';
+            cell3.classList.add("text-center");
+        }
+    </script>
+{% endblock %}

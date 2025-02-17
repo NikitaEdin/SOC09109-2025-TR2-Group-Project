@@ -35,15 +35,19 @@
     {% endblock %}
     
 
-    <!-- Content -->
-    <div class="mt-3 container">
+    <!-- Check if 'use_container' is passed as False -->
+    <div class="{% if use_container != False %}mt-3 container{% endif %}">
         {% block content %}{% endblock %}
     </div>
 
+
    <!-- Footer -->
+    {% if footer != False %}
    {% block footer %}
        {% include 'footer.html' %}
    {% endblock %}
+
+   {% endif %}
   
 
 
