@@ -46,7 +46,7 @@
                         <p class="form-label"><em>Example: Flight to be conducted under 400ft ASL.</em></p>
                         <textarea class="form-control form-control-sm" id="locationInformation" name="locationInformation" rows="6" cols="50"></textarea>
                     </div>
-
+                    <!-- Option 1: range show value -->
                     <div class="mb-3">
                         <label class="form-label" for="severity"><strong>Severity: </strong><span id="severityValue">5</span></label>
                         <input type="range" class="form-range" min="0" max="10" step="1" id="severity" oninput="updateSeverity(this.value)">
@@ -58,6 +58,7 @@
                         }
                     </script>
 
+                    <!-- Option 2: range show value -->
                     <div class="mb-3">
                         <label class="form-label" for="probability"><strong>Probability: </strong><span id="curr"></span> </label>
                         <input type="range" class="form-range" min="0" max="10" step="1" id="probability">
