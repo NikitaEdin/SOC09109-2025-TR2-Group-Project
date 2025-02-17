@@ -145,12 +145,6 @@ body{
     width: fit-content;
 }
 
-.container {
-width: 100%;
-max-width: none;
-}
-
-
 .checklist-item p {
     color: rgb(from black r g b / 50%);
     margin: 0;

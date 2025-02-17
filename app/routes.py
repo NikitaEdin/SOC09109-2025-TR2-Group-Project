@@ -7,7 +7,7 @@ from app.models import User, Role
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('index.html', title='Home')
+    return render_template('index.html', title='Home', use_container=False)
 
 
 ########## INFORMATIONAL PAGES ###########
