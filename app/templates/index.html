@@ -4,28 +4,27 @@
 
 
 {% block content %}
-<div class="">
-    <!-- Flash messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    <!--  any messages? -->
-    {% if messages %}
-    <!-- loop messages -->
-    {% for category, message in messages %}
-    <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
-        {{ message}}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    {% endfor %}
 
-    {% endif %}
-    {% endwith %}
-</div>
-<style>
 
-</style>
 
 <!-- Hero Section -->
 <section class="hero bg-dark text-white" style="height: 75vh; position: relative;">
+
+    <div class="">
+        <!-- Flash message -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <!-- Display first message only -->
+                {% set message = messages[0] %}
+                <div class="alert alert-{{ message[0] }} alert-dismissible fade show position-absolute top-0 start-0 end-0 mx-3 mt-2 col-8 mx-auto" role="alert" style="z-index: 1080;">
+                    {{ message[1] }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+    
+
     <!-- Hero Image-->
     <img src="{{ url_for('static', filename='images/hero-background.jpg') }}"
         class="img-fluid position-absolute top-0 start-0" alt="Drone Flight"
@@ -52,8 +51,6 @@
         </div>
     </div>
 </section>
-
-
 
 
 <!-- Features Section -->
@@ -86,7 +83,6 @@
         </div>
     </div>
 </section>
-
 
 
 <!-- Drones Section -->
