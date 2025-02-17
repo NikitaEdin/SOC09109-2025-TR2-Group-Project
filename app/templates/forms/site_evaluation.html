@@ -5,17 +5,21 @@
 {% block content %}
 
     <script type="text/javascript">
-      function previewImage(event, imageLocation) {
+      function previewImage(event, previewLocation) {
          var input = event.target;
-         var image = document.getElementById(imageLocation);
+         var image = document.getElementById(previewLocation);
          if (input.files && input.files[0]) {
              console.log("File selected:", input.files[0].name);
             var reader = new FileReader();
             reader.onload = function(e) {
                 console.log("Image loaded successfully!");
                image.src = e.target.result;
+               image.style.display = "block";
             }
             reader.readAsDataURL(input.files[0]);
+         } else {
+            image.src = "";
+            image.style.display = "none";
          }
       }
    </script>
@@ -25,7 +29,7 @@
     </div>
     <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
 
-        <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3" novalidate>
+        <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3" enctype="multipart/form-data" novalidate>
 
             <div class="card my-3">
                 <div class="card-body">
@@ -108,7 +112,7 @@
                             <br> e.g. restricted airspace 5km northwest of operating area (HMP Wakefield Prison)<br>
                             This will be useful to identify and additional permission needed if looking to operate within.</p>
 
-                        <textarea class="form-control form-control-sm" id="restrictions" name="restrictions" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="restrictions" name="restrictions" rows="6" cols="50"></textarea>
                     </div>
 
                      <div class="mb-3">
@@ -116,7 +120,7 @@
 
                          <p>Brief overview of what the location is like to assist with planning and risk assessment (Ordnance survey maps can offer insight via contour information)</p>
 
-                        <textarea class="form-control form-control-sm" id="terrain" name="terrain" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="terrain" name="terrain" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -131,7 +135,7 @@
                         <p>This would be a brief overview of any other airspace proximities;
                             you will want to look 360 Degrees around your location and a minimum distance of how far your craft could fly.</p>
 
-                        <textarea class="form-control form-control-sm" id="aviationProximities" name="aviationProximities" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="aviationProximities" name="aviationProximities" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -141,7 +145,7 @@
 
                         <p>You would want to include the details of your point of contact and any other constraints e.g. dates, times and geographical constraints.</p>
 
-                        <textarea class="form-control form-control-sm" id="permissions" name="permissions" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="permissions" name="permissions" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -151,7 +155,7 @@
 
                         <p>Are there any temporary restricted areas or temporary danger areas identified by NOTAM?</p>
 
-                        <textarea class="form-control form-control-sm" id="notams" name="notams" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="notams" name="notams" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -161,7 +165,7 @@
 
                         <p>e.g. Client requests pilot to wear a high visibility jacket.</p>
 
-                        <textarea class="form-control form-control-sm" id="ppeRequirements" name="ppeRequirements" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="ppeRequirements" name="ppeRequirements" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -169,7 +173,7 @@
 
                         <p>Is there a potential for livestock, birds etc at the purposed flight location?</p>
 
-                        <textarea class="form-control form-control-sm" id="livestock" name="livestock" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="livestock" name="livestock" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -180,7 +184,7 @@
 
                         <p>e.g. residential housing estate 450m to the north west, industrial estate 200m to south</p>
 
-                        <textarea class="form-control form-control-sm" id="people" name="people" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="people" name="people" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -191,7 +195,7 @@
                         <p>This is not only to identify collision risk but also potential sources of interference that could affect the safety of a flight,
                             also consider HIRTA’s (High Intensity Radio Transmission Areas) in regards to airspace.</p>
 
-                        <textarea class="form-control form-control-sm" id="hazards" name="hazards" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="hazards" name="hazards" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -200,7 +204,7 @@
                         <p>OS maps will provide information on Public footpaths, right of ways and Bridleways,
                             this is useful information showing potential for public access to locations that may not be visible on satellite imagery</p>
 
-                        <textarea class="form-control form-control-sm" id="footpaths" name="footpaths" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="footpaths" name="footpaths" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -210,13 +214,13 @@
 
                         <p>can members of the public access the flight area by vehicles.</p>
 
-                        <textarea class="form-control form-control-sm" id="vehicleAccess" name="vehicleAccess" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="vehicleAccess" name="vehicleAccess" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="mobilePhoneCoverage"><strong>Mobile phone coverage:</strong></label>
 
-                        <textarea class="form-control form-control-sm" id="mobilePhoneCoverage" name="mobilePhoneCoverage" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="mobilePhoneCoverage" name="mobilePhoneCoverage" rows="6" cols="50"></textarea>
                     </div>
                 </div>
             </div>
@@ -233,7 +237,7 @@
 
                         <p>If you were to log a flight via 101 this is where you could write down the case number for reference if needed.</p>
 
-                        <textarea class="form-control form-control-sm" id="localPolice" name="localPolice" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="localPolice" name="localPolice" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -246,7 +250,7 @@
                         <p>This can be obtained through dronesafetymap.com in some instances by clicking on the FRZ for the
                             airport/aerodrome/heliport and viewing the airspace information.</p>
 
-                        <textarea class="form-control form-control-sm" id="localATC" name="localATC" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="localATC" name="localATC" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -256,7 +260,7 @@
 
                         <p>Will safety be improved by logging your flight?</p>
 
-                        <textarea class="form-control form-control-sm" id="militaryLowFlyingBookingCell" name="militaryLowFlyingBookingCell" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="militaryLowFlyingBookingCell" name="militaryLowFlyingBookingCell" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -264,7 +268,7 @@
 
                         <p>Local A&E include address/ postcode could be useful to obtain and have to hand in the event of incident or accident if unfamiliar with the location.</p>
 
-                        <textarea class="form-control form-control-sm" id="localHospital" name="localHospital" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="localHospital" name="localHospital" rows="6" cols="50"></textarea>
                     </div>
                 </div>
             </div>
@@ -286,23 +290,25 @@
                             <li>Restrictions on flying either legal (FRZ, D,R,P areas etc) or self-imposed operational limitations</li>
                         </ul>
 
+                        <!-- Airspace upload and notes -->
                         <label class="form-label" for="screenshotDrawingAirspace"><strong>Insert screenshot/drawing of airspace (dronesafetymap.com or equivalent tool):</strong></label>
 
-                        <input class="form-control form-control-sm my-2" type="file" onchange="previewImage(event, 'airspaceImagePreview')" id="screenshotDrawingAirspace" name="screenshotDrawingAirspace">
+                        <input class="form-control form-control-sm my-2" type="file" accept="image/*" onchange="previewImage(event, 'airspaceImagePreview')" id="screenshotDrawingAirspace" name="screenshotDrawingAirspace">
 
-                        <img id="airspaceImagePreview" alt="Airspace Image Preview" style="max-width: 100%; height: auto;"><br>
+                        <img src ="" id="airspaceImagePreview" alt="Airspace Image Preview" style="max-width: 100%; height: auto; display: none"><br>
 
                         <label class="form-label" for="airspaceNotes"><strong>Airspace Notes:</strong></label>
-                        <textarea class="form-control form-control-sm" id="airspaceNotes" name="airspaceNotes" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="airspaceNotes" name="airspaceNotes" rows="6" cols="50"></textarea>
 
+                        <!-- Environment upload and notes -->
                         <label class="form-label" for="screenshotDrawingEnvironment"><strong>Insert screenshot/drawing of local environment (gridreferencefinder.com or equivalent tool:</strong></label>
 
-                        <input class="form-control form-control-sm my-2" type="file" onchange="previewImage(event, 'environmentImagePreview')" id="screenshotDrawingEnvironment" name="screenshotDrawingEnvironment">
+                        <input class="form-control form-control-sm my-2" type="file" accept="image/*" onchange="previewImage(event, 'environmentImagePreview')" id="screenshotDrawingEnvironment" name="screenshotDrawingEnvironment">
 
-                        <img id="environmentImagePreview" alt="Environment Image Preview" style="max-width: 100%; height: auto;"><br>
+                        <img src ="" id="environmentImagePreview" alt="Environment Image Preview" style="max-width: 100%; height: auto; display: none"><br>
 
                         <label class="form-label" for="environmentNotes"><strong>Environment Notes:</strong></label>
-                        <textarea class="form-control form-control-sm" id="environmentNotes" name="environmentNotes" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="environmentNotes" name="environmentNotes" rows="6" cols="50"></textarea>
 
                     </div>
                 </div>
@@ -325,7 +331,7 @@
                         <p>Masts, Wires, Buildings, Train lines, Trees, Lakes, Rivers etc.
                             Any changes that might need to be considered within the planned flight or updated within the risk assessment</p>
 
-                        <textarea class="form-control form-control-sm" id="obstructions" name="obstructions" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="obstructions" name="obstructions" rows="6" cols="50"></textarea>
                     </div>
 
                      <div class="mb-3">
@@ -335,7 +341,7 @@
 
                          <p>Any changes that might need to be considered within the planned flight or updated within the risk assessment.</p>
 
-                        <textarea class="form-control form-control-sm" id="people" name="people" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="people" name="people" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -345,7 +351,7 @@
 
                         <p>Any changes that might need to be considered within the planned flight or updated within the risk assessment.</p>
 
-                        <textarea class="form-control form-control-sm" id="livestock" name="livestock" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="livestock" name="livestock" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -355,7 +361,7 @@
 
                         <p>Any changes that might need to be considered within the planned flight or updated within the risk assessment.</p>
 
-                        <textarea class="form-control form-control-sm" id="proximity" name="proximity" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="proximity" name="proximity" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -363,7 +369,7 @@
 
                         <p>Needs to comply with applicable legislation around separation distances.</p>
 
-                        <textarea class="form-control form-control-sm" id="primaryTOLZ" name="primaryTOLZ" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="primaryTOLZ" name="primaryTOLZ" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -371,7 +377,7 @@
 
                         <p>Needs to comply with applicable legislation around separation distances.</p>
 
-                        <textarea class="form-control form-control-sm" id="secondaryTOLZ" name="secondaryTOLZ" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="secondaryTOLZ" name="secondaryTOLZ" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -383,7 +389,7 @@
 
                         <p>If so what band/Frequency and any associated protocol to ensure effective.</p>
 
-                        <textarea class="form-control form-control-sm" id="comms" name="comms" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="comms" name="comms" rows="6" cols="50"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -391,7 +397,7 @@
 
                         <p>Any other factors that might affect the safety of the flight.</p>
 
-                        <textarea class="form-control form-control-sm" id="other" name="other" rows="4" cols="50"></textarea>
+                        <textarea class="form-control form-control-sm" id="other" name="other" rows="6" cols="50"></textarea>
                     </div>
                 </div>
             </div>
