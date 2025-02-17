@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}Post-Flight Actions{% endblock %}
+
+{% block content %}
+    <div class="text-center m-3">
+        <h2><strong>Post-Flight Actions</strong></h2>
+    </div>
+    
+    <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="rounded border border-danger-subtle p-3 w-75 my-3 card">
+            <div class="card-body">
+                <h3 class="text-center fw-light fs-4 pb-2">
+                    Procedures to follow during landing stage.
+                </h3>
+                <form>
+                <div class="row">
+                    <!-- Left Column - Section Titles -->
+                    <div class="col-md-4 fw-bold">
+                        <p>During Landing</p>
+                    </div>
+                    <!-- Right Column - Checklist Items -->
+                    <div class="col-md-8">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="noCrew">
+                            <label class="form-check-label" for="noCrew">
+                                No crew within 5m of landing point.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="TOLZFree">
+                            <label class="form-check-label" for="TOLZFree">
+                                TOLZ free of foreign object and debris.	
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="uninvolvedPerson">
+                            <label class="form-check-label" for="uninvolvedPerson">
+                                Uninvolved persons at required separation distance.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="callsClear">
+                            <label class="form-check-label" for="callsClear">
+                                Pilot calls <em>Clear</em>.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="repliesClear">
+                            <label class="form-check-label" for="repliesClear">
+                                Designated crew member replies <em>Clear</em>.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="landRPA">
+                            <label class="form-check-label" for="landRPA">
+                                Pilot lands RPA.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="disarmsRPA">
+                            <label class="form-check-label" for="disarmsRPA">
+                                Pilot disarms RPA.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="powerDownRPA">
+                            <label class="form-check-label" for="powerDownRPA">
+                                Pilot approaches RPA and powers down.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="callsAircraftSafe">
+                            <label class="form-check-label" for="callsAircraftSafe">
+                                Pilot calls <em>Aircraft safe</em>.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+    
+                <hr>
+    
+                <div class="row">
+                    <div class="col-md-4 fw-bold">
+                        <p>After Landing</p>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="disassemble">
+                            <label class="form-check-label" for="disassemble">
+                                Disassemble UAS using model-specific checklist.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="recordMaintenance">
+                            <label class="form-check-label" for="recordMaintenance">
+                                Record any maintenance actions.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="flightData">
+                            <label class="form-check-label" for="flightData">
+                                Manually record flight data if there is any problem uploading.                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="debrief">
+                            <label class="form-check-label" for="debrief">
+                                Debrief crew to capture any lessons learned.                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="collectEquipment">
+                            <label class="form-check-label" for="collectEquipment">
+                                Collect and check off any equipment used by the crew.                            </label>
+                        </div>
+                    </div>
+                </div>
+    
+                <hr>
+    
+                <div class="row">
+                    <div class="col-md-4 fw-bold">
+                        <p>Reporting</p>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="reportIncident">
+                            <label class="form-check-label" for="reportIncident">
+                                Report any incidents.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="reportAIRPROX">
+                            <label class="form-check-label" for="reportAIRPROX">
+                                Report any AIRPROX.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="d-flex justify-content-left gap-3 mt-4">
+                    <button type="button" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-success">Save Changes</button>
+                </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+{% endblock %}

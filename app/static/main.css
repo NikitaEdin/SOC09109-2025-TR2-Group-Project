@@ -124,3 +124,23 @@ body{
     color: rgb(from black r g b / 50%);
     margin: 0;
 }
+
+/* Custom table - using Napier branding secondary colour */
+.custom-form-table thead th {
+    background-color: #859ea4 !important; /* Force override */
+    color: black !important;
+}
+
+/* Custom tables - borders on cells */
+.custom-form-table th, 
+.custom-form-table td {
+    border: 1px solid #859ea4;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Custom table - align checkboxes */
+.custom-form-table .form-check-input {
+    margin: 0 auto;
+    display: block;
+}

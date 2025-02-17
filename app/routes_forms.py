@@ -16,3 +16,44 @@ def viability_study():
             print("Form Submitted")
 
     return render_template("/forms/viability_study.html", form=form)
+
+# Post Flight Actions Form Route
+@app.route("/forms/post-flight")
+def post_flight():
+    return render_template('forms/post_flight.html', title='Post-Flight Actions')
+
+
+# Risk Analysis Form - Add Risk Route
+@app.route("/forms/risk-analysis/add")
+def add_risk_analysis():
+    return render_template('forms/risk_analysis/add_risk.html', title='Add Risk Analysis Form')
+
+# Loading List Route
+@app.route("/forms/loading-list")
+def loading_list():
+    return render_template('forms/loading/loading_list.html', title='Loading List')
+
+# Loading List CREW Form Route
+@app.route("/forms/loading-list/crew")
+def loading_list_crew():
+    return render_template('forms/loading/crew.html', title='Loading List - Crew')
+
+# Loading List EQUIPMENT Form Route
+@app.route("/forms/loading-list/equipment")
+def loading_list_equipment():
+    return render_template('forms/loading/equipment.html', title='Loading List - Equipment')
+
+# Loading List MAINTENANCE KIT Form Route
+@app.route("/forms/loading-list/maintenance-kit")
+def loading_list_maintenance_kit():
+    return render_template('forms/loading/maintenance_kit.html', title='Loading List - Maintenance Kit')
+
+# Loading List SAFETY KIT Form Route
+@app.route("/forms/loading-list/safety-kit")
+def loading_list_safety_kit():
+    return render_template('forms/loading/safety_kit.html', title='Loading List - Safety Kit')
+
+# Loading List GROUND EQUIPMENT Form Route
+@app.route("/forms/loading-list/ground-equipment")
+def loading_list_ground_equip():
+    return render_template('forms/loading/ground_equipment.html', title='Loading List - Ground Equipment')
