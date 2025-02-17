@@ -3,7 +3,7 @@ from app import app, db
 from flask import flash, redirect, render_template, session, url_for
 from flask_login import current_user, login_required
 
-from app.forms.createProject import ProjectLocation, ProjectType, ProjectDetails
+from app.forms.createProject import EditProject, ProjectLocation, ProjectType, ProjectDetails
 from app.models import Project
 
 
@@ -78,7 +78,8 @@ def new_project_details():
             title=form.title.data,
             description=form.description.data,
             dateOfFlight=form.dateOfFlight.data,
-            lastEdited=datetime.now(timezone.utc)
+            lastEdited=datetime.now(timezone.utc),
+            created_at=datetime.now(timezone.utc)
         )
 
         # Commit new record to db
@@ -95,3 +96,32 @@ def new_project_details():
         return redirect(url_for('dashboard'))
 
     return render_template('/create_project/new_project_details.html', form=form, footer=False, title='Almost there...')
+
+
+@app.route("/dashboard/project/<int:project_id>/edit", methods=["GET", "POST"])
+@login_required
+def edit_project(project_id):
+    # Fetch project by ID
+    project = Project.query.get_or_404(project_id)
+
+    # User is author?
+    if project.author.id != current_user.id:
+        flash("You are not authorized to edit this project.", "danger")
+        return redirect(url_for('dashboard'))
+
+    # Define the form for editing the project
+    form = EditProject(obj=project)
+
+    if form.validate_on_submit():
+        # Update record form data
+        project.title = form.title.data
+        project.description = form.description.data
+        project.lastEdited=datetime.now(timezone.utc)
+
+        # Commit changes 
+        db.session.commit()
+
+        flash("Project updated successfully.", "success")
+        return redirect(url_for('project', project_id=project.id)) 
+
+    return render_template("dashboard/edit_project.html", form=form, project=project)

@@ -61,20 +61,6 @@
 }
 
 
-
-.btn-primary.focus,
-.btn-primary:focus {
-    box-shadow:  0 0 0 0.25rem #275F80 !important;
-}
-
-.btn-primary:active {
-    color: #fff;
-    background-color: var(--accent-press-colour) !important; 
-    border-color: var(--accent-press-colour) !important;
-}
-
-
-
 /* /////////////////// GLOBAL ///////////////////*/
 
 /* ///////////////////// Footer alignment ///////////////////// */
@@ -139,6 +125,7 @@ body{
 /* Checklists */
 
 .checklist-container {
+    background-color: #FFFFFF;
     padding: 1rem;
     border: var(--accent-colour) solid 1px;
     border-radius: 1rem;
@@ -156,9 +143,25 @@ body{
     width: 100%;   
     border-radius: 10px;  /* Rounded corners */
     border: 2px solid #ccc;  /* Light border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Shadow effect for map */
-#map {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Custom table - using Napier branding secondary colour */
+.custom-form-table thead th {
+    background-color: #859ea4 !important; /* Force override */
+    color: black !important;
+}
+
+/* Custom tables - borders on cells */
+.custom-form-table th, 
+.custom-form-table td {
+    border: 1px solid #859ea4;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Custom table - align checkboxes */
+.custom-form-table .form-check-input {
+    margin: 0 auto;
+    display: block;
 }

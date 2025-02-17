@@ -20,6 +20,9 @@ __Configuration__
 - Move the map to the default marker (if any)
 {% set reset_to_default_marker = 1 %}
 
+- Set as read-only.
+{% set map_read_only = 1 %}
+
 - Hide map form (should be hidden)
 {% set hidden_form = True %} 
 
@@ -78,7 +81,7 @@ __Configuration__
 
     var marker;
 
-    // Function to convert decimal degrees to DMS (Degrees, Minutes, Seconds)
+    // Convert decimal degrees to DMS (Degrees, Minutes, Seconds)
     function toDMS(lat, lon) {
         function convertToDMS(degrees) {
             var absDeg = Math.abs(degrees);
@@ -99,12 +102,16 @@ __Configuration__
 
     // Add click event listener on map to get clicked location
     map.on('click', function (e) {
+        var map_read_only = parseFloat("{{ map_read_only }}");
+        if(map_read_only != null && map_read_only == 1)
+            return;
+
         if (marker) {
             map.removeLayer(marker);
         }
         marker = L.marker(e.latlng).addTo(map);
 
-        // Get the latitude and longitude in decimal degrees (DD)
+        // Get latitude and longitude in decimal degrees (DD)
         var lat = e.latlng.lat.toFixed(6);
         var lng = e.latlng.lng.toFixed(6);
         var latLngText = `Lat: ${lat}, Lng: ${lng}`;
@@ -128,13 +135,15 @@ __Configuration__
     // Check if default marker is valid (if any)
     if (default_marker_latitude !== null && default_marker_longitude !== null && !isNaN(default_marker_latitude) && !isNaN(default_marker_longitude)) {
         var default_marker = L.marker([default_marker_latitude, default_marker_longitude]).addTo(map);
-        default_marker.bindPopup("<b>Default Location</b>").openPopup(); // Popup text
-
+        var marker_msg = "{{ default_marker_msg | escape }}";
+        if (marker_msg !== null && marker_msg !== undefined && marker_msg.length > 1) {
+            default_marker.bindPopup(marker_msg).openPopup(); // Popup text
+        }
+        
         // Move to marker?
         var reset_to_default_marker = parseFloat("{{ reset_to_default_marker }}");
-        console.log(reset_to_default_marker)
         if (reset_to_default_marker !== null && reset_to_default_marker == 1) {
-            map.setView([default_marker_latitude, default_marker_longitude], 15);
+            map.setView([default_marker_latitude, default_marker_longitude], zoom);
         }
     }
 </script>
