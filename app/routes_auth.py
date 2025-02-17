@@ -1,5 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request
 from app import app, bcrypt
+from app.AuditLogger import AuditLogger
 from app.models import User
 from app.forms.loginForm import LoginForm
 from flask_login import login_user, current_user, logout_user
@@ -21,7 +22,7 @@ def login():
 
             next_page = request.args.get('next')
             flash('Welcome back ' + user.username + '!', 'success')
-
+            AuditLogger.log(current_user.id, 'login', f'User {current_user.username} logged in.')
             return redirect(next_page) if next_page else redirect(url_for('dashboard'))
         else:
             flash('Failed to login.', 'danger')

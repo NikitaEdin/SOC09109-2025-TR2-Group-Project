@@ -22,9 +22,14 @@
 
   <!-- Bottom Section -->
   <div class="bottom-section mx-2 mb-2">
-    <button class="btn">
+    <a href="{{url_for('logs')}}" class="btn {% if title == 'logs' %}active{% endif %}">
+      <i class="fas fa-history"></i> Logs
+    </a>
+
+    <a class="btn">
       <i class="fas fa-sliders-h"></i> Settings
-    </button>
+    </a>
+
     <a href="{{url_for('logout')}}" class="btn">
       <i class="fas fa-sign-out-alt"></i> Logout
     </a>

@@ -46,6 +46,14 @@ class User(db.Model, UserMixin):
     def get_projects(self):
         return Project.query.filter_by(authorID=self.id).all()
 
+    # Get all logs by user
+    def get_all_logs(self):
+        return AuditLog.query.filter_by(user_id=self.id).all()
+    
+    # Get logs by action
+    def get_logs_by_action(self, action):
+        return AuditLog.query.filter_by(user_id=self.id, action=action).all()
+
 
 ###### ROLES ######
 
@@ -105,3 +113,16 @@ class Project(db.Model):
 
     def __repr__(self):
         return f'<Project {self.title} by {self.author.username}>'
+    
+
+class AuditLog(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    action = db.Column(db.String(100), nullable=False)
+    message = db.Column(db.String(200), nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+
+    user = db.relationship('User', backref=db.backref('audit_logs', lazy=True))
+
+    def __repr__(self):
+        return f"<AuditLog {self.user_id} - {self.action} at {self.timestamp}>"

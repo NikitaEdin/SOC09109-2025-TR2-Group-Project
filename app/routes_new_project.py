@@ -3,6 +3,7 @@ from app import app, db
 from flask import flash, redirect, render_template, session, url_for
 from flask_login import current_user, login_required
 
+from app.AuditLogger import AuditLogger
 from app.forms.createProject import EditProject, ProjectLocation, ProjectType, ProjectDetails
 from app.models import Project
 
@@ -91,6 +92,9 @@ def new_project_details():
         session.pop('latitude', None)
         session.pop('projectType', None)
 
+        # Audit
+        AuditLogger.log(current_user.id, 'new_project', f'Created project id: {project.id}')
+
         # Flash and redirect
         flash('Project created successfuly!', 'success')
         return redirect(url_for('dashboard'))
@@ -120,6 +124,9 @@ def edit_project(project_id):
 
         # Commit changes 
         db.session.commit()
+
+        # Audit
+        AuditLogger.log(current_user.id, 'edit_project', f'Edited project id: {project.id}')
 
         flash("Project updated successfully.", "success")
         return redirect(url_for('project', project_id=project.id)) 

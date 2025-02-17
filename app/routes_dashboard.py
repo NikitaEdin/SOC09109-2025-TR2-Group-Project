@@ -5,7 +5,7 @@ from app import app
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
-from app.models import Project, User, Role
+from app.models import AuditLog, Project, User, Role
 
 # The main/home page of the dashboard.
 @app.route("/dashboard")
@@ -39,6 +39,20 @@ def projects():
     projects = Project.query.filter_by(authorID=current_user.id).order_by(Project.created_at.desc()).paginate(page=page, per_page=per_page)
     return render_template('/dashboard/projects.html', title='projects',  use_container=False, 
                            projects=projects)
+
+# Dashboard page for listing all projects
+@app.route("/dashboard/logs")
+@login_required
+def logs():
+    # Page number
+    page = request.args.get('page', 1, type=int)  
+    per_page = 10
+
+    # User logs
+    logs = AuditLog.query.filter_by(user_id=current_user.id).order_by(AuditLog.timestamp.desc()).paginate(page=page, per_page=per_page)
+    
+    return render_template('/dashboard/logs.html', title='logs',  use_container=False, 
+                           logs=logs, footer=False)
 
 # Single project item
 @app.route("/dashboard/project/<int:project_id>")
