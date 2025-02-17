@@ -80,7 +80,7 @@
 /* ///////////////////// Footer alignment ///////////////////// */
 html, body {
     height: 100%;
-    margin: 0; 
+    margin: 0;
 }
 
 body{
@@ -144,6 +144,12 @@ body{
     border-radius: 1rem;
     width: fit-content;
 }
+
+.container {
+width: 100%;
+max-width: none;
+}
+
 
 .checklist-item p {
     color: rgb(from black r g b / 50%);
