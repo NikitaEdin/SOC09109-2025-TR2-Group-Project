@@ -11,13 +11,30 @@ def viability_study():
     if request.method == "POST":
         # saves changes only for finalising later
         if form.saveChanges.data:
-            print("Form Saved")
+            print("viability study form saved for later")
 
         # submits completed form
         if form.submit.data and form.validate_on_submit():
-            print("Form Submitted")
+            print("viability study form submitted")
 
     return render_template("/forms/viability_study.html", form=form)
+
+@app.route('/forms/site-evaluation', methods=['GET', 'POST'])
+def site_evaluation():
+    """
+    form = siteEvaluationForm()
+
+    if request.method == "POST":
+        # saves changes only for finalising later
+        if form.saveChanges.data:
+            print("site evaluation form saved for later")
+
+        # submits completed form
+        if form.submit.data and form.validate_on_submit():
+            print("site evaluation form submitted")
+    """
+
+    return render_template("/forms/site_evaluation.html")
 
 @app.route('/forms/crew_call_sheet', methods=['GET', 'POST'])
 def crew_call_sheet():
@@ -71,7 +88,7 @@ def optional():
         'title': 'Prepare and send Crew Call Sheets',
         'description' : 'Items for crew to bring on flight',
         'value': False
-        
+
     },
     'post_flight_check':{
         'title': 'Post Flight Form',
@@ -101,7 +118,7 @@ def optional():
             'value': False
         }
     }
-    
+
 #  This is to tidy up and only pass in only one variable into the template
     content = {
     "checks": checks,

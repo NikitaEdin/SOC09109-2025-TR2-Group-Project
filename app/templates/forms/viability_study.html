@@ -9,7 +9,7 @@
     <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
 
         <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3 card" novalidate>
-            {{ form.csrf_token }}
+            {{ form.hidden_tag() }}
 
             <h3 class="text-center fw-light fs-4">Analysing risks, requirements, and operational feasibility</h3>
 

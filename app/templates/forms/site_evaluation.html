@@ -1,0 +1,415 @@
+{% extends "base.html" %}
+
+{% block title %}Site Evaluation{% endblock %}
+
+{% block content %}
+
+    <script type="text/javascript">
+      function previewImage(event, previewLocation) {
+         var input = event.target;
+         var image = document.getElementById(previewLocation);
+         if (input.files && input.files[0]) {
+             console.log("File selected:", input.files[0].name);
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                console.log("Image loaded successfully!");
+               image.src = e.target.result;
+               image.style.display = "block";
+            }
+            reader.readAsDataURL(input.files[0]);
+         } else {
+            image.src = "";
+            image.style.display = "none";
+         }
+      }
+   </script>
+
+    <div class="text-center m-3">
+        <h2><strong>Site Evaluation</strong></h2>
+    </div>
+    <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
+
+        <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3" enctype="multipart/form-data" novalidate>
+
+            <div class="card my-3">
+                <div class="card-body">
+                    <h3 class="card-title">2.1 Flight details</h3>
+                    <div class="mb-3">
+                        <label class="form-label" for="flightCode"><strong>Flight Code:</strong> 98465</label>
+                    </div>
+
+                    <div class="mb-3 col-12 col-md-6 col-lg-4">
+                        <label class="form-label" for="dateOfFlight"><strong>Date of Flight:</strong> 26/02/25</label>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="remotePilot"><strong>Remote Pilot:</strong></label>
+                        <input class="form-control form-control-sm" type="text" id="remotePilot" name="remotePilot">
+                    </div>
+
+                    <div class="mb-3 col-12 col-md-6 col-lg-4">
+                        <label class="form-label" for="dateCompleted"><strong>Date Completed:</strong></label>
+                        <input class="form-control form-control-sm" type="date" id="dateCompleted" name="dateCompleted">
+                    </div>
+                </div>
+            </div>
+             <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+            <div class="card my-3">
+                <div class="card-body">
+                    <h3 class="card-title">2.2 Pre-site visit</h3>
+                    <div class="mb-3">
+                        <label class="form-label" for="locationInformation"><strong>Location Information:</strong></label>
+
+                        <p class="form-label">Latitude: 56°04'02.6"N</p>
+                        <p class="form-label">Longitude: 3°27'58.0"W</p>
+
+                        <p>Could Contain -</p>
+
+                        <ul>
+                            <li>Elevation in feet above mean sea level</li>
+                            <li>6-figure grid reference</li>
+                            <li>Address including postcode</li>
+                            <li>What 3 words could be useful in some instances</li>
+                        </ul>
+
+                        <textarea class="form-control form-control-sm" id="locationInformation" name="locationInformation" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="description"><strong>Description:</strong></label>
+
+                        <textarea class="form-control form-control-sm" id="description" name="description" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="sensitivities"><strong>Sensitivities:</strong></label>
+
+                        <p>This could include things like schools, cemeteries, government buildings where
+                            flying a drone in the vicinity could cause issues or concerns with the public.
+                            This may help you to decide if it would be worth informing the police via 101</p>
+
+                        <textarea class="form-control form-control-sm" id="sensitivities" name="sensitivities" rows="6" cols="50"></textarea>
+                    </div>
+
+                     <div class="mb-3">
+                         <label class="form-label" for="airspace"><strong>Airspace:</strong></label>
+
+                         <p>Example 1 – No ATC Permission required Class G airspace uncontrolled</p>
+
+                         <p>Example 2 – No ATC Permission required, ATC Notification if deemed necessary Class D airspace Leeds Bradford CTR – Surface – 4500ft amsl</p>
+
+                         <p>Example 3 – ATC Permission required Leeds Bradford Flight restriction zone</p>
+
+                        <textarea class="form-control form-control-sm" id="airspace" name="airspace" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="restrictions"><strong>Restrictions:</strong></label>
+
+                        <p>This is specifically looking at restricted, danger and prohibited airspace,
+                            <br> e.g. restricted airspace 5km northwest of operating area (HMP Wakefield Prison)<br>
+                            This will be useful to identify and additional permission needed if looking to operate within.</p>
+
+                        <textarea class="form-control form-control-sm" id="restrictions" name="restrictions" rows="6" cols="50"></textarea>
+                    </div>
+
+                     <div class="mb-3">
+                         <label class="form-label" for="terrain"><strong>Terrain:</strong></label>
+
+                         <p>Brief overview of what the location is like to assist with planning and risk assessment (Ordnance survey maps can offer insight via contour information)</p>
+
+                        <textarea class="form-control form-control-sm" id="terrain" name="terrain" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="aviationProximities"><strong>Aviation Proximities:</strong></label>
+
+                        <p>What is the distance and direction to places where people not under your control could be found?
+                            You will want to look at least as far as you could fly, e.g 500m but further is wise to help assess issues if you have an
+                            “exit from operations area” issue during flight.</p>
+
+                        <p>e.g. residential housing estate 450m to the north west, industrial estate 200m to south</p>
+
+                        <p>This would be a brief overview of any other airspace proximities;
+                            you will want to look 360 Degrees around your location and a minimum distance of how far your craft could fly.</p>
+
+                        <textarea class="form-control form-control-sm" id="aviationProximities" name="aviationProximities" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="permissions"><strong>Permissions:</strong></label>
+
+                        <p>Do you have permission to operate from that location you should be aware of any issues around byelaws and trespass.</p>
+
+                        <p>You would want to include the details of your point of contact and any other constraints e.g. dates, times and geographical constraints.</p>
+
+                        <textarea class="form-control form-control-sm" id="permissions" name="permissions" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="notams"><strong>NOTAMS:</strong></label>
+
+                        <p>e.g. NOTAMS checked at 13.00pm 24/09/2022 No NOTAMS in effect within 10km</p>
+
+                        <p>Are there any temporary restricted areas or temporary danger areas identified by NOTAM?</p>
+
+                        <textarea class="form-control form-control-sm" id="notams" name="notams" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="ppeRequirements"><strong>PPE Requirements:</strong></label>
+
+                        <p>Your/client minimum PPE requirements in line with OM.</p>
+
+                        <p>e.g. Client requests pilot to wear a high visibility jacket.</p>
+
+                        <textarea class="form-control form-control-sm" id="ppeRequirements" name="ppeRequirements" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="livestock"><strong>Livestock:</strong></label>
+
+                        <p>Is there a potential for livestock, birds etc at the purposed flight location?</p>
+
+                        <textarea class="form-control form-control-sm" id="livestock" name="livestock" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="people"><strong>People:</strong></label>
+
+                        <p>What is the distance and direction to places where people non under your control could be found? You will want to look at least as far as you could fly,
+                            <br>e.g 500m but further is wise to help assess issues if you have a “exit from operations area” issue during flight.</p>
+
+                        <p>e.g. residential housing estate 450m to the north west, industrial estate 200m to south</p>
+
+                        <textarea class="form-control form-control-sm" id="people" name="people" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="hazards"><strong>Hazards:</strong></label>
+
+                        <p>e.g. Transmitters, Power Pylons etc.</p>
+
+                        <p>This is not only to identify collision risk but also potential sources of interference that could affect the safety of a flight,
+                            also consider HIRTA’s (High Intensity Radio Transmission Areas) in regards to airspace.</p>
+
+                        <textarea class="form-control form-control-sm" id="hazards" name="hazards" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="footpaths"><strong>Footpaths:</strong></label>
+
+                        <p>OS maps will provide information on Public footpaths, right of ways and Bridleways,
+                            this is useful information showing potential for public access to locations that may not be visible on satellite imagery</p>
+
+                        <textarea class="form-control form-control-sm" id="footpaths" name="footpaths" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="vehicleAccess"><strong>Vehicle Access:</strong></label>
+
+                        <p>where is the parking for the pilot.</p>
+
+                        <p>can members of the public access the flight area by vehicles.</p>
+
+                        <textarea class="form-control form-control-sm" id="vehicleAccess" name="vehicleAccess" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="mobilePhoneCoverage"><strong>Mobile phone coverage:</strong></label>
+
+                        <textarea class="form-control form-control-sm" id="mobilePhoneCoverage" name="mobilePhoneCoverage" rows="6" cols="50"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+            <div class="card  my-3">
+                <div class="card-body">
+                    <h3 class="card-title">2.3 Emergency contact details</h3>
+                    <div class="mb-3">
+                        <label class="form-label" for="localPolice"><strong>Local Police:</strong></label>
+
+                        <p>Local police number include address/postcode.</p>
+
+                        <p>If you were to log a flight via 101 this is where you could write down the case number for reference if needed.</p>
+
+                        <textarea class="form-control form-control-sm" id="localPolice" name="localPolice" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="localATC"><strong>Local ATC:</strong></label>
+
+                        <p>Direct line to ATC is what you will want to obtain if possible.</p>
+
+                        <p>This is obtained via the NATS AIS Website > EAIP link > Part 3 > AD2.</p>
+
+                        <p>This can be obtained through dronesafetymap.com in some instances by clicking on the FRZ for the
+                            airport/aerodrome/heliport and viewing the airspace information.</p>
+
+                        <textarea class="form-control form-control-sm" id="localATC" name="localATC" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="militaryLowFlyingBookingCell"><strong>Military Low flying booking cell:</strong></label>
+
+                        <p>0800 515544</p>
+
+                        <p>Will safety be improved by logging your flight?</p>
+
+                        <textarea class="form-control form-control-sm" id="militaryLowFlyingBookingCell" name="militaryLowFlyingBookingCell" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="localHospital"><strong>Local Hospital:</strong></label>
+
+                        <p>Local A&E include address/ postcode could be useful to obtain and have to hand in the event of incident or accident if unfamiliar with the location.</p>
+
+                        <textarea class="form-control form-control-sm" id="localHospital" name="localHospital" rows="6" cols="50"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+            <div class="card my-3">
+                <div class="card-body">
+                    <h3 class="card-title">2.4 Airspace and Environment diagrams</h3>
+                    <div class="mb-3">
+                        <p>Adding annotations to drawing/screenshots can be useful during briefings and operations planning,
+                            information like;</p>
+
+                        <ul>
+                            <li>ATC Details</li>
+                            <li>Wind direction and speed</li>
+                            <li>Distances and direction to hazards</li>
+                            <li>Identifying primary and secondary take-off and landing sites</li>
+                            <li>Restrictions on flying either legal (FRZ, D,R,P areas etc) or self-imposed operational limitations</li>
+                        </ul>
+
+                        <!-- Airspace upload and notes -->
+                        <label class="form-label" for="screenshotDrawingAirspace"><strong>Insert screenshot/drawing of airspace (dronesafetymap.com or equivalent tool):</strong></label>
+
+                        <input class="form-control form-control-sm my-2" type="file" accept="image/*" onchange="previewImage(event, 'airspaceImagePreview')" id="screenshotDrawingAirspace" name="screenshotDrawingAirspace">
+
+                        <img src ="" id="airspaceImagePreview" alt="Airspace Image Preview" style="max-width: 100%; height: auto; display: none"><br>
+
+                        <label class="form-label" for="airspaceNotes"><strong>Airspace Notes:</strong></label>
+                        <textarea class="form-control form-control-sm" id="airspaceNotes" name="airspaceNotes" rows="6" cols="50"></textarea>
+
+                        <!-- Environment upload and notes -->
+                        <label class="form-label" for="screenshotDrawingEnvironment"><strong>Insert screenshot/drawing of local environment (gridreferencefinder.com or equivalent tool:</strong></label>
+
+                        <input class="form-control form-control-sm my-2" type="file" accept="image/*" onchange="previewImage(event, 'environmentImagePreview')" id="screenshotDrawingEnvironment" name="screenshotDrawingEnvironment">
+
+                        <img src ="" id="environmentImagePreview" alt="Environment Image Preview" style="max-width: 100%; height: auto; display: none"><br>
+
+                        <label class="form-label" for="environmentNotes"><strong>Environment Notes:</strong></label>
+                        <textarea class="form-control form-control-sm" id="environmentNotes" name="environmentNotes" rows="6" cols="50"></textarea>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+            <div class="card my-3">
+                <div class="card-body">
+                    <h3 class="card-title">2.5 Site Survey</h3>
+                    <div class="mb-3 col-12 col-md-6 col-lg-4">
+                        <label class="form-label" for="confirmPreSiteVisitInfo"><strong>Confirm date and time of 2.2 Pre-Site Visit Info:</strong></label>
+
+                        <input class="form-control form-control-sm" type="datetime-local" id="confirmPreSiteVisitInfo" name="confirmPreSiteVisitInfo">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="obstructions"><strong>Obstructions:</strong></label>
+
+                        <p>Masts, Wires, Buildings, Train lines, Trees, Lakes, Rivers etc.
+                            Any changes that might need to be considered within the planned flight or updated within the risk assessment</p>
+
+                        <textarea class="form-control form-control-sm" id="obstructions" name="obstructions" rows="6" cols="50"></textarea>
+                    </div>
+
+                     <div class="mb-3">
+                         <label class="form-label" for="people"><strong>People:</strong></label>
+
+                         <p>Cordon requirement, Crowd Control.</p>
+
+                         <p>Any changes that might need to be considered within the planned flight or updated within the risk assessment.</p>
+
+                        <textarea class="form-control form-control-sm" id="people" name="people" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="livestock"><strong>Livestock:</strong></label>
+
+                        <p>Farm animals, Dogs, Wildlife.</p>
+
+                        <p>Any changes that might need to be considered within the planned flight or updated within the risk assessment.</p>
+
+                        <textarea class="form-control form-control-sm" id="livestock" name="livestock" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="proximity"><strong>Proximity:</strong></label>
+
+                        <p>Public, Road Users.</p>
+
+                        <p>Any changes that might need to be considered within the planned flight or updated within the risk assessment.</p>
+
+                        <textarea class="form-control form-control-sm" id="proximity" name="proximity" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="primaryTOLZ"><strong>Primary TOLZ:</strong></label>
+
+                        <p>Needs to comply with applicable legislation around separation distances.</p>
+
+                        <textarea class="form-control form-control-sm" id="primaryTOLZ" name="primaryTOLZ" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="secondaryTOLZ"><strong>Secondary TOLZ:</strong></label>
+
+                        <p>Needs to comply with applicable legislation around separation distances.</p>
+
+                        <textarea class="form-control form-control-sm" id="secondaryTOLZ" name="secondaryTOLZ" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="comms"><strong>Comms:</strong></label>
+
+                        <p>Communications required by ops team.</p>
+
+                        <p>If deploying additional human resources do you need to use radio or other means of communications?</p>
+
+                        <p>If so what band/Frequency and any associated protocol to ensure effective.</p>
+
+                        <textarea class="form-control form-control-sm" id="comms" name="comms" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="other"><strong>Other:</strong></label>
+
+                        <p>Any other factors that might affect the safety of the flight.</p>
+
+                        <textarea class="form-control form-control-sm" id="other" name="other" rows="6" cols="50"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="form-control btn btn-primary my-3">Submit</button>
+            <button type="submit" class="form-control btn btn-primary">Save</button>
+
+
+
+        </form>
+
+    </div>
+
+
+{% endblock %}
