@@ -135,6 +135,10 @@ def optional():
 def post_flight():
     return render_template('forms/post_flight.html', title='Post-Flight Actions')
 
+# Risk Analysis Form 
+@app.route("/forms/risk-analysis")
+def risk_analysis():
+    return render_template('forms/risk_analysis/risk_analysis_list.html', title=' Risk Analysis Form')
 
 # Risk Analysis Form - Add Risk Route
 @app.route("/forms/risk-analysis/add")

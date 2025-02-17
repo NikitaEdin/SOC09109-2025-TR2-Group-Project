@@ -9,7 +9,7 @@
     
     <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
         <div class="w-75 text-start">
-            <a href="{{ url_for('loading_list') }}" class="btn btn-secondary my-3">
+            <a href="{{ url_for('loading_list') }}" class="btn btn-primary my-3">
                 ← Back to Forms Page
             </a>
         </div>
@@ -44,27 +44,10 @@
                 <div class="text-center mb-3">
                     <button type="button" class="btn btn-primary" onclick="addRow()">Add More Items</button>
                 </div>
-                <div class="d-flex justify-content-left gap-3 mt-4">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="d-flex justify-content-left mt-4">
                     <button type="button" class="btn btn-success">Save Changes</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        function addRow() {
-            let table = document.getElementById("itemTable").getElementsByTagName('tbody')[0];
-            let newRow = table.insertRow();
-            
-            let cell1 = newRow.insertCell(0);
-            let cell2 = newRow.insertCell(1);
-            let cell3 = newRow.insertCell(2);
-            
-            cell1.innerHTML = '<input type="text" class="form-control" name="item[]">';
-            cell2.innerHTML = '<input type="text" class="form-control" name="action[]">';
-            cell3.innerHTML = '<input type="checkbox" class="form-check-input" name="check[]">';
-            cell3.classList.add("text-center");
-        }
-    </script>
 {% endblock %}

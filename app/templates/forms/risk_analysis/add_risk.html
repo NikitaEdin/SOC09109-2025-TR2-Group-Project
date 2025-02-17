@@ -8,116 +8,136 @@
     </div>
     
     <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
-        <div class="rounded border border-danger-subtle p-3 w-75 my-3 card">
-            <div class="card-body">
-                <h3 class="text-center fw-light fs-4 pb-2">
-                    Analyse a possible risk to mitigate dangers.
-                </h3>
-                <form>
-                <!-- User should describe hazard and what is at risk from it -->
-                <div class="row">
-                    <div class="col-md-4 fw-bold">
-                        <p>Hazard</p>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label class="form-label" for="hazard">Hazard</label>
-                            <input type="text" class="form-control fw-bold" name="hazard">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="atRisk">At Risk</label>
-                            <input type="text" class="form-control fw-bold" name="atRisk">
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <!-- User will analyse the risk with only exsisting control measures in place -->
-                <div class="row">
-                    <div class="col-md-4 fw-bold">
-                        <p>Risk Before Mitigation</p>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label class="form-label" for="atRisk">Existing Control Measures</label>
-                            <textarea class="form-control fw-bold" name="atRisk" rows="4"></textarea>
-                        </div>
 
-                        <div class="mb-3">
-                            <label class="form-label" for="beforeSeverity">Severity</label>
-                            <select class="form-select" aria-label="severity">
-                                <option selected>Select severity rating</option>
-                                {% for i in range(1, 11) %}
-                                    <option value="{{ i }}">{{ i }}</option>
-                                {% endfor %}
-                              </select>
-                        </div>  
-                        <div class="mb-3">
-                            <label class="form-label" for="beforeProbability">Probability</label>
-                            <select class="form-select" aria-label="probability">
-                                <option selected>Select probability rating</option>
-                                {% for i in range(1, 11) %}
-                                    <option value="{{ i }}">{{ i }}</option>
-                                {% endfor %}
-                              </select>
-                        </div>  
-                        <div class="mb-3">
-                            <label class="form-label" for="beforeRisk">Risk</label>
-                            <select class="form-select" aria-label="risk">
-                                <option selected>Select risk rating</option>
-                                {% for i in range(1, 11) %}
-                                    <option value="{{ i }}">{{ i }}</option>
-                                {% endfor %}
-                              </select>
-                        </div>    
+        <form class="rounded border border-danger-subtle p-3 w-75 my-3">
+            <div class="card my-3">
+                <div class="card-body">
+                    <h3 class="card-title">Hazard Analysis</h3>
+                    <!-- User should describe hazard and what is at risk from it -->
+                    <div class="mb-3">
+                        <label class="form-label" for="flightCode"><strong>Hazard ID:</strong>01</label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="hazard"><strong>Hazard:</strong></label>
+                        <p class="form-label">Describe a hazrd that could impact project.</p>
+                        <p class="form-label"><em>Example: Air incursion with Manned aircraft leading to collision with RPA.</em></p>
+                        <input class="form-control form-control-sm" type="text" id="remotePilot" name="remotePilot">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="remotePilot"><strong>Risk:</strong></label>
+                        <p class="form-label">What does this hazard put at risk?</p>
+                        <input class="form-control form-control-sm" type="text" id="remotePilot" name="remotePilot">
                     </div>
                 </div>
-                <hr>
-                <!-- User will now input their anaylsis of expectations if further control measures are taken -->
-                <div class="row">
-                    <div class="col-md-4 fw-bold">
-                        <p>Risk After Mitigation</p>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <label class="form-label" for="furtherMeasure">Further Control Measures</label>
-                            <textarea class="form-control fw-bold" name="furtherMeasure" rows="4"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="afterSeverity">Severity</label>
-                            <select class="form-select" aria-label="severity">
-                                <option selected>Select severity rating</option>
-                                {% for i in range(1, 11) %}
-                                    <option value="{{ i }}">{{ i }}</option>
-                                {% endfor %}
-                              </select>
-                        </div>  
-                        <div class="mb-3">
-                            <label class="form-label" for="afterProbability">Probability</label>
-                            <select class="form-select" aria-label="probability">
-                                <option selected>Select probability rating</option>
-                                {% for i in range(1, 11) %}
-                                    <option value="{{ i }}">{{ i }}</option>
-                                {% endfor %}
-                              </select>
-                        </div>  
-                        <div class="mb-3">
-                            <label class="form-label" for="afterRisk">Risk</label>
-                            <select class="form-select" aria-label="risk">
-                                <option selected>Select risk rating</option>
-                                {% for i in range(1, 11) %}
-                                    <option value="{{ i }}">{{ i }}</option>
-                                {% endfor %}
-                              </select>
-                        </div>     
-                    </div>
-                </div>
-                <!-- Buttons to submit or save changes -->
-                <div class="d-flex justify-content-left gap-3 mt-4">
-                    <button type="button" class="btn btn-primary">Submit</button>
-                    <button type="button" class="btn btn-success">Save Changes</button>
-                </div>
-                </form>
             </div>
-        </div>
+             <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// --> 
+
+      
+             <div class="card my-3">
+                <div class="card-body">
+                    <h3 class="card-title">Risk Before Mitigation</h3>
+                    <!-- User will analyse the risk with only exsisting control measures in place -->
+
+                    <div class="mb-3">
+                        <label class="form-label" for="existingMeasures"><strong>Existing Control Measures:</strong></label>
+                        <p class="form-label">Describe the measures that have been take to prevent this hazard.</p>
+                        <p class="form-label"><em>Example: Flight to be conducted under 400ft ASL.</em></p>
+                        <textarea class="form-control form-control-sm" id="locationInformation" name="locationInformation" rows="6" cols="50"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="severity"><strong>Severity: </strong><span id="severityValue">5</span></label>
+                        <input type="range" class="form-range" min="0" max="10" step="1" id="severity" oninput="updateSeverity(this.value)">
+                    </div>
+                    
+                    <script>
+                        function updateSeverity(value) {
+                            document.getElementById("severityValue").textContent = value;
+                        }
+                    </script>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="probability"><strong>Probability: </strong><span id="curr"></span> </label>
+                        <input type="range" class="form-range" min="0" max="10" step="1" id="probability">
+                    </div>
+                     
+
+             <script> 
+                var el = document.getElementById('curr'); 
+                var p = document.getElementById('probability'); 
+                el.innerText = p.valueAsNumber; 
+                p.addEventListener('change', () => { 
+                    el.innerText = p.valueAsNumber; 
+                }) 
+            </script> 
+
+
+
+                    <div class="mb-3">
+                        <label class="form-label" for="risk"><strong>Risk:</strong></label>
+                        <input type="range" class="form-range" min="0" max="10" step="1" id="risk">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="beforeRisk"><strong>Risk:</strong></label>
+                        <select class="form-select">
+                            <option selected>Select risk rating</option>
+                            {% for i in range(1, 11) %}
+                                <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="card my-3">
+                <div class="card-body">
+                   <h3 class="card-title">Risk Before Mitigation</h3>
+                    <!-- User will now input their anaylsis of expectations if further control measures are taken -->
+   
+                   <div class="mb-3">
+                       <label class="form-label" for="furtherMeasures"><strong>Further Control Measures:</strong></label>
+                       <p class="form-label">Describe the measures that will be taken to prevent this hazard.</p>
+                       <p class="form-label"><em>Example: Spotters to be deployed and briefed on alerting pilot to low flying aircraft.</em></p>
+                       <textarea class="form-control form-control-sm" id="locationInformation" name="locationInformation" rows="6" cols="50"></textarea>
+                   </div>
+   
+                   <div class="mb-3">
+                       <label class="form-label" for="afterSeverity"><strong>Severity:</strong></label>
+                       <select class="form-select">
+                           <option selected>Select severity rating</option>
+                           {% for i in range(1, 11) %}
+                               <option value="{{ i }}">{{ i }}</option>
+                           {% endfor %}
+                         </select>
+                   </div>
+                   <div class="mb-3">
+                       <label class="form-label" for="afterProbability"><strong>Probability:</strong></label>
+                       <select class="form-select" >
+                           <option selected>Select probability rating</option>
+                           {% for i in range(1, 11) %}
+                               <option value="{{ i }}">{{ i }}</option>
+                           {% endfor %}
+                         </select>
+                   </div>
+                   <div class="mb-3">
+                       <label class="form-label" for="afterRisk"><strong>Risk:</strong></label>
+                       <select class="form-select">
+                           <option selected>Select risk rating</option>
+                           {% for i in range(1, 11) %}
+                               <option value="{{ i }}">{{ i }}</option>
+                           {% endfor %}
+                         </select>
+                   </div>
+               </div>
+            </div>
+
+            <!-- Buttons to submit or save changes -->
+            <button type="submit" class="form-control btn btn-primary my-3">Submit</button>
+            <button type="submit" class="form-control btn btn-primary">Save</button>
+
+        </form>
     </div>
 {% endblock %}

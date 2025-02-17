@@ -9,7 +9,7 @@
 
     <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
         <div class="w-75 text-start">
-            <a href="{{ url_for('loading_list') }}" class="btn btn-secondary my-3">
+            <a href="{{ url_for('loading_list') }}" class="btn btn-primary my-3">
                 ← Back to Loading List
             </a>
         </div>
@@ -57,16 +57,12 @@
                 <div class="text-center mb-3">
                     <button type="button" class="btn btn-primary" onclick="addRow()">Add More Crew</button>
                 </div>
+                <div class="d-flex justify-content-left mt-4">
+                    <button type="button" class="btn btn-success">Save Changes</button>
                 </div>
+            </div>
         </div>
-                
-        
-                <!-- Submit and Reset Buttons -->
-                <div class="d-flex justify-content-center gap-3">
-                    <button type="reset" class="btn btn-success">Reset</button>
-                    <button type="reset" class="btn btn-danger">Reset</button>
-                </div>
             </form>
-        </div>
+    </div>
     
 {% endblock %}
