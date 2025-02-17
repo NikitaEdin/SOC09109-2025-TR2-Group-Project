@@ -1,10 +1,22 @@
 :root {
-    --accent-colour: #269aff;
+    /* --accent-colour: #269aff;
     --accent-hover-colour: #2980B9; 
-    --accent-press-colour: #275F80;
+    --accent-press-colour: #275F80; */
+
+    --accent-colour: #E5233F;
+    --accent-hover-colour: #F03B55; 
+    --accent-press-colour: #C71E36;
+
+    --text-secondary-colour:rgb(93, 93, 93);
+
+    --text-light-colour: #f4f4f4;
+    --text-dark-colour: #121212;
 
     --success-colour: #03BD5B;
+    --success-colour-hover: #14d26d;
+    --success-colour-press: #07a651;
     --danger-colour: #dc3545;
+
 }
 
 
@@ -28,19 +40,25 @@
     background-color:  var(--accent-press-colour);
 }
 
-
-
-.btn-primary.focus,
-.btn-primary:focus {
-    box-shadow:  0 0 0 0.25rem #275F80 !important;
+/* ///////////////////// Success Buttons ///////////////////// */
+.btn-success {
+    background-color: var(--success-colour) !important; 
+    border-color: var(--success-colour) !important;
 }
 
-.btn-primary:active {
-    color: #fff;
-    background-color: var(--accent-press-colour) !important; 
-    border-color: var(--accent-press-colour) !important;
+.btn-success:hover {
+    background-color: var(--success-colour-hover) !important;
+    border-color: var(--success-colour-hover) !important;
 }
 
+.btn-success:active {
+    background-color: var(--success-colour-press) !important;
+    border-color: var(--success-colour-press) !important;
+}
+
+.btn-success:visited {
+    background-color:  var(--success-colour-press);
+}
 
 
 /* /////////////////// GLOBAL ///////////////////*/
@@ -90,4 +108,60 @@ body{
 
 .active {
     font-weight: 600 !important;
+}
+
+/* Maps */
+
+.map-box {
+    position: relative;
+    max-width: 500px;
+    max-height: 500px;
+    width: 100%;
+    height: 100%;
+    margin: 10px;
+    overflow: auto;
+}
+
+/* Checklists */
+
+.checklist-container {
+    background-color: #FFFFFF;
+    padding: 1rem;
+    border: var(--accent-colour) solid 1px;
+    border-radius: 1rem;
+    width: fit-content;
+}
+
+.checklist-item p {
+    color: rgb(from black r g b / 50%);
+    margin: 0;
+}
+
+/* Custom map styling */
+#map {
+    height: 400px;  
+    width: 100%;   
+    border-radius: 10px;  /* Rounded corners */
+    border: 2px solid #ccc;  /* Light border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom table - using Napier branding secondary colour */
+.custom-form-table thead th {
+    background-color: #859ea4 !important; /* Force override */
+    color: black !important;
+}
+
+/* Custom tables - borders on cells */
+.custom-form-table th, 
+.custom-form-table td {
+    border: 1px solid #859ea4;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Custom table - align checkboxes */
+.custom-form-table .form-check-input {
+    margin: 0 auto;
+    display: block;
 }

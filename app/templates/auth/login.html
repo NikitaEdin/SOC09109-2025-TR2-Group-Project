@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center" style="height: 80vh;" >
+        <div class="card p-4" style="min-width: 320px; max-width: 400px; width: 100%;">
+            <h2 class="text-center">Login</h2>
+
+            <!-- Flash message if incorrect login details are submitted by pilot or admin -->
+            {% if get_flashed_messages() %}
+            <div class="alert alert-danger">
+                {{ get_flashed_messages()[0] }}
+            </div>
+            {% endif %}
+
+            <!-- Login form with CSRF token field for added security-->
+        <form method="POST" action="{{ url_for('login') }}">
+            {{ form.hidden_tag() }}
+
+            <!-- Email field with input validation -->
+            <div class="mb-4">
+                {{ form.email.label }}
+                {{ form.email(class="form-control", placeholder="Enter your email") }}
+                {% if form.email.errors %}
+                    <div class="text-danger">{{ form.email.errors[0] }}</div>
+                {% endif %}
+            </div>
+            <!-- Password field with input validation -->
+            <div class="mb-4">
+                {{ form.password.label }}
+                {{ form.password(class="form-control", placeholder="Enter your password") }}
+                {% if form.password.errors %}
+                    <div class="text-danger">{{ form.password.errors[0] }}</div>
+                {% endif %}
+            </div>
+            <!-- Submit button -->
+            <div class="d-grid">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+
+        </form>
+        </div>
+</div>
+
+{% endblock %}

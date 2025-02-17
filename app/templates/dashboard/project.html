@@ -1,0 +1,103 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% block main_content %}
+    
+    <div class="">
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        <!--  any messages? -->
+            {% if messages %}
+                <!-- loop messages -->
+                {% for category, message in messages %}
+                    <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                        {{ message}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h2 class="card-title" >{{project.title}}</h2>
+                            <a href="{{ url_for('edit_project', project_id=project.id) }}" class="btn btn-outline-danger btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                        </div>
+                        <h6>Author: {{project.author.username}}</h6>
+
+                        <h6>Created: {{project.created_at.strftime('%B %d, %Y')}} <span class="text-muted">({{ created_at_humanized }})</span></h6>
+                        <h6>Edited: {{project.lastEdited.strftime('%B %d, %Y')}} <span class="text-muted">({{ last_edited_humanized }})</span></h6>
+                        <h6 class="mt-3">Date of Flight: {{project.dateOfFlight.strftime('%B %d, %Y')}} <span class="text-muted">({{ date_status }})</span></h6>
+                        
+                        <h6 class="mt-3 text-muted">Description:</h6>
+                        <p>{{project.description}}</p>
+                    </div>
+                    <div class="col-md-6 map">
+                        <h5 class="text-muted">Flight Location</h5>
+                        <div class="">
+                            {% set hidden_form = True %}  
+                            {% set latitude = project.latitude %}
+                            {% set longitude = project.longitude %}
+                            {% set zoom = 14 %}
+                            {% set default_marker_latitude = project.latitude %}
+                            {% set default_marker_longitude = project.longitude %}
+                            {% set map_read_only = 1%}
+                            {% set reset_to_default_marker = 1 %}
+                            {% set default_marker_msg = 'Flight Location' %}
+                            
+                            {% include '/create_project/map_location.html'%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Controls -->
+        <div class="mt-4">
+            <div class="row justify-content-center">
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Documents and Checklist</h5>
+    
+                            <div class="row">
+                                <!-- Required Documents -->
+                                <div class="col-md-4 mb-3 text-center">
+                                    <button class="btn btn-primary w-100"><i class="fas fa-file-alt"></i> Required Documents</button>
+                                </div>
+                                
+                                <!-- Optional Documents -->
+                                <div class="col-md-4 mb-3 text-center">
+                                    <button class="btn btn-primary w-100"><i class="fas fa-file"></i> Optional Documents</button>
+                                </div>
+    
+                                <!-- Checklist -->
+                                <div class="col-md-4 mb-3 text-center">
+                                    <button class="btn btn-secondary w-100"><i class="fas fa-check-circle"></i> Checklist</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+
+
+    <!-- Prevents ease-in on load, due to map loading in -->
+    <style>
+        *{
+            transition: none !important;
+        }
+    </style>
+
+
+{% endblock %}
+
