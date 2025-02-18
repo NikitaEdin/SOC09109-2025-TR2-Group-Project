@@ -3,25 +3,27 @@
 {% block title %}Viability Study{% endblock %}
 
 {% block content %}
-    <div class="text-center m-3">
-        <h2><strong>Viability Study</strong></h2>
-    </div>
+
     <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
 
-        <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3" novalidate>
+        <form method="POST" class="rounded border border-danger-subtle w-75" novalidate>
             {{ form.hidden_tag() }}
 
-            <h3 class="text-center fw-light fs-4">Analysing risks, requirements, and operational feasibility</h3>
 
-            <div class="card my-3">
+            <div class="card">
                 <div class="card-body">
+                    <div class="text-center mb-3">
+                        <h1>Viability Study</h1>
+                    </div>
+
+                    <h3 class="text-center fw-light fs-4">Analysing risks, requirements, and operational feasibility</h3>
+
+                    <!-- 1.1 Flight information -->
                     <h3 class="card-title">1.1 Flight information</h3>
-
-
 
                     <!-- Fight Code -->
                     <div class="mb-3">
-                        <strong>{{ form.flightCode.label(class="form-label") }}</strong>
+                        <h4>{{ form.flightCode.label(class="form-label my-3") }}</h4>
                         <p>Leave blank – this is allocated by the accountable manager if the flight is viable.</p>
                         {{ form.flightCode(class="form-control form-control-sm") }}
                         {% if form.flightCode.errors %}
@@ -35,7 +37,7 @@
 
                     <!-- Summary -->
                     <div class="mb-3">
-                        <strong>{{ form.summary.label(class="form-label") }}</strong>
+                        <h4>{{ form.summary.label(class="form-label my-3") }}</h4>
                         <p>Describe the proposed flight.</p>
                         {{ form.summary(class="form-control form-control-sm", rows="5", cols="50") }}
                         {% if form.summary.errors %}
@@ -47,8 +49,9 @@
                         {% endif %}
                     </div>
 
+                    <!-- Flight Date -->
                     <div class="mb-3 col-12 col-md-6 col-lg-4">
-                        <strong>{{ form.flightDate.label(class="form-label") }}</strong>
+                        <h4>{{ form.flightDate.label(class="form-label my-3") }}</h4>
                         {{ form.flightDate(class="form-control form-control-sm") }}
                         {% if form.flightDate.errors %}
                             <ul class="text-danger">
@@ -59,13 +62,14 @@
                         {% endif %}
                     </div>
 
+                    <!-- Fight Code -->
                     <div class="mb-3">
                         <p class="form-label">Latitude: 56°04'02.6"N</p>
                         <p class="form-label">Longitude: 3°27'58.0"W</p>
                     </div>
 
                     <div class="mb-3">
-                        <strong>{{ form.preparedBy.label(class="form-label") }}</strong>
+                        <h4>{{ form.preparedBy.label(class="form-label my-3") }}</h4>
                         {{ form.preparedBy(class="form-control form-control-sm") }}
                         {% if form.preparedBy.errors %}
                             <ul class="text-danger">
@@ -76,8 +80,9 @@
                         {% endif %}
                     </div>
 
+                    <!-- Prepared Date -->
                     <div class="mb-3 col-12 col-md-6 col-lg-4">
-                        <strong>{{ form.preparedDate.label(class="form-label") }}</strong>
+                        <h4>{{ form.preparedDate.label(class="form-label my-3") }}</h4>
                         {{ form.preparedDate(class="form-control form-control-sm") }}
                         {% if form.preparedDate.errors %}
                             <ul class="text-danger">
@@ -87,15 +92,13 @@
                             </ul>
                         {% endif %}
                     </div>
-                </div>
-            </div>
 
-            <div class="card my-3">
-                <div class="card-body">
+                    <!-- 1.2 Airspace -->
                     <h3 class="card-title">1.2 Airspace</h3>
 
+                    <!-- Airspace Class -->
                     <div class="mb-3">
-                        <strong>{{ form.airSpaceClass.label(class="form-label") }}</strong>
+                        <h4>{{ form.airSpaceClass.label(class="form-label my-3") }}</h4>
                         {{ form.airSpaceClass(class="form-control form-control-sm") }}
                         {% if form.airSpaceClass.errors %}
                             <ul class="text-danger">
@@ -106,8 +109,9 @@
                         {% endif %}
                     </div>
 
+                    <!-- Airspace Observations -->
                     <div class="mb-3">
-                        <strong>{{ form.airspaceObservations.label(class="form-label") }}</strong>
+                        <h4>{{ form.airspaceObservations.label(class="form-label my-3") }}</h4>
                         <p>List any factors that need to be taken into account such as the proximity to other aeronautical activities</p>
                         {{ form.airspaceObservations(class="form-control form-control-sm", rows="5", cols="50") }}
                         {% if form.airspaceObservations.errors %}
@@ -119,8 +123,9 @@
                         {% endif %}
                     </div>
 
+                    <!-- Airspace Sources -->
                     <div class="mb-3">
-                        <strong>{{ form.airspaceSources.label(class="form-label") }}</strong>
+                        <h4>{{ form.airspaceSources.label(class="form-label my-3") }}</h4>
                         <p>List the sources used</p>
                         {{ form.airspaceSources(class="form-control form-control-sm", rows="5", cols="50") }}
                         {% if form.airspaceSources.errors %}
@@ -131,15 +136,13 @@
                             </ul>
                         {% endif %}
                     </div>
-                </div>
-            </div>
 
-            <div class="card my-3">
-                <div class="card-body">
+                    <!-- 1.3 ground hazards -->
                     <h3 class="card-title">1.3 Ground hazards</h3>
 
+                    <!-- Ground Observations -->
                     <div class="mb-3">
-                        <strong>{{ form.groundObservations.label(class="form-label") }}</strong>
+                        <h4>{{ form.groundObservations.label(class="form-label my-3") }}</h4>
                         <p>List any factors that need to be taken into account such as the proximity to other aeronautical activities</p>
                         {{ form.groundObservations(class="form-control form-control-sm", rows="5", cols="50") }}
                         {% if form.groundObservations.errors %}
@@ -151,8 +154,9 @@
                         {% endif %}
                     </div>
 
+                    <!-- Ground Sources -->
                     <div class="mb-3">
-                        <strong>{{ form.groundSources.label(class="form-label") }}</strong>
+                        <h4>{{ form.groundSources.label(class="form-label my-3") }}</h4>
                         <p>List the sources used</p>
                         {{ form.groundSources(class="form-control form-control-sm", rows="5", cols="50") }}
                         {% if form.groundSources.errors %}
@@ -163,15 +167,13 @@
                             </ul>
                         {% endif %}
                     </div>
-                </div>
-            </div>
 
-            <div class="card my-3">
-                <div class="card-body">
+                    <!-- 1.4 Weather -->
                     <h3 class="card-title">1.4 Weather</h3>
 
+                    <!-- Weather Observations -->
                     <div class="mb-3">
-                        <strong>{{ form.weatherObservations.label(class="form-label") }}</strong>
+                        <h4>{{ form.weatherObservations.label(class="form-label my-3") }}</h4>
                         <p>Describe the expected weather conditions</p>
                         {{ form.weatherObservations(class="form-control form-control-sm", rows="5", cols="50") }}
                         {% if form.weatherObservations.errors %}
@@ -183,8 +185,9 @@
                         {% endif %}
                     </div>
 
+                    <!-- Weather Sources -->
                     <div class="mb-3">
-                        <strong>{{ form.weatherSources.label(class="form-label") }}</strong>
+                        <h4>{{ form.weatherSources.label(class="form-label my-3") }}</h4>
                         <p>List the sources used</p>
                         {{ form.weatherSources(class="form-control form-control-sm", rows="5", cols="50") }}
                         {% if form.weatherSources.errors %}
@@ -195,12 +198,17 @@
                             </ul>
                         {% endif %}
                     </div>
-                </div>
+
+
+                    <!-- Submit and Save changes -->
+                    <div class="row justify-content-center">
+                        <div class="col-4">
+                            {{ form.submit(class="form-control btn btn-primary my-3") }}
+                        </div>
+                    </div>
+               </div>
             </div>
 
-            <!-- Submit and Save changes -->
-            {{ form.submit(class="form-control btn btn-primary my-3") }}
-            {{ form.saveChanges(class="form-control btn btn-primary") }}
         </form>
 
     </div>

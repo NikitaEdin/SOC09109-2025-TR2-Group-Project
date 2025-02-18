@@ -19,4 +19,3 @@ class ViabilityStudyForm(FlaskForm):
 
 
     submit = SubmitField('Submit')
-    saveChanges = SubmitField('Save Changes')

@@ -24,43 +24,52 @@
       }
    </script>
 
-    <div class="text-center m-3">
-        <h2><strong>Site Evaluation</strong></h2>
-    </div>
     <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
 
-        <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3" enctype="multipart/form-data" novalidate>
+        <form method="POST" class="rounded border border-danger-subtle w-75" enctype="multipart/form-data" novalidate>
 
-            <div class="card my-3">
+            <div class="card">
                 <div class="card-body">
+
+                    <div class="text-center mb-3">
+                        <h1>Site Evaluation</h1>
+                    </div>
+
+                    <!-- 2.1 Flight details -->
                     <h3 class="card-title">2.1 Flight details</h3>
+
+                    <!-- Flight Code -->
                     <div class="mb-3">
-                        <label class="form-label" for="flightCode"><strong>Flight Code:</strong> 98465</label>
+                        <h4 class="form-label my-3">Flight Code:</h4>
+                        <p>98465</p>
                     </div>
 
-                    <div class="mb-3 col-12 col-md-6 col-lg-4">
-                        <label class="form-label" for="dateOfFlight"><strong>Date of Flight:</strong> 26/02/25</label>
-
+                    <!-- Date of Flight -->
+                    <div class="mb-3">
+                        <h4 class="form-label my-3">Date of Flight:</h4>
+                        <p>26/02/25</p>
                     </div>
 
+                    <!-- Remote Pilot -->
                     <div class="mb-3">
-                        <label class="form-label" for="remotePilot"><strong>Remote Pilot:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="remotePilot">Remote Pilot:</label></h4>
                         <input class="form-control form-control-sm" type="text" id="remotePilot" name="remotePilot">
                     </div>
 
+                    <!-- Date Completed -->
                     <div class="mb-3 col-12 col-md-6 col-lg-4">
-                        <label class="form-label" for="dateCompleted"><strong>Date Completed:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="dateCompleted">Date Completed:</label></h4>
                         <input class="form-control form-control-sm" type="date" id="dateCompleted" name="dateCompleted">
                     </div>
-                </div>
-            </div>
+
              <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-            <div class="card my-3">
-                <div class="card-body">
+                    <!-- 2.2 Pre-site visit -->
                     <h3 class="card-title">2.2 Pre-site visit</h3>
+
+                    <!-- Location Information -->
                     <div class="mb-3">
-                        <label class="form-label" for="locationInformation"><strong>Location Information:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="locationInformation">Location Information:</label></h4>
 
                         <p class="form-label">Latitude: 56°04'02.6"N</p>
                         <p class="form-label">Longitude: 3°27'58.0"W</p>
@@ -77,14 +86,16 @@
                         <textarea class="form-control form-control-sm" id="locationInformation" name="locationInformation" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Description -->
                     <div class="mb-3">
-                        <label class="form-label" for="description"><strong>Description:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="description">Description:</label></h4>
 
                         <textarea class="form-control form-control-sm" id="description" name="description" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Sensitivities -->
                     <div class="mb-3">
-                        <label class="form-label" for="sensitivities"><strong>Sensitivities:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="sensitivities">Sensitivities:</label></h4>
 
                         <p>This could include things like schools, cemeteries, government buildings where
                             flying a drone in the vicinity could cause issues or concerns with the public.
@@ -93,8 +104,9 @@
                         <textarea class="form-control form-control-sm" id="sensitivities" name="sensitivities" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Airspace -->
                      <div class="mb-3">
-                         <label class="form-label" for="airspace"><strong>Airspace:</strong></label>
+                         <h4 class="my-3"><label class="form-label" for="airspace">Airspace:</label></h4>
 
                          <p>Example 1 – No ATC Permission required Class G airspace uncontrolled</p>
 
@@ -105,8 +117,9 @@
                         <textarea class="form-control form-control-sm" id="airspace" name="airspace" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Restrictions -->
                     <div class="mb-3">
-                        <label class="form-label" for="restrictions"><strong>Restrictions:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="restrictions">Restrictions:</label></h4>
 
                         <p>This is specifically looking at restricted, danger and prohibited airspace,
                             <br> e.g. restricted airspace 5km northwest of operating area (HMP Wakefield Prison)<br>
@@ -115,16 +128,18 @@
                         <textarea class="form-control form-control-sm" id="restrictions" name="restrictions" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Terrain -->
                      <div class="mb-3">
-                         <label class="form-label" for="terrain"><strong>Terrain:</strong></label>
+                         <h4 class="my-3"><label class="form-label" for="terrain">Terrain:</label></h4>
 
                          <p>Brief overview of what the location is like to assist with planning and risk assessment (Ordnance survey maps can offer insight via contour information)</p>
 
                         <textarea class="form-control form-control-sm" id="terrain" name="terrain" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Aviation Proximities -->
                     <div class="mb-3">
-                        <label class="form-label" for="aviationProximities"><strong>Aviation Proximities:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="aviationProximities">Aviation Proximities:</label></h4>
 
                         <p>What is the distance and direction to places where people not under your control could be found?
                             You will want to look at least as far as you could fly, e.g 500m but further is wise to help assess issues if you have an
@@ -138,8 +153,9 @@
                         <textarea class="form-control form-control-sm" id="aviationProximities" name="aviationProximities" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Permissions -->
                     <div class="mb-3">
-                        <label class="form-label" for="permissions"><strong>Permissions:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="permissions">Permissions:</label></h4>
 
                         <p>Do you have permission to operate from that location you should be aware of any issues around byelaws and trespass.</p>
 
@@ -148,8 +164,9 @@
                         <textarea class="form-control form-control-sm" id="permissions" name="permissions" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- NOTAMS -->
                     <div class="mb-3">
-                        <label class="form-label" for="notams"><strong>NOTAMS:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="notams">NOTAMS:</label></h4>
 
                         <p>e.g. NOTAMS checked at 13.00pm 24/09/2022 No NOTAMS in effect within 10km</p>
 
@@ -158,8 +175,9 @@
                         <textarea class="form-control form-control-sm" id="notams" name="notams" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- PPE Requirements -->
                     <div class="mb-3">
-                        <label class="form-label" for="ppeRequirements"><strong>PPE Requirements:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="ppeRequirements">PPE Requirements:</label></h4>
 
                         <p>Your/client minimum PPE requirements in line with OM.</p>
 
@@ -168,16 +186,18 @@
                         <textarea class="form-control form-control-sm" id="ppeRequirements" name="ppeRequirements" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Livestock -->
                     <div class="mb-3">
-                        <label class="form-label" for="livestock"><strong>Livestock:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="livestock">Livestock:</label></h4>
 
                         <p>Is there a potential for livestock, birds etc at the purposed flight location?</p>
 
                         <textarea class="form-control form-control-sm" id="livestock" name="livestock" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- People -->
                     <div class="mb-3">
-                        <label class="form-label" for="people"><strong>People:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="people">People:</label></h4>
 
                         <p>What is the distance and direction to places where people non under your control could be found? You will want to look at least as far as you could fly,
                             <br>e.g 500m but further is wise to help assess issues if you have a “exit from operations area” issue during flight.</p>
@@ -187,8 +207,9 @@
                         <textarea class="form-control form-control-sm" id="people" name="people" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Hazards -->
                     <div class="mb-3">
-                        <label class="form-label" for="hazards"><strong>Hazards:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="hazards">Hazards:</label></h4>
 
                         <p>e.g. Transmitters, Power Pylons etc.</p>
 
@@ -198,8 +219,9 @@
                         <textarea class="form-control form-control-sm" id="hazards" name="hazards" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Footpaths -->
                     <div class="mb-3">
-                        <label class="form-label" for="footpaths"><strong>Footpaths:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="footpaths">Footpaths:</label></h4>
 
                         <p>OS maps will provide information on Public footpaths, right of ways and Bridleways,
                             this is useful information showing potential for public access to locations that may not be visible on satellite imagery</p>
@@ -207,8 +229,9 @@
                         <textarea class="form-control form-control-sm" id="footpaths" name="footpaths" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Vehicle Access -->
                     <div class="mb-3">
-                        <label class="form-label" for="vehicleAccess"><strong>Vehicle Access:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="vehicleAccess">Vehicle Access:</label></h4>
 
                         <p>where is the parking for the pilot.</p>
 
@@ -217,21 +240,21 @@
                         <textarea class="form-control form-control-sm" id="vehicleAccess" name="vehicleAccess" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Mobile phone coverage -->
                     <div class="mb-3">
-                        <label class="form-label" for="mobilePhoneCoverage"><strong>Mobile phone coverage:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="mobilePhoneCoverage">Mobile phone coverage:</label></h4>
 
                         <textarea class="form-control form-control-sm" id="mobilePhoneCoverage" name="mobilePhoneCoverage" rows="6" cols="50"></textarea>
                     </div>
-                </div>
-            </div>
 
             <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-            <div class="card  my-3">
-                <div class="card-body">
+                    <!-- 2.3 Emergency contact details -->
                     <h3 class="card-title">2.3 Emergency contact details</h3>
+
+                    <!-- Local Police -->
                     <div class="mb-3">
-                        <label class="form-label" for="localPolice"><strong>Local Police:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="localPolice">Local Police:</label></h4>
 
                         <p>Local police number include address/postcode.</p>
 
@@ -240,8 +263,9 @@
                         <textarea class="form-control form-control-sm" id="localPolice" name="localPolice" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Local ATC -->
                     <div class="mb-3">
-                        <label class="form-label" for="localATC"><strong>Local ATC:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="localATC">Local ATC:</label></h4>
 
                         <p>Direct line to ATC is what you will want to obtain if possible.</p>
 
@@ -253,8 +277,9 @@
                         <textarea class="form-control form-control-sm" id="localATC" name="localATC" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Military Low flying booking cell -->
                     <div class="mb-3">
-                        <label class="form-label" for="militaryLowFlyingBookingCell"><strong>Military Low flying booking cell:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="militaryLowFlyingBookingCell">Military Low flying booking cell:</label></h4>
 
                         <p>0800 515544</p>
 
@@ -263,20 +288,18 @@
                         <textarea class="form-control form-control-sm" id="militaryLowFlyingBookingCell" name="militaryLowFlyingBookingCell" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Local Hospital -->
                     <div class="mb-3">
-                        <label class="form-label" for="localHospital"><strong>Local Hospital:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="localHospital">Local Hospital:</label></h4>
 
                         <p>Local A&E include address/ postcode could be useful to obtain and have to hand in the event of incident or accident if unfamiliar with the location.</p>
 
                         <textarea class="form-control form-control-sm" id="localHospital" name="localHospital" rows="6" cols="50"></textarea>
                     </div>
-                </div>
-            </div>
 
             <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-            <div class="card my-3">
-                <div class="card-body">
+                    <!-- 2.4 Airspace and Environment diagrams -->
                     <h3 class="card-title">2.4 Airspace and Environment diagrams</h3>
                     <div class="mb-3">
                         <p>Adding annotations to drawing/screenshots can be useful during briefings and operations planning,
@@ -311,22 +334,20 @@
                         <textarea class="form-control form-control-sm" id="environmentNotes" name="environmentNotes" rows="6" cols="50"></textarea>
 
                     </div>
-                </div>
-            </div>
 
             <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-            <div class="card my-3">
-                <div class="card-body">
+                    <!-- Confirm date and time of 2.2 Pre-Site Visit Info -->
                     <h3 class="card-title">2.5 Site Survey</h3>
                     <div class="mb-3 col-12 col-md-6 col-lg-4">
-                        <label class="form-label" for="confirmPreSiteVisitInfo"><strong>Confirm date and time of 2.2 Pre-Site Visit Info:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="confirmPreSiteVisitInfo">Confirm date and time of 2.2 Pre-Site Visit Info:</label></h4>
 
                         <input class="form-control form-control-sm" type="datetime-local" id="confirmPreSiteVisitInfo" name="confirmPreSiteVisitInfo">
                     </div>
 
+                    <!-- Obstructions -->
                     <div class="mb-3">
-                        <label class="form-label" for="obstructions"><strong>Obstructions:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="obstructions">Obstructions:</label></h4>
 
                         <p>Masts, Wires, Buildings, Train lines, Trees, Lakes, Rivers etc.
                             Any changes that might need to be considered within the planned flight or updated within the risk assessment</p>
@@ -334,8 +355,9 @@
                         <textarea class="form-control form-control-sm" id="obstructions" name="obstructions" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- People -->
                      <div class="mb-3">
-                         <label class="form-label" for="people"><strong>People:</strong></label>
+                         <h4 class="my-3"><label class="form-label" for="people">People:</label></h4>
 
                          <p>Cordon requirement, Crowd Control.</p>
 
@@ -344,8 +366,9 @@
                         <textarea class="form-control form-control-sm" id="people" name="people" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Livestock -->
                     <div class="mb-3">
-                        <label class="form-label" for="livestock"><strong>Livestock:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="livestock">Livestock:</label></h4>
 
                         <p>Farm animals, Dogs, Wildlife.</p>
 
@@ -354,8 +377,9 @@
                         <textarea class="form-control form-control-sm" id="livestock" name="livestock" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Proximity -->
                     <div class="mb-3">
-                        <label class="form-label" for="proximity"><strong>Proximity:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="proximity">Proximity:</label></h4>
 
                         <p>Public, Road Users.</p>
 
@@ -364,24 +388,27 @@
                         <textarea class="form-control form-control-sm" id="proximity" name="proximity" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Primary TOLZ -->
                     <div class="mb-3">
-                        <label class="form-label" for="primaryTOLZ"><strong>Primary TOLZ:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="primaryTOLZ">Primary TOLZ:</label></h4>
 
                         <p>Needs to comply with applicable legislation around separation distances.</p>
 
                         <textarea class="form-control form-control-sm" id="primaryTOLZ" name="primaryTOLZ" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Secondary TOLZ -->
                     <div class="mb-3">
-                        <label class="form-label" for="secondaryTOLZ"><strong>Secondary TOLZ:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="secondaryTOLZ">Secondary TOLZ:</label></h4>
 
                         <p>Needs to comply with applicable legislation around separation distances.</p>
 
                         <textarea class="form-control form-control-sm" id="secondaryTOLZ" name="secondaryTOLZ" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Comms -->
                     <div class="mb-3">
-                        <label class="form-label" for="comms"><strong>Comms:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="comms">Comms:</label></h4>
 
                         <p>Communications required by ops team.</p>
 
@@ -392,18 +419,24 @@
                         <textarea class="form-control form-control-sm" id="comms" name="comms" rows="6" cols="50"></textarea>
                     </div>
 
+                    <!-- Other -->
                     <div class="mb-3">
-                        <label class="form-label" for="other"><strong>Other:</strong></label>
+                        <h4 class="my-3"><label class="form-label" for="other">Other:</label></h4>
 
                         <p>Any other factors that might affect the safety of the flight.</p>
 
                         <textarea class="form-control form-control-sm" id="other" name="other" rows="6" cols="50"></textarea>
                     </div>
+
+                    <!-- Submit and Save changes -->
+                    <div class="row justify-content-center">
+                        <div class="col-4">
+                            <button type="submit" class="form-control btn btn-primary my-3">Submit</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
-            <button type="submit" class="form-control btn btn-primary my-3">Submit</button>
-            <button type="submit" class="form-control btn btn-primary">Save</button>
 
 
 
