@@ -1,6 +1,7 @@
 from flask import render_template, request
 
 from app import app
+from app.models import db, Project, checklist_template
 
 @app.route("/create_project/create-rural", methods=['GET', 'POST'])
 def create_project_rural():
@@ -73,6 +74,20 @@ def create_project_urban():
 
 @app.route('/create_project/optional', methods =['GET','POST'])
 def optional():
+    
+    # TODO Return to this should grab the project based on the id passed on from the dashboard
+    # project = Project.query.get_or_404(project_id)
+    
+    # if not project.checklist:
+    #     project.checklist = []
+    #     for item in checklist_template:
+    #         project.checklist.append({
+    #             "name": item["name"],
+    #             "status": False,
+    #             "last_edit": None
+    #         })
+    #     db.session.commit()
+        
     checks={
         'leaflet_drop': {
         'title': 'Leaflet Drop',
@@ -150,5 +165,3 @@ def optional():
     "rural": request.args.get('rural', 'False')
 }
     return render_template("create_project/optional_forms.html", content=content )
-
-
