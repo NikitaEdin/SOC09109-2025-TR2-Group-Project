@@ -149,3 +149,23 @@ html, body {
 #map {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* Custom table - using Napier branding secondary colour */
+.custom-form-table thead th {
+    background-color: #E5233F ;
+    color: black;
+}
+
+/* Custom tables - borders on cells */
+.custom-form-table th, 
+.custom-form-table td {
+    border: 1px solid #E5233F;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Custom table - centre align checkboxes */
+.custom-form-table .form-check-input {
+    margin: 0 auto;
+    display: block;
+}

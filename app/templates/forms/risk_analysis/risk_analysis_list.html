@@ -1,0 +1,48 @@
+{% extends "base.html" %} {% block title %}Risk Analysis{% endblock %} {% block
+content %}
+<div class="text-center m-3">
+  <h2><strong>Risk Analysis</strong></h2>
+</div>
+
+<div
+  class="container d-flex flex-column justify-content-center align-items-center"
+  style="min-height: 80vh"
+>
+  <div class="w-75 text-start">
+    <a href="{{ url_for('loading_list') }}" class="btn btn-primary my-3">
+      ← Back to Forms Page
+    </a>
+  </div>
+  <div class="rounded border border-danger-subtle p-3 w-75 my-3 card">
+    <div class="card-body">
+      <h3 class="text-center fw-light fs-4 pb-2">
+        Analyse the possible risks during the project.
+      </h3>
+
+      <hr />
+
+      <ul class="list-group">
+        <!-- List different risks -->
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center border-danger-subtle"
+        >
+          <span>ID: 1</span>
+          <span>Crew</span>
+          <div class="d-flex gap-2 align-items-center">
+            <a
+              href="{{ url_for('add_risk_analysis) }}"
+              class="btn btn-primary btn-sm"
+              >Edit</a
+            >
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Button to submiy finshed loading list -->
+    <div class="justify-content-left mt-4">
+      <button type="submit" class="btn btn-success">Submit Loading List</button>
+    </div>
+  </div>
+</div>
+{% endblock %}

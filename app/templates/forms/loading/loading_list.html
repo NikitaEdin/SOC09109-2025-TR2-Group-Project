@@ -9,7 +9,7 @@
     
     <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
         <div class="w-75 text-start">
-            <a href="{{ url_for('loading_list') }}" class="btn btn-secondary my-3">
+            <a href="{{ url_for('loading_list') }}" class="btn btn-primary my-3">
                 ← Back to Forms Page
             </a>
         </div>
@@ -23,7 +23,7 @@
 
                 <ul class="list-group">
                     <!-- Crew -->
-                    <li class="list-group-item d-flex justify-content-between align-items-center border-secondary">
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-danger-subtle">
                         <span>Crew</span>
                         <div class="d-flex gap-2 align-items-center">
                             <span class="badge bg-success rounded-pill">Complete</span>
@@ -32,7 +32,7 @@
                     </li>
 
                     <!-- Equipment -->
-                    <li class="list-group-item d-flex justify-content-between align-items-center border-secondary">
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-danger-subtle">
                         <span>Equipment</span>
                         <div class="d-flex gap-2 align-items-center">
                             <span class="badge bg-warning rounded-pill">In Progress</span>
@@ -41,7 +41,7 @@
                     </li>
 
                     <!-- Maintenance Kit -->
-                    <li class="list-group-item d-flex justify-content-between align-items-center border-secondary">
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-danger-subtle">
                         <span>Maintenance Kit</span>
                         <div class="d-flex gap-2 align-items-center">
                             <span class="badge bg-danger rounded-pill">Not Started</span>
@@ -50,7 +50,7 @@
                     </li>
 
                     <!-- Safety Kit -->
-                    <li class="list-group-item d-flex justify-content-between align-items-center border-secondary">
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-danger-subtle">
                         <span>Safety Kit</span>
                         <div class="d-flex gap-2 align-items-center">
                             <span class="badge bg-danger rounded-pill">Not Started</span>
@@ -59,7 +59,7 @@
                     </li>
 
                     <!-- Ground Equipment -->
-                    <li class="list-group-item d-flex justify-content-between align-items-center border-secondary">
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-danger-subtle">
                         <span>Ground Equipment</span>
                         <div class="d-flex gap-2 align-items-center">
                             <span class="badge bg-warning rounded-pill">In Progress</span>
@@ -68,7 +68,9 @@
                     </li>
                 </ul>
             </div>
-            <div class="d-flex justify-content-left gap-3 mt-4">
+            
+            <!-- Button to submiy finshed loading list -->
+            <div class="justify-content-left mt-4">
                 <button type="submit" class="btn btn-success">Submit Loading List</button>
             </div>
         </div>
