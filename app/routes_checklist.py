@@ -150,3 +150,5 @@ def optional():
     "rural": request.args.get('rural', 'False')
 }
     return render_template("create_project/optional_forms.html", content=content )
+
+

@@ -5,10 +5,29 @@ from flask import url_for
 from flask_login import UserMixin, current_user
 from sqlalchemy import func
 import re
+import json
+import os
 
 # Global/static variables
 ADMIN_MIN_POWER = 90
 
+# Method to read json's in the form folder 
+def read_json(filename):
+    try:
+        base_path = os.path.join(os.path.dirname(__file__), "forms", "jsons")  
+        filepath = os.path.join(base_path, filename) 
+    
+        with open(filepath, "r", encoding="utf-8") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        print(f"Error: The file {filename} was not found.")
+    except json.JSONDecodeError:
+        print(f"Error: The file {filename} is not a valid JSON format.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+    return None  # Return None in case of an error
+    
+checklist_template = read_json("checklist_template.json")
 
 ###### USER ######
 @login_manager.user_loader
@@ -126,3 +145,23 @@ class AuditLog(db.Model):
 
     def __repr__(self):
         return f"<AuditLog {self.user_id} - {self.action} at {self.timestamp}>"
+    
+# Checklist 
+    checklist = db.Column(db.JSON, nullable=True)
+    
+    # Updates the database
+    def update_checklist(self, checklist):
+        self.checklist = checklist
+        db.session.commit()
+
+    def update_checklist_from_json(self, updated_checklist):
+        for template_item in checklist_template:
+            if not any(item['name'] == template_item['name'] for item in updated_checklist):
+                updated_checklist.append({
+                    "name": template_item["name"],
+                    "status": False,
+                    "last_edit": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                })
+
+        self.checklist = updated_checklist
+        db.session.commit()
