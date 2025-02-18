@@ -105,9 +105,9 @@
     </div>
 
     {% if content.rural == 'True' %}
-    <a href="{{ url_for('wizard_create_project_rural') }}" class="btn btn-primary mt-3">Back</a>
+    <a href="{{ url_for('create_project_rural') }}" class="btn btn-primary mt-3">Back</a>
     {% elif content.urban == 'True' %}
-    <a href="{{ url_for('wizard_create_project_urban') }}" class="btn btn-primary mt-3">Back</a>
+    <a href="{{ url_for('create_project_urban') }}" class="btn btn-primary mt-3">Back</a>
     {% else %}
     <a href="{{ url_for('home') }}" class="btn btn-primary mt-3">home</a>
     {% endif %}
