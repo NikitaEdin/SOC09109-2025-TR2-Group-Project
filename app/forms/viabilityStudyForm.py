@@ -4,18 +4,18 @@ from wtforms.validators import DataRequired, Length, ValidationError, Optional
 
 class ViabilityStudyForm(FlaskForm):
 
-    flightCode = StringField('Flight Code', validators=[DataRequired()])
-    summary = TextAreaField('Summary', validators=[DataRequired()])
-    flightDate = DateField('Flight Date', format='%Y-%m-%d', validators=[DataRequired()])
-    preparedBy = StringField('Prepared By', validators=[DataRequired()])
-    preparedDate = DateField('Prepared Date', format='%Y-%m-%d', validators=[DataRequired()])
-    airSpaceClass = StringField('Air Space Class', validators=[DataRequired()])
-    airspaceObservations = StringField('Airspace Observations', validators=[DataRequired()])
-    airspaceSources = StringField('Airspace Sources', validators=[DataRequired()])
-    groundObservations = StringField('Ground Observations', validators=[DataRequired()])
-    groundSources = StringField('Ground Sources', validators=[DataRequired()])
-    weatherObservations = StringField('Weather Observations', validators=[DataRequired()])
-    weatherSources = StringField('Weather Sources', validators=[DataRequired()])
+    flightCode = StringField('Flight Code:', validators=[DataRequired()])
+    summary = TextAreaField('Summary:', validators=[DataRequired()])
+    flightDate = DateField('Flight Date:', format='%Y-%m-%d', validators=[DataRequired()])
+    preparedBy = StringField('Prepared By:', validators=[DataRequired()])
+    preparedDate = DateField('Prepared Date:', format='%Y-%m-%d', validators=[DataRequired()])
+    airSpaceClass = StringField('Air Space Class:', validators=[DataRequired()])
+    airspaceObservations = TextAreaField('Observations:', validators=[DataRequired()])
+    airspaceSources = TextAreaField('Sources:', validators=[DataRequired()])
+    groundObservations = TextAreaField('Observations:', validators=[DataRequired()])
+    groundSources = TextAreaField('Sources:', validators=[DataRequired()])
+    weatherObservations = TextAreaField('Observations:', validators=[DataRequired()])
+    weatherSources = TextAreaField('Sources:', validators=[DataRequired()])
 
 
     submit = SubmitField('Submit')
