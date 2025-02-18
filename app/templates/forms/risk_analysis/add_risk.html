@@ -22,13 +22,13 @@
                         <label class="form-label" for="hazard"><strong>Hazard:</strong></label>
                         <p class="form-label">Describe a hazrd that could impact project.</p>
                         <p class="form-label"><em>Example: Air incursion with Manned aircraft leading to collision with RPA.</em></p>
-                        <input class="form-control form-control-sm" type="text" id="remotePilot" name="remotePilot">
+                        <input class="form-control form-control-sm" type="text" id="hazard" name="hazard">
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label" for="remotePilot"><strong>Risk:</strong></label>
+                        <label class="form-label" for="risk"><strong>Risk:</strong></label>
                         <p class="form-label">What does this hazard put at risk?</p>
-                        <input class="form-control form-control-sm" type="text" id="remotePilot" name="remotePilot">
+                        <input class="form-control form-control-sm" type="text" id="risk" name="risk">
                     </div>
                 </div>
             </div>
@@ -46,41 +46,25 @@
                         <p class="form-label"><em>Example: Flight to be conducted under 400ft ASL.</em></p>
                         <textarea class="form-control form-control-sm" id="locationInformation" name="locationInformation" rows="6" cols="50"></textarea>
                     </div>
-                    <!-- Option 1: range show value -->
-                    <div class="mb-3">
-                        <label class="form-label" for="severity"><strong>Severity: </strong><span id="severityValue">5</span></label>
-                        <input type="range" class="form-range" min="0" max="10" step="1" id="severity" oninput="updateSeverity(this.value)">
-                    </div>
                     
-                    <script>
-                        function updateSeverity(value) {
-                            document.getElementById("severityValue").textContent = value;
-                        }
-                    </script>
-
-                    <!-- Option 2: range show value -->
                     <div class="mb-3">
-                        <label class="form-label" for="probability"><strong>Probability: </strong><span id="curr"></span> </label>
-                        <input type="range" class="form-range" min="0" max="10" step="1" id="probability">
+                        <label class="form-label" for="beforeSeverity"><strong>Severity:</strong></label>
+                        <select class="form-select">
+                            <option selected>Select severity rating</option>
+                            {% for i in range(1, 11) %}
+                                <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                          </select>
                     </div>
-                     
-
-             <script> 
-                var el = document.getElementById('curr'); 
-                var p = document.getElementById('probability'); 
-                el.innerText = p.valueAsNumber; 
-                p.addEventListener('change', () => { 
-                    el.innerText = p.valueAsNumber; 
-                }) 
-            </script> 
-
-
-
                     <div class="mb-3">
-                        <label class="form-label" for="risk"><strong>Risk:</strong></label>
-                        <input type="range" class="form-range" min="0" max="10" step="1" id="risk">
+                        <label class="form-label" for="beforeProbability"><strong>Probability:</strong></label>
+                        <select class="form-select" >
+                            <option selected>Select probability rating</option>
+                            {% for i in range(1, 11) %}
+                                <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                          </select>
                     </div>
-
                     <div class="mb-3">
                         <label class="form-label" for="beforeRisk"><strong>Risk:</strong></label>
                         <select class="form-select">
@@ -88,7 +72,7 @@
                             {% for i in range(1, 11) %}
                                 <option value="{{ i }}">{{ i }}</option>
                             {% endfor %}
-                        </select>
+                          </select>
                     </div>
                 </div>
             </div>
