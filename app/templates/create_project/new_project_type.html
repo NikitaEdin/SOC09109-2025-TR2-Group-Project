@@ -19,18 +19,29 @@
     {% endwith %}
 </div>
 
-<div class="card shadow-sm p-4">
+<div class="card text-center">
     <h2 class="mb-4">Select Project Type</h2>
+    <p>Choose from the two project types</p>
     <form method="POST">
         {{ form.hidden_tag() }}
 
-        <div class="mb-3">
-            {{ form.projectType.label(class="form-label") }}
-            {{ form.projectType(class="form-select") }}
-            {% for error in form.projectType.errors %}
+        <div class="d-flex mb-3">
+            <label class="card d-flex align-items-center w-50">
+            <input type ="radio" name="{{ form.projectType.name }}" value="Rural">
+                <img src="{{ url_for('static', filename='images/icons/mountain.png') }}" style="width: 65px;">
+                    <h5>{{ form.projectType.choices[0][1] }}</h5>
+                </label>
+
+            <label class="card d-flex align-items-center w-50">
+            <input type ="radio" name="{{ form.projectType.name }}" value="Urban">
+                <img src="{{ url_for('static', filename='images/icons/buildings.png') }}" style="width: 65px;">
+                    <h5>{{ form.projectType.choices[1][1] }}</h5>
+                </label>
+        </div>
+
+                    {% for error in form.projectType.errors %}
                 <div class="text-danger">{{ error }}</div>
             {% endfor %}
-        </div>
 
         <button type="submit" class="btn btn-primary">Next</button>
     </form>
