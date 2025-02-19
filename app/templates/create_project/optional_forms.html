@@ -61,8 +61,7 @@
                                 %}>
                             <div style="max-width: 25rem;">
                                 <label for="{{ key }}">{{ value.title }} 
-                                    {% if project.last_edited %} - Last Edited: {{ project.last_edited.strftime('%d/%m/%y') }} {% endif %}
-
+                                    <small>{% if value.last_edit %} - Last Edited: {{ value.last_edit }} {% endif %}</small>
                                 </label>
                                 <p>{{ value.description }}</p>
                             </div>

@@ -93,7 +93,8 @@ def optional(project_id):
         item["name"]: {
         "title": item["name"],
         "description": item["description"],
-        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist)
+        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
+        "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
     } for item in checklist_template_optional
     }
     
