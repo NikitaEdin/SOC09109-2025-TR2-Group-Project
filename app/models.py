@@ -5,7 +5,7 @@ from flask import url_for
 from flask_login import UserMixin, current_user
 from sqlalchemy import func
 import re
-from app.forms.checklist_template import checklist_template
+from app.forms.checklist_template import checklist_template, checklist_template_optional
 
 # Global/static variables
 ADMIN_MIN_POWER = 90
@@ -118,7 +118,7 @@ class Project(db.Model):
     postFlight = db.Column(db.JSON, nullable=True)
 
     author = db.relationship('User', backref='projects')
-
+    
     # Returns true if given user is the owner of this project
     def is_owner(self, user):
         return self.authorID == user.id
@@ -129,6 +129,28 @@ class Project(db.Model):
 
     def __repr__(self):
         return f'<Project {self.title} by {self.author.username}>'
+    
+    # Checklist 
+
+    checklist = db.Column(db.JSON, nullable=True)
+    
+    # Updates the database
+    def update_checklist(self, checklist):
+        self.checklist = checklist
+        db.session.commit()
+
+    def update_checklist_from_json(self, updated_checklist):
+        for template_item in checklist_template_optional:
+            if not any(item['name'] == template_item['name'] for item in updated_checklist):
+                updated_checklist.append({
+                    "name": template_item["name"],
+                    "description":template_item["description"],
+                    "status": False,
+                    "last_edit": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                })
+
+        self.checklist = updated_checklist
+        db.session.commit()
     
 
 class AuditLog(db.Model):
@@ -143,22 +165,3 @@ class AuditLog(db.Model):
     def __repr__(self):
         return f"<AuditLog {self.user_id} - {self.action} at {self.timestamp}>"
     
-# Checklist 
-    checklist = db.Column(db.JSON, nullable=True)
-    
-    # Updates the database
-    def update_checklist(self, checklist):
-        self.checklist = checklist
-        db.session.commit()
-
-    def update_checklist_from_json(self, updated_checklist):
-        for template_item in checklist_template:
-            if not any(item['name'] == template_item['name'] for item in updated_checklist):
-                updated_checklist.append({
-                    "name": template_item["name"],
-                    "status": False,
-                    "last_edit": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                })
-
-        self.checklist = updated_checklist
-        db.session.commit()

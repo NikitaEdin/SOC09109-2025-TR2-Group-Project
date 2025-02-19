@@ -1,7 +1,8 @@
+from datetime import datetime
 from flask import render_template, request
 
 from app import app
-from app.models import db, Project, checklist_template
+from app.models import db, Project, checklist_template_optional,checklist_template
 
 @app.route("/create_project/create-rural", methods=['GET', 'POST'])
 def create_project_rural():
@@ -72,44 +73,50 @@ def create_project_urban():
     
     return render_template('create_project/create_project_urban.html', checks=checks)
 
-@app.route('/create_project/optional', methods =['GET','POST'])
-def optional():
+@app.route('/create_project/optional/<int:project_id>', methods =['GET','POST'])
+def optional(project_id):
     
     # TODO Return to this should grab the project based on the id passed on from the dashboard
-    # project = Project.query.get_or_404(project_id)
+    project = Project.query.get_or_404(project_id)
     
-    # if not project.checklist:
-    #     project.checklist = []
-    #     for item in checklist_template:
-    #         project.checklist.append({
-    #             "name": item["name"],
-    #             "status": False,
-    #             "last_edit": None
-    #         })
-    #     db.session.commit()
+    if not project.checklist:
+        project.checklist = []
+        for item in checklist_template_optional:
+            project.checklist.append({
+                "name": item["name"],
+                "status": False,
+                "last_edit": None
+            })
+        db.session.commit()
         
     checks={
-        'leaflet_drop': {
-        'title': 'Leaflet Drop',
-        'description': 'Carry out a leaflet drop and/or a door-to-door advisory campaign',
-        'value': False
-    },
-    'inform_police': {
-        'title': 'Inform Police',
-        'description': 'Inform the local police if the planned flight operation is to take place in areas where there is likely to be members of the public',
-        'value': False
-    },
-    'inform_local_air_user': {
-        'title': 'Inform Local Air Users',
-        'description': 'If there is a local air user club nearby, contact the club and enquire about any likely activity on the day of the proposed flight operation',
-        'value': False
-    },
-    'monitor_weather': {
-        'title': 'Monitor Weather',
-        'description': 'Monitor the weather conditions on the day of the proposed flight operation',
-        'value': False
+        item["name"]: {
+        "title": item["name"],
+        "description": item["description"],
+        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist)
+    } for item in checklist_template_optional
     }
-    }
+    
+    if request.method == "POST":
+        updated_checklist = []
+        for item in project.checklist:
+            status = request.form.get(item["name"]) == "on"
+            
+            updated_item = item.copy()
+
+            # Update only if the status changed
+            if updated_item["status"] != status:
+                updated_item["status"] = status
+                updated_item["last_edit"] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            else:
+                updated_checklist.append(updated_item)
+
+        # Update the project checklist
+        project.update_checklist(updated_checklist)
+        
+        # Add any missing items from the checklist template
+        project.update_checklist_from_json(updated_checklist)
+        
     forms={
         'customise_loading_list': {
         'title': 'Customise Loading List',
@@ -155,13 +162,13 @@ def optional():
             'value': False
         }
     }
+    
+    
 
 #  This is to tidy up and only pass in only one variable into the template
     content = {
     "checks": checks,
     "forms": forms,
-    "IncidentsEmergencies": IncidentsEmergencies,
-    "urban": request.args.get('urban', 'False'),
-    "rural": request.args.get('rural', 'False')
+    "IncidentsEmergencies": IncidentsEmergencies
 }
-    return render_template("create_project/optional_forms.html", content=content )
+    return render_template("create_project/optional_forms.html", content=content, project=project )
