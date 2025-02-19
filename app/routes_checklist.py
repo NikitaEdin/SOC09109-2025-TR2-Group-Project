@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import render_template, request
+from flask import render_template, request,redirect,url_for
 
 from app import app
 from app.models import db, Project, checklist_template_optional,checklist_template
@@ -103,13 +103,15 @@ def optional(project_id):
             status = request.form.get(item["name"]) == "on"
             
             updated_item = item.copy()
+            old_status = updated_item["status"]
 
+            updated_item["status"] = status
+            
             # Update only if the status changed
-            if updated_item["status"] != status:
-                updated_item["status"] = status
+            if old_status != status:
                 updated_item["last_edit"] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            else:
-                updated_checklist.append(updated_item)
+            
+            updated_checklist.append(updated_item)
 
         # Update the project checklist
         project.update_checklist(updated_checklist)
@@ -117,6 +119,7 @@ def optional(project_id):
         # Add any missing items from the checklist template
         project.update_checklist_from_json(updated_checklist)
         
+        return redirect(url_for('optional', project_id=project.id))
     forms={
         'customise_loading_list': {
         'title': 'Customise Loading List',
