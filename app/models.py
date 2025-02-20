@@ -130,15 +130,15 @@ class Project(db.Model):
     def __repr__(self):
         return f'<Project {self.title} by {self.author.username}>'
     
-    # Checklist 
-
+    # Creates Checklist in the database
     checklist = db.Column(db.JSON, nullable=True)
     
-    # Updates the database
+    # Updates the checklist column 
     def update_checklist(self, checklist):
         self.checklist = checklist
         db.session.commit()
 
+    # Ensures the template items are stored before saving to the database
     def update_checklist_from_json(self, updated_checklist):
         for template_item in checklist_template_optional:
             if not any(item['name'] == template_item['name'] for item in updated_checklist):

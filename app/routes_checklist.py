@@ -79,6 +79,7 @@ def optional(project_id):
     # TODO Return to this should grab the project based on the id passed on from the dashboard
     project = Project.query.get_or_404(project_id)
     
+    # Checks if the checklist is generated if not give it default values
     if not project.checklist:
         project.checklist = []
         for item in checklist_template_optional:
@@ -89,6 +90,7 @@ def optional(project_id):
             })
         db.session.commit()
         
+    # Stores information from the checklist template
     checks={
         item["name"]: {
         "title": item["name"],
@@ -98,6 +100,7 @@ def optional(project_id):
     } for item in checklist_template_optional
     }
     
+    # On form submission checks if the checkbox is marked  then puts it into updated checklist
     if request.method == "POST":
         updated_checklist = []
         for item in project.checklist:
