@@ -132,14 +132,15 @@ class Project(db.Model):
             checklist_template_emergencies,
             checklist_template_forms_optional
     ]
-        for template_item in checklist_templates:
-            if not any(item['name'] == template_item['name'] for item in updated_checklist):
-                updated_checklist.append({
-                    "name": template_item["name"],
-                    "description":template_item["description"],
-                    "status": False,
-                    "last_edit": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                })
+        for template in checklist_templates:
+            for template_item in template:
+                if not any(item['name'] == template_item['name'] for item in updated_checklist):
+                    updated_checklist.append({
+                        "name": template_item["name"],
+                        "description":template_item["description"],
+                        "status": False,
+                        "last_edit": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    })
 
         self.checklist = updated_checklist
         db.session.commit()

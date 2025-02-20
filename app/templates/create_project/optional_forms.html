@@ -8,7 +8,6 @@
     <h3>Fill the forms and keep track of the progress</h3>
 </div>
 
-
 <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 70vh">
     <div class="row justify-content-between">
         <!-- Left column -->
@@ -19,14 +18,15 @@
             <form class="container d-flex flex-column gap-4 align-items-start" method="post">
                 <div class="d-flex flex-wrap align-items-center justify-content-start" style="gap: 5rem;">
                     <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
-                        {% for key in content.forms.keys() %}
-                        {% set value = content.forms[key] %}
+                        {% for key, value in content.forms.items() %}
 
                         <div class="d-flex align-items-center gap-4 checklist-item">
                             <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif
                                 %}>
                             <div style="max-width: 25rem;">
-                                <label for="{{ key }}">{{ value.title }}</label>
+                                <label for="{{ key }}">{{ value.title }}
+                                    <small class="fw-light fs-6">{% if value.last_edit %} - Last Edited: {{ value.last_edit }} {% endif %}</small>
+                                </label>
                                 <p>{{ value.description }}</p>
                             </div>
                             <div class="d-flex align-items-end ms-auto">
@@ -39,8 +39,10 @@
                                 {%endif%}
                             </div>
                         </div>
-
                         {% endfor %}
+                        <div class="container text-center">
+                            <button class="btn btn-primary mt-3">Submit Changes</button>
+                        </div>
                     </div>
                 </div>
         </div>
@@ -84,14 +86,13 @@
         <form class="container d-flex flex-column gap-4 align-items-center" method="post">
             <div class="d-flex flex-wrap align-items-center justify-content-center" style="gap: 5rem;">
                 <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
-                    {% for key in content.IncidentsEmergencies.keys() %}
-                    {% set value = content.IncidentsEmergencies[key] %}
+                    {% for key, value in content.IncidentsEmergencies.items() %}
 
                     <div class="d-flex align-items-center gap-4 checklist-item">
                         <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif %}>
                         <div style="max-width: 25rem;">
                             <label for="{{ key }}">{{ value.title }}
-                                
+                                <small class="fw-light fs-6">{% if value.last_edit %} - Last Edited: {{ value.last_edit }} {% endif %}</small>
                             </label>
                             <p>{{ value.description }}</p>
                         </div>
@@ -106,6 +107,9 @@
                         </div>
                     </div>
                     {% endfor %}
+                    <div class="container text-center">
+                        <button class="btn btn-primary mt-3">Submit Changes</button>
+                    </div>
                 </div>
             </div>
         </form>
