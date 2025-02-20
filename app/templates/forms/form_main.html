@@ -1,0 +1,69 @@
+{% if not form_data or form_data|length <= 0 %}
+    <div class="container text-center mt-5">
+        <h5>Oh no! Something went wrong with the form.</h5>
+        <p>Try to recreate the project, or contact the web administrator.</p>
+        <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary">Go Back</a>
+    </div>
+{% else %}
+    <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
+        <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3 card">
+            <div class="text-center">
+                <p class="fs-1 mb-0">{{ form_data.title }}</p>
+                <p class="fs-3 fw-light">{{ form_data.header }}</p>
+            </div>
+
+            {% for section in form_data.form.sections %}
+                <div class="section">
+                    {% if section.header %}
+                        <h4 class="mt-5">{{ section.header }}</h4>
+                    {% endif %}
+
+                    {% for field in section.fields %}
+                        <div class="form-group mb-2">
+                            <label for="{{ field.id }}">{{ field.name|capitalize }}</label>
+
+                            {% if field.type == 'textarea' %}
+                            <textarea class="form-control {% if field.id in errors %}is-invalid{% endif %}" 
+                                      id="{{ field.id }}" 
+                                      name="{{ field.id }}" 
+                                      rows="3"  
+                                      {% if field.required %}required{% endif %}>{{ field.value }}</textarea>
+                        
+                        {% elif field.type == 'date' %}
+                            <input type="date" 
+                                   class="form-control {% if field.id in errors %}is-invalid{% endif %}" 
+                                   id="{{ field.id }}" 
+                                   name="{{ field.id }}" 
+                                   value="{{ field.value }}"  
+                                   {% if field.required %}required{% endif %}>
+                        
+                        {% else %}
+                            <input type="text" 
+                                   class="form-control {% if field.id in errors %}is-invalid{% endif %}" 
+                                   id="{{ field.id }}" 
+                                   name="{{ field.id }}" 
+                                   value="{{ field.value }}"  
+                                   {% if field.required %}required{% endif %}>
+                        {% endif %}
+                        
+
+                            {% if field.id in errors %}
+                                <div class="invalid-feedback mb-3">
+                                    {{ errors[field.id] }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                    {% endfor %}
+                </div>
+
+            {% endfor %}
+
+            <div class="row justify-content-center">
+                <div class="col-6 mt-5">
+                    <button type="submit" class="btn btn-primary w-100">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endif %}

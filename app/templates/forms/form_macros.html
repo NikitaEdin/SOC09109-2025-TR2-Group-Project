@@ -1,0 +1,23 @@
+{% macro render_field(field, errors) %}
+<div class="form-group">
+    <label for="{{ field.id }}">{{ field.name|capitalize }}</label>
+
+    {% if field.type == 'textarea' %}
+        <textarea class="form-control {% if field.id in errors %}is-invalid{% endif %}" 
+                  id="{{ field.id }}" name="{{ field.id }}" rows="3"
+                  {% if field.required %}required{% endif %}>{{ field.value }}</textarea>
+    {% elif field.type == 'date' %}
+        <input type="date" class="form-control {% if field.id in errors %}is-invalid{% endif %}" 
+               id="{{ field.id }}" name="{{ field.id }}" value="{{ field.value }}"
+               {% if field.required %}required{% endif %}>
+    {% else %}
+        <input type="text" class="form-control {% if field.id in errors %}is-invalid{% endif %}" 
+               id="{{ field.id }}" name="{{ field.id }}" value="{{ field.value }}"
+               {% if field.required %}required{% endif %}>
+    {% endif %}
+
+    {% if field.id in errors %}
+        <div class="invalid-feedback"> {{ errors[field.id] }}</div>
+    {% endif %}
+</div>
+{% endmacro %}
