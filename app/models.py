@@ -5,26 +5,11 @@ from flask import url_for
 from flask_login import UserMixin, current_user
 from sqlalchemy import func
 import re
-from app.forms.checklist_template import checklist_template, checklist_template_optional
+# Import the checklist templates
+from app.forms.checklist_template import checklist_template_emergencies, checklist_template_optional_checklist, checklist_template_forms_optional
 
 # Global/static variables
 ADMIN_MIN_POWER = 90
-
-# Method to read json's in the form folder 
-# def read_json(filename):
-#     try:
-#         base_path = os.path.join(os.path.dirname(__file__), "forms", "jsons")  
-#         filepath = os.path.join(base_path, filename) 
-    
-#         with open(filepath, "r", encoding="utf-8") as file:
-#             return json.load(file)
-#     except FileNotFoundError:
-#         print(f"Error: The file {filename} was not found.")
-#     except json.JSONDecodeError:
-#         print(f"Error: The file {filename} is not a valid JSON format.")
-#     except Exception as e:
-#         print(f"An unexpected error occurred: {e}")
-#     return None  # Return None in case of an error
 
 ###### USER ######
 @login_manager.user_loader
@@ -140,7 +125,14 @@ class Project(db.Model):
 
     # Ensures the template items are stored before saving to the database
     def update_checklist_from_json(self, updated_checklist):
-        for template_item in checklist_template_optional:
+        
+        # Here just import the checklist templates that you want to be used
+        checklist_templates = [
+            checklist_template_optional_checklist,
+            checklist_template_emergencies,
+            checklist_template_forms_optional
+    ]
+        for template_item in checklist_templates:
             if not any(item['name'] == template_item['name'] for item in updated_checklist):
                 updated_checklist.append({
                     "name": template_item["name"],

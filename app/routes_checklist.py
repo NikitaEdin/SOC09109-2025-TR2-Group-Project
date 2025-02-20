@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import render_template, request,redirect,url_for
 
 from app import app
-from app.models import db, Project, checklist_template_optional,checklist_template
+from app.models import db, Project, checklist_template_optional_checklist,checklist_template_emergencies,checklist_template_forms_optional
 
 @app.route("/create_project/create-rural", methods=['GET', 'POST'])
 def create_project_rural():
@@ -79,17 +79,24 @@ def optional(project_id):
     # TODO Return to this should grab the project based on the id passed on from the dashboard
     project = Project.query.get_or_404(project_id)
     
-    # Checks if the checklist is generated if not give it default values
+    checklist_templates=[
+        checklist_template_optional_checklist,
+        checklist_template_emergencies,
+        checklist_template_forms_optional
+    ]
+    
+    # Checks if the checklist templates is generated if not give it default values
     if not project.checklist:
         project.checklist = []
-        for item in checklist_template_optional:
+        
+        for item in checklist_templates:
             project.checklist.append({
                 "name": item["name"],
                 "status": False,
                 "last_edit": None
             })
         db.session.commit()
-        
+           
     # Stores information from the checklist template
     checks={
         item["name"]: {
@@ -97,7 +104,25 @@ def optional(project_id):
         "description": item["description"],
         "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
         "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
-    } for item in checklist_template_optional
+    } for item in checklist_template_optional_checklist
+    }
+    
+    IncidentsEmergencies={
+        item["name"]: {
+        "title": item["name"],
+        "description": item["description"],
+        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
+        "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
+    } for item in checklist_template_emergencies
+    }
+    
+    forms={
+        item["name"]: {
+        "title": item["name"],
+        "description": item["description"],
+        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
+        "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
+    } for item in checklist_template_forms_optional
     }
     
     # On form submission checks if the checkbox is marked  then puts it into updated checklist
