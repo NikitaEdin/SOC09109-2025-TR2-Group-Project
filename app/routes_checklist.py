@@ -113,7 +113,7 @@ def optional(project_id):
             
             # Update only if the status changed
             if old_status != status:
-                updated_item["last_edit"] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                updated_item["last_edit"] = datetime.now().strftime("%d/%m/%y %H:%M")
             
             updated_checklist.append(updated_item)
 
