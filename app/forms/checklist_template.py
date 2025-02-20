@@ -5,16 +5,16 @@ checklist_template_optional_checklist = [
     {"name": "Monitor Weather", "description": "Monitor the weather conditions on the day of the proposed flight operation"},
 ]
 
-checklist_template_forms_optional= {
+checklist_template_forms_optional = [
     {"name":"Loading List","description":"Customise the loading list to suit the flight operation"},
     {"name":"Land Permission","description":"Obtain permission to land on the landowner’s property"},
     {"name":"Crew Call Sheets","description":"Items for crew to bring on flight"},
     {"name":"Post-Flight","description":"Form for post flight data"},
     {"name":"Pre-Flight","description":"Form for pre flight data"},
     {"name":"NOTAM","description":"Click the button to fill in the form"}
-}
+]
 
-checklist_template_emergencies = {
+checklist_template_emergencies = [
     {"name":"ECCAIRS","description":"Click the button & fill the form"},
     {"name":"AIRPROX","description":"Click the button & fill the form"}
-}
+]

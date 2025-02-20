@@ -89,12 +89,13 @@ def optional(project_id):
     if not project.checklist:
         project.checklist = []
         
-        for item in checklist_templates:
-            project.checklist.append({
-                "name": item["name"],
-                "status": False,
-                "last_edit": None
-            })
+        for template in checklist_templates:
+            for item in template:
+                project.checklist.append({
+                    "name": item["name"],
+                    "status": False,
+                    "last_edit": None
+                })
         db.session.commit()
            
     # Stores information from the checklist template
@@ -149,53 +150,6 @@ def optional(project_id):
         project.update_checklist_from_json(updated_checklist)
         
         return redirect(url_for('optional', project_id=project.id))
-    forms={
-        'customise_loading_list': {
-        'title': 'Customise Loading List',
-        'description': 'Customise the loading list to suit the flight operation',
-        'value': False
-    },
-    'land_permission': {
-        'title': 'Permission from Land Owner',
-        'description': 'Obtain permission to land on the landowner’s property',
-        'value': False
-    },
-    'crew_call_sheets':{
-        'title': 'Prepare and send Crew Call Sheets',
-        'description' : 'Items for crew to bring on flight',
-        'value': False
-
-    },
-    'post_flight_check':{
-        'title': 'Post Flight Form',
-        'description':'Form for post flight data',
-        'value': False
-    },
-    'pre_flight_check':{
-        'title':'Pre flight form',
-        'description': 'Form for pre flight data',
-        'value': False
-    },
-    'notam_form':{
-        'title':'Notam Form',
-        'description': 'Enter details into form',
-        'value': False
-    }
-    }
-    IncidentsEmergencies={
-        'ECCAIRS':{
-            'title': 'ECCAIRS Incident Link',
-            'description': 'Click the button & fill the form',
-            'value': False
-        },
-        'AIRPROX':{
-            'title': 'AIRPROX Incident Link',
-            'description':'Click the button & fill the form',
-            'value': False
-        }
-    }
-    
-    
 
 #  This is to tidy up and only pass in only one variable into the template
     content = {
