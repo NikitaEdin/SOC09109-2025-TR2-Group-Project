@@ -34,7 +34,7 @@ def create_project_rural():
         }
     }
     
-    return render_template('create_project/create_project_rural.html', checks=checks)
+    return render_template("create_project/create_project_rural.html", checks=checks)
 
 @app.route("/create_project/create-urban", methods=['GET','POST'])
 def create_project_urban():
@@ -71,7 +71,7 @@ def create_project_urban():
         }    
     }
     
-    return render_template('create_project/create_project_urban.html', checks=checks)
+    return render_template("create_project/create_project_urban.html", checks=checks)
 
 @app.route('/create_project/optional/<int:project_id>', methods =['GET','POST'])
 def optional(project_id):
