@@ -128,9 +128,10 @@ class AuditLog(db.Model):
         return f"<AuditLog {self.user_id} - {self.action} at {self.timestamp}>"
 
 class Drone(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    droneID = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     weight = db.Column(db.String(50), nullable=False)
     homePage = db.Column(db.String(255), nullable=False)
     userGuide = db.Column(db.String(255), nullable=False)
     imageURL = db.Column(db.String(255), nullable=False)
+

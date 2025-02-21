@@ -12,13 +12,18 @@
     <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 60vh;">
 
         <div class="row justify-content-center">
-            {% for drone in drones.values() %}
+            {% for drone in drones %}
                 <div class="col-12 col-md-4 col-sm-6">
-                    <div class="card mb-3 mx-3 mx-xl-5 bg-transparent border-0 text-center">
+                    <div class="card mb-3 mx-3 mx-xl-5 border-0 text-center">
                         <div class="card-body">
-                            <h5 class="card-title">{{ drone.name }}</h5>
+                            <h5 class="card-title">{{ drone.title }}</h5>
                         </div>
-                        <img src="{{ url_for('static', filename=drone.image_path) }}" alt="image of a drone" class="img-fluid rounded">
+                        <img src="{{ url_for('static', filename=drone.imageURL) }}" alt="image of a drone" class="img-fluid rounded">
+                        <p>Weight: {{drone.weight}}</p>
+                        <div class="d-flex justify-content-between p-3">
+                            <a href="{{drone.homePage}}" target="_blank" style="text-decoration: none;">Product Page</a>
+                            <a href="{{drone.userGuide}}" target="_blank" style="text-decoration: none;">User Guide</a>
+                        </div>
                     </div>
                 </div>
             {% endfor %}

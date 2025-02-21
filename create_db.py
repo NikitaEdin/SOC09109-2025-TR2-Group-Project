@@ -79,7 +79,8 @@ def create_database():
                                     userGuide='https://dl.djicdn.com/downloads/DJI_Mavic_3_Enterprise/DJI_Mavic_3E_3T_User_Manual_EN.pdf',
                                     imageURL='images/drone2.png')
 
-                    drone_3 = Drone(title='DJI Mini 3 Pro', weight='249g',
+                    drone_3 = Drone(title='DJI Mini 3 Pro',
+                                    weight='249g',
                                     homePage='https://store.dji.com/uk/product/dji-mini-3-pro',
                                     userGuide='https://dl.djicdn.com/downloads/DJI_Mini_3_Pro/UM/20240105/2/DJI_Mini_3_Pro_User_Manual_v1.6_EN.pdf',
                                     imageURL='images/drone3.png')
