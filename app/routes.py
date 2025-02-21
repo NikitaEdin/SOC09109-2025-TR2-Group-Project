@@ -7,7 +7,9 @@ from app.models import User, Role, Drone
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('index.html', title='Home', use_container=False)
+    drones = Drone.query.limit(3).all()
+
+    return render_template('index.html', title='Home', use_container=False, drones=drones)
 
 
 ########## INFORMATIONAL PAGES ###########
@@ -28,6 +30,6 @@ def view_drones():
 
     drones = Drone.query.all()
 
-    return render_template('/info/view_drones.html', drones=drones)
+    return render_template('/info/view_drones.html', drones=drones, title='All Drones')
 
 

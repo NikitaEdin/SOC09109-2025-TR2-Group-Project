@@ -67,23 +67,35 @@ def create_database():
                 if not Drone.query.first(): # checks if drones exist
                     print("Adding drones...")
 
-                    drone_1 = Drone(title='DJI Matrice 30 RTK',
-                                    weight='9.2kg',
-                                    homePage='https://enterprise.dji.com/matrice-30',
-                                    userGuide='https://dl.djicdn.com/downloads/matrice-30-series/20230922UM/Matrice30_Series_User_Manual_v2.0_EN.pdf',
-                                    imageURL='images/drone1.png')
+                    drone_1 = Drone(
+                        title='DJI Matrice 30 RTK',
+                        weight='9.2kg',
+                        homePage='https://enterprise.dji.com/matrice-30',
+                        userGuide='https://dl.djicdn.com/downloads/matrice-30-series/20230922UM/Matrice30_Series_User_Manual_v2.0_EN.pdf',
+                        imageURL='images/drone1.png',
+                        best_for='Industrial applications and surveying',
+                        release_date='March 21, 2022'
+                    )
 
-                    drone_2 = Drone(title='DJI Mavic 3E',
-                                    weight='1.05kg',
-                                    homePage='https://enterprise.dji.com/mavic-3-enterprise',
-                                    userGuide='https://dl.djicdn.com/downloads/DJI_Mavic_3_Enterprise/DJI_Mavic_3E_3T_User_Manual_EN.pdf',
-                                    imageURL='images/drone2.png')
+                    drone_2 = Drone(
+                        title='DJI Mavic 3E',
+                        weight='1.05kg',
+                        homePage='https://enterprise.dji.com/mavic-3-enterprise',
+                        userGuide='https://dl.djicdn.com/downloads/DJI_Mavic_3_Enterprise/DJI_Mavic_3E_3T_User_Manual_EN.pdf',
+                        imageURL='images/drone2.png',
+                        best_for='Professional aerial inspection',
+                        release_date='September 27, 2022'
+                    )
 
-                    drone_3 = Drone(title='DJI Mini 3 Pro',
-                                    weight='249g',
-                                    homePage='https://store.dji.com/uk/product/dji-mini-3-pro',
-                                    userGuide='https://dl.djicdn.com/downloads/DJI_Mini_3_Pro/UM/20240105/2/DJI_Mini_3_Pro_User_Manual_v1.6_EN.pdf',
-                                    imageURL='images/drone3.png')
+                    drone_3 = Drone(
+                        title='DJI Mini 3 Pro',
+                        weight='249g',
+                        homePage='https://store.dji.com/uk/product/dji-mini-3-pro',
+                        userGuide='https://dl.djicdn.com/downloads/DJI_Mini_3_Pro/UM/20240105/2/DJI_Mini_3_Pro_User_Manual_v1.6_EN.pdf',
+                        imageURL='images/drone3.png',
+                        best_for='Travel and casual photography',
+                        release_date='May 2023'
+                    )
 
                     db.session.add(drone_1)
                     db.session.add(drone_2)
