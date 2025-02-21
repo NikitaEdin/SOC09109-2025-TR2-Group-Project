@@ -129,12 +129,12 @@ def optional(project_id):
     # On form submission checks if the checkbox is marked  then puts it into updated checklist
     if request.method == "POST":
         updated_checklist = []
+        
         for item in project.checklist:
             status = request.form.get(item["name"]) == "on"
             
             updated_item = item.copy()
             old_status = updated_item["status"]
-
             updated_item["status"] = status
             
             # Update only if the status changed
@@ -142,6 +142,8 @@ def optional(project_id):
                 updated_item["last_edit"] = datetime.now().strftime("%d/%m/%y %H:%M")
             
             updated_checklist.append(updated_item)
+            
+        db.session.commit()
 
         # Update the project checklist
         project.update_checklist(updated_checklist)
@@ -157,4 +159,4 @@ def optional(project_id):
     "forms": forms,
     "IncidentsEmergencies": IncidentsEmergencies
 }
-    return render_template("create_project/optional_forms.html", content=content, project=project )
+    return render_template("create_project/optional_forms.html", content=content, project=project,footer=False )
