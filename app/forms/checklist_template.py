@@ -1,3 +1,4 @@
+# Optional Checklist Templates
 checklist_template_optional_checklist = [
     {"name": "Leaflet Drop", "description": "Carry out a leaflet drop and/or a door-to-door advisory campaign", "value":""},
     {"name": "Inform Police", "description": "Inform the local police if the planned flight operation is to take place in areas where there is likely to be members of the public"},
@@ -18,3 +19,20 @@ checklist_template_emergencies = [
     {"name":"ECCAIRS","description":"Click the button & fill the form"},
     {"name":"AIRPROX","description":"Click the button & fill the form"}
 ]
+
+# Required Checklist Templates
+checklist_template_required_rural = [
+    {"name":"Viability Study","description":"Complete the form"},
+    {"name":"Site Evaluation","description":"Complete the form"},
+    {"name":"Risk Analysis","description":"Complete the form"}
+]
+
+checklist_template_required_urban = [
+    {"name":"Viability Study","description":"Complete the form"},
+    {"name":"Site Evaluation","description":"Complete the form"},
+    {"name":"Risk Analysis","description":"Complete the form"},
+    {"name":"Advanced Flight Permission","description":"Complete the form"}
+]
+
+
+
