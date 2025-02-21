@@ -33,6 +33,3 @@ checklist_template_required_urban = [
     {"name":"Risk Analysis","description":"Complete the form"},
     {"name":"Advanced Flight Permission","description":"Complete the form"}
 ]
-
-
-

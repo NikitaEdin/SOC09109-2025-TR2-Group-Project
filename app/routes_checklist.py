@@ -1,8 +1,7 @@
 from datetime import datetime
 from flask import render_template, request,redirect,url_for
-
 from app import app
-from app.models import db, Project, checklist_template_optional_checklist,checklist_template_emergencies,checklist_template_forms_optional
+from app.models import db, Project, checklist_template_optional_checklist,checklist_template_emergencies,checklist_template_forms_optional,checklist_template_required_rural,checklist_template_required_urban
 
 @app.route("/create_project/create-rural", methods=['GET', 'POST'])
 def create_project_rural():
@@ -36,39 +35,35 @@ def create_project_rural():
     
     return render_template("create_project/create_project_rural.html", checks=checks)
 
-@app.route("/create_project/create-urban", methods=['GET','POST'])
-def create_project_urban():
-    checks = {
-        'viability_study': {
-            'title': 'Complete Viability Study',
-            'description': 'Complete the form and checkbox ticks',
-            'value': False
-        },
-        'site_eval': {
-            'title': 'Complete Site Evaluation',
-            'description': 'Complete the form and checkbox ticks',
-            'value': False
-        },
-        'loading_list': {
-            'title': 'Loading List',
-            'description': 'Complete the form and checkbox ticks',
-            'value': False
-        },
-        'risk_analysis':{
-            'title': 'Risk Analysis',
-            'description': 'Complete the form and checkbox ticks',
-            'value': False
-        },
-        'post_flight':{
-            'title': 'Post Flight',
-            'description': 'Complete the form and checkbox ticks',
-            'value': False
-        },
-        'advanced_flight':{
-            'title':'Advanced Flight Permission',
-            'description':'This is to apply to fly in restricted areas',
-            'value': False
-        }    
+@app.route("/create_project/create-urban/<int:project_id>", methods=['GET','POST'])
+def create_project_urban(project_id):
+    
+    project = Project.query.get_or_404(project_id)
+    
+    checklist_templates = [
+        checklist_template_required_urban
+    ]
+    
+    # Checks if the checklist templates is generated if not give it default values
+    if not project.checklist:
+        project.checklist = []
+        
+        for template in checklist_templates:
+            for item in template:
+                project.checklist.append({
+                    "name": item["name"],
+                    "status": False,
+                    "last_edit": None
+                })
+        db.session.commit()
+    
+    checks={
+        item["name"]: {
+        "title": item["name"],
+        "description": item["description"],
+        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
+        "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
+    } for item in checklist_template_optional_checklist
     }
     
     return render_template("create_project/create_project_urban.html", checks=checks)
@@ -76,7 +71,6 @@ def create_project_urban():
 @app.route('/create_project/optional/<int:project_id>', methods =['GET','POST'])
 def optional(project_id):
     
-    # TODO Return to this should grab the project based on the id passed on from the dashboard
     project = Project.query.get_or_404(project_id)
     
     checklist_templates=[
