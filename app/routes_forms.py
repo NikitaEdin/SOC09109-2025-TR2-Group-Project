@@ -38,12 +38,7 @@ def viability_study(project_id):
                     elif not field_value.isnumeric():  # Must be numeric
                         errors[field_id] = "Flight code must be numeric."
 
-                # Validation for flightDate
-                if field_id == 'flightdate':
-                    if not field_value:
-                        errors[field_id] = "Flight date is required."
-                    elif not is_valid_date(field_value):
-                        errors[field_id] = "Invalid date format. Please use YYYY-MM-DD."
+              
 
                 # If the field passes validation, save its value back to the JSON
                 if field_id not in errors:

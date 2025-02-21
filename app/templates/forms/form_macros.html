@@ -1,21 +1,28 @@
 {% macro render_field(field, errors) %}
 <div class="form-group">
+    <!-- Generate based on type -->
     <label for="{{ field.id }}">{{ field.name|capitalize }}</label>
 
+    <!-- Text Field -->
     {% if field.type == 'textarea' %}
-        <textarea class="form-control {% if field.id in errors %}is-invalid{% endif %}" 
-                  id="{{ field.id }}" name="{{ field.id }}" rows="3"
+        <textarea class="form-control mb-3 {% if field.id in errors %}is-invalid{% endif %}" 
+                  id="{{ field.id }}" name="{{ field.id }}" rows="3" style="min-height: 5rem; max-height: 16rem;" maxlength="1000"
                   {% if field.required %}required{% endif %}>{{ field.value }}</textarea>
+
+    <!-- Date -->
     {% elif field.type == 'date' %}
-        <input type="date" class="form-control {% if field.id in errors %}is-invalid{% endif %}" 
+        <input type="date" class="form-control mb-3 {% if field.id in errors %}is-invalid{% endif %}" 
                id="{{ field.id }}" name="{{ field.id }}" value="{{ field.value }}"
-               {% if field.required %}required{% endif %}>
+               {% if field.required %}required{% endif %}> 
+
+    <!-- Text -->
     {% else %}
-        <input type="text" class="form-control {% if field.id in errors %}is-invalid{% endif %}" 
+        <input type="text" class="form-control mb-3 {% if field.id in errors %}is-invalid{% endif %}" 
                id="{{ field.id }}" name="{{ field.id }}" value="{{ field.value }}"
                {% if field.required %}required{% endif %}>
     {% endif %}
 
+    <!-- Link error field -->
     {% if field.id in errors %}
         <div class="invalid-feedback"> {{ errors[field.id] }}</div>
     {% endif %}
