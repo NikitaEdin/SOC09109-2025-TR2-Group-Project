@@ -17,7 +17,7 @@
             </div>
         <form method="POST">
             <div class="container d-flex flex-column gap-4 align-items-start">
-                <div class="d-flex flex-wrap align-items-center justify-content-start" style="gap: 5rem;">
+                <div class="d-flex flex-wrap align-items-start justify-content-start mt-2" style="gap: 5rem;">
                     <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
                         {% for key, value in content.forms.items() %}
 
@@ -52,7 +52,7 @@
                 <h4>Checklist</h4>
             </div>
             <div class="container d-flex flex-column gap-4 align-items-end">
-                <div class="d-flex flex-wrap align-items-center justify-content-end" style="gap: 5rem;">
+                <div class="d-flex flex-wrap align-items-end justify-content-end mt-2" style="gap: 5rem;">
                     <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
                         {% for key, value in content.checks.items() %}
 
@@ -108,7 +108,8 @@
         </div>
     </div>
     <div class="container text-center mb-3">
-        <button class="btn btn-primary ms-auto">Save Changes</button>
+        <a href="/dashboard" class="btn btn-primary ms-auto">Back to Dashboard</a>
+        <button class="btn btn-success ms-auto">Save Changes</button>
     </div>
 </form>
 </div>

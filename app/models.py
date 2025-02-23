@@ -141,7 +141,7 @@ class Project(db.Model):
                         "name": template_item["name"],
                         "description":template_item["description"],
                         "status": False,
-                        "last_edit": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                        "last_edit": datetime.now().strftime("%d/%m/%y %H:%M")
                     })
 
         self.checklist = updated_checklist

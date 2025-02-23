@@ -3,7 +3,7 @@ from flask import render_template, request,redirect,url_for
 from app import app
 from app.models import db, Project, checklist_template_optional_checklist,checklist_template_emergencies,checklist_template_forms_optional,checklist_template_required_rural,checklist_template_required_urban
 
-@app.route("/create_project/create-rural/<int:project_id>", methods=['GET', 'POST'])
+@app.route("/checklist/create-rural/<int:project_id>", methods=['GET', 'POST'])
 def create_project_rural(project_id):
     project = Project.query.get_or_404(project_id)
     
@@ -61,7 +61,7 @@ def create_project_rural(project_id):
     
     return render_template("create_project/create_project_rural.html", checks=checks, footer=False)
 
-@app.route("/create_project/create-urban/<int:project_id>", methods=['GET','POST'])
+@app.route("/checklist/create-urban/<int:project_id>", methods=['GET','POST'])
 def create_project_urban(project_id):
     
     project = Project.query.get_or_404(project_id)
@@ -120,7 +120,7 @@ def create_project_urban(project_id):
     
     return render_template("create_project/create_project_urban.html", checks=checks, footer=False)
 
-@app.route('/create_project/optional/<int:project_id>', methods =['GET','POST'])
+@app.route('/checklist/optional/<int:project_id>', methods =['GET','POST'])
 def optional(project_id):
     
     project = Project.query.get_or_404(project_id)
