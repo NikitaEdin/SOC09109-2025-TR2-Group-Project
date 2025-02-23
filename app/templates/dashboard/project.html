@@ -68,12 +68,31 @@
                             <div class="row">
                                 <!-- Required Documents -->
                                 <div class="col-md-4 mb-3 text-center">
-                                    <button class="btn btn-primary w-100"><i class="fas fa-file-alt"></i> Required Documents</button>
+                                    {% if project.projectType =='Rural' %}
+                                    <a href="{{ url_for('create_project_rural',project_id=project.id) }}" class="btn btn-primary w-100">
+                                        <i class="fas fa-file-alt"></i> Required Documents
+                                      </a>
+                                      
+                                    {% elif project.projectType=='Urban'%}
+                                    <a href="{{ url_for('create_project_urban',project_id=project.id) }}" class="btn btn-primary w-100">
+                                        <i class="fas fa-file-alt"></i> Required Documents
+                                      </a>
+                                      
+                                    {% else %}
+                                    <a href="#" class="btn disabled">
+                                        <i class="fas fa-file-alt"></i> Required Documents Error</a>
+                                    {% endif %}
                                 </div>
                                 
                                 <!-- Optional Documents -->
                                 <div class="col-md-4 mb-3 text-center">
-                                    <button class="btn btn-primary w-100"><i class="fas fa-file"></i> Optional Documents</button>
+                                    {% if project.projectType =='Rural' %}
+                                    <a href="{{ url_for('optional',project_id=project.id) }}" class="btn btn-primary w-100"><i class="fas fa-file"></i> Optional Documents</a>
+                                    {% elif project.projectType=='Urban'%}
+                                    <a href="{{ url_for('optional',project_id=project.id) }}" class="btn btn-primary w-100"><i class="fas fa-file"></i> Optional Documents</a>
+                                    {% else %}
+                                    <a href="#" class=" btn disabled"><i class="fas fa-file"></i> Optional Documents Error</a>
+                                    {% endif %}
                                 </div>
     
                                 <!-- Checklist -->

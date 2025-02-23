@@ -1,33 +1,48 @@
 {% extends "base.html" %}
 
-{% block title %}View Drones{% endblock %}
-
-
 {% block content %}
     <div class="text-center m-3">
-        <h1><strong>View Our Drones</strong></h1>
-            <h4>Currently Deployed Drones</h4>
+        <h1 class="fs-1">Our Drones</h1>
+        <span class="fw-light fs-4">Currently Deployed Drones</span>
     </div>
 
-    <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 60vh;">
+    <div class="container d-flex flex-column justify-content-start mt-5 align-items-center" style="min-height: 60vh;">
 
         <div class="row justify-content-center">
-            {% for drone in drones.values() %}
-                <div class="col-12 col-md-4 col-sm-6">
-                    <div class="card mb-3 mx-3 mx-xl-5 bg-transparent border-0 text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ drone.name }}</h5>
+            {% for drone in drones %}
+                <div class="col-lg-4 col-md-5 col-sm-6">
+                    <div class="card mb-3 mx-1 border-0 text-center" style="height: 100%; display: flex; flex-direction: column;">
+                        <div class="card-body d-flex flex-column" style="flex-grow: 1;">
+                            <h5 class="card-title">{{ drone.title }}</h5>
+                            <img src="{{ url_for('static', filename=drone.imageURL) }}" alt="image of a drone" class="img-fluid rounded">
+                            <div class="container text-start">
+                                {% if drone.weight %}
+                                    <p class="my-0"><span class="fw-semibold">Weight: </span>{{ drone.weight }}</p>
+                                {% endif %}
+                                
+                                {% if drone.best_for %}
+                                    <p class="my-0"><span class="fw-semibold">Best for: </span>{{ drone.best_for }}</p>
+                                {% endif %}
+                                
+                                {% if drone.release_date %}
+                                    <p class="my-0"><span class="fw-semibold">Release Date: </span>{{ drone.release_date }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="d-flex justify-content-between mx-2 mt-auto">
+                                {% if drone.homePage %}
+                                    <a href="{{ drone.homePage }}" target="_blank" style="text-decoration: none;">Product Page</a>
+                                {% endif %}
+                                
+                                {% if drone.userGuide %}
+                                    <a href="{{ drone.userGuide }}" target="_blank" style="text-decoration: none;">User Guide</a>
+                                {% endif %}
+                            </div>
                         </div>
-                        <img src="{{ url_for('static', filename=drone.image_path) }}" alt="image of a drone" class="img-fluid rounded">
                     </div>
                 </div>
             {% endfor %}
         </div>
+        
     </div>
 
-    <div class="d-flex justify-content-center m-3">
-        <div class="col-12 col-md-4">
-            <button class="form-control btn btn-primary">Show More</button>
-        </div>
-    </div>
 {% endblock %}
