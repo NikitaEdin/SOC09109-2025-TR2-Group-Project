@@ -90,68 +90,44 @@
     <div class="row justify-content-center">
         <div class="col-8">
             <h3 class="text-start">Our Drones
-                <span class="text-muted fs-6 ms-3">More drones coming soon</span>
+                <a href="{{ url_for('view_drones')}}" class="text-muted fs-6 ms-3">View all drones</a>
             </h3>
-            <div class="row mt-4 gy-2">
-                <!-- Drone 1 -->
-                <div class="col d-flex justify-content-center">
-                    <div class="card shadow-sm border-0 rounded-4" style="max-width: 260px; overflow: hidden;">
-                        <img src="{{ url_for('static', filename='images/drone3.png') }}"
-                            class="card-img-top rounded-top" alt="DJI Mini 3 Pro"
-                            style="object-fit: cover; max-height: 230px;">
-                        <div class="card-body text-start">
-                            <h5 class="card-title">DJI Mini 3 Pro</h5>
-                            <p class="text-muted">Weight: 249g</p>
-                            <div class="d-flex justify-content-between">
-                                <a href="https://store.dji.com/uk/product/dji-mini-3-pro" class="text-primary">Product
-                                    Page</a>
-                                <a href="https://dl.djicdn.com/downloads/DJI_Mini_3_Pro/UM/20240105/2/DJI_Mini_3_Pro_User_Manual_v1.6_EN.pdf"
-                                    class="text-primary">User Guide</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Drone 2 -->
-                <div class="col d-flex justify-content-center">
-                    <div class="card shadow-sm border-0 rounded-4" style="max-width: 260px; overflow: hidden;">
-                        <img src="{{ url_for('static', filename='images/drone1.png') }}"
-                            class="card-img-top rounded-top" alt="DJI Matrice 30 RTK"
-                            style="object-fit: cover; max-height: 230px;">
-                        <div class="card-body text-start">
-                            <h5 class="card-title">DJI Matrice 30 RTK</h5>
-                            <p class="text-muted">Weight: 9.2kg</p>
-                            <div class="d-flex justify-content-between">
-                                <a href="https://enterprise.dji.com/matrice-30" class="text-primary">Product Page</a>
-                                <a href="https://dl.djicdn.com/downloads/matrice-30-series/20230922UM/Matrice30_Series_User_Manual_v2.0_EN.pdf"
-                                    class="text-primary">User Guide</a>
+            <!-- Any drones found -->
+            {% if drones %}
+                <div class="row mt-4 gy-4"> 
+                    <!-- Loop through drones -->
+                    {% for drone in drones %}
+                        <div class="col-12 col-md-4 d-flex justify-content-center mb-4"> 
+                            <div class="card shadow-sm border-0 rounded-4" style="max-width: 260px; overflow: hidden;">
+                                <!-- Drone Image -->
+                                <img src="{{ url_for('static', filename=drone.imageURL) }}"
+                                    class="card-img-top rounded-top" alt="{{ drone.title }}"
+                                    style="object-fit: cover; max-height: 230px;">
+                                <div class="card-body text-start">
+                                    <!-- Title and links -->
+                                    <h5 class="card-title">{{ drone.title }}</h5>
+                                    <div class="d-flex justify-content-between">
+                                        {% if drone.homePage %}
+                                            <a href="{{ drone.homePage }}" style="text-decoration: none;" class="text-primary">Product Page</a>
+                                        {% endif %}
+                                        {% if drone.userGuide %}
+                                            <a href="{{ drone.userGuide }}" style="text-decoration: none;" class="text-primary">User Guide</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
+            {% else %}
+                <p>Oh no! Looks like we don't have any available drones at the moment.</p>
+            {% endif %}
 
-                <!-- Drone 3 -->
-                <div class="col d-flex justify-content-center">
-                    <div class="card shadow-sm border-0 rounded-4" style="max-width: 260px; overflow: hidden;">
-                        <img src="{{ url_for('static', filename='images/drone2.png') }}"
-                            class="card-img-top rounded-top" alt="DJI Mavic 3E"
-                            style="object-fit: cover; max-height: 230px;">
-                        <div class="card-body text-start">
-                            <h5 class="card-title">DJI Mavic 3E</h5>
-                            <p class="text-muted">Weight: 1.05kg</p>
-                            <div class="d-flex justify-content-between">
-                                <a href="https://enterprise.dji.com/mavic-3-enterprise" class="text-primary">Product
-                                    Page</a>
-                                <a href="https://dl.djicdn.com/downloads/DJI_Mavic_3_Enterprise/DJI_Mavic_3E_3T_User_Manual_EN.pdf"
-                                    class="text-primary">User Guide</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </section>
+
 
 
 {% endblock %}
