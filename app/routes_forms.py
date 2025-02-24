@@ -60,8 +60,43 @@ def viability_study(project_id):
     return render_template("/forms/viability_study.html", project=project, form_data=form_data, footer=False, title="Viability Study")
 
 
-@app.route('/forms/site-evaluation', methods=['GET', 'POST'])
-def site_evaluation():
+@app.route('/project/<int:project_id>/site-evaluation', methods=['GET', 'POST'])
+@login_required
+def site_evaluation(project_id):
+    project = Project.query.get_or_404(project_id)
+    form_data = project.siteEvaluation    
+    errors = {}  # validation errors
+    if request.method == 'POST':
+        # Loop through each section
+        for section in form_data[0]['form']['sections']:
+            # Loop through all fields
+            try:
+                for field in section['fields']:
+                    field_id = field['id']  
+                    field_value = request.form.get(field_id)
+
+                    # Any field validations go here, before it's assigned
+                    if field_id not in errors:
+                        field['value'] = field_value
+            except:
+                pass
+                
+
+        # Any errors? don't commit the changes
+        if errors:
+            return render_template('/forms/site-evaluation.html', project=project, form_data=form_data, errors=errors)
+
+        # No errors, save changes
+        project.siteEvaluation = form_data
+        flag_modified(project, "siteEvaluation")
+        db.session.add(project)
+        db.session.commit()
+
+        flash('Changes saved successfully!', 'success')
+        return redirect(url_for('project', project_id=project.id))
+    
+    return render_template("/forms/site_evaluation.html", project=project, form_data=form_data, footer=False, title="Site Evaluation")
+
     """
     form = siteEvaluationForm()
 
@@ -76,6 +111,11 @@ def site_evaluation():
     """
 
     return render_template("/forms/site_evaluation.html")
+
+
+@app.route('/forms/site-evaluation-template', methods=['GET', 'POST'])
+def site_evaluation_template():
+    return render_template("/forms/site_evaluation_copy.html")
 
 @app.route('/forms/crew_call_sheet', methods=['GET', 'POST'])
 def crew_call_sheet():
