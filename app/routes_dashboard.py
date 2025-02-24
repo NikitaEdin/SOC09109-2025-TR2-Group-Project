@@ -58,7 +58,7 @@ def logs():
                            logs=logs, footer=False)
 
 # Single project item
-@app.route("/dashboard/project/<int:project_id>")
+@app.route("/project/<int:project_id>")
 @login_required
 def project(project_id):
     # Query by id

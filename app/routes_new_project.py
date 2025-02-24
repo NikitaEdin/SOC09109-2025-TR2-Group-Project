@@ -7,6 +7,8 @@ from app.AuditLogger import AuditLogger
 from app.forms.createProject import EditProject, ProjectLocation, ProjectType, ProjectDetails
 from app.models import Project
 
+from app.forms.jsons.viabilityStudyTemplate import ViabilityStudyTemplate
+from app.forms.jsons.siteEvaluationTemplate import SiteEvaluationTemplate
 
 # Step 1: Get location of the project
 @app.route("/create_project/location", methods=['GET','POST'])
@@ -80,7 +82,10 @@ def new_project_details():
             description=form.description.data,
             dateOfFlight=form.dateOfFlight.data,
             lastEdited=datetime.now(timezone.utc),
-            created_at=datetime.now(timezone.utc)
+            created_at=datetime.now(timezone.utc),
+            # JSON forms
+            viabilityStudy = ViabilityStudyTemplate,
+            siteEvaluation = SiteEvaluationTemplate
         )
 
         # Commit new record to db
@@ -102,7 +107,7 @@ def new_project_details():
     return render_template('/create_project/new_project_details.html', form=form, footer=False, title='Almost there...')
 
 
-@app.route("/dashboard/project/<int:project_id>/edit", methods=["GET", "POST"])
+@app.route("/project/<int:project_id>/edit", methods=["GET", "POST"])
 @login_required
 def edit_project(project_id):
     # Fetch project by ID
@@ -110,7 +115,7 @@ def edit_project(project_id):
 
     # User is author?
     if project.author.id != current_user.id:
-        flash("You are not authorized to edit this project.", "danger")
+        flash("You are not authorised to edit this project.", "danger")
         return redirect(url_for('dashboard'))
 
     # Define the form for editing the project
