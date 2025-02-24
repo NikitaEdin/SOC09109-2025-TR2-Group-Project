@@ -1,152 +1,208 @@
-from flask import render_template, request
-
+from datetime import datetime
+from flask import render_template, request,redirect,url_for
 from app import app
+from app.models import db, Project, checklist_template_optional_checklist,checklist_template_emergencies,checklist_template_forms_optional,checklist_template_required_rural,checklist_template_required_urban
 
-@app.route("/create_project/create-rural", methods=['GET', 'POST'])
-def create_project_rural():
-    checks = {
-         'viability_study': {
-            'title': 'Complete Viability Study',
-            'description': 'Complete the form and checkbox ticks',
-            'value': False
-        },
-        'site_eval': {
-            'title': 'Complete Site Evaluation',
-            'description': 'Complete the form and checkbox ticks',
-            'value': False
-        },
-        'loading_list': {
-            'title': 'Loading List',
-            'description': 'Complete the form and checkbox ticks',
-            'value': False
-        },
-        'risk_analysis':{
-            'title': 'Risk Analysis',
-            'description': 'Complete the form and checkbox ticks',
-            'value': False
-        },
-        'post_flight':{
-            'title': 'Post Flight',
-            'description': 'Complete the form and checkbox ticks',
-            'value': False
-        }
-    }
+@app.route("/checklist/create-rural/<int:project_id>", methods=['GET', 'POST'])
+def create_project_rural(project_id):
+    project = Project.query.get_or_404(project_id)
     
-    return render_template('create_project/create_project_rural.html', checks=checks)
-
-@app.route("/create_project/create-urban", methods=['GET','POST'])
-def create_project_urban():
-    checks = {
-        'viability_study': {
-            'title': 'Complete Viability Study',
-            'description': 'Complete the form and checkbox ticks',
-            'value': False
-        },
-        'site_eval': {
-            'title': 'Complete Site Evaluation',
-            'description': 'Complete the form and checkbox ticks',
-            'value': False
-        },
-        'loading_list': {
-            'title': 'Loading List',
-            'description': 'Complete the form and checkbox ticks',
-            'value': False
-        },
-        'risk_analysis':{
-            'title': 'Risk Analysis',
-            'description': 'Complete the form and checkbox ticks',
-            'value': False
-        },
-        'post_flight':{
-            'title': 'Post Flight',
-            'description': 'Complete the form and checkbox ticks',
-            'value': False
-        },
-        'advanced_flight':{
-            'title':'Advanced Flight Permission',
-            'description':'This is to apply to fly in restricted areas',
-            'value': False
-        }    
-    }
+    # Add checklist templates here and in the model if required
+    checklist_templates = [
+        checklist_template_required_rural
+    ]
     
-    return render_template('create_project/create_project_urban.html', checks=checks)
+    # Checks if the checklist templates is generated if not give it default values
+    if not project.checklist:
+        project.checklist = []
+        
+        for template in checklist_templates:
+            for item in template:
+                project.checklist.append({
+                    "name": item["name"],
+                    "status": False,
+                    "last_edit": None
+                })
+        db.session.commit()
+    if request.method == "POST":
+        updated_checklist = []
+        
+        for item in project.checklist:
+            status = request.form.get(item["name"]) == "on"
+            
+            updated_item = item.copy()
+            old_status = updated_item["status"]
+            updated_item["status"] = status
+            
+            # Update only if the status changed
+            if old_status != status:
+                updated_item["last_edit"] = datetime.now().strftime("%d/%m/%y %H:%M")
+            
+            updated_checklist.append(updated_item)
+            
+        db.session.commit()
 
-@app.route('/create_project/optional', methods =['GET','POST'])
-def optional():
+        # Update the project checklist
+        project.update_checklist(updated_checklist)
+        
+        # Add any missing items from the checklist template
+        project.update_checklist_from_json(updated_checklist)
+        
+        return redirect(url_for('create_project_rural', project_id=project.id))
+    
     checks={
-        'leaflet_drop': {
-        'title': 'Leaflet Drop',
-        'description': 'Carry out a leaflet drop and/or a door-to-door advisory campaign',
-        'value': False
-    },
-    'inform_police': {
-        'title': 'Inform Police',
-        'description': 'Inform the local police if the planned flight operation is to take place in areas where there is likely to be members of the public',
-        'value': False
-    },
-    'inform_local_air_user': {
-        'title': 'Inform Local Air Users',
-        'description': 'If there is a local air user club nearby, contact the club and enquire about any likely activity on the day of the proposed flight operation',
-        'value': False
-    },
-    'monitor_weather': {
-        'title': 'Monitor Weather',
-        'description': 'Monitor the weather conditions on the day of the proposed flight operation',
-        'value': False
+        item["name"]: {
+        "title": item["name"],
+        "description": item["description"],
+        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
+        "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
+    } for item in checklist_template_optional_checklist
     }
-    }
-    forms={
-        'customise_loading_list': {
-        'title': 'Customise Loading List',
-        'description': 'Customise the loading list to suit the flight operation',
-        'value': False
-    },
-    'land_permission': {
-        'title': 'Permission from Land Owner',
-        'description': 'Obtain permission to land on the landowner’s property',
-        'value': False
-    },
-    'crew_call_sheets':{
-        'title': 'Prepare and send Crew Call Sheets',
-        'description' : 'Items for crew to bring on flight',
-        'value': False
+    
+    return render_template("create_project/create_project_rural.html", checks=checks, footer=False)
 
-    },
-    'post_flight_check':{
-        'title': 'Post Flight Form',
-        'description':'Form for post flight data',
-        'value': False
-    },
-    'pre_flight_check':{
-        'title':'Pre flight form',
-        'description': 'Form for pre flight data',
-        'value': False
-    },
-    'notam_form':{
-        'title':'Notam Form',
-        'description': 'Enter details into form',
-        'value': False
+@app.route("/checklist/create-urban/<int:project_id>", methods=['GET','POST'])
+def create_project_urban(project_id):
+    
+    project = Project.query.get_or_404(project_id)
+    
+    # Add checklist templates here and in the model if required
+    checklist_templates = [
+        checklist_template_required_urban
+    ]
+    
+    # Checks if the checklist templates is generated if not give it default values
+    if not project.checklist:
+        project.checklist = []
+        
+        for template in checklist_templates:
+            for item in template:
+                project.checklist.append({
+                    "name": item["name"],
+                    "status": False,
+                    "last_edit": None
+                })
+        db.session.commit()
+    if request.method == "POST":
+        updated_checklist = []
+        
+        for item in project.checklist:
+            status = request.form.get(item["name"]) == "on"
+            
+            updated_item = item.copy()
+            old_status = updated_item["status"]
+            updated_item["status"] = status
+            
+            # Update only if the status changed
+            if old_status != status:
+                updated_item["last_edit"] = datetime.now().strftime("%d/%m/%y %H:%M")
+            
+            updated_checklist.append(updated_item)
+            
+        db.session.commit()
+
+        # Update the project checklist
+        project.update_checklist(updated_checklist)
+        
+        # Add any missing items from the checklist template
+        project.update_checklist_from_json(updated_checklist)
+        
+        return redirect(url_for('create_project_urban', project_id=project.id))
+    
+    checks={
+        item["name"]: {
+        "title": item["name"],
+        "description": item["description"],
+        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
+        "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
+    } for item in checklist_template_optional_checklist
     }
+    
+    return render_template("create_project/create_project_urban.html", checks=checks, footer=False)
+
+@app.route('/checklist/optional/<int:project_id>', methods =['GET','POST'])
+def optional(project_id):
+    
+    project = Project.query.get_or_404(project_id)
+    
+    checklist_templates=[
+        checklist_template_optional_checklist,
+        checklist_template_emergencies,
+        checklist_template_forms_optional
+    ]
+    
+    # Checks if the checklist templates is generated if not give it default values
+    if not project.checklist:
+        project.checklist = []
+        
+        for template in checklist_templates:
+            for item in template:
+                project.checklist.append({
+                    "name": item["name"],
+                    "status": False,
+                    "last_edit": None
+                })
+        db.session.commit()
+           
+    # Stores information from the checklist template
+    checks={
+        item["name"]: {
+        "title": item["name"],
+        "description": item["description"],
+        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
+        "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
+    } for item in checklist_template_optional_checklist
     }
+    
     IncidentsEmergencies={
-        'ECCAIRS':{
-            'title': 'ECCAIRS Incident Link',
-            'description': 'Click the button & fill the form',
-            'value': False
-        },
-        'AIRPROX':{
-            'title': 'AIRPROX Incident Link',
-            'description':'Click the button & fill the form',
-            'value': False
-        }
+        item["name"]: {
+        "title": item["name"],
+        "description": item["description"],
+        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
+        "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
+    } for item in checklist_template_emergencies
     }
+    
+    forms={
+        item["name"]: {
+        "title": item["name"],
+        "description": item["description"],
+        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
+        "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
+    } for item in checklist_template_forms_optional
+    }
+    
+    # On form submission checks if the checkbox is marked  then puts it into updated checklist
+    if request.method == "POST":
+        updated_checklist = []
+        
+        for item in project.checklist:
+            status = request.form.get(item["name"]) == "on"
+            
+            updated_item = item.copy()
+            old_status = updated_item["status"]
+            updated_item["status"] = status
+            
+            # Update only if the status changed
+            if old_status != status:
+                updated_item["last_edit"] = datetime.now().strftime("%d/%m/%y %H:%M")
+            
+            updated_checklist.append(updated_item)
+            
+        db.session.commit()
+
+        # Update the project checklist
+        project.update_checklist(updated_checklist)
+        
+        # Add any missing items from the checklist template
+        project.update_checklist_from_json(updated_checklist)
+        
+        return redirect(url_for('optional', project_id=project.id))
 
 #  This is to tidy up and only pass in only one variable into the template
     content = {
     "checks": checks,
     "forms": forms,
-    "IncidentsEmergencies": IncidentsEmergencies,
-    "urban": request.args.get('urban', 'False'),
-    "rural": request.args.get('rural', 'False')
+    "IncidentsEmergencies": IncidentsEmergencies
 }
-    return render_template("create_project/optional_forms.html", content=content )
+    return render_template("create_project/optional_forms.html", content=content, project=project,footer=False )

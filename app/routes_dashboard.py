@@ -1,10 +1,13 @@
+import os
+import uuid
 from datetime import date, datetime
 
 import humanize
 from app import app
-from flask import flash, redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, url_for, Response
 from flask_login import current_user, login_required
 
+from app.forms.exportToPDF import export_form_to_pdf
 from app.models import AuditLog, Project, User, Role
 
 # The main/home page of the dashboard.
@@ -83,3 +86,39 @@ def project(project_id):
     return render_template('/dashboard/project.html', project=project, use_container=False, title=project.title, footer=False,
                            created_at_humanized=created_at_humanized, last_edited_humanized=last_edited_humanized,
                            date_status=date_status)
+
+
+# Export Document to PDF
+@app.route("/dashboard/project/<int:project_id>/<string:document_name>/pdf")
+def export_document_pdf(project_id, document_name):
+    # Query the project
+    found_project = Project.query.filter_by(id=project_id).first()
+
+    # Ensure it and the document exists
+    if not found_project:
+        return "Project not found", 400
+
+    if getattr(found_project, document_name) is None:
+        return "Document not found", 400
+
+    document = getattr(found_project, document_name)
+
+    # Export to PDF
+    random_file_name = str(uuid.uuid4()) + ".pdf"
+    dest_file = open(random_file_name, "w+b")
+    export_status = export_form_to_pdf(document, dest_file, name=document_name)
+
+    # Unless there is an error, return
+    if export_status.err:
+        return "Error exporting document to PDF", 500
+
+    # Close the written file and read it
+    dest_file.close()
+    dest_file = open(random_file_name, "r+b")
+    dest_file_binary = dest_file.read()
+
+    # Close and remove the file
+    dest_file.close()
+    os.remove(random_file_name)
+
+    return Response(dest_file_binary, mimetype="application/pdf", headers={"Content-Disposition": f"attachment; filename={document_name}.pdf"})
