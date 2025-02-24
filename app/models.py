@@ -5,10 +5,11 @@ from flask import url_for
 from flask_login import UserMixin, current_user
 from sqlalchemy import func
 import re
+# Import the checklist templates
+from app.forms.checklist_template import checklist_template_emergencies, checklist_template_optional_checklist, checklist_template_forms_optional, checklist_template_required_rural, checklist_template_required_urban
 
 # Global/static variables
 ADMIN_MIN_POWER = 90
-
 
 ###### USER ######
 @login_manager.user_loader
@@ -45,6 +46,14 @@ class User(db.Model, UserMixin):
     # Get all projects by this user
     def get_projects(self):
         return Project.query.filter_by(authorID=self.id).all()
+
+    # Get all logs by user
+    def get_all_logs(self):
+        return AuditLog.query.filter_by(user_id=self.id).all()
+    
+    # Get logs by action
+    def get_logs_by_action(self, action):
+        return AuditLog.query.filter_by(user_id=self.id, action=action).all()
 
 
 ###### ROLES ######
@@ -94,7 +103,7 @@ class Project(db.Model):
     postFlight = db.Column(db.JSON, nullable=True)
 
     author = db.relationship('User', backref='projects')
-
+    
     # Returns true if given user is the owner of this project
     def is_owner(self, user):
         return self.authorID == user.id
@@ -105,3 +114,62 @@ class Project(db.Model):
 
     def __repr__(self):
         return f'<Project {self.title} by {self.author.username}>'
+    
+    # Creates Checklist in the database
+    checklist = db.Column(db.JSON, nullable=True)
+    
+    # Updates the checklist column 
+    def update_checklist(self, checklist):
+        self.checklist = checklist
+        db.session.commit()
+
+    # Ensures the template items are stored before saving to the database
+    def update_checklist_from_json(self, updated_checklist):
+        
+        # Here just import the checklist templates that you want to be used
+        checklist_templates = [
+            checklist_template_optional_checklist,
+            checklist_template_emergencies,
+            checklist_template_forms_optional,
+            checklist_template_required_urban,
+            checklist_template_required_rural
+    ]
+        for template in checklist_templates:
+            for template_item in template:
+                if not any(item['name'] == template_item['name'] for item in updated_checklist):
+                    updated_checklist.append({
+                        "name": template_item["name"],
+                        "description":template_item["description"],
+                        "status": False,
+                        "last_edit": datetime.now().strftime("%d/%m/%y %H:%M")
+                    })
+
+        self.checklist = updated_checklist
+        db.session.commit()
+    
+
+class AuditLog(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    action = db.Column(db.String(100), nullable=False)
+    message = db.Column(db.String(200), nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+
+    user = db.relationship('User', backref=db.backref('audit_logs', lazy=True))
+
+    def __repr__(self):
+        return f"<AuditLog {self.user_id} - {self.action} at {self.timestamp}>"
+
+###### Drone ######
+class Drone(db.Model):
+    droneID = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50), nullable=False)
+    imageURL = db.Column(db.String(255), nullable=False)  
+    # Optional information about drone
+    weight = db.Column(db.String(50), nullable=True) 
+    homePage = db.Column(db.String(255), nullable=True)  
+    userGuide = db.Column(db.String(255), nullable=True) 
+    best_for = db.Column(db.String(255), nullable=True) 
+    release_date = db.Column(db.String(50), nullable=True) 
+
+

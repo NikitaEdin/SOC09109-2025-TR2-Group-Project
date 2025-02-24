@@ -1,13 +1,15 @@
 from app import app
 from flask import render_template
 
-from app.models import User, Role
+from app.models import User, Role, Drone
 
 
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('index.html', title='Home')
+    drones = Drone.query.limit(3).all()
+
+    return render_template('index.html', title='Home', use_container=False, drones=drones)
 
 
 ########## INFORMATIONAL PAGES ###########
@@ -26,40 +28,8 @@ def contact_us():
 @app.route("/view-drones")
 def view_drones():
 
-    drones = {
-        '1': {
-            'name': 'DJI Matrice 350 RTK',
-            'image_path': 'Images/Matrice350RTK.jpg'
-        },
-        '2': {
-            'name': 'DJI Mavic 3E',
-            'image_path': '/Images/coenkpz4.png'
-        },
-        '3': {
-            'name': 'DJI Mini 3 Pro',
-            'image_path': '/Images/Mini3Pro.jpeg'
-        }
-    }
+    drones = Drone.query.all()
 
-    """
-        '4': {
-            'name': 'Drone 4',
-            'image_path': '/Images/DroneCityEdited.jpg'
-        },
-        '5': {
-            'name': 'Drone 5',
-            'image_path': '/Images/DroneCityEdited.jpg'
-        },
-        '6': {
-            'name': 'Drone 6',
-            'image_path': '/Images/DroneCityEdited.jpg'
-        },
-        '7': {
-            'name': 'Drone 7',
-            'image_path': '/Images/DroneCityEdited.jpg'
-        }
-    """
-
-    return render_template('/info/view_drones.html', drones=drones)
+    return render_template('/info/view_drones.html', drones=drones, title='All Drones')
 
 

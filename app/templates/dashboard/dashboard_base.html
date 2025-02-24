@@ -6,7 +6,7 @@
 
 {% block content %}
 <!-- Sidebar -->
-<div class="sidebar" style="margin-top: 59.5px; height: calc(100vh - 59.5px);">
+<div class="sidebar" style="margin-top: 60px; height: calc(100vh - 60px);">
   <!-- Top Section -->
   <div class="top-section mt-2 mx-2">
     <a href="{{ url_for('dashboard') }}" class="btn my-1 {% if title == 'dashboard' %}active{% endif %}">
@@ -22,9 +22,14 @@
 
   <!-- Bottom Section -->
   <div class="bottom-section mx-2 mb-2">
-    <button class="btn">
+    <a href="{{url_for('logs')}}" class="btn {% if title == 'logs' %}active{% endif %}">
+      <i class="fas fa-history"></i> Logs
+    </a>
+
+    <a class="btn">
       <i class="fas fa-sliders-h"></i> Settings
-    </button>
+    </a>
+
     <a href="{{url_for('logout')}}" class="btn">
       <i class="fas fa-sign-out-alt"></i> Logout
     </a>
@@ -35,7 +40,7 @@
 <button class="sidebar-collapse btn" id="sidebar-toggle">&#9776;</button>
 
 <!-- MAIN CONTENT -->
-<div class="main_content">
+<div class="main_content py-0 py-md-3">
   {% block main_content %}{% endblock %}
 </div>
 
@@ -49,8 +54,7 @@
     transition: margin-left 0.3s ease;
     padding: 20px;
     background-color: #f5f5f5;
-    min-height: 100vh;
-    /* Ensure content takes up full height */
+    
   }
 
   /* Sidebar */

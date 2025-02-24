@@ -1,0 +1,96 @@
+<!-- Dashboard: view of the user logs -->
+{% extends "dashboard/dashboard_base.html" %}
+
+{% block title %}Logs{% endblock %}
+
+{% block main_content %}
+<div class="logs-container">
+  <!-- New Project -->
+  <div class="row align-items-center mb-2">
+    <div class="col">
+      <p class="fs-2">Logs</p>
+    </div>
+  </div>
+
+  <!-- Logs List -->
+  <div class="list-group">
+    {% if logs %}
+
+    {% for log in logs %}
+    <!-- Log Card -->
+    <span class="list-group-item list-group-item-action d-flex justify-content-between mb-1">
+      <div>
+        <h5 class="mb-1">Action: {{ log.action }}</h5>
+        <p class="mb-1">Message: {{ log.message }}</p>
+      </div>
+      <small class="text-muted">
+        Logged by user ID: {{ log.user_id }} on {{ log.timestamp }}
+      </small>
+    </span>
+
+
+    {% endfor %}
+    {% else %}
+    <p>No logs.</p>
+    {% endif %}
+
+
+
+  </div>
+
+
+
+  <!-- Pagination -->
+  {% set pagination = logs %}
+  {% include 'pagination.html' %}
+
+
+</div>
+
+<style>
+  .logs-container {
+    padding: 20px;
+  }
+
+  .logs-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .logs-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 30%;
+    box-sizing: border-box;
+    border-radius: 5px;
+  }
+
+  .log-card h4 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+
+  .log-card p {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #555;
+  }
+
+  .log-card a {
+    text-decoration: none;
+  }
+
+  .pagination {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .pagination .btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin: 0 5px;
+  }
+</style>
+{% endblock %}

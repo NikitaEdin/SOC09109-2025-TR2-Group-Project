@@ -3,18 +3,16 @@
 {% block title %}Loading List{% endblock %}
 
 {% block content %}
-    <div class="text-center m-3">
-        <h2><strong>Loading List</strong></h2>
-    </div>
+    
     
     <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
-        <div class="w-75 text-start">
-            <a href="{{ url_for('loading_list') }}" class="btn btn-secondary my-3">
-                ← Back to Forms Page
-            </a>
-        </div>
+        
         <div class="rounded border border-danger-subtle p-3 w-75 my-3 card">
             <div class="card-body">
+                <div class="text-center m-3">
+                    <h2><strong>Loading List</strong></h2>
+                </div>
+
                 <h3 class="text-center fw-light fs-4 pb-2">
                     Ensure all resources are prepared for flight.
                 </h3>
@@ -23,7 +21,7 @@
 
                 <ul class="list-group">
                     <!-- Crew -->
-                    <li class="list-group-item d-flex justify-content-between align-items-center border-secondary">
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-danger-subtle">
                         <span>Crew</span>
                         <div class="d-flex gap-2 align-items-center">
                             <span class="badge bg-success rounded-pill">Complete</span>
@@ -32,7 +30,7 @@
                     </li>
 
                     <!-- Equipment -->
-                    <li class="list-group-item d-flex justify-content-between align-items-center border-secondary">
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-danger-subtle">
                         <span>Equipment</span>
                         <div class="d-flex gap-2 align-items-center">
                             <span class="badge bg-warning rounded-pill">In Progress</span>
@@ -41,7 +39,7 @@
                     </li>
 
                     <!-- Maintenance Kit -->
-                    <li class="list-group-item d-flex justify-content-between align-items-center border-secondary">
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-danger-subtle">
                         <span>Maintenance Kit</span>
                         <div class="d-flex gap-2 align-items-center">
                             <span class="badge bg-danger rounded-pill">Not Started</span>
@@ -50,7 +48,7 @@
                     </li>
 
                     <!-- Safety Kit -->
-                    <li class="list-group-item d-flex justify-content-between align-items-center border-secondary">
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-danger-subtle">
                         <span>Safety Kit</span>
                         <div class="d-flex gap-2 align-items-center">
                             <span class="badge bg-danger rounded-pill">Not Started</span>
@@ -59,7 +57,7 @@
                     </li>
 
                     <!-- Ground Equipment -->
-                    <li class="list-group-item d-flex justify-content-between align-items-center border-secondary">
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-danger-subtle">
                         <span>Ground Equipment</span>
                         <div class="d-flex gap-2 align-items-center">
                             <span class="badge bg-warning rounded-pill">In Progress</span>
@@ -68,8 +66,12 @@
                     </li>
                 </ul>
             </div>
-            <div class="d-flex justify-content-left gap-3 mt-4">
-                <button type="submit" class="btn btn-success">Submit Loading List</button>
+            
+            <!-- Button to submit finshed loading list -->
+            <div class="row justify-content-center">
+                <div class="col-3">
+                    <button type="submit" class="btn btn-primary">Submit Loading List</button>
+                </div>
             </div>
         </div>
     </div>

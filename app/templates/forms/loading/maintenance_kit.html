@@ -3,18 +3,19 @@
 {% block title %}Loading List - Maintenance Kit{% endblock %}
 
 {% block content %}
-    <div class="text-center m-3">
-        <h2><strong>Loading List - Maintenance Kit</strong></h2>
-    </div>
     
     <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
         <div class="w-75 text-start">
-            <a href="{{ url_for('loading_list') }}" class="btn btn-secondary my-3">
+            <a href="{{ url_for('loading_list') }}" class="btn btn-primary my-3">
                 ← Back to Loading List
             </a>
         </div>
         <div class="rounded border border-danger-subtle p-3 w-75 my-3 card">
             <div class="card-body">
+                <div class="text-center m-3">
+                    <h2><strong>Loading List - Maintenance Kit</strong></h2>
+                </div>
+                
                 <h3 class="text-center fw-light fs-4 pb-2">
                     Ensure all maintenance kit items are checked before proceeding.
                 </h3>
@@ -56,8 +57,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="d-flex justify-content-left gap-3 mt-4">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="d-flex justify-content-left mt-4">
                         <button type="button" class="btn btn-success">Save Changes</button>
                     </div>
                 </form>

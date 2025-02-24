@@ -4,53 +4,130 @@
 
 
 {% block content %}
+
+
+
+<!-- Hero Section -->
+<section class="hero bg-dark text-white" style="height: 75vh; position: relative;">
+
     <div class="">
-        <!-- Flash messages -->
+        <!-- Flash message -->
         {% with messages = get_flashed_messages(with_categories=true) %}
-        <!--  any messages? -->
-        {% if messages %}
-            <!-- loop messages -->
-            {% for category, message in messages %}
-                <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
-                    {{ message}}
+            {% if messages %}
+                <!-- Display first message only -->
+                {% set message = messages[0] %}
+                <div class="alert alert-{{ message[0] }} alert-dismissible fade show position-absolute top-0 start-0 end-0 mx-3 mt-2 col-8 mx-auto" role="alert" style="z-index: 1080;">
+                    {{ message[1] }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-            {% endfor %}
-
-        {% endif %}
-    {% endwith %}
+            {% endif %}
+        {% endwith %}
     </div>
+    
 
-    <!-- Welcome Section -->
-    <div class="text-center my-5">
-        <h2 class="display-4">Welcome to the Drone Operations Web App</h2>
-        <p class="lead">This web app is designed to replace manual Word documents and streamline drone operation processes.</p>
-        <p>The system supports role-based security, allowing administrators, remote pilots, and other users to access tailored features. Data can also be exported in Excel and PDF formats for greater efficiency.</p>
+    <!-- Hero Image-->
+    <img src="{{ url_for('static', filename='images/hero-background.jpg') }}"
+        class="img-fluid position-absolute top-0 start-0" alt="Drone Flight"
+        style="object-fit: cover; width: 100%; height: 100%;">
 
+    <!-- Colour overlay -->
+    <div class="overlay position-absolute top-0 left-0 w-100 h-100 bg-dark opacity-50"></div>
 
-        <a href="{{ url_for('login') }}" class="btn btn-lg btn-primary fs-6 w-25 mb-5">GET STARTED</a>
-    </div>
-
-    <!-- Features Section -->
-    <div class="row text-center ">
-        <!-- Role-Based -->
-        <div class="col-md-4 mb-4">
-            <h4><i class="fas fa-user-shield fa-3x text-primary"></i></h4>
-            <h5>Role-Based Security</h5>
-            <p>Different access levels for administrators, pilots, and users, ensuring controlled access to sensitive data.</p>
+    <div class="container h-100 d-flex flex-column justify-content-between position-relative">
+        <div class="row h-100 align-items-center" style="margin-top: -100px;">
+            <!-- Hero Text -->
+            <div class="col-12 text-center">
+                <h1 class="display-4">Optimising Drone Flight Data</h1>
+                <p class="lead">Create and manage drone flights - all in one place.</p>
+            </div>
         </div>
-        <!-- Streamlined Data -->
-        <div class="col-md-4 mb-4">
-            <h4><i class="fas fa-clipboard-list fa-3x text-success"></i></h4>
-            <h5>Streamlined Data</h5>
-            <p>Replace inconsistent Word documents with a structured database, reducing manual entry and errors.</p>
-        </div>
-        <!-- Export Data -->
-        <div class="col-md-4 mb-4">
-            <h4><i class="fas fa-file-export fa-3x text-warning"></i></h4> 
-            <h5>Export Data</h5>
-            <p>Easily export operation data to Excel or PDF, saving time and improving data sharing.</p>
+
+        <!-- Hero Button -->
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-2 col-12 text-center mb-4">
+                <a href="{{ url_for('dashboard') if current_user.is_authenticated else url_for('login') }}"
+                    class="btn btn-primary w-100">Get Started</a>
+            </div>
         </div>
     </div>
+</section>
+
+
+<!-- Features Section -->
+<section class="bg-white pb-5" style="padding-top: 3rem">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-4">Our Features</h2>
+                <p class="lead">Discover the powerful features that help you optimise your drone flight operations.</p>
+            </div>
+        </div>
+
+
+        <div class="row text-center justify-content-center">
+            <div class="col-md-4 mb-4">
+                <img src="{{ url_for('static', filename='images/icons/feature_pin.png') }}" alt="icon" class="mb-3"
+                    style="width: 80px; height: 80px;">
+                <p class="lead">Organise and manage your drone flights as individual projects</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <img src="{{ url_for('static', filename='images/icons/feature_drone.png') }}" alt="icon" class="mb-3"
+                    style="width: 80px; height: 80px;">
+                <p class="lead">Manage all project documentation and flight records</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <img src="{{ url_for('static', filename='images/icons/feature_document.png') }}" alt="icon" class="mb-3"
+                    style="width: 80px; height: 80px;">
+                <p class="lead">Generate detailed reports of your projects</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Drones Section -->
+<section class="container my-5" style="padding-bottom: 7.5rem;">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <h3 class="text-start">Our Drones
+                <a href="{{ url_for('view_drones')}}" class="text-muted fs-6 ms-3">View all drones</a>
+            </h3>
+
+            <!-- Any drones found -->
+            {% if drones %}
+                <div class="row mt-4 gy-4"> 
+                    <!-- Loop through drones -->
+                    {% for drone in drones %}
+                        <div class="col-12 col-md-4 d-flex justify-content-center mb-4"> 
+                            <div class="card shadow-sm border-0 rounded-4" style="max-width: 260px; overflow: hidden;">
+                                <!-- Drone Image -->
+                                <img src="{{ url_for('static', filename=drone.imageURL) }}"
+                                    class="card-img-top rounded-top" alt="{{ drone.title }}"
+                                    style="object-fit: cover; max-height: 230px;">
+                                <div class="card-body text-start">
+                                    <!-- Title and links -->
+                                    <h5 class="card-title">{{ drone.title }}</h5>
+                                    <div class="d-flex justify-content-between">
+                                        {% if drone.homePage %}
+                                            <a href="{{ drone.homePage }}" style="text-decoration: none;" class="text-primary">Product Page</a>
+                                        {% endif %}
+                                        {% if drone.userGuide %}
+                                            <a href="{{ drone.userGuide }}" style="text-decoration: none;" class="text-primary">User Guide</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Oh no! Looks like we don't have any available drones at the moment.</p>
+            {% endif %}
+
+        </div>
+    </div>
+</section>
+
+
 
 {% endblock %}
