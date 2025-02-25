@@ -56,7 +56,7 @@ def create_project_rural(project_id):
         "description": item["description"],
         "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
         "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
-    } for item in checklist_template_optional_checklist
+    } for item in checklist_template_required_rural
     }
     
     return render_template("create_project/create_project_rural.html", checks=checks, footer=False)
@@ -115,7 +115,7 @@ def create_project_urban(project_id):
         "description": item["description"],
         "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
         "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
-    } for item in checklist_template_optional_checklist
+    } for item in checklist_template_required_urban
     }
     
     return render_template("create_project/create_project_urban.html", checks=checks, footer=False)
