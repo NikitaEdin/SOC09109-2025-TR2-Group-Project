@@ -20,7 +20,7 @@
                 {% for key, value in checks.items() %}
 
                 <div class="d-flex align-items-center gap-4 checklist-item">
-                    <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif %}>
+                    <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.status or value.value %}checked{% endif %}>
                     <div style="max-width: 25rem;">
                         <label for="{{ key }}">{{ value.title }}
                             <small class="fw-light fs-6">{% if value.last_edit %} - Last Edited: {{ value.last_edit }} {% endif %}</small>
