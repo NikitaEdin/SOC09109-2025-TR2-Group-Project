@@ -169,3 +169,11 @@ html, body {
     margin: 0 auto;
     display: block;
 }
+
+/* Tooltips */
+.custom-tooltip {
+    border: 2px solid var(--accent-colour);
+    border-radius: 8px;
+}
+
+

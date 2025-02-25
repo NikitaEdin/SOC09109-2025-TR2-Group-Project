@@ -23,12 +23,18 @@ ViabilityStudyTemplate = [
         "header": "Observations",
         "fields": [
           {"id": "airspaceclass", "name": "Airspace Class", "value": "", "type": "text"},
-          {"id": "airspaceobservations", "name": "Airspace Observations", "value": "", "type": "textarea"},
-          {"id": "airspacesources", "name": "Airspace Sources", "value": "", "type": "textarea"},
-          {"id": "groundobservations", "name": "Ground Observations", "value": "", "type": "textarea"},
-          {"id": "groundsources", "name": "Ground Sources", "value": "", "type": "textarea"},
-          {"id": "watherobservations", "name": "Weather Observations", "value": "", "type": "textarea"},
-          {"id": "weathersources", "name": "Weather Sources", "value": "", "type": "textarea"}
+          {"id": "airspaceobservations", "name": "Airspace Observations", "value": "", "type": "textarea",
+           "description": "List any factors that need to be taken into account such as the proximity to other aeronautical activities"},
+          {"id": "airspacesources", "name": "Airspace Sources", "value": "", "type": "textarea", 
+           "description" : "List the sources used"},
+          {"id": "groundobservations", "name": "Ground Observations", "value": "", "type": "textarea",
+           "description": "List any factors that need to be taken into account such as the proximity to other aeronautical activities"},
+          {"id": "groundsources", "name": "Ground Sources", "value": "", "type": "textarea", 
+           "description": "List the sources used"},
+          {"id": "watherobservations", "name": "Weather Observations", "value": "", "type": "textarea",
+           "description": "Describe the expected weather conditions"},
+          {"id": "weathersources", "name": "Weather Sources", "value": "", "type": "textarea",
+           "description": "Sources:	List the sources used"}
         ]
       }
     ]
