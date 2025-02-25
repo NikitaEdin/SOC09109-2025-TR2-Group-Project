@@ -137,3 +137,38 @@ def edit_project(project_id):
         return redirect(url_for('project', project_id=project.id)) 
 
     return render_template("dashboard/edit_project.html", form=form, project=project)
+
+
+@app.route("/project/<int:project_id>/remove")
+@login_required
+def remove_project(project_id):
+    # Query by id
+    project = Project.query.get_or_404(project_id)
+
+    # Check ownership
+    if project.authorID != current_user.id:
+        flash('You do not have permission to remove this project.', 'danger')
+        return redirect(url_for('dashboard'))
+
+    try:
+        # delete project
+        db.session.delete(project)
+
+        # commits changes
+        db.session.commit()
+
+        # Audit
+        AuditLogger.log(current_user.id, 'remove_project', f'Removed project id: {project.id}')
+
+        # redirects user and flashes message
+        flash("Project removed successfully.", "success")
+        return redirect(url_for('projects'))
+
+    except:
+        # rolls back any uncommited changes as a precaution
+        db.session.rollback()
+
+        #  redirects user and flashes message
+        flash("Project couldn't be removed at this time.", "danger")
+        return redirect(url_for('project', project_id=project.id))
+
