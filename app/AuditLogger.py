@@ -17,6 +17,7 @@ class AuditLogger:
         'login': True,
         'new_project': True,
         'edit_project': True,
+        'remove_project': True,
     }
 
     def __new__(cls):
