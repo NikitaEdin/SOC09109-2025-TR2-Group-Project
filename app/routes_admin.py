@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash
 from app import app, db
 from flask_login import current_user
-from app.models import User
+from app.models import User, Project
 
 @app.route("/admin/dashboard")
 def admin_dashboard():
@@ -9,7 +9,7 @@ def admin_dashboard():
         flash('You must be logged in as an admin to access this page.', 'danger')
         return redirect(url_for("login"))
     num_users = User.query.count()
-    num_projects = 5
+    num_projects = Project.query.count()
     return render_template("admin_panel/admin_dashboard.html", num_users=num_users, num_projects=num_projects)
 
 @app.route("/admin/users")
