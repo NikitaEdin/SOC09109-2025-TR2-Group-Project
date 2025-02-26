@@ -91,9 +91,9 @@ def create_project_urban(project_id):
     if not project.checklist:
         project.checklist = []
         
-    for template in checklist_templates:
-        for item in template:
-            project.checklist.append({
+        for template in checklist_templates:
+            for item in template:
+                project.checklist.append({
                     "name": item["name"],
                     "status": False,
                     "last_edit": None
@@ -160,9 +160,9 @@ def optional(project_id):
     if not project.checklist:
         project.checklist = []
         
-    for template in checklist_templates:
-        for item in template:
-            project.checklist.append({
+        for template in checklist_templates:
+            for item in template:
+                project.checklist.append({
                     "name": item["name"],
                     "status": False,
                     "last_edit": None
