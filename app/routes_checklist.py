@@ -9,7 +9,11 @@ def create_project_rural(project_id):
     
     # Add checklist templates here and in the model if required
     checklist_templates = [
-        checklist_template_required_rural
+        checklist_template_optional_checklist,
+        checklist_template_emergencies,
+        checklist_template_forms_optional,
+        checklist_template_required_rural,
+        checklist_template_required_urban
     ]
     
     # Checks if the checklist templates is generated if not give it default values
@@ -24,6 +28,7 @@ def create_project_rural(project_id):
                     "last_edit": None
                 })
         db.session.commit()
+        
     if request.method == "POST":
         updated_checklist = []
         
@@ -54,10 +59,16 @@ def create_project_rural(project_id):
         item["name"]: {
         "title": item["name"],
         "description": item["description"],
-        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
-        "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
+     "value": next(
+            (check["status"] for check in project.checklist if check["name"] == item["name"]), 
+            False  # Default to False if no match is found
+        ),
+        "last_edit": next(
+            (check["last_edit"] for check in project.checklist if check["name"] == item["name"]),
+            None  # Default to None if no match is found
+        )
     } for item in checklist_template_required_rural
-    }
+}
     
     return render_template("create_project/create_project_rural.html", checks=checks, footer=False)
 
@@ -68,6 +79,10 @@ def create_project_urban(project_id):
     
     # Add checklist templates here and in the model if required
     checklist_templates = [
+        checklist_template_optional_checklist,
+        checklist_template_emergencies,
+        checklist_template_forms_optional,
+        checklist_template_required_rural,
         checklist_template_required_urban
     ]
     
@@ -83,6 +98,7 @@ def create_project_urban(project_id):
                     "last_edit": None
                 })
         db.session.commit()
+        
     if request.method == "POST":
         updated_checklist = []
         
@@ -113,10 +129,16 @@ def create_project_urban(project_id):
         item["name"]: {
         "title": item["name"],
         "description": item["description"],
-        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
-        "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
+        "value": next(
+            (check["status"] for check in project.checklist if check["name"] == item["name"]), 
+            False  # Default to False if no match is found
+        ),
+        "last_edit": next(
+            (check["last_edit"] for check in project.checklist if check["name"] == item["name"]),
+            None  # Default to None if no match is found
+        )
     } for item in checklist_template_required_urban
-    }
+}
     
     return render_template("create_project/create_project_urban.html", checks=checks, footer=False)
 
@@ -128,7 +150,9 @@ def optional(project_id):
     checklist_templates=[
         checklist_template_optional_checklist,
         checklist_template_emergencies,
-        checklist_template_forms_optional
+        checklist_template_forms_optional,
+        checklist_template_required_rural,
+        checklist_template_required_urban
     ]
     
     # Checks if the checklist templates is generated if not give it default values
@@ -149,27 +173,45 @@ def optional(project_id):
         item["name"]: {
         "title": item["name"],
         "description": item["description"],
-        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
-        "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
+         "value": next(
+            (check["status"] for check in project.checklist if check["name"] == item["name"]), 
+            False  # Default to False if no match is found
+        ),
+        "last_edit": next(
+            (check["last_edit"] for check in project.checklist if check["name"] == item["name"]),
+            None  # Default to None if no match is found
+        )
     } for item in checklist_template_optional_checklist
-    }
+}
     
     IncidentsEmergencies={
         item["name"]: {
         "title": item["name"],
         "description": item["description"],
-        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
-        "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
+        "value": next(
+            (check["status"] for check in project.checklist if check["name"] == item["name"]), 
+            False  # Default to False if no match is found
+        ),
+        "last_edit": next(
+            (check["last_edit"] for check in project.checklist if check["name"] == item["name"]),
+            None  # Default to None if no match is found
+        )
     } for item in checklist_template_emergencies
-    }
+}
     
     forms={
         item["name"]: {
         "title": item["name"],
         "description": item["description"],
-        "value": any(check["name"] == item["name"] and check["status"] for check in project.checklist),
-        "last_edit": next((check["last_edit"] for check in project.checklist if check["name"] == item["name"]), None)
-    } for item in checklist_template_forms_optional
+        "value": next(
+            (check["status"] for check in project.checklist if check["name"] == item["name"]), 
+            False  # Default to False if no match is found
+        ),
+        "last_edit": next(
+            (check["last_edit"] for check in project.checklist if check["name"] == item["name"]),
+            None  # Default to None if no match is found
+        )
+    } for item in checklist_template_emergencies
     }
     
     # On form submission checks if the checkbox is marked  then puts it into updated checklist
