@@ -20,14 +20,14 @@ def create_project_rural(project_id):
     if not project.checklist:
         project.checklist = []
         
-        for template in checklist_templates:
-            for item in template:
-                project.checklist.append({
+    for template in checklist_templates:
+         for item in template:
+            project.checklist.append({
                     "name": item["name"],
                     "status": False,
                     "last_edit": None
                 })
-        db.session.commit()
+    db.session.commit()
         
     if request.method == "POST":
         updated_checklist = []
@@ -36,6 +36,7 @@ def create_project_rural(project_id):
             status = request.form.get(item["name"]) == "on"
             
             updated_item = item.copy()
+            
             old_status = updated_item["status"]
             updated_item["status"] = status
             
@@ -90,9 +91,9 @@ def create_project_urban(project_id):
     if not project.checklist:
         project.checklist = []
         
-        for template in checklist_templates:
-            for item in template:
-                project.checklist.append({
+    for template in checklist_templates:
+        for item in template:
+            project.checklist.append({
                     "name": item["name"],
                     "status": False,
                     "last_edit": None
@@ -159,9 +160,9 @@ def optional(project_id):
     if not project.checklist:
         project.checklist = []
         
-        for template in checklist_templates:
-            for item in template:
-                project.checklist.append({
+    for template in checklist_templates:
+        for item in template:
+            project.checklist.append({
                     "name": item["name"],
                     "status": False,
                     "last_edit": None
@@ -211,7 +212,7 @@ def optional(project_id):
             (check["last_edit"] for check in project.checklist if check["name"] == item["name"]),
             None  # Default to None if no match is found
         )
-    } for item in checklist_template_emergencies
+    } for item in checklist_template_forms_optional
     }
     
     # On form submission checks if the checkbox is marked  then puts it into updated checklist
