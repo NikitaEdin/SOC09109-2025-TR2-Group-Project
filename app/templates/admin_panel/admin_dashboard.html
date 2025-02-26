@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Admin Dashboard</h1>
+<div style="margin: 30px; padding: 30px; border: 1px solid">
 <p>Number of users: {{ num_users }}</p>
 <p>Number of projects: {{ num_projects }}</p>
+<a href="{{ url_for('view_users') }}">View Users</a>
 <a href="#">Manage Users</a>
+</div>
 {% endblock %}
