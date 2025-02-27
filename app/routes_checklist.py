@@ -41,8 +41,8 @@ def create_project_rural(project_id):
             # Grab the status and if it cant put it to false
             existing_status = next((i["status"] for i in existing_checklist if i["name"] == item["name"]), False)
             
-            if existing_status and request.form.get(item["name"]) is None:
-                updated_item["status"] = existing_checklist
+            if request.form.get(item["name"]) is None:
+                updated_item["status"] = existing_status
             else:
                 updated_item["status"] = status
                 
@@ -116,8 +116,8 @@ def create_project_urban(project_id):
             # Grab the status and if it cant put it to false
             existing_status = next((i["status"] for i in existing_checklist if i["name"] == item["name"]), False)
             
-            if existing_status and request.form.get(item["name"]) is None:
-                updated_item["status"] = existing_checklist
+            if request.form.get(item["name"]) is None:
+                updated_item["status"] = existing_status
             else:
                 updated_item["status"] = status
                 
@@ -237,8 +237,8 @@ def optional(project_id):
             # Grab the status and if it cant put it to false
             existing_status = next((i["status"] for i in existing_checklist if i["name"] == item["name"]), False)
             
-            if existing_status and request.form.get(item["name"]) is None:
-                updated_item["status"] = existing_checklist
+            if request.form.get(item["name"]) is None:
+                updated_item["status"] = existing_status
             else:
                 updated_item["status"] = status
                 
