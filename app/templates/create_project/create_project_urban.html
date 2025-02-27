@@ -3,20 +3,16 @@
 {% block title %}Urban Area Flights{% endblock %}
 
 {% block content %}
-<div class="container text-center">
-    <h1 class="mb-2">Urban Area Flights</h1>
-    <h3>This page is for creating an urban project</h3>
-</div>
-
-
 
 <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 70vh;">
-    <div class="container text-center">
-        <h4>Mandatory Forms</h4>
-    </div>
     <form class="container d-flex flex-column gap-4 align-items-center" method="post">
         <div class="d-flex flex-wrap align-items-center justify-content-center" style="gap: 5rem;">
             <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
+                <div class="container text-center">
+                    <p class="fs-1 mb-2">Urban Area Flights</p>
+                    <p class="fs-3 fw-light">This page is for creating an urban project</p>
+                    <p class="fs-4 mt-5">Mandatory Forms</p>
+                </div>
                 {% for key, value in checks.items() %}
 
                 <div class="d-flex align-items-center gap-4 checklist-item">
