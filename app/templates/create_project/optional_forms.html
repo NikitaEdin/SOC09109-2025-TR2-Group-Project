@@ -3,22 +3,22 @@
 {% block title %}Urban Area Flights{% endblock %}
 
 {% block content %}
-<div class="container text-center mb-3">
+
+<div class="container d-flex flex-column justify-content-center align-items-center checklist-container" style="min-height: 80vh">
     <p class=" fs-1 mb-2">Optional Forms</p>
     <p class="fs-3 fw-light">Fill the forms and keep track of the progress</p>
-</div>
-
-<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 70vh">
     <div class="row justify-content-between">
         <!-- Left column -->
         <div class="col">
         <form method="POST">
             <div class="container d-flex flex-column gap-4 align-items-start">
                 <div class="d-flex flex-wrap align-items-start justify-content-start mt-2" style="gap: 5rem;">
-                    <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
+                    <div class="d-flex flex-column gap-2  flex-shrink">
                         <div class="container text-center">
                             <p class="fs-4">Forms</p>
+                            <hr class="my-4">
                         </div>
+                        
                         {% for key, value in content.forms.items() %}
 
                         <div class="d-flex align-items-center gap-4 checklist-item">
@@ -45,15 +45,16 @@
                 </div>
             </div>
         </div>
+       
 
         <!-- Right Column -->
         <div class="col">
-           
             <div class="container d-flex flex-column gap-4 align-items-end">
                 <div class="d-flex flex-wrap align-items-end justify-content-end mt-2" style="gap: 5rem;">
-                    <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
+                    <div class="d-flex flex-column gap-2 flex-shrink">
                         <div class="container text-center">
                             <p class="fs-4">Checklist</p>
+                            <hr class="my-4">
                         </div>
                         {% for key, value in content.checks.items() %}
 
@@ -73,44 +74,10 @@
             </div>
         </div>
     </div>
-   
-
-    <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 30vh;">
-       
-        <div class="container d-flex flex-column gap-4 align-items-center">
-            <div class="d-flex flex-wrap align-items-center justify-content-center" style="gap: 5rem;">
-                <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
-                    <div class="container text-center">
-                        <p class="fs-4">Incidents & Emergencies</p>
-                    </div>
-                    {% for key, value in content.IncidentsEmergencies.items() %}
-
-                    <div class="d-flex align-items-center gap-4 checklist-item">
-                        <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif %}>
-                        <div style="max-width: 25rem;">
-                            <label for="{{ key }}">{{ value.title }}
-                                <small class="fw-light small">{% if value.last_edit %} - Last Edited: {{ value.last_edit }} {% endif %}</small>
-                            </label>
-                            <p>{{ value.description }}</p>
-                        </div>
-                        <div class="d-flex align-items-end ms-auto">
-                            <!-- Create If statement to show update state if there is a form in progress -->
-                            {% if value.value %}
-                            <button type="button" class="btn btn-success ms">Update</button>
-                            {% else %}
-                            <!-- Make an onclick event to tick the box when the user clicks to set the value.value to True -->
-                            <button type="button" class="btn btn-primary ms">View</button>
-                            {%endif%}
-                        </div>
-                    </div>
-                    {% endfor %}
-                   
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container text-center mb-3">
-        <a href="/dashboard" class="btn btn-primary ms-auto">Back to Dashboard</a>
+    
+    
+    <div class="container text-center mt-5 mb-2">
+        <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary ms-auto">Back to Project</a>
         <button class="btn btn-success ms-auto">Save Changes</button>
     </div>
 </form>
