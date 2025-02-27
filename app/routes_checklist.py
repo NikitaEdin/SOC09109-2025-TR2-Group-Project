@@ -20,33 +20,37 @@ def create_project_rural(project_id):
     if not project.checklist:
         project.checklist = []
         
-    for template in checklist_templates:
-         for item in template:
-            project.checklist.append({
+        for template in checklist_templates:
+            for item in template:
+                project.checklist.append({
                     "name": item["name"],
                     "status": False,
                     "last_edit": None
                 })
-    db.session.commit()
+        db.session.commit()
         
     if request.method == "POST":
         updated_checklist = []
         
         for item in project.checklist:
+            existing_checklist = project.checklist
             status = request.form.get(item["name"]) == "on"
             
             updated_item = item.copy()
             
-            old_status = updated_item["status"]
-            updated_item["status"] = status
+            # Grab the status and if it cant put it to false
+            existing_status = next((i["status"] for i in existing_checklist if i["name"] == item["name"]), False)
             
+            if existing_status and request.form.get(item["name"]) is None:
+                updated_item["status"] = existing_checklist
+            else:
+                updated_item["status"] = status
+                
             # Update only if the status changed
-            if old_status != status:
+            if updated_item["status"] != item["status"]:
                 updated_item["last_edit"] = datetime.now().strftime("%d/%m/%y %H:%M")
             
             updated_checklist.append(updated_item)
-            
-        db.session.commit()
 
         # Update the project checklist
         project.update_checklist(updated_checklist)
@@ -104,19 +108,24 @@ def create_project_urban(project_id):
         updated_checklist = []
         
         for item in project.checklist:
+            existing_checklist = project.checklist
             status = request.form.get(item["name"]) == "on"
             
             updated_item = item.copy()
-            old_status = updated_item["status"]
-            updated_item["status"] = status
             
+            # Grab the status and if it cant put it to false
+            existing_status = next((i["status"] for i in existing_checklist if i["name"] == item["name"]), False)
+            
+            if existing_status and request.form.get(item["name"]) is None:
+                updated_item["status"] = existing_checklist
+            else:
+                updated_item["status"] = status
+                
             # Update only if the status changed
-            if old_status != status:
+            if updated_item["status"] != item["status"]:
                 updated_item["last_edit"] = datetime.now().strftime("%d/%m/%y %H:%M")
             
             updated_checklist.append(updated_item)
-            
-        db.session.commit()
 
         # Update the project checklist
         project.update_checklist(updated_checklist)
@@ -220,19 +229,24 @@ def optional(project_id):
         updated_checklist = []
         
         for item in project.checklist:
+            existing_checklist = project.checklist
             status = request.form.get(item["name"]) == "on"
             
             updated_item = item.copy()
-            old_status = updated_item["status"]
-            updated_item["status"] = status
             
+            # Grab the status and if it cant put it to false
+            existing_status = next((i["status"] for i in existing_checklist if i["name"] == item["name"]), False)
+            
+            if existing_status and request.form.get(item["name"]) is None:
+                updated_item["status"] = existing_checklist
+            else:
+                updated_item["status"] = status
+                
             # Update only if the status changed
-            if old_status != status:
+            if updated_item["status"] != item["status"]:
                 updated_item["last_edit"] = datetime.now().strftime("%d/%m/%y %H:%M")
             
             updated_checklist.append(updated_item)
-            
-        db.session.commit()
 
         # Update the project checklist
         project.update_checklist(updated_checklist)

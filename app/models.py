@@ -143,10 +143,6 @@ class Project(db.Model):
                         "status": False,
                         "last_edit": datetime.now().strftime("%d/%m/%y %H:%M")
                     })
-                    
-        for item in updated_checklist:
-            if item.get('last_edit'):
-                item['status'] = True
 
         self.checklist = updated_checklist
         db.session.commit()
