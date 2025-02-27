@@ -1,10 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Admin Dashboard</h1>
-<div style="margin: 30px; padding: 30px; border: 1px solid">
-<p>Number of users: {{ num_users }}</p>
-<p>Number of projects: {{ num_projects }}</p>
-<a href="{{ url_for('view_users') }}">View Users</a>
-<a href="#">Manage Users</a>
+<div class="container mt-4">
+    <div class="card shadow-lg p-4 border border-danger">
+    <h1 class="text-center">Admin Dashboard</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Number of users:</h5>
+                    <p class="card-text fs-4">{{ num_users }}</p>
+                    <a href="{{ url_for('view_users') }}" class="btn btn-success">View Users</a>
+                    <a href="#" class="btn btn-primary">Manage Users</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body border-danger-subtle">
+                    <h5 class="card-title">Number of projects:</h5>
+                    <p class="card-text fs-4">{{ num_projects }}</p>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-success">View Projects</a>
+                    <a href="#" class="btn btn-primary">Manage Projects</a>
+                 </div>
+            </div>
+        </div>
+    </div>
 </div>
+    </div>
 {% endblock %}
