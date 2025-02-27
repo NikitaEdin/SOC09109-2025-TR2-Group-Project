@@ -75,7 +75,7 @@ def create_project_rural(project_id):
     } for item in checklist_template_required_rural
 }
     
-    return render_template("create_project/create_project_rural.html", checks=checks, footer=False)
+    return render_template("create_project/create_project_rural.html", checks=checks, project=project, footer=False)
 
 @app.route("/checklist/create-urban/<int:project_id>", methods=['GET','POST'])
 def create_project_urban(project_id):
@@ -150,7 +150,7 @@ def create_project_urban(project_id):
     } for item in checklist_template_required_urban
 }
     
-    return render_template("create_project/create_project_urban.html", checks=checks, footer=False)
+    return render_template("create_project/create_project_urban.html", checks=checks, project=project, footer=False)
 
 @app.route('/checklist/optional/<int:project_id>', methods =['GET','POST'])
 def optional(project_id):
