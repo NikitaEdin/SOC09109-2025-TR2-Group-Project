@@ -128,7 +128,7 @@ html, body {
     background-color: white;
     padding: 1rem;
     border: var(--accent-colour) solid 1px;
-    border-radius: 1rem;
+    border-radius: 8px;
     width: fit-content;
 }
 

@@ -3,11 +3,6 @@
 {% block title %}Rural Area Flights{% endblock %}
 
 {% block content %}
-<div class="container text-center">
-    
-</div>
-
-
 
 <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 70vh;">
     <form class="container d-flex flex-column gap-4 align-items-center" method="post">
@@ -24,7 +19,7 @@
                     <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif %}>
                     <div style="max-width: 25rem;">
                         <label for="{{ key }}">{{ value.title }}
-                            <small class="fw-light fs-6">{% if value.last_edit %} - Last Edited: {{ value.last_edit }} {% endif %}</small>
+                            <small class="fw-light small">{% if value.last_edit %} - Last Edited: {{ value.last_edit }} {% endif %}</small>
                         </label>
                         <p>{{ value.description }}</p>
                     </div>
