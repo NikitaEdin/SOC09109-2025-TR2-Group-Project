@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import render_template, request,redirect,url_for
 from app import app
-from app.models import db, Project, checklist_template_optional_checklist,checklist_template_emergencies,checklist_template_forms_optional,checklist_template_required_rural,checklist_template_required_urban
+from app.models import db, Project, checklist_template_optional_checklist,checklist_template_physical,checklist_template_forms_optional,checklist_template_required_rural,checklist_template_required_urban
 
 @app.route("/checklist/create-rural/<int:project_id>", methods=['GET', 'POST'])
 def create_project_rural(project_id):
@@ -10,7 +10,6 @@ def create_project_rural(project_id):
     # Add checklist templates here and in the model if required
     checklist_templates = [
         checklist_template_optional_checklist,
-        checklist_template_emergencies,
         checklist_template_forms_optional,
         checklist_template_required_rural,
         checklist_template_required_urban
@@ -85,7 +84,6 @@ def create_project_urban(project_id):
     # Add checklist templates here and in the model if required
     checklist_templates = [
         checklist_template_optional_checklist,
-        checklist_template_emergencies,
         checklist_template_forms_optional,
         checklist_template_required_rural,
         checklist_template_required_urban
@@ -159,7 +157,6 @@ def optional(project_id):
     
     checklist_templates=[
         checklist_template_optional_checklist,
-        checklist_template_emergencies,
         checklist_template_forms_optional,
         checklist_template_required_rural,
         checklist_template_required_urban
@@ -194,20 +191,6 @@ def optional(project_id):
     } for item in checklist_template_optional_checklist
 }
     
-    IncidentsEmergencies={
-        item["name"]: {
-        "title": item["name"],
-        "description": item["description"],
-        "value": next(
-            (check["status"] for check in project.checklist if check["name"] == item["name"]), 
-            False  # Default to False if no match is found
-        ),
-        "last_edit": next(
-            (check["last_edit"] for check in project.checklist if check["name"] == item["name"]),
-            None  # Default to None if no match is found
-        )
-    } for item in checklist_template_emergencies
-}
     
     forms={
         item["name"]: {
@@ -259,7 +242,6 @@ def optional(project_id):
 #  This is to tidy up and only pass in only one variable into the template
     content = {
     "checks": checks,
-    "forms": forms,
-    "IncidentsEmergencies": IncidentsEmergencies
+    "forms": forms
 }
     return render_template("create_project/optional_forms.html", content=content, project=project,footer=False )
