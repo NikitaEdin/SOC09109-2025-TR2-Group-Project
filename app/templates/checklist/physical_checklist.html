@@ -12,7 +12,7 @@
                     <p class="fs-1 mb-2">Physical Checklist</p>
                     <p class="fs-3 fw-light">Checklist</p>
                 </div>
-                {% for key, value in checks.items() %}
+                {% for key, value in content.checks.items() %}
 
                 <div class="d-flex align-items-center gap-4 checklist-item">
                     <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif %}>
@@ -34,7 +34,7 @@
                 </div>
                 {% endfor %}
                 <div class="container text-center mt-3 mb-2">
-                    <a href="#" class="btn btn-primary ms-auto">Back to Project</a>
+                    <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary ms-auto">Back to Project</a>
                     <button class="btn btn-success ms-auto">Save Changes</button>
                 </div>
             </div>
