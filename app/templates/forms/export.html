@@ -34,10 +34,11 @@
 <div class="d-flex mt-2 gap-2 flex-column align-items-center no-print">
     <p style="margin: 0;">Click the button below to print to PDF</p>
     <button class="btn btn-primary" id="print-button">Save Document</button>
+    <p class="small">If some elements are missing, enable "Print Background colors and images" in your browser's print menu. If that doesn't work, please use a chromium based browser.</p>
 </div>
 
 {% for template in form_data %}
-<div class="container-lg d-flex flex-column gap-1">
+<div class="container-lg print-container d-flex flex-column gap-1">
     <img
         alt="Edinburgh Napier University Logo"
         src="/static/Images/Logos/ENU%20Main%20Logo/ENU%20Main%20Logo/png%20Screen/ENU%20logo.png"
