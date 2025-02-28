@@ -13,7 +13,7 @@
         <form method="POST">
             <div class="container d-flex flex-column gap-4 align-items-start">
                 <div class="d-flex flex-wrap align-items-start justify-content-start mt-2" style="gap: 5rem;">
-                    <div class="d-flex flex-column gap-2  flex-shrink">
+                    <div class="d-flex flex-column gap-2  flex-shrink ">
                         <div class="container text-center">
                             <p class="fs-4">Forms</p>
                             <hr class="my-4">
@@ -21,7 +21,7 @@
                         
                         {% for key, value in content.forms.items() %}
 
-                        <div class="d-flex align-items-center gap-4 checklist-item">
+                        <div class="d-flex align-items-center gap-4 checklist-item ">
                             <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif
                                 %}>
                             <div style="max-width: 25rem;">
@@ -45,7 +45,11 @@
                 </div>
             </div>
         </div>
-       
+
+        <!-- Vertical Divider between checklist Solution add a border to the checklist items  -->
+        <!-- <div class="d-flex" style="height: 200px;">
+            <div class="vr"></div>
+          </div> -->
 
         <!-- Right Column -->
         <div class="col">
