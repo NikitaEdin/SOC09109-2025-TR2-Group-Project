@@ -176,4 +176,17 @@ html, body {
     border-radius: 8px;
 }
 
+.print-only {
+    display: none;
+}
 
+/* Printing to PDF */
+@media print {
+    .no-print, .no-print * {
+        display: none !important;
+    }
+
+    .print-only {
+        display: block !important;
+    }
+}
