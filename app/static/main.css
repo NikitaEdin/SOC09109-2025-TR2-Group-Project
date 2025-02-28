@@ -183,6 +183,14 @@ html, body {
 }
 
 @media print {
+    html, body {
+        height: initial;
+        margin: initial;
+        overflow-x: initial;
+        background-color: initial;
+        min-height: initial;
+    }
+
     .no-print, .no-print * {
         display: none !important;
     }
