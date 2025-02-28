@@ -72,12 +72,12 @@
                                 <!-- Required Documents -->
                                 <div class="col-md-4 mb-3 text-center">
                                     {% if project.projectType =='Rural' %}
-                                    <a href="{{ url_for('create_project_rural',project_id=project.id) }}" class="btn btn-primary w-100">
+                                    <a href="{{ url_for('rural_checklist',project_id=project.id) }}" class="btn btn-primary w-100">
                                         <i class="fas fa-file-alt"></i> Required Documents
                                       </a>
                                       
                                     {% elif project.projectType=='Urban'%}
-                                    <a href="{{ url_for('create_project_urban',project_id=project.id) }}" class="btn btn-primary w-100">
+                                    <a href="{{ url_for('urban_checklist',project_id=project.id) }}" class="btn btn-primary w-100">
                                         <i class="fas fa-file-alt"></i> Required Documents
                                       </a>
                                       

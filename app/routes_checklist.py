@@ -4,7 +4,7 @@ from app import app
 from app.models import db, Project, checklist_template_optional_checklist,checklist_template_physical,checklist_template_forms_optional,checklist_template_required_rural,checklist_template_required_urban
 
 @app.route("/project/<int:project_id>/rural-checklist", methods=['GET', 'POST'])
-def create_project_rural(project_id):
+def rural_checklist(project_id):
     project = Project.query.get_or_404(project_id)
     
     # Add checklist templates here and in the model if required
@@ -12,7 +12,8 @@ def create_project_rural(project_id):
         checklist_template_optional_checklist,
         checklist_template_forms_optional,
         checklist_template_required_rural,
-        checklist_template_required_urban
+        checklist_template_required_urban,
+        checklist_template_physical
     ]
     
     # Checks if the checklist templates is generated if not give it default values
@@ -57,7 +58,7 @@ def create_project_rural(project_id):
         # Add any missing items from the checklist template
         project.update_checklist_from_json(updated_checklist)
         
-        return redirect(url_for('create_project_rural', project_id=project.id))
+        return redirect(url_for('rural_checklist', project_id=project.id))
     
     checks={
         item["name"]: {
@@ -74,11 +75,11 @@ def create_project_rural(project_id):
     } for item in checklist_template_required_rural
 }
     
-    return render_template("create_project/create_project_rural.html", checks=checks, project=project, footer=False)
+    return render_template("checklist/rural_checklist.html", checks=checks, project=project, footer=False)
 
 
 @app.route("/project/<int:project_id>/urban-checklist", methods=['GET','POST'])
-def create_project_urban(project_id):
+def urban_checklist(project_id):
     
     project = Project.query.get_or_404(project_id)
     
@@ -87,7 +88,8 @@ def create_project_urban(project_id):
         checklist_template_optional_checklist,
         checklist_template_forms_optional,
         checklist_template_required_rural,
-        checklist_template_required_urban
+        checklist_template_required_urban,
+        checklist_template_physical
     ]
     
     # Checks if the checklist templates is generated if not give it default values
@@ -132,7 +134,7 @@ def create_project_urban(project_id):
         # Add any missing items from the checklist template
         project.update_checklist_from_json(updated_checklist)
         
-        return redirect(url_for('create_project_urban', project_id=project.id))
+        return redirect(url_for('urban_checklist', project_id=project.id))
     
     checks={
         item["name"]: {
@@ -149,7 +151,7 @@ def create_project_urban(project_id):
     } for item in checklist_template_required_urban
 }
     
-    return render_template("create_project/create_project_urban.html", checks=checks, project=project, footer=False)
+    return render_template("checklist/urban_checklist.html", checks=checks, project=project, footer=False)
 
 @app.route('/project/<int:project_id>/optional-checklist', methods =['GET','POST'])
 def optional(project_id):
@@ -160,7 +162,8 @@ def optional(project_id):
         checklist_template_optional_checklist,
         checklist_template_forms_optional,
         checklist_template_required_rural,
-        checklist_template_required_urban
+        checklist_template_required_urban,
+        checklist_template_physical
     ]
     
     # Checks if the checklist templates is generated if not give it default values
@@ -244,7 +247,7 @@ def optional(project_id):
     "checks": checks,
     "forms": forms
 }
-    return render_template("create_project/optional_forms.html", content=content, project=project,footer=False )
+    return render_template("checklist/optional_checklist.html", content=content, project=project,footer=False )
 
 @app.route('/project/<int:project_id>/physical-checklist', methods =['GET','POST'])
 def physical(project_id):
