@@ -67,7 +67,7 @@
             {% elif field.type == "textarea" %}
                 <div>
                     <p class="fw-bold fs-6 m-0">{{ field.name }}</p>
-                    <p class="m-0">{{ field.value|safe }}</p>
+                    <p class="m-0">{{ field.value|replace("\n", "<br>")|safe }}</p>
                 </div>
             {% elif field.type == "date" %}
                 <p>
