@@ -34,3 +34,4 @@ from app import routes_forms
 from app import routes_dashboard
 from app import routes_new_project
 from app import routes_checklist
+from app import routes_profile
