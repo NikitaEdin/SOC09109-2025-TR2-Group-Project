@@ -3,6 +3,7 @@ from app import app, db
 from flask import flash, json, redirect, render_template, request, url_for
 from sqlalchemy.orm.attributes import flag_modified
 from app.forms.crewCallSheetForm import CrewCallSheetForm
+from app.forms.jsons.viabilityStudyTemplate import ViabilityStudyTemplate
 from app.models import Project
 
 from datetime import datetime
@@ -59,6 +60,12 @@ def viability_study(project_id):
     
     return render_template("/forms/viability_study.html", project=project, form_data=form_data, footer=False, title="Viability Study")
 
+@app.route("/project/<int:project_id>/viability-study/export", methods=["GET"])
+@login_required
+def export_viability_study(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    return render_template("/forms/export.html", form_data=project.viabilityStudy, title="Viability Study")
 
 @app.route('/project/<int:project_id>/site-evaluation', methods=['GET', 'POST'])
 @login_required
@@ -111,6 +118,14 @@ def site_evaluation(project_id):
     """
 
     return render_template("/forms/site_evaluation.html")
+
+
+@app.route("/project/<int:project_id>/site-evaluation/export", methods=["GET", "POST"])
+@login_required
+def export_site_evaluation(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    return render_template("/forms/export.html", form_data=project.siteEvaluation, title="Site Evaluation")
 
 
 @app.route('/forms/site-evaluation-template', methods=['GET', 'POST'])
