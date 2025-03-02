@@ -1,5 +1,6 @@
 from datetime import datetime
-from flask import render_template, request,redirect,url_for
+from flask import flash, render_template, request,redirect,url_for
+from flask_login import current_user, login_required
 from app import app
 from app.models import db, Project, checklist_template_optional_checklist,checklist_template_physical,checklist_template_forms_optional,checklist_template_required_rural,checklist_template_required_urban
   
@@ -30,9 +31,21 @@ def default_checklist(project_id):
      
         
 @app.route("/project/<int:project_id>/rural-checklist", methods=['GET', 'POST'])
+@login_required
 def rural_checklist(project_id):
     project = Project.query.get_or_404(project_id)
     
+    # Restrict access to only rural project types
+    if project.projectType != 'Rural':
+        flash("Project is not of type Rural.", 'danger')
+        return redirect(url_for('project', project_id = project.id))
+    
+    # Ensure project is owned by current_user
+    if project.is_owner(current_user) != True:
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+     
+
     default_checklist(project_id)
         
     if request.method == "POST":
@@ -79,9 +92,19 @@ def rural_checklist(project_id):
 
 
 @app.route("/project/<int:project_id>/urban-checklist", methods=['GET','POST'])
+@login_required
 def urban_checklist(project_id):
-    
     project = Project.query.get_or_404(project_id)
+
+    # Restrict access to only rural project types
+    if project.projectType != 'Urban':
+        flash("Project is not of type Urban.", 'danger')
+        return redirect(url_for('project', project_id = project.id))
+    
+     # Ensure project is owned by current_user
+    if project.is_owner(current_user) != True:
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
     
     default_checklist(project_id)
         
@@ -128,10 +151,15 @@ def urban_checklist(project_id):
     return render_template("checklist/urban_checklist.html", checks=checks, project=project, footer=False)
 
 @app.route('/project/<int:project_id>/optional-checklist', methods =['GET','POST'])
+@login_required
 def optional(project_id):
-    
     project = Project.query.get_or_404(project_id)
     
+    # Ensure project is owned by current_user
+    if project.is_owner(current_user) != True:
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+
     default_checklist(project_id)
            
     # Stores information from the checklist template
@@ -200,9 +228,15 @@ def optional(project_id):
     return render_template("checklist/optional_checklist.html", content=content, project=project,footer=False )
 
 @app.route('/project/<int:project_id>/physical-checklist', methods =['GET','POST'])
+@login_required
 def physical(project_id):
     project = Project.query.get_or_404(project_id)
     
+    # Ensure project is owned by current_user
+    if project.is_owner(current_user) != True:
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+
     default_checklist(project_id)
         
     # Stores information from the checklist template
