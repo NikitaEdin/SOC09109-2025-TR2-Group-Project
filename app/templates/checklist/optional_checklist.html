@@ -1,12 +1,10 @@
-{% extends "base.html" %}
+{% extends "/dashboard/dashboard_base.html" %}
 
-{% block title %}Urban Area Flights{% endblock %}
-
-{% block content %}
+{% block main_content %}
 
 <div class="container d-flex flex-column justify-content-center align-items-center checklist-container" style="min-height: 80vh">
     <p class=" fs-1 mb-2">Optional Forms</p>
-    <p class="fs-3 fw-light">Fill the forms and keep track of the progress</p>
+    <p class="fs-5 fw-light">Fill the forms and keep track of the progress</p>
     <div class="row justify-content-between">
         <!-- Left column -->
         <div class="col">
@@ -16,13 +14,13 @@
                     <div class="d-flex flex-column gap-2  flex-shrink ">
                         <div class="container text-center">
                             <p class="fs-4">Forms</p>
-                            <hr class="my-4">
+                            <hr class="mb-3">
                         </div>
                         
                         {% for key, value in content.forms.items() %}
 
-                        <div class="d-flex align-items-center gap-4 checklist-item ">
-                            <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif
+                        <div class="d-flex align-items-start gap-4 checklist-item ">
+                            <input type="checkbox" class="mt-2" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif
                                 %}>
                             <div style="max-width: 25rem;">
                                 <label for="{{ key }}">{{ value.title }}
@@ -46,11 +44,6 @@
             </div>
         </div>
 
-        <!-- Vertical Divider between checklist Solution add a border to the checklist items  -->
-        <!-- <div class="d-flex" style="height: 200px;">
-            <div class="vr"></div>
-          </div> -->
-
         <!-- Right Column -->
         <div class="col">
             <div class="container d-flex flex-column gap-4 align-items-end">
@@ -58,12 +51,12 @@
                     <div class="d-flex flex-column gap-2 flex-shrink">
                         <div class="container text-center">
                             <p class="fs-4">Checklist</p>
-                            <hr class="my-4">
+                            <hr class="mb-3">
                         </div>
                         {% for key, value in content.checks.items() %}
 
-                        <div class="d-flex align-items-center gap-4 checklist-item">
-                            <input type="checkbox" id="{{ key }}" name="{{ key }}" value="on" {% if value.value %}checked{% endif
+                        <div class="d-flex align-items-start gap-4 checklist-item">
+                            <input type="checkbox" class="mt-2" id="{{ key }}" name="{{ key }}" value="on" {% if value.value %}checked{% endif
                                 %}>
                             <div style="max-width: 25rem;">
                                 <label for="{{ key }}">{{ value.title }} 

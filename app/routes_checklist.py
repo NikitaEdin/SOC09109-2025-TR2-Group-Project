@@ -88,7 +88,7 @@ def rural_checklist(project_id):
     } for item in checklist_template_required_rural
 }
     
-    return render_template("checklist/rural_checklist.html", checks=checks, project=project, footer=False)
+    return render_template("checklist/rural_checklist.html", checks=checks, project=project, footer=False, title='Required Forms')
 
 
 @app.route("/project/<int:project_id>/urban-checklist", methods=['GET','POST'])
@@ -148,7 +148,7 @@ def urban_checklist(project_id):
     } for item in checklist_template_required_urban
 }
     
-    return render_template("checklist/urban_checklist.html", checks=checks, project=project, footer=False)
+    return render_template("checklist/urban_checklist.html", checks=checks, project=project, footer=False, title='Required Forms')
 
 @app.route('/project/<int:project_id>/optional-checklist', methods =['GET','POST'])
 @login_required
@@ -225,7 +225,7 @@ def optional(project_id):
     "checks": checks,
     "forms": forms
 }
-    return render_template("checklist/optional_checklist.html", content=content, project=project,footer=False )
+    return render_template("checklist/optional_checklist.html", content=content, project=project, footer=False, title='Optional Forms')
 
 @app.route('/project/<int:project_id>/physical-checklist', methods =['GET','POST'])
 @login_required
@@ -284,4 +284,4 @@ def physical(project_id):
         
         return redirect(url_for('physical', project_id=project.id))
     
-    return render_template("checklist/physical_checklist.html",content=content, project=project,footer=False )
+    return render_template("checklist/physical_checklist.html",content=content, project=project, footer=False, title='Physical Checklist')

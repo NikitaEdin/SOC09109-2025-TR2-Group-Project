@@ -1,21 +1,19 @@
-{% extends "base.html" %}
+{% extends "/dashboard/dashboard_base.html" %}
 
-{% block title %}Rural Area Flights{% endblock %}
+{% block main_content %}
 
-{% block content %}
-
-<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 70vh;">
-    <form class="container d-flex flex-column gap-4 align-items-center" method="post">
-        <div class="d-flex flex-wrap align-items-center justify-content-center" style="gap: 5rem;">
-            <div class="d-flex flex-column gap-2 checklist-container flex-shrink">
+<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 50vh;">
+    <form class="d-flex flex-column gap-4 align-items-center w-100" method="post">
+        <div class="d-flex flex-wrap align-items-start justify-content-center col-lg-8 col-md-10 col-sm-12" style="gap: 5rem;">
+            <div class="d-flex flex-column gap-2 checklist-container" style="flex: 1;">
                 <div class="container text-center">
                     <p class="fs-1 mb-2">Rural Area Flights</p>
-                    <p class="fs-3 fw-light">Mandatory Forms</p>
+                    <p class="fs-5 fw-light">Mandatory Forms</p>
                 </div>
                 {% for key, value in checks.items() %}
 
-                <div class="d-flex align-items-center gap-4 checklist-item">
-                    <input type="checkbox" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif %}>
+                <div class="d-flex align-items-start gap-4 checklist-item">
+                    <input type="checkbox" class="mt-2" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif %}>
                     <div style="max-width: 25rem;">
                         <label for="{{ key }}">{{ value.title }}
                             <small class="fw-light small">{% if value.last_edit %} - Last Edited: {{ value.last_edit }} {% endif %}</small>
@@ -33,7 +31,7 @@
                     </div>
                 </div>
                 {% endfor %}
-                <div class="container text-center mt-3 mb-2">
+                <div class="container text-center mt-5 mb-2">
                     <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary ms-auto">Back to Project</a>
                     <button class="btn btn-success ms-auto">Save Changes</button>
                 </div>
