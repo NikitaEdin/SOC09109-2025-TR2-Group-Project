@@ -2,12 +2,12 @@ from datetime import datetime
 from flask import render_template, request,redirect,url_for
 from app import app
 from app.models import db, Project, checklist_template_optional_checklist,checklist_template_physical,checklist_template_forms_optional,checklist_template_required_rural,checklist_template_required_urban
-
+        
 @app.route("/project/<int:project_id>/rural-checklist", methods=['GET', 'POST'])
 def rural_checklist(project_id):
     project = Project.query.get_or_404(project_id)
     
-    # Add checklist templates here and in the model if required
+      # Add checklist templates here and in the model if required
     checklist_templates = [
         checklist_template_optional_checklist,
         checklist_template_forms_optional,
@@ -33,30 +33,24 @@ def rural_checklist(project_id):
         updated_checklist = []
         
         for item in project.checklist:
-            existing_checklist = project.checklist
             status = request.form.get(item["name"]) == "on"
             
             updated_item = item.copy()
             
-            # Grab the status and if it cant put it to false
-            existing_status = next((i["status"] for i in existing_checklist if i["name"] == item["name"]), False)
             
-            if request.form.get(item["name"]) is None:
-                updated_item["status"] = existing_status
-            else:
+            if item["name"] in request.form:
                 updated_item["status"] = status
+            else: 
+                updated_item["status"] = item["status"]
                 
             # Update only if the status changed
             if updated_item["status"] != item["status"]:
                 updated_item["last_edit"] = datetime.now().strftime("%d/%m/%y %H:%M")
             
             updated_checklist.append(updated_item)
-
+            
         # Update the project checklist
         project.update_checklist(updated_checklist)
-        
-        # Add any missing items from the checklist template
-        project.update_checklist_from_json(updated_checklist)
         
         return redirect(url_for('rural_checklist', project_id=project.id))
     
@@ -109,18 +103,14 @@ def urban_checklist(project_id):
         updated_checklist = []
         
         for item in project.checklist:
-            existing_checklist = project.checklist
             status = request.form.get(item["name"]) == "on"
             
             updated_item = item.copy()
             
-            # Grab the status and if it cant put it to false
-            existing_status = next((i["status"] for i in existing_checklist if i["name"] == item["name"]), False)
-            
-            if request.form.get(item["name"]) is None:
-                updated_item["status"] = existing_status
-            else:
+            if item["name"] in request.form:
                 updated_item["status"] = status
+            else: 
+                updated_item["status"] = item["status"]
                 
             # Update only if the status changed
             if updated_item["status"] != item["status"]:
@@ -131,8 +121,6 @@ def urban_checklist(project_id):
         # Update the project checklist
         project.update_checklist(updated_checklist)
         
-        # Add any missing items from the checklist template
-        project.update_checklist_from_json(updated_checklist)
         
         return redirect(url_for('urban_checklist', project_id=project.id))
     
@@ -215,30 +203,25 @@ def optional(project_id):
         updated_checklist = []
         
         for item in project.checklist:
-            existing_checklist = project.checklist
             status = request.form.get(item["name"]) == "on"
             
             updated_item = item.copy()
             
-            # Grab the status and if it cant put it to false
-            existing_status = next((i["status"] for i in existing_checklist if i["name"] == item["name"]), False)
             
-            if request.form.get(item["name"]) is None:
-                updated_item["status"] = existing_status
-            else:
+            if item["name"] in request.form:
                 updated_item["status"] = status
+            else: 
+                updated_item["status"] = item["status"]
                 
             # Update only if the status changed
             if updated_item["status"] != item["status"]:
                 updated_item["last_edit"] = datetime.now().strftime("%d/%m/%y %H:%M")
             
             updated_checklist.append(updated_item)
+            
 
         # Update the project checklist
         project.update_checklist(updated_checklist)
-        
-        # Add any missing items from the checklist template
-        project.update_checklist_from_json(updated_checklist)
         
         return redirect(url_for('optional', project_id=project.id))
 
@@ -298,30 +281,24 @@ def physical(project_id):
         updated_checklist = []
         
         for item in project.checklist:
-            existing_checklist = project.checklist
             status = request.form.get(item["name"]) == "on"
             
             updated_item = item.copy()
             
-            # Grab the status and if it cant put it to false
-            existing_status = next((i["status"] for i in existing_checklist if i["name"] == item["name"]), False)
-            
-            if request.form.get(item["name"]) is None:
-                updated_item["status"] = existing_status
-            else:
+            if item["name"] in request.form:
                 updated_item["status"] = status
+            else: 
+                updated_item["status"] = item["status"]
                 
             # Update only if the status changed
             if updated_item["status"] != item["status"]:
                 updated_item["last_edit"] = datetime.now().strftime("%d/%m/%y %H:%M")
             
             updated_checklist.append(updated_item)
-
+            
         # Update the project checklist
         project.update_checklist(updated_checklist)
         
-        # Add any missing items from the checklist template
-        project.update_checklist_from_json(updated_checklist)
         
         return redirect(url_for('physical', project_id=project.id))
     
