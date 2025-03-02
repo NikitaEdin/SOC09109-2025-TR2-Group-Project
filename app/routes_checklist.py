@@ -2,9 +2,8 @@ from datetime import datetime
 from flask import render_template, request,redirect,url_for
 from app import app
 from app.models import db, Project, checklist_template_optional_checklist,checklist_template_physical,checklist_template_forms_optional,checklist_template_required_rural,checklist_template_required_urban
-        
-@app.route("/project/<int:project_id>/rural-checklist", methods=['GET', 'POST'])
-def rural_checklist(project_id):
+  
+def default_checklist(project_id):
     project = Project.query.get_or_404(project_id)
     
       # Add checklist templates here and in the model if required
@@ -28,6 +27,13 @@ def rural_checklist(project_id):
                     "last_edit": None
                 })
         db.session.commit()
+     
+        
+@app.route("/project/<int:project_id>/rural-checklist", methods=['GET', 'POST'])
+def rural_checklist(project_id):
+    project = Project.query.get_or_404(project_id)
+    
+    default_checklist(project_id)
         
     if request.method == "POST":
         updated_checklist = []
@@ -77,27 +83,7 @@ def urban_checklist(project_id):
     
     project = Project.query.get_or_404(project_id)
     
-    # Add checklist templates here and in the model if required
-    checklist_templates = [
-        checklist_template_optional_checklist,
-        checklist_template_forms_optional,
-        checklist_template_required_rural,
-        checklist_template_required_urban,
-        checklist_template_physical
-    ]
-    
-    # Checks if the checklist templates is generated if not give it default values
-    if not project.checklist:
-        project.checklist = []
-        
-        for template in checklist_templates:
-            for item in template:
-                project.checklist.append({
-                    "name": item["name"],
-                    "status": False,
-                    "last_edit": None
-                })
-        db.session.commit()
+    default_checklist(project_id)
         
     if request.method == "POST":
         updated_checklist = []
@@ -146,26 +132,7 @@ def optional(project_id):
     
     project = Project.query.get_or_404(project_id)
     
-    checklist_templates=[
-        checklist_template_optional_checklist,
-        checklist_template_forms_optional,
-        checklist_template_required_rural,
-        checklist_template_required_urban,
-        checklist_template_physical
-    ]
-    
-    # Checks if the checklist templates is generated if not give it default values
-    if not project.checklist:
-        project.checklist = []
-        
-        for template in checklist_templates:
-            for item in template:
-                project.checklist.append({
-                    "name": item["name"],
-                    "status": False,
-                    "last_edit": None
-                })
-        db.session.commit()
+    default_checklist(project_id)
            
     # Stores information from the checklist template
     checks={
@@ -236,26 +203,7 @@ def optional(project_id):
 def physical(project_id):
     project = Project.query.get_or_404(project_id)
     
-    checklist_templates=[
-        checklist_template_optional_checklist,
-        checklist_template_forms_optional,
-        checklist_template_required_rural,
-        checklist_template_required_urban,
-        checklist_template_physical
-    ]
-    
-    # Checks if the checklist templates is generated if not give it default values
-    if not project.checklist:
-        project.checklist = []
-        
-        for template in checklist_templates:
-            for item in template:
-                project.checklist.append({
-                    "name": item["name"],
-                    "status": False,
-                    "last_edit": None
-                })
-        db.session.commit()
+    default_checklist(project_id)
         
     # Stores information from the checklist template
     checks={
