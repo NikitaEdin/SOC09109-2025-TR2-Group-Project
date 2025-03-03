@@ -1,33 +1,63 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "/admin_panel/admin_base.html" %}
+{% set footer=False%}
+{% set use_container=False%}
 
-<div class="container mt-4">
-      <div class="card shadow-lg p-4 border border-danger">
-<h1 class="text-center">All Users</h1>
+{% block main_content %}
+<div class="mt-4">
 
-  <div class="table-responsive mt-4">
-<table class="table table-striped table-bordered shadow">
-  <thead class="table-dark">
-    <tr>
-      <th>Username</th>
-      <th>Email</th>
-      <th>Role</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for user in users %}
-  <tr>
-    <td>{{ user.username }}</td>
-    <td>{{ user.email }}</td>
-    <td>{{ user.role.title }}</td>
-    <td><a href="#" class="btn btn-primary btn-sm">Edit</a>
-    </td>
-  </tr>
-  {% endfor %}
-  </tbody>
-</table>
+    <div class="">
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            <!--  any messages? -->
+            {% if messages %}
+            <!-- loop messages -->
+            {% for category, message in messages %}
+            <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                {{ message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <h1 class="mb-4 fs-2"></i> All Users</h1>
+
+
+    <div class="list-group">
+      {% if users %}
+          {% for user in users %}
+          <!-- User Card -->
+          <div class="card mb-2">
+              <div class="row mx-2 my-1">
+                  <!-- Username -->
+                  <div class="col-3 align-content-center">
+                      <p class="mb-0">{{ user.username }}</p>
+                  </div>
+                  <!-- Email -->
+                  <div class="col align-content-center">
+                      <p class="mb-0" style="color: var(--text-secondary-colour);">{{ user.email }}</p>
+                  </div>
+                  <!-- Role -->
+                  <div class="col align-content-center">
+                      <p class="mb-0" style="color: var(--text-secondary-colour);">{{ user.role.title }}</p>
+                  </div>
+  
+                  <!-- Edit Action -->
+                  <div class="col d-flex justify-content-end">
+                      <a href="#" class="btn btn-primary">Edit</a>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+      {% else %}
+          <p>No users found.</p>
+      {% endif %}
   </div>
-      </div>
+  
+
+
 </div>
+
 {% endblock %}

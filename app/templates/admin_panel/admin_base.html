@@ -1,0 +1,160 @@
+<!-- This is the base html used for all ADMIN dashboard pages -->
+<!-- It comes with collapsable sidebar -->
+
+{% extends "base.html" %}
+
+
+{% block content %}
+<!-- Sidebar -->
+<div class="sidebar" style="margin-top: 60px; height: calc(100vh - 60px);">
+  <!-- Top Section -->
+  <div class="top-section mt-2 mx-2">
+    <a href="{{url_for('admin_dashboard')}}" class="btn my-1 {% if title == 'admin panel' %}active{% endif %}">
+      <i class="fas fa-tachometer-alt"></i> Admin Panel
+    </a>
+
+    <a href="{{url_for('view_users')}}" class="btn my-1 {% if title == 'users' %}active{% endif %}">
+      <i class="fas fa-user"></i> Users
+    </a>
+
+  </div>
+
+
+  <!-- Bottom Section -->
+  <div class="bottom-section mx-2 mb-2">
+    <a href="{{url_for('logout')}}" class="btn">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+  </div>
+</div>
+
+<!-- Hamburger Menu (visible on mobile screens) -->
+<button class="sidebar-collapse btn" id="sidebar-toggle">&#9776;</button>
+
+<!-- MAIN CONTENT -->
+<div class="main_content py-0 py-md-3">
+  {% block main_content %}{% endblock %}
+</div>
+
+<style>
+  /* General Styles for the Dashboard Layout */
+  .main_content {
+    margin-left: 250px;
+    /* Make space for the sidebar on larger screens */
+    width: calc(100% - 250px);
+    /* Adjust width to account for the sidebar */
+    transition: margin-left 0.3s ease;
+    padding: 20px;
+    background-color: #f5f5f5;
+    
+  }
+
+  /* Sidebar */
+  .sidebar {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    background-color: #ffffff;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid #ddd;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+  }
+
+  /* Sidebar toggle button (for mobile) */
+  .sidebar-collapse {
+    display: none;
+  }
+
+  /* Media Query for Small Screens (Mobile/Tablets) */
+  @media (max-width: 768px) {
+
+    /* Small screens - sidebar should take 60% width */
+    .sidebar {
+      position: fixed;
+      width: 60%;
+      transform: translateX(-100%);
+      /* Sidebar hidden by default */
+      z-index: 1050;
+    }
+
+    /* Show sidebar when it has 'show' class */
+    .sidebar.show {
+      transform: translateX(0);
+    }
+
+    /* Main content takes full width when sidebar is collapsed */
+    .main_content {
+      margin-left: 0;
+      width: 100%;
+      /* Take up full width */
+    }
+
+    .sidebar-collapse {
+      margin: 5px 25px;
+      display: block;
+      background-color: #ffffff;
+      color: var(--accent-colour);
+
+      border: none;
+      font-size: 30px;
+    }
+  }
+
+  /* Sidebar Button Styling */
+  .sidebar a,
+  .sidebar button {
+    color: #333;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: block;
+    font-size: 18px;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .sidebar a:hover,
+  .sidebar button:hover {
+    background-color: var(--accent-colour);
+    color: white;
+  }
+
+  /* Active button styles */
+  .sidebar .btn.active {
+    font-weight: bold;
+    background-color: var(--accent-colour);
+    color: white;
+  }
+
+  .sidebar a:active,
+  .sidebar button:active {
+    background-color: var(--accent-colour);
+  }
+</style>
+
+<script>
+  // Dashboard - toggle the sidebar on mobile
+  const sidebarToggle = document.getElementById('sidebar-toggle');
+  const sidebar = document.querySelector('.sidebar');
+
+  // Dashboard - sidebar visibility when hamburger menu is clicked (mobile)
+  sidebarToggle.addEventListener('click', function () {
+    sidebar.classList.toggle('show');
+  });
+
+  // Dashboard - Close sidebar when clicking outside (mobile)
+  document.addEventListener('click', function (event) {
+    if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+      sidebar.classList.remove('show');
+    }
+  });
+</script>
+{% endblock %}
