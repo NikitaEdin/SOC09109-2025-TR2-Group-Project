@@ -4,6 +4,12 @@ from flask_login import current_user, login_required
 
 from app.forms.editUserDetails import EditUserDetails
 
+# Settings page
+@app.route("/settings")
+@login_required
+def settings():
+    return render_template('/profile/settings.html', title='Settings', user=current_user)
+
 # User's profile page
 @app.route("/profile")
 @login_required
