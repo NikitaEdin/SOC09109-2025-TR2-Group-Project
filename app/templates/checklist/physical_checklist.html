@@ -1,0 +1,33 @@
+{% extends "/dashboard/dashboard_base.html" %}
+
+{% block main_content %}
+
+<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 50vh;">
+    <form class="d-flex flex-column gap-4 align-items-center w-100" method="post">
+        <div class="d-flex flex-wrap align-items-start justify-content-center col-lg-8 col-md-10 col-sm-12" style="gap: 5rem;">
+            <div class="d-flex flex-column gap-2 checklist-container" style="flex: 1;">
+                <div class="container text-center">
+                    <p class="fs-1 mb-2">Physical Checklist</p>
+                    <p class="fs-5 fw-light">Confirm All Aspects of Safety and Equipment are in Order</p>
+                </div>
+                {% for key, value in content.checks.items() %}
+
+                <div class="d-flex align-items-start gap-4 checklist-item">
+                    <input type="checkbox" class="mt-2" id="{{ key }}" name="{{ key }}" {% if value.value %}checked{% endif %}>
+                    <div style="max-width: 25rem;">
+                        <label for="{{ key }}">{{ value.title }}
+                            <small class="fw-light small">{% if value.last_edit %} - Last Edited: {{ value.last_edit }} {% endif %}</small>
+                        </label>
+                        <p>{{ value.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="container text-center mt-5 mb-2">
+                    <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary ms-auto">Back to Project</a>
+                    <button class="btn btn-success ms-auto">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

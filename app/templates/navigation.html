@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top navbar-light" style="background-color: var(--accent-colour) !important; ">
+<nav class="no-print navbar navbar-expand-lg bg-body-tertiary sticky-top navbar-light" style="background-color: var(--accent-colour) !important; ">
     <div class="container-fluid col-10">
         <!-- Logo -->
         <a class="navbar-brand" href="{{ url_for('home') }}" style="font-weight: 700; color: var(--text-light-colour);">
@@ -35,6 +35,7 @@
                         
                      {% endif %}
                      <li><a class="dropdown-item" href="{{url_for('dashboard')}}"><i class="fas fa-chart-line me-2"></i> Dashboard</a></li>
+                     <li><a class="dropdown-item" href="{{url_for('profile')}}"><i class="fas fa-circle-user me-2"></i> Profile</a></li>
                     <li><a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
                 </ul>
             </li>

@@ -6,7 +6,7 @@ from flask_login import UserMixin, current_user
 from sqlalchemy import func
 import re
 # Import the checklist templates
-from app.forms.checklist_template import checklist_template_emergencies, checklist_template_optional_checklist, checklist_template_forms_optional, checklist_template_required_rural, checklist_template_required_urban
+from app.forms.checklist_template import checklist_template_physical, checklist_template_optional_checklist, checklist_template_forms_optional, checklist_template_required_rural, checklist_template_required_urban
 
 # Global/static variables
 ADMIN_MIN_POWER = 90
@@ -122,31 +122,7 @@ class Project(db.Model):
     def update_checklist(self, checklist):
         self.checklist = checklist
         db.session.commit()
-
-    # Ensures the template items are stored before saving to the database
-    def update_checklist_from_json(self, updated_checklist):
-        
-        # Here just import the checklist templates that you want to be used
-        checklist_templates = [
-            checklist_template_optional_checklist,
-            checklist_template_emergencies,
-            checklist_template_forms_optional,
-            checklist_template_required_urban,
-            checklist_template_required_rural
-    ]
-        for template in checklist_templates:
-            for template_item in template:
-                if not any(item['name'] == template_item['name'] for item in updated_checklist):
-                    updated_checklist.append({
-                        "name": template_item["name"],
-                        "description":template_item["description"],
-                        "status": False,
-                        "last_edit": datetime.now().strftime("%d/%m/%y %H:%M")
-                    })
-
-        self.checklist = updated_checklist
-        db.session.commit()
-    
+  
 
 class AuditLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% set footer=False %}
+{% set use_container=False %}
+
+{% block content %}
+
+<div class="d-flex mt-2 gap-2 flex-column align-items-center no-print">
+    <p style="margin: 0;">Click the button below to print to PDF</p>
+    <button class="btn btn-primary" id="print-button">Save Document</button>
+    <p class="small">If some elements are missing, enable "Print Background colors and images" in your browser's print menu. If that doesn't work, please use a chromium based browser.</p>
+</div>
+
+{% for template in form_data %}
+<div class="container-lg print-container d-flex flex-column gap-1">
+    <img
+        alt="Edinburgh Napier University Logo"
+        src="/static/Images/Logos/ENU%20Main%20Logo/ENU%20Main%20Logo/png%20Screen/ENU%20logo.png"
+        class="w-50 mb-5 print-only"
+        style="align-self: flex-end;"
+    />
+
+    <h1>{{ template.title }}</h1>
+    <p>{{ template.header }}</p>
+
+    {% for section in template.form.sections %}
+        <hr>
+
+        <h2 class="fs-3">{{ section.header }}</h2>
+
+        {% for field in section.fields %}
+            {% if not field.value or field.value == "" %}
+                <p>
+                    <span class="fw-bold fs-6">{{ field.name }}:</span>
+                    <span class="text-danger">N/A</span>
+                </p>
+            {% elif field.type == "text" %}
+               <p>
+                   <span class="fw-bold fs-6">{{ field.name }}:</span>
+                   {{ field.value|safe }}
+               </p>
+            {% elif field.type == "textarea" %}
+                <div>
+                    <p class="fw-bold fs-6 m-0">{{ field.name }}</p>
+                    <p class="m-0">{{ field.value|replace("\n", "<br>")|safe }}</p>
+                </div>
+            {% elif field.type == "date" %}
+                <p>
+                    <span class="fw-bold fs-6">{{ field.name }}:</span>
+                    {{ field.value|safe }}
+                </p>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</div>
+{% endfor %}
+
+
+<script>
+    // Print to PDF
+    const printButton = document.getElementById("print-button");
+
+    printButton.addEventListener("click", () => window.print());
+</script>
+
+
+{% endblock %}
