@@ -13,8 +13,12 @@
       <i class="fas fa-tachometer-alt"></i> Admin Panel
     </a>
 
-    <a href="{{url_for('view_users')}}" class="btn my-1 {% if title == 'users' %}active{% endif %}">
+    <a href="{{url_for('view_users')}}" class="btn my-1 {% if title == 'Users' %}active{% endif %}">
       <i class="fas fa-user"></i> Users
+    </a>
+
+    <a href="{{url_for('view_projects')}}" class="btn my-1 {% if title == 'Projects' %}active{% endif %}">
+      <i class="fas fa-briefcase"></i> Projects
     </a>
 
   </div>

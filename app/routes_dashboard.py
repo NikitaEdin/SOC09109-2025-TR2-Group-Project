@@ -64,8 +64,8 @@ def project(project_id):
     # Query by id
     project = Project.query.get_or_404(project_id)
 
-    # Check ownership
-    if project.authorID != current_user.id:
+    # Check ownership (admins can view/edit other user projects)
+    if project.authorID != current_user.id and current_user.is_admin() == False:
         flash('You do not have permission to view this project.', 'danger')
         return redirect(url_for('dashboard'))
 

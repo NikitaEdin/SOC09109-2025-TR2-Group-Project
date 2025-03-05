@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, request, url_for, flash
 from sqlalchemy import func
 from app import app, db
 from app.decorators import admin_required
@@ -37,6 +37,17 @@ def admin_dashboard():
 @admin_required
 def view_users():
     users = User.query.all()
-    return render_template("admin_panel/view_users.html", users=users,
-                            title='users',)
+    return render_template("admin_panel/view_users.html", users=users, title='Users',)
+
+@app.route("/admin/projects")
+@admin_required
+def view_projects():
+     # Page number
+    page = request.args.get('page', 1, type=int)  
+    per_page = 10
+
+    # All projects
+    projects = Project.query.order_by(Project.created_at.desc()).paginate(page=page, per_page=per_page)
+    return render_template("admin_panel/view_projects.html", projects=projects, title='Projects',)
+
 

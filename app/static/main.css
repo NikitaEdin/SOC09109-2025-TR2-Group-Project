@@ -177,3 +177,22 @@ html, body {
 }
 
 
+
+.pagination .page-item .page-link {
+    color: black;
+    border: 1px solid var(--accent-colour);
+}
+
+
+
+.pagination .page-item.active .page-link {
+    color: white;
+    background-color: var(--accent-press-colour);
+    border-color: var(--accent-press-colour);
+}
+
+.pagination .page-item .page-link:hover {
+    color: white;
+    background-color: var(--accent-hover-colour);
+    border-color: var(--accent-hover-colour);
+}
