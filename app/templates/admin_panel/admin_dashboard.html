@@ -1,0 +1,85 @@
+{% extends "/admin_panel/admin_base.html" %}
+{% set footer=False%}
+
+{% block main_content %}
+<div class="mt-4">
+
+    {% include 'shared/flash-message.html' %}
+
+    <h1 class="mb-4 fs-2"></i> Admin Dashboard</h1>
+
+    <!-- Upper Cards -->
+    <div class="row d-flex justify-content-center mb-sm-0 mb-lg-5">
+        <!-- Users Card -->
+        <div class="card mx-3 my-2" style="width: 15rem;">
+            <div class="card-body text-center">
+                <p class="fs-2 card-title">{{ num_users }}</p>
+                <p class="card-text">Total Users</p>
+            </div>
+        </div>
+
+        <!-- Projects Card -->
+        <div class="card mx-3 my-2" style="width: 15rem;">
+            <div class="card-body text-center">
+                <p class="fs-2 card-title">{{ num_projects }}</p>
+                <p class="card-text">Total Projects</p>
+            </div>
+        </div>
+
+        <!-- Audit Logs Card -->
+        <div class="card mx-3 my-2" style="width: 15rem;">
+            <div class="card-body text-center">
+                <p class="fs-2 card-title">{{ num_logs }}</p>
+                <p class="card-text">Total Audit Records</p>
+            </div>
+        </div>
+
+        <!-- Total Drones Card -->
+        <div class="card mx-3 my-2" style="width: 15rem;">
+            <div class="card-body text-center">
+                <p class="fs-2 card-title">{{ num_drones }}</p>
+                <p class="card-text">Total Drones</p>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row mt-4">
+        <!-- Projects by Type -->
+        <div class="col-md-6">
+            <p class="fs-5"> Projects by Type</p>
+            <div class="divider"></div>
+            <ul class="list-group">
+                {% for type, count in projects_by_type.items() %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ type }}
+                    <span class="badge rounded-pill" style="background-color: var(--accent-colour);">{{ count }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Latest Projects -->
+        <div class="col-md-6">
+            <p class="fs-5"> Latest Projects</p>
+            <div class="divider"></div>
+            <ul class="list-group">
+                {% for project in recent_projects %}
+                <li class="list-group-item">
+                    <strong>{{ project.title }}</strong> - {{ project.created_at.strftime('%d/%m/%Y') }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .divider {
+        border-top: 1px solid rgb(228, 228, 228);
+        margin-top: -1rem;
+        margin-bottom: 1rem;
+      }
+</style>
+{% endblock %}

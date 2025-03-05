@@ -1,0 +1,51 @@
+{% extends "/admin_panel/admin_base.html" %}
+{% set footer=False %}
+{% set use_container=False %}
+
+{% block main_content %}
+<div class="mt-4">
+
+    {% include 'shared/flash-message.html' %}
+
+    <h1 class="mb-4 fs-2">All Projects</h1>
+
+    <div class="list-group">
+      {% if projects %}
+          {% for project in projects %}
+          <!-- Project Card -->
+          <div class="card mb-2">
+              <div class="row mx-2 my-1">
+                  <!-- Project Title -->
+                  <div class="col-3 align-content-center">
+                      <p class="mb-0">Title: {{ project.title }}</p>
+                  </div>
+                  <!-- Project Type -->
+                  <div class="col align-content-center">
+                      <p class="mb-0 text-muted">Type: {{ project.projectType }}</p>
+                  </div>
+                  <!-- Date of Flight -->
+                  <div class="col align-content-center">
+                      <p class="mb-0 text-muted">Flight Date: {{ project.dateOfFlight }}</p>
+                  </div>
+                  <!-- Project Author -->
+                  <div class="col align-content-center">
+                      <p class="mb-0 text-muted">Author: {{ project.get_author().username }}</p>
+                  </div>
+                  <!-- Edit Action -->
+                  <div class="col d-flex justify-content-end">
+                        <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary">View Project</a>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+
+           <!-- Pagination -->
+            {% set pagination = projects %}
+            {% include 'pagination.html' %}
+      {% else %}
+          <p>No projects found.</p>
+      {% endif %}
+  </div>
+  
+</div>
+{% endblock %}

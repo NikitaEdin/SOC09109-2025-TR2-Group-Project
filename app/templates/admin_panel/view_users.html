@@ -1,0 +1,48 @@
+{% extends "/admin_panel/admin_base.html" %}
+{% set footer=False%}
+{% set use_container=False%}
+
+{% block main_content %}
+<div class="mt-4">
+
+    {% include 'shared/flash-message.html' %}
+
+    <h1 class="mb-4 fs-2"></i> All Users</h1>
+
+
+    <div class="list-group">
+      {% if users %}
+          {% for user in users %}
+          <!-- User Card -->
+          <div class="card mb-2">
+              <div class="row mx-2 my-1">
+                  <!-- Username -->
+                  <div class="col-3 align-content-center">
+                      <p class="mb-0">{{ user.username }}</p>
+                  </div>
+                  <!-- Email -->
+                  <div class="col align-content-center">
+                      <p class="mb-0" style="color: var(--text-secondary-colour);">{{ user.email }}</p>
+                  </div>
+                  <!-- Role -->
+                  <div class="col align-content-center">
+                      <p class="mb-0" style="color: var(--text-secondary-colour);">{{ user.role.title }}</p>
+                  </div>
+  
+                  <!-- Edit Action -->
+                  <div class="col d-flex justify-content-end">
+                     <a href="{{ url_for('edit_user', user_id=user.id) }}" class="btn btn-primary">Edit</a>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+      {% else %}
+          <p>No users found.</p>
+      {% endif %}
+  </div>
+  
+
+
+</div>
+
+{% endblock %}
