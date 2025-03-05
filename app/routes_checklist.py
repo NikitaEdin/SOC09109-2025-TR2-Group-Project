@@ -28,6 +28,17 @@ def default_checklist(project_id):
                     "last_edit": None
                 })
         db.session.commit()
+        
+# Add Forms here and their urls to send the user to the form      
+def form_url(form_name):
+    form_urls ={
+        "Viability Study Rural" : "viability_study",
+        "Site Evaluation Rural" : "site_evaluation",
+        "Viability Study Urban" : "viability_study",
+        "Site Evaluation Urban" : "site_evaluation",
+    }
+    return form_urls.get(form_name,"dashboard")
+
      
         
 @app.route("/project/<int:project_id>/rural-checklist", methods=['GET', 'POST'])
@@ -77,14 +88,15 @@ def rural_checklist(project_id):
         item["name"]: {
         "title": item["name"],
         "description": item["description"],
-     "value": next(
+        "value": next(
             (check["status"] for check in project.checklist if check["name"] == item["name"]), 
             False  # Default to False if no match is found
         ),
         "last_edit": next(
             (check["last_edit"] for check in project.checklist if check["name"] == item["name"]),
             None  # Default to None if no match is found
-        )
+        ),
+        "form_url": form_url(item["name"])
     } for item in checklist_template_required_rural
 }
     
@@ -144,7 +156,8 @@ def urban_checklist(project_id):
         "last_edit": next(
             (check["last_edit"] for check in project.checklist if check["name"] == item["name"]),
             None  # Default to None if no match is found
-        )
+        ),
+        "form_url": form_url(item["name"])
     } for item in checklist_template_required_urban
 }
     
@@ -189,7 +202,8 @@ def optional(project_id):
         "last_edit": next(
             (check["last_edit"] for check in project.checklist if check["name"] == item["name"]),
             None  # Default to None if no match is found
-        )
+        ),
+        "form_url": form_url(item["name"])
     } for item in checklist_template_forms_optional
     }
     
