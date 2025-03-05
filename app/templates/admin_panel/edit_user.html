@@ -1,0 +1,25 @@
+{% extends "/admin_panel/admin_base.html" %}
+{% set footer=False%}
+{% set use_container=False%}
+
+{% block main_content %}
+<div class="mt-4">
+
+    {% include 'shared/flash-message.html' %}
+
+    <h1 class="mb-4 fs-2">Edit User</h1>
+
+    <form method="POST">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="displayname" class="form-label">Display Name</label>
+            <input type="text" class="form-control" id="displayname" name="displayname" value="{{ user.displayname }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="{{ url_for('view_users') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
