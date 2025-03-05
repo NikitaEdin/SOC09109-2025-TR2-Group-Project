@@ -32,10 +32,11 @@ def default_checklist(project_id):
 # Add Forms here and their urls to send the user to the form      
 def form_url(form_name):
     form_urls ={
-        "Viability Study Rural" : "viability_study",
-        "Site Evaluation Rural" : "site_evaluation",
-        "Viability Study Urban" : "viability_study",
-        "Site Evaluation Urban" : "site_evaluation",
+        "Viability Study" : "viability_study",
+        "Site Evaluation" : "site_evaluation",
+        "Risk Analysis" : "risk_analysis",
+        "Loading List" : "loading_list",
+        "Post-Flight" : "post_flight"
     }
     return form_urls.get(form_name,"dashboard")
 

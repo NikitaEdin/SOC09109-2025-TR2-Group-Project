@@ -22,15 +22,15 @@ checklist_template_emergencies = [
 
 # Required Checklist Templates
 checklist_template_required_rural = [
-    {"name":"Viability Study Rural","description":"Is the flight viable or even possible"},
-    {"name":"Site Evaluation Rural","description":"Is the site fit for purpose or safe"},
-    {"name":"Risk Analysis Rural","description":"Potential Risks or Dangers that could occur during flight"}
+    {"name":"Viability Study","description":"Is the flight viable or even possible"},
+    {"name":"Site Evaluation","description":"Is the site fit for purpose or safe"},
+    {"name":"Risk Analysis","description":"Potential Risks or Dangers that could occur during flight"}
 ]
 
 checklist_template_required_urban = [
-    {"name":"Viability Study Urban","description":"Is the flight viable or even possible"},
-    {"name":"Site Evaluation Urban","description":"Is the site fit for purpose or safe"},
-    {"name":"Risk Analysis Urban","description":"Potential Risks or Dangers that could occur during flight"},
+    {"name":"Viability Study","description":"Is the flight viable or even possible"},
+    {"name":"Site Evaluation","description":"Is the site fit for purpose or safe"},
+    {"name":"Risk Analysis","description":"Potential Risks or Dangers that could occur during flight"},
     {"name":"Advanced Flight Permission","description":"Apply for non-standard flight permission if required"}
 ]
 

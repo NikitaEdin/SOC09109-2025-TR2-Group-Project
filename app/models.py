@@ -99,8 +99,46 @@ class Project(db.Model):
     viabilityStudy = db.Column(db.JSON, nullable=True)
     siteEvaluation = db.Column(db.JSON, nullable=True)
     riskAnalysis = db.Column(db.JSON, nullable=True)
-    loadingList = db.Column(db.JSON, nullable=True)
+    
+    # Loading List Forms 
+    loadingList = db.Column(db.JSON, nullable=True) # This will save either true or false values if other forms have been completed (its a checklist)
+    crewList = db.Column(db.JSON, nullable=True)
     postFlight = db.Column(db.JSON, nullable=True)
+    maintenanceKit = db.Column(db.JSON, nullable=True)
+    safetyKit = db.Column(db.JSON, nullable=True)
+    groundEquipment = db.Column(db.JSON, nullable=True)
+    
+    # Updates the loadingList column 
+    def update_loadingList(self, loadingList):
+        self.loadingList = loadingList
+        db.session.commit()
+    
+    # Updates the crewList column 
+    def update_crewList(self, crewList):
+        self.crewList = crewList
+        db.session.commit()
+        
+    # Updates the postFlight column 
+    def update_postFlight(self, postFlight):
+        self.postFlight = postFlight
+        db.session.commit()
+        
+    # Updates the maintenanceKit column  
+    def update_maintenanceKit(self, maintenanceKit):
+        self.maintenanceKit = maintenanceKit
+        db.session.commit()
+        
+    # Updates the safetyKit column  
+    def update_maintenanceKit(self, safetyKit):
+        self.safetyKit = safetyKit
+        db.session.commit()
+    
+    # Updates the groundEquipment column  
+    def update_groundEquipment(self, groundEquipment):
+        self.groundEquipment = groundEquipment
+        db.session.commit()
+        
+  
 
     author = db.relationship('User', backref='projects')
     
