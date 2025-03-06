@@ -4,6 +4,7 @@ from flask import flash, json, redirect, render_template, request, url_for
 from sqlalchemy.orm.attributes import flag_modified
 from app.forms.crewCallSheetForm import CrewCallSheetForm
 from app.forms.jsons.viabilityStudyTemplate import ViabilityStudyTemplate
+from app.forms.jsons.loadingListSafetyKitTemplate import LoadingListSafetyKitTemplate
 from app.models import Project
 
 from datetime import datetime
@@ -185,6 +186,42 @@ def loading_list_maintenance_kit():
 @app.route("/forms/loading-list/safety-kit")
 def loading_list_safety_kit():
     return render_template('forms/loading/safety_kit.html', title='Loading List - Safety Kit')
+
+
+@app.route("/project/<int:project_id>/loading-list/safety-kit", methods=["GET", "POST"])
+@login_required
+def safety_kit(project_id):
+    project = Project.query.get_or_404(project_id)
+    form_data = project.safetyKit    
+    errors = {}  # validation errors
+    
+    if request.method == 'POST':
+        # Loop through each section
+        for section in form_data[0]['form']['sections']:
+            # Loop through all fields
+            for field in section['fields']:
+                field_id = field['id']  
+               
+                # Handle checkboxes 
+                if field['type'] == 'checkbox':  
+                    field['value'] = request.form.get(field_id) == "on"  # True if checked
+                else:
+                    field['value'] = False
+
+        # Any errors? don't commit the changes
+        if errors:
+            return render_template('/forms/safety_kit_json.html', project=project, form_data=form_data, errors=errors)
+
+        # No errors, save changes
+        project.safetyKit = form_data
+        flag_modified(project, "safetyKit")
+        db.session.add(project)
+        db.session.commit()
+
+        flash('Changes saved successfully!', 'success')
+        return redirect(url_for('project', project_id=project.id))
+    
+    return render_template("/forms/loading/safety_kit_json.html", project=project, form_data=form_data, footer=False, title="Safety Kit" )
 
 # Loading List GROUND EQUIPMENT Form Route
 @app.route("/forms/loading-list/ground-equipment")
