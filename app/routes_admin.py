@@ -2,6 +2,7 @@ from flask import render_template, redirect, request, url_for, flash
 from sqlalchemy import func
 from app import app, db
 from app.decorators import admin_required
+from app.forms.editUserDetails import EditUserForm
 from app.models import AuditLog, Drone, User, Role, Project
 
 @app.route("/admin/dashboard")
@@ -42,14 +43,29 @@ def view_users():
 @app.route("/admin/users/edit/<int:user_id>", methods=["GET", "POST"])
 @admin_required
 def edit_user(user_id):
-    user = User.query.get(user_id)
-    if request.method == "POST":
-        user.email = request.form.get("email")
-        user.displayname = request.form.get("displayname")
+    user = User.query.get_or_404(user_id)
+    form = EditUserForm(obj=user)
+
+    if form.validate_on_submit():  
+        if form.email.data:
+            user.email = form.email.data
+
+        if form.displayname.data:
+            user.displayname = form.displayname.data
+        
+        if form.role_id.data:
+            user.role_id = form.role_id.data
+
+        new_password = form.password.data
+        if new_password:
+            user.set_password(new_password)
+        
         db.session.commit()
         flash("User updated successfully!", "success")
         return redirect(url_for("view_users"))
-    return render_template("admin_panel/edit_user.html", user=user, title='Edit User')
+
+    # Pre-fill form fields for the user being edited
+    return render_template("admin_panel/edit_user.html", form=form, user=user, title="Edit User")
 
 
 @app.route("/admin/projects")

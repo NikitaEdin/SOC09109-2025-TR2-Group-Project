@@ -1,25 +1,80 @@
 {% extends "/admin_panel/admin_base.html" %}
-{% set footer=False%}
-{% set use_container=False%}
+{% set footer=False %}
+{% set use_container=False %}
 
 {% block main_content %}
 <div class="mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            {% include 'shared/flash-message.html' %}
 
-    {% include 'shared/flash-message.html' %}
+            <h1 class="mb-4 fs-2">Edit User - {{user.username}} </h1>
 
-    <h1 class="mb-4 fs-2">Edit User</h1>
+            <form method="POST">
+                {{ form.hidden_tag() }}
 
-    <form method="POST">
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+                <!-- Personal Information Section -->
+                <div class="mb-4">
+                    <h4 class="mb-3">Personal Information</h4>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        {{ form.email(class="form-control") }}
+                        {% if form.email.errors %}
+                            <div class="text-danger">{{ form.email.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="displayname" class="form-label">Display Name</label>
+                        {{ form.displayname(class="form-control") }}
+                        {% if form.displayname.errors %}
+                            <div class="text-danger">{{ form.displayname.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Role Section -->
+                <div class="mb-4">
+                    <h4 class="mb-3">Role</h4>
+
+                    <div class="mb-3">
+                        <label for="role_id" class="form-label">Role</label>
+                        {{ form.role_id(class="form-control") }}
+                        {% if form.role_id.errors %}
+                            <div class="text-danger">{{ form.role_id.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Password Section -->
+                <div class="mb-4">
+                    <span class="mb-3 fs-4">Change Password 
+                        <small class="fs-6 text-muted">(Leave blank to keep current)</small>
+                    </span>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">New Password</label>
+                        {{ form.password(class="form-control") }}
+
+                        {% if form.password.errors %}
+                            <div class="text-danger">{{ form.password.errors[0] }}</div>
+                        {% elif form.confirm_password.errors %}
+                            <div class="text-danger">{{ form.confirm_password.errors[0] }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label">Confirm New Password</label>
+                        {{ form.confirm_password(class="form-control") }}
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a href="{{ url_for('view_users') }}" class="btn btn-secondary">Cancel</a>
+            </form>
         </div>
-        <div class="mb-3">
-            <label for="displayname" class="form-label">Display Name</label>
-            <input type="text" class="form-control" id="displayname" name="displayname" value="{{ user.displayname }}" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        <a href="{{ url_for('view_users') }}" class="btn btn-secondary">Cancel</a>
-    </form>
+    </div>
 </div>
+
 {% endblock %}
