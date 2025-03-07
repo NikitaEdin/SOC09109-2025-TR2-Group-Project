@@ -15,11 +15,6 @@ checklist_template_forms_optional = [
     {"name":"NOTAM","description":"Notice to Airmen will their be any hazards"}
 ]
 
-checklist_template_emergencies = [
-    {"name":"ECCAIRS","description":"European Coordination Centre for Accident and Incident Reporting Systems"},
-    {"name":"AIRPROX","description":"Report near-miss incidents between aircraft"}
-]
-
 # Required Checklist Templates
 checklist_template_required_rural = [
     {"name":"Viability Study","description":"Is the flight viable or even possible"},
