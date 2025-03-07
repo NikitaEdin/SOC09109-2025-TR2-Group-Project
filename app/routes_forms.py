@@ -167,7 +167,70 @@ def add_risk_analysis():
 @app.route("/project/<int:project_id>/loading-list")
 def loading_list(project_id):
     project = Project.query.get_or_404(project_id)
-    return render_template('forms/loading/loading_list.html', title='Loading List', project=project, footer=False)
+
+    form_maintenanceKit = project.maintenanceKit  
+    form_safetyKit = project.safetyKit
+    form_equipment = project.equipment 
+    form_groundEquipment = project.groundEquipment
+    form_crewList = project.crewList 
+    
+    # Loop through each section
+    for section in form_maintenanceKit[0]['form']['sections']:
+         # Loop through all fields
+         for field in section['fields']:
+            if field['value']:
+                form_maintenanceKitStatus = True
+            else:
+                form_maintenanceKitStatus = False
+                
+    # Loop through each section
+    for section in form_safetyKit[0]['form']['sections']:
+         # Loop through all fields
+         for field in section['fields']:
+            if field['value']:
+                form_safetyKitStatus = True
+            else:
+                form_safetyKitStatus = False
+                
+    # Loop through each section
+    for section in form_equipment[0]['form']['sections']:
+         # Loop through all fields
+         for field in section['fields']:
+            if field['value']:
+                form_equipmentStatus = True
+            else:
+                form_equipmentStatus = False
+                
+       # Loop through each section
+    # for section in form_groundEquipment[0]['form']['sections']:
+    #      # Loop through all fields
+    #      for field in section['fields']:
+    #         if field['value']:
+    #             form_groundEquipmentStatus = True
+    #         else:
+    #             form_groundEquipmentStatus = False
+            
+    #         if field['value'] == None:
+    #             form_groundEquipmentStatus = False
+            
+               
+    #  # Loop through each section
+    # for section in form_crewList[0]['form']['sections']:
+    #      # Loop through all fields
+    #      for field in section['fields']:
+    #         if field['value']:
+    #             form_crewListStatus = True
+    #         else:
+    #             form_crewListStatus = False
+                
+    form_status = {
+    "form_maintenanceKitStatus": form_maintenanceKitStatus,
+    "form_safetyKitStatus": form_safetyKitStatus,
+    "form_equipmentStatus": form_equipmentStatus
+    # "form_groundEquipmentStatus": form_groundEquipmentStatus,
+    # "form_crewListStatus": form_crewListStatus
+}
+    return render_template('forms/loading/loading_list.html', title='Loading List', project=project, form_status=form_status, footer=False)
 
 # Loading List CREW Form Route
 @app.route("/project/<int:project_id>/loading-list/crew")
@@ -207,7 +270,7 @@ def loading_list_equipment(project_id):
         db.session.commit()
 
         flash('Changes saved successfully!', 'success')
-        return redirect(url_for('project', project_id=project.id))
+        return redirect(url_for('loading_list', project_id=project.id))
     
     return render_template("/forms/loading/equipment_json.html", project=project, form_data=form_data, footer=False, title="Equipment" )
 
@@ -243,7 +306,7 @@ def loading_list_maintenance_kit(project_id):
         db.session.commit()
 
         flash('Changes saved successfully!', 'success')
-        return redirect(url_for('project', project_id=project.id))
+        return redirect(url_for('loading_list', project_id=project.id))
     
     return render_template("/forms/loading/maintenance_kit_json.html", project=project, form_data=form_data, footer=False, title="Maintenance Kit" )
 
@@ -279,7 +342,7 @@ def loading_list_safety_kit(project_id):
         db.session.commit()
 
         flash('Changes saved successfully!', 'success')
-        return redirect(url_for('project', project_id=project.id))
+        return redirect(url_for('loading_list', project_id=project.id))
     
     return render_template("/forms/loading/safety_kit_json.html", project=project, form_data=form_data, footer=False, title="Safety Kit" )
 
