@@ -164,24 +164,21 @@ def add_risk_analysis():
     return render_template('forms/risk_analysis/add_risk.html', title='Add Risk Analysis Form')
 
 # Loading List Route
-@app.route("/forms/loading-list")
-def loading_list():
-    return render_template('forms/loading/loading_list.html', title='Loading List')
+@app.route("/project/<int:project_id>/loading-list")
+def loading_list(project_id):
+    project = Project.query.get_or_404(project_id)
+    return render_template('forms/loading/loading_list.html', title='Loading List', project=project, footer=False)
 
 # Loading List CREW Form Route
-@app.route("/forms/loading-list/crew")
-def loading_list_crew():
-    return render_template('forms/loading/crew.html', title='Loading List - Crew')
-
-# Loading List EQUIPMENT Form Route
-@app.route("/forms/loading-list/equipment")
-def loading_list_equipment():
-    return render_template('forms/loading/equipment.html', title='Loading List - Equipment')
+@app.route("/project/<int:project_id>/loading-list/crew")
+def loading_list_crew(project_id):
+    project = Project.query.get_or_404(project_id)
+    return render_template('forms/loading/crew.html', title='Loading List - Crew', project=project, project_id=project_id, footer=False)
 
 # Loading List EQUIPMENT KIT Form Route (JSON GENERATION)
 @app.route("/project/<int:project_id>/loading-list/equipment", methods=["GET", "POST"])
 @login_required
-def equipment(project_id):
+def loading_list_equipment(project_id):
     project = Project.query.get_or_404(project_id)
     form_data = project.equipment    
     errors = {}  # validation errors
@@ -214,15 +211,10 @@ def equipment(project_id):
     
     return render_template("/forms/loading/equipment_json.html", project=project, form_data=form_data, footer=False, title="Equipment" )
 
-# Loading List MAINTENANCE KIT Form Route
-@app.route("/forms/loading-list/maintenance-kit")
-def loading_list_maintenance_kit():
-    return render_template('forms/loading/maintenance_kit.html', title='Loading List - Maintenance Kit')
-
 # Loading List MAINTENANCE KIT Form Route (JSON GENERATION)
 @app.route("/project/<int:project_id>/loading-list/maintenance-kit", methods=["GET", "POST"])
 @login_required
-def maintenance_kit(project_id):
+def loading_list_maintenance_kit(project_id):
     project = Project.query.get_or_404(project_id)
     form_data = project.maintenanceKit    
     errors = {}  # validation errors
@@ -255,15 +247,10 @@ def maintenance_kit(project_id):
     
     return render_template("/forms/loading/maintenance_kit_json.html", project=project, form_data=form_data, footer=False, title="Maintenance Kit" )
 
-# Loading List SAFETY KIT Form Route
-@app.route("/forms/loading-list/safety-kit")
-def loading_list_safety_kit():
-    return render_template('forms/loading/safety_kit.html', title='Loading List - Safety Kit')
-
 # Loading List SAFETY KIT Form Route (JSON GENERATION)
 @app.route("/project/<int:project_id>/loading-list/safety-kit", methods=["GET", "POST"])
 @login_required
-def safety_kit(project_id):
+def loading_list_safety_kit(project_id):
     project = Project.query.get_or_404(project_id)
     form_data = project.safetyKit    
     errors = {}  # validation errors
@@ -297,6 +284,7 @@ def safety_kit(project_id):
     return render_template("/forms/loading/safety_kit_json.html", project=project, form_data=form_data, footer=False, title="Safety Kit" )
 
 # Loading List GROUND EQUIPMENT Form Route
-@app.route("/forms/loading-list/ground-equipment")
-def loading_list_ground_equip():
-    return render_template('forms/loading/ground_equipment.html', title='Loading List - Ground Equipment')
+@app.route("/project/<int:project_id>/loading-list/ground-equipment")
+def loading_list_ground_equip(project_id):
+    project = Project.query.get_or_404(project_id)
+    return render_template('forms/loading/ground_equipment.html', title='Loading List - Ground Equipment', project=project, project_id=project_id, footer=False)

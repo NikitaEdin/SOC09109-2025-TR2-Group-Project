@@ -13,7 +13,7 @@ Checklist template for auto-generated forms
 
 <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
     <div class="w-75 text-start">
-        <a href="{{ url_for('loading_list') }}" class="btn btn-primary my-3">
+        <a href="{{ url_for('loading_list', project_id=project.id) }}" class="btn btn-primary my-3">
             ← Back to Loading List
         </a>
     </div>
