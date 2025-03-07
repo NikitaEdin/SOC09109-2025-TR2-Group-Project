@@ -6,7 +6,10 @@
 
 <div class="d-flex mt-2 gap-2 flex-column align-items-center no-print">
     <p style="margin: 0;">Click the button below to print to PDF</p>
-    <button class="btn btn-primary" id="print-button">Save Document</button>
+    <div class="col gap-1">
+        <button class="btn btn-secondary" id="back-button">Back</button>
+        <button class="btn btn-primary" id="print-button">Save Document</button>
+    </div>
     <p class="small">If some elements are missing, enable "Print Background colors and images" in your browser's print menu. If that doesn't work, please use a chromium based browser.</p>
 </div>
 
@@ -58,8 +61,20 @@
 <script>
     // Print to PDF
     const printButton = document.getElementById("print-button");
-
     printButton.addEventListener("click", () => window.print());
+
+    document.addEventListener('readystatechange', (event) => {
+        if (document.readyState === 'complete') {
+            const searchParams = new URLSearchParams(window.location.search);
+
+            if (searchParams.has("auto_open")) {
+                window.print();
+            }
+        }
+    });
+
+    const backButton = document.getElementById("back-button");
+    backButton.addEventListener("click", () => window.history.back());
 </script>
 
 
