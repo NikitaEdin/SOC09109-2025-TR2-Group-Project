@@ -10,18 +10,18 @@ Checklist template for auto-generated forms
         <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary">Go Back</a>
     </div>
 {% else %}
-    <div class="container d-flex flex-column justify-content-center align-items-center checklist-container" style="min-height: 70vh;">
+    <div class="container d-flex justify-content-center col-12 checklist-container" style="min-height: 80vh;">
         <form method="POST">
 
             <!-- Title and subtitle -->
-            <div class="text-center">
+            <div class=" container text-center">
                 <p class="fs-1 mb-0">{{ form_data.title }}</p>
-                <p class="fs-3 fw-light">{{ form_data.header }}</p>
+                <p class="fs-5 fw-light">{{ form_data.header }}</p>
             </div>
 
             <!-- Loop through all sections of JSON -->
             {% for section in form_data.form.sections %}
-                <div class="checklist-item">
+                <div class="container ">
                     <!-- Section header -->
                     {% if section.header %}
                         <h4 class=" mt-5 text-center" >{{ section.header }}</h4>
@@ -29,7 +29,7 @@ Checklist template for auto-generated forms
 
                     <!-- Render field -->
                     {% for field in section.fields %}
-                    <div class="d-flex justify-content-center  align-items-start gap-4 checklist-item">
+                    <div class="d-flex flex-column col-12 col-md-6 checklist-item">
                         {{ macros.render_field(field, errors) }}
                     </div>
                     {% endfor %}

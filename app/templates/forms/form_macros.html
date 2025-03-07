@@ -28,10 +28,12 @@
 
     <!-- Checkbox -->
     {% elif field.type == 'checkbox' %}
-        <input type="checkbox" class="mt-2 {% if field.id in errors %}is-invalid{% endif %}" 
-               id="{{ field.id }}" name="{{ field.id }}"
+    <div class="d-flex align-items-center ">
+        <input type="checkbox" class="mt-2 ms-3 {% if field.id in errors %}is-invalid{% endif %}" 
+        id="{{ field.id }}" name="{{ field.id }}"
               {% if field.value %}checked{% endif %} 
-               {% if field.required %}required{% endif %}> 
+               {% if field.required %}required{% endif %}>
+    </div>
 
     <!-- Text -->
     {% else %}
