@@ -110,27 +110,18 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">Export Options</h5>
-
-                            <div class="col">
-                                <ul>
-                                    <li>
-                                        Viability Study:
-                                        <a class="btn btn-primary btn-sm my-1" href="{{ url_for('export_viability_study',project_id=project.id,auto_open=1) }}">
-                                            <i class="fa-solid fa-download"></i>
-                                            Export
-                                        </a>
-                                    </li>
-                                    <li>
-                                        Site Evaluation:
-                                        <a class="btn btn-primary btn-sm my-1" href="{{ url_for('export_site_evaluation',project_id=project.id,auto_open=1) }}">
-                                            <i class="fa-solid fa-download"></i>
-                                            Export
-                                        </a>
-                                    </li>
-
-                                    <!-- TODO: add the rest of the forms we want to export -->
-                                </ul>
-                            </div>
+                                <div class="col-md-4 mb-3 text-start pe-md-3">
+                                    <!-- Viability Study -->
+                                    <a class="btn btn-primary w-100 mb-2"
+                                        href="{{ url_for('export_viability_study', project_id=project.id, auto_open=1) }}">
+                                        <i class="fa-solid fa-download"></i> Export Viability Study (PDF)</a>
+                                        
+                                    <!-- Site Evaluation -->
+                                    <a class="btn btn-primary w-100 mb-2"
+                                        href="{{ url_for('export_site_evaluation', project_id=project.id, auto_open=1) }}">
+                                        <i class="fa-solid fa-download"></i> Export Site Evaluation (PDF)</a>
+                                </div>
+                                <!-- TODO: add the rest of the forms we want to export -->
                         </div>
                     </div>
                 </div>
