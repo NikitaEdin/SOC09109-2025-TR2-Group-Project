@@ -1,4 +1,4 @@
-LoadingListEquipment = [
+LoadingListEquipmentTemplate = [
 {
   "title": "Loading List - Equipment",
   "header": "Check that all equipment required is packed.",

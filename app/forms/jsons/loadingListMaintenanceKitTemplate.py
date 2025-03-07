@@ -1,4 +1,4 @@
-LoadingListMaintenanceKit = [
+LoadingListMaintenanceKitTemplate = [
 {
   "title": "Loading List - Maintenance Kit",
   "header": "Ensure all maintenance kit items are checked before proceeding.",
