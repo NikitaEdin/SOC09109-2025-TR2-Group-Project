@@ -31,7 +31,7 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
                     {% if current_user.is_admin() %}
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-cogs me-2"></i> Admin Panel</a></li>
+                        <li><a class="dropdown-item" href="{{url_for('admin_dashboard')}}"><i class="fas fa-cogs me-2"></i> Admin Panel</a></li>
                         
                      {% endif %}
                      <li><a class="dropdown-item" href="{{url_for('dashboard')}}"><i class="fas fa-chart-line me-2"></i> Dashboard</a></li>

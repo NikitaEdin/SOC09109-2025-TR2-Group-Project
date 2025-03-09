@@ -125,9 +125,10 @@ html, body {
 /* Checklists */
 
 .checklist-container {
+    background-color: white;
     padding: 1rem;
     border: var(--accent-colour) solid 1px;
-    border-radius: 1rem;
+    border-radius: 8px;
     width: fit-content;
 }
 
@@ -174,6 +175,31 @@ html, body {
 .custom-tooltip {
     border: 2px solid var(--accent-colour);
     border-radius: 8px;
+}
+
+
+
+.pagination .page-item .page-link {
+    color: black;
+    border: 1px solid var(--accent-colour);
+}
+
+
+
+.pagination .page-item.active .page-link {
+    color: white;
+    background-color: var(--accent-press-colour);
+    border-color: var(--accent-press-colour);
+}
+
+.pagination .page-item .page-link:hover {
+    color: white;
+    background-color: var(--accent-hover-colour);
+    border-color: var(--accent-hover-colour);
+}
+input[type="checkbox"] {
+    transform: scale(1.4); 
+    accent-color: var(--accent-colour); 
 }
 
 /* Printing to PDF */
