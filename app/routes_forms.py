@@ -205,20 +205,16 @@ def loading_list(project_id):
     for section in form_groundEquipment[0]['form']['sections']:
          # Loop through all fields
          for field in section['fields']:
-            if field['value'] != None or field['value'] != False:
+            if field['value'] != None and field['value'] == True:
                 form_groundEquipmentStatus = True
             else:
                 form_groundEquipmentStatus = False
-            
-            if field['value'] == None:
-                form_groundEquipmentStatus = False
-            
                
     # Loop through each section
     for section in form_crewList[0]['form']['sections']:
          # Loop through all fields
          for field in section['fields']:
-            if field['value'] != None or  field['value'] != False:
+            if field['value'] != None and  field['value'] == True:
                 form_crewListStatus = True
             else:
                 form_crewListStatus = False
