@@ -1,15 +1,24 @@
 from flask_wtf import FlaskForm
 from wtforms import SelectField, StringField, PasswordField, SubmitField, ValidationError, validators
-from wtforms.validators import DataRequired, Email, Optional, Length
+from wtforms.validators import DataRequired, Email, Optional, Length, EqualTo
 
 from app.models import Role
 from app.utils.validators import validate_password
 
 class EditUserDetails(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()])
+    display_name = StringField("Display Name", validators=[Optional(), Length(min=4, max=12)])
     email = StringField("Email", validators=[DataRequired(), Email()])
-    password = PasswordField("New Password", validators=[Optional()])
     submit = SubmitField("Save Changes")
+
+
+class ChangePassword(FlaskForm):
+    current_password = PasswordField("Current Password", validators=[DataRequired()])
+    new_password = PasswordField("New Password", validators=[DataRequired(), validate_password])
+    confirm_password = PasswordField(
+        "Confirm New Password",
+        validators=[DataRequired(), EqualTo("new_password", message="Passwords must match.")],
+    )
+    submit = SubmitField("Change Password")
 
 # For Admin usage
 class EditUserForm(FlaskForm):
