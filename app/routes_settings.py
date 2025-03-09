@@ -2,8 +2,7 @@ from app import app, db
 from flask import flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
 
-from app.forms.editUserDetails import EditUserDetails
-from app.forms.changePassword import ChangePassword
+from app.forms.editUserDetails import ChangePassword, EditUserDetails
 
 # Settings page
 @app.route("/settings")
@@ -51,9 +50,7 @@ def change_password():
         if not  current_user.check_password(form.current_password.data):
             flash("Incorrect current password.", "danger")
         elif form.new_password.data != form.confirm_password.data:
-            flash("New passwords do not match.", "danger")
-        elif len(form.new_password.data) < 8:
-            flash("New password must be 8 characters or longer.", "danger")
+            flash("New passwords do not match.", "danger")        
         else:
             # If all correct update password
             current_user.set_password(form.new_password.data)
