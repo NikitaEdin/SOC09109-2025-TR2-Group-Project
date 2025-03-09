@@ -3,7 +3,6 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, Optional, Length
 
 class EditUserDetails(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()])
+    display_name = StringField("Display Name", validators=[Optional(), Length(min=4, max=12)])
     email = StringField("Email", validators=[DataRequired(), Email()])
-    password = PasswordField("New Password", validators=[Optional()])
     submit = SubmitField("Save Changes")
