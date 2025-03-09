@@ -5,6 +5,7 @@ from sqlalchemy.orm.attributes import flag_modified
 from app.forms.crewCallSheetForm import CrewCallSheetForm
 from app.forms.jsons.viabilityStudyTemplate import ViabilityStudyTemplate
 from app.models import Project
+from app.routes_auth import requires_admin
 
 from datetime import datetime
 
@@ -19,6 +20,7 @@ def is_valid_date(date_str):
 
 @app.route("/project/<int:project_id>/viability-study", methods=["GET", "POST"])
 @login_required
+@requires_admin
 def viability_study(project_id):
     project = Project.query.get_or_404(project_id)
     form_data = project.viabilityStudy    
@@ -104,21 +106,6 @@ def site_evaluation(project_id):
     
     return render_template("/forms/site_evaluation.html", project=project, form_data=form_data, footer=False, title="Site Evaluation")
 
-    """
-    form = siteEvaluationForm()
-
-    if request.method == "POST":
-        # saves changes only for finalising later
-        if form.saveChanges.data:
-            print("site evaluation form saved for later")
-
-        # submits completed form
-        if form.submit.data and form.validate_on_submit():
-            print("site evaluation form submitted")
-    """
-
-    return render_template("/forms/site_evaluation.html")
-
 
 @app.route("/project/<int:project_id>/site-evaluation/export", methods=["GET", "POST"])
 @login_required
@@ -132,8 +119,9 @@ def export_site_evaluation(project_id):
 def site_evaluation_template():
     return render_template("/forms/site_evaluation_copy.html")
 
-@app.route('/forms/crew_call_sheet', methods=['GET', 'POST'])
-def crew_call_sheet():
+@app.route('/project/<int:project_id>/crew_call_sheet', methods=['GET', 'POST'])
+@login_required
+def crew_call_sheet(project_id):
     form = CrewCallSheetForm()
 
     # save & submit handler
@@ -147,46 +135,56 @@ def crew_call_sheet():
     return render_template("/forms/crew_call_sheet.html", form=form)
 
 # Post Flight Actions Form Route
-@app.route("/forms/post-flight")
-def post_flight():
+@app.route("/project/<int:project_id>/post-flight")
+@login_required
+def post_flight(project_id):
     return render_template('forms/post_flight.html', title='Post-Flight Actions')
 
-# Risk Analysis Form 
-@app.route("/forms/risk-analysis")
-def risk_analysis():
+# Risk Analysis Form
+# template missing ###################################################################
+@app.route("/project/<int:project_id>/risk-analysis")
+@login_required
+def risk_analysis(project_id):
     return render_template('forms/risk_analysis/risk_analysis_list.html', title=' Risk Analysis Form')
 
 # Risk Analysis Form - Add Risk Route
-@app.route("/forms/risk-analysis/add")
-def add_risk_analysis():
+@app.route("/project/<int:project_id>/risk-analysis/add")
+@login_required
+def add_risk_analysis(project_id):
     return render_template('forms/risk_analysis/add_risk.html', title='Add Risk Analysis Form')
 
 # Loading List Route
-@app.route("/forms/loading-list")
-def loading_list():
-    return render_template('forms/loading/loading_list.html', title='Loading List')
+@app.route("/project/<int:project_id>/loading-list")
+@login_required
+def loading_list(project_id):
+    return render_template('forms/loading/loading_list.html', title='Loading List', project_id=project_id)
 
 # Loading List CREW Form Route
-@app.route("/forms/loading-list/crew")
-def loading_list_crew():
-    return render_template('forms/loading/crew.html', title='Loading List - Crew')
+@app.route("/project/<int:project_id>/loading-list/crew")
+@login_required
+def loading_list_crew(project_id):
+    return render_template('forms/loading/crew.html', title='Loading List - Crew', project_id=project_id)
 
 # Loading List EQUIPMENT Form Route
-@app.route("/forms/loading-list/equipment")
-def loading_list_equipment():
-    return render_template('forms/loading/equipment.html', title='Loading List - Equipment')
+@app.route("/project/<int:project_id>/loading-list/equipment")
+@login_required
+def loading_list_equipment(project_id):
+    return render_template('forms/loading/equipment.html', title='Loading List - Equipment', project_id=project_id)
 
 # Loading List MAINTENANCE KIT Form Route
-@app.route("/forms/loading-list/maintenance-kit")
-def loading_list_maintenance_kit():
-    return render_template('forms/loading/maintenance_kit.html', title='Loading List - Maintenance Kit')
+@app.route("/project/<int:project_id>/loading-list/maintenance-kit")
+@login_required
+def loading_list_maintenance_kit(project_id):
+    return render_template('forms/loading/maintenance_kit.html', title='Loading List - Maintenance Kit', project_id=project_id)
 
 # Loading List SAFETY KIT Form Route
-@app.route("/forms/loading-list/safety-kit")
-def loading_list_safety_kit():
-    return render_template('forms/loading/safety_kit.html', title='Loading List - Safety Kit')
+@app.route("/project/<int:project_id>/loading-list/safety-kit")
+@login_required
+def loading_list_safety_kit(project_id):
+    return render_template('forms/loading/safety_kit.html', title='Loading List - Safety Kit', project_id=project_id)
 
 # Loading List GROUND EQUIPMENT Form Route
-@app.route("/forms/loading-list/ground-equipment")
-def loading_list_ground_equip():
-    return render_template('forms/loading/ground_equipment.html', title='Loading List - Ground Equipment')
+@app.route("/project/<int:project_id>/loading-list/ground-equipment")
+@login_required
+def loading_list_ground_equip(project_id):
+    return render_template('forms/loading/ground_equipment.html', title='Loading List - Ground Equipment', project_id=project_id)

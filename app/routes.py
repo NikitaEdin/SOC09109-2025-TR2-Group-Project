@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template
+from flask import render_template, flash, url_for, redirect
 
 from app.models import User, Role, Drone
 
@@ -28,8 +28,11 @@ def contact_us():
 @app.route("/view-drones")
 def view_drones():
 
-    drones = Drone.query.all()
-
-    return render_template('/info/view_drones.html', drones=drones, title='All Drones')
+    try:
+        drones = Drone.query.all()
+        return render_template('/info/view_drones.html', drones=drones, title='All Drones')
+    except:
+        flash("Drones couldn't be retrieved at this time", "danger")
+        return redirect(url_for('home', title='Home'))
 
 
