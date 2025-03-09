@@ -1,4 +1,4 @@
-LoadingListCrewTemplate = [
+LoadingListCrewListTemplate = [
 {
   "title": "Loading List - Crew",
   "header": "Enter all of the crew and their details.",

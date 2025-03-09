@@ -13,6 +13,8 @@ from app.forms.jsons.loadingListSafetyKitTemplate import LoadingListSafetyKitTem
 from app.forms.jsons.loadingListMaintenanceKitTemplate import LoadingListMaintenanceKitTemplate
 from app.forms.jsons.loadingListEquipmentTemplate import LoadingListEquipmentTemplate
 from app.forms.jsons.postFlightTemplate import PostFlightTemplate
+from app.forms.jsons.loadingListCrewListTemplate import LoadingListCrewListTemplate
+from app.forms.jsons.loadingListGroundEquipmentTemplate import LoadingListGroundEquipmentTemplate
 
 # Step 1: Get location of the project
 @app.route("/create_project/location", methods=['GET','POST'])
@@ -91,10 +93,14 @@ def new_project_details():
             # JSON forms
             viabilityStudy = ViabilityStudyTemplate,
             siteEvaluation = SiteEvaluationTemplate,
+            postFlight= PostFlightTemplate,
+            
+            # Loading list
             safetyKit = LoadingListSafetyKitTemplate,
             maintenanceKit = LoadingListMaintenanceKitTemplate,
             equipment = LoadingListEquipmentTemplate,
-            postFlight= PostFlightTemplate
+            groundEquipment = LoadingListGroundEquipmentTemplate,
+            crewList = LoadingListCrewListTemplate
         )
 
         # Commit new record to db
