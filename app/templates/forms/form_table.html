@@ -32,27 +32,31 @@ Checklist template for auto-generated forms
             <table class="table table-bordered  custom-form-table">
                 <thead class="table-light">
                     <tr>
-                        <th>Item</th>
-                        <th>Check</th>
+                    {% for section in form_data.form.sections %}
+                    {% if section.header %}
+                        <th>{{section.header}}</th>
+                    {% endif %}
+                    {% endfor %}
                     </tr>
                 </thead>
+            <tbody>
             <!-- Loop through all sections of JSON -->
             {% for section in form_data.form.sections %}
-                    <!-- Render field -->
-                    {% for field in section.fields %}
-                        <tbody>
-                            <tr>
-                                <td>
-                                    {{ macros.render_field(field, errors) }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    {% endfor %}
+            <tr>
+                <!-- Render field -->
+                {% for field in section.fields %}
+                    <td> {{ macros.render_field(field, errors) }} </td>
+                {% endfor %}
+            </tr>
             {% endfor %}
+            </tbody>
         </table>
 
             <!-- Submit/Save button -->
             <div class="row justify-content-center">
+                <div class="text-center mb-3">
+                    <button type="button" class="btn btn-primary" onclick="addRow()">Add More Items</button>
+                </div>
                 <div class="col-6 mt-5">
                     <button type="submit" class="btn btn-primary w-100">Save</button>
                 </div>

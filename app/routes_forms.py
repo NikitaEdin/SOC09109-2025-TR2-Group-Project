@@ -201,42 +201,78 @@ def loading_list(project_id):
             else:
                 form_equipmentStatus = False
                 
-       # Loop through each section
-    # for section in form_groundEquipment[0]['form']['sections']:
-    #      # Loop through all fields
-    #      for field in section['fields']:
-    #         if field['value']:
-    #             form_groundEquipmentStatus = True
-    #         else:
-    #             form_groundEquipmentStatus = False
+    # Loop through each section
+    for section in form_groundEquipment[0]['form']['sections']:
+         # Loop through all fields
+         for field in section['fields']:
+            if field['value'] != None or field['value'] != False:
+                form_groundEquipmentStatus = True
+            else:
+                form_groundEquipmentStatus = False
             
-    #         if field['value'] == None:
-    #             form_groundEquipmentStatus = False
+            if field['value'] == None:
+                form_groundEquipmentStatus = False
             
                
-    #  # Loop through each section
-    # for section in form_crewList[0]['form']['sections']:
-    #      # Loop through all fields
-    #      for field in section['fields']:
-    #         if field['value']:
-    #             form_crewListStatus = True
-    #         else:
-    #             form_crewListStatus = False
+    # Loop through each section
+    for section in form_crewList[0]['form']['sections']:
+         # Loop through all fields
+         for field in section['fields']:
+            if field['value'] != None or  field['value'] != False:
+                form_crewListStatus = True
+            else:
+                form_crewListStatus = False
                 
     form_status = {
     "form_maintenanceKitStatus": form_maintenanceKitStatus,
     "form_safetyKitStatus": form_safetyKitStatus,
-    "form_equipmentStatus": form_equipmentStatus
-    # "form_groundEquipmentStatus": form_groundEquipmentStatus,
-    # "form_crewListStatus": form_crewListStatus
+    "form_equipmentStatus": form_equipmentStatus,
+    "form_groundEquipmentStatus": form_groundEquipmentStatus,
+    "form_crewListStatus": form_crewListStatus
 }
     return render_template('forms/loading/loading_list.html', title='Loading List', project=project, form_status=form_status, footer=False)
 
-# Loading List CREW Form Route
-@app.route("/project/<int:project_id>/loading-list/crew")
+# Loading List CrewList Form Route (JSON GENERATION)
+@app.route("/project/<int:project_id>/loading-list/crew-list", methods=["GET", "POST"])
+@login_required
 def loading_list_crew(project_id):
     project = Project.query.get_or_404(project_id)
-    return render_template('forms/loading/crew.html', title='Loading List - Crew', project=project, project_id=project_id, footer=False)
+    form_data = project.crewList    
+    errors = {}  # validation errors
+    
+    if request.method == 'POST':
+
+        for section in form_data[0]['form']['sections']:
+            # Loop through all fields
+            try:
+                for field in section['fields']:
+                    field_id = field['id']  
+                    field_value = request.form.get(field_id)
+
+                    # Any field validations go here, before it's assigned
+                    if field_id not in errors:
+                        field['value'] = field_value
+                
+                    # Handle checkboxes 
+                    if field['type'] == 'checkbox':  
+                        field['value'] = request.form.get(field_id) == "on"  # True if checked
+            except:
+                pass 
+               
+        # Any errors? don't commit the changes
+        if errors:
+            return render_template('/forms/loading/crew_list_json.html', project=project, form_data=form_data, errors=errors)
+
+        # No errors, save changes
+        project.crewList = form_data
+        flag_modified(project, "crewList")
+        db.session.add(project)
+        db.session.commit()
+
+        flash('Changes saved successfully!', 'success')
+        return redirect(url_for('loading_list', project_id=project.id))
+    
+    return render_template("/forms/loading/crew_list_json.html", project=project, form_data=form_data, footer=False, title="Crew List" )
 
 # Loading List EQUIPMENT KIT Form Route (JSON GENERATION)
 @app.route("/project/<int:project_id>/loading-list/equipment", methods=["GET", "POST"])
@@ -322,14 +358,20 @@ def loading_list_safety_kit(project_id):
         # Loop through each section
         for section in form_data[0]['form']['sections']:
             # Loop through all fields
-            for field in section['fields']:
-                field_id = field['id']  
-               
-                # Handle checkboxes 
-                if field['type'] == 'checkbox':  
+            try:
+                for field in section['fields']:
+                    field_id = field['id']  
+                    field_value = request.form.get(field_id)
+
+                 # Handle checkboxes first 
+                if field['type'] == 'checkbox':
                     field['value'] = request.form.get(field_id) == "on"  # True if checked
                 else:
-                    field['value'] = False
+                    # For other fields 
+                    if field_id not in errors:
+                        field['value'] = field_value #
+            except:
+                pass 
 
         # Any errors? don't commit the changes
         if errors:
@@ -346,8 +388,50 @@ def loading_list_safety_kit(project_id):
     
     return render_template("/forms/loading/safety_kit_json.html", project=project, form_data=form_data, footer=False, title="Safety Kit" )
 
-# Loading List GROUND EQUIPMENT Form Route
-@app.route("/project/<int:project_id>/loading-list/ground-equipment")
+
+# @app.route("/project/<int:project_id>/loading-list/ground-equipment")
+# def loading_list_ground_equip(project_id):
+#     project = Project.query.get_or_404(project_id)
+#     return render_template('forms/loading/ground_equipment.html', title='Loading List - Ground Equipment', project=project, project_id=project_id, footer=False)
+
+# Loading List GROUND EQUIPMENT JSON Form Route
+@app.route("/project/<int:project_id>/loading-list/ground-equipment", methods=["GET", "POST"])
+@login_required
 def loading_list_ground_equip(project_id):
     project = Project.query.get_or_404(project_id)
-    return render_template('forms/loading/ground_equipment.html', title='Loading List - Ground Equipment', project=project, project_id=project_id, footer=False)
+    form_data = project.groundEquipment    
+    errors = {}  # validation errors
+    
+    if request.method == 'POST':
+
+        for section in form_data[0]['form']['sections']:
+            # Loop through all fields
+            try:
+                for field in section['fields']:
+                    field_id = field['id']  
+                    field_value = request.form.get(field_id)
+
+                 # Handle checkboxes first 
+                if field['type'] == 'checkbox':
+                    field['value'] = request.form.get(field_id) == "on"  # True if checked
+                else:
+                    # For other fields 
+                    if field_id not in errors:
+                        field['value'] = field_value #
+            except:
+                pass 
+               
+        # Any errors? don't commit the changes
+        if errors:
+            return render_template('/forms/loading/ground_equipment_json.html', project=project, form_data=form_data, errors=errors)
+
+        # No errors, save changes
+        project.groundEquipment = form_data
+        flag_modified(project, "groundEquipment")
+        db.session.add(project)
+        db.session.commit()
+
+        flash('Changes saved successfully!', 'success')
+        return redirect(url_for('loading_list', project_id=project.id))
+    
+    return render_template("/forms/loading/ground_equipment_json.html", project=project, form_data=form_data, footer=False, title="Ground Equipment" )

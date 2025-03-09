@@ -7,20 +7,20 @@ LoadingListGroundEquipmentTemplate = [
       {
         "header": "Item",
         "fields": [
-          {"id": "groundid1", "name": "Item", "value": "", "type": "text", "required": True}
+          {"id": "groundid1-item", "name": "Item", "value": "", "type": "text", "required": True}
 
         ]
       },
       {
         "header": "Action",
         "fields": [
-          {"id": "groundid1", "name": "Action", "value": "", "type": "text", "required": True}
+          {"id": "groundid1-action", "name": "Action", "value": "", "type": "text", "required": True}
         ]
       },
       {
         "header": "Check",
         "fields": [
-          {"id": "groundid1", "name": "Check", "value": "", "type": "checkbox", "required": True}
+          {"id": "groundid1-check", "name": "Check", "value": "", "type": "checkbox", "required": True}
         ]
       }
     ]
