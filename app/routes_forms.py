@@ -122,7 +122,7 @@ def site_evaluation(project_id):
     return render_template("/forms/site_evaluation.html")
 
 
-@app.route("/project/<int:project_id>/site-evaluation/export", methods=["GET", "POST"])
+@app.route("/project/<int:project_id>/site-evaluation/export", methods=["GET"])
 @login_required
 def export_site_evaluation(project_id):
     project = Project.query.get_or_404(project_id)
