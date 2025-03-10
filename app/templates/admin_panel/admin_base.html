@@ -1,4 +1,4 @@
-<!-- This is the base html used for all dashboard pages -->
+<!-- This is the base html used for all ADMIN dashboard pages -->
 <!-- It comes with collapsable sidebar -->
 
 {% extends "base.html" %}
@@ -9,34 +9,23 @@
 <div class="sidebar" style="margin-top: 60px; height: calc(100vh - 60px);">
   <!-- Top Section -->
   <div class="top-section mt-2 mx-2">
-    <a href="{{ url_for('dashboard') }}" class="btn my-1 {% if title == 'dashboard' %}active{% endif %}">
-      <i class="fas fa-home"></i> Dashboard
+    <a href="{{url_for('admin_dashboard')}}" class="btn my-1 {% if title == 'admin panel' %}active{% endif %}">
+      <i class="fas fa-tachometer-alt"></i> Admin Panel
     </a>
 
-    <a href="{{ url_for('projects') }}" class="btn my-1 {% if title == 'projects' %}active{% endif %}">
+    <a href="{{url_for('view_users')}}" class="btn my-1 {% if title == 'Users' %}active{% endif %}">
+      <i class="fas fa-user"></i> Users
+    </a>
+
+    <a href="{{url_for('view_projects')}}" class="btn my-1 {% if title == 'Projects' %}active{% endif %}">
       <i class="fas fa-briefcase"></i> Projects
     </a>
 
-    <li class="dropdown" style=" list-style-type: none;">
-      <a class="dropdown-toggle" role="button" data-bs-toggle="dropdown" ><i class="fas fa-ambulance"></i> Emergency</a>
-      <ul class="dropdown-menu">
-        <li><a href="https://aviationreporting.eu/" class="dropdown-item">Eccairs</a></li>
-        <li><a href="https://www.airproxboard.org.uk/home/" class="dropdown-item">Airprox</a></li>
-      </ul>
-    </li>
   </div>
 
 
   <!-- Bottom Section -->
   <div class="bottom-section mx-2 mb-2">
-    <a href="{{url_for('logs')}}" class="btn {% if title == 'logs' %}active{% endif %}">
-      <i class="fas fa-history"></i> Logs
-    </a>
-
-    <a href="{{url_for('settings')}}" class="btn">
-      <i class="fas fa-sliders-h"></i> Settings
-    </a>
-
     <a href="{{url_for('logout')}}" class="btn">
       <i class="fas fa-sign-out-alt"></i> Logout
     </a>

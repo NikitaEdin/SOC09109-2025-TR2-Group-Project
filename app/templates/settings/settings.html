@@ -1,0 +1,58 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% block main_content %}
+    <div class="">
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        <!--  any messages? -->
+            {% if messages %}
+                <!-- loop messages -->
+                {% for category, message in messages %}
+                    <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                        {{ message}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class=" align-items-center justify-content-between">
+                <div class="card-header bg-white">
+                    <h2 class="card-title"><i class="fa-solid fa-gear"></i> Settings</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">Manage your account settings and preferences</h6>
+                </div>
+
+                <div class="card-body">
+                <!-- List of Settings -->
+                    <ul class="list-group mt-3">
+                        <!-- User Profile Item -->
+                        <a href="/settings/profile" class="list-group-item list-group-item-action border-0 px-3 py-3 d-flex align-items-center">
+                            <div class="d-flex align-items-center justify-content-center bg-light p-2 me-3">
+                                <i class="fa-solid fa-user text-danger"></i>
+                            </div>
+                            <div>
+                              <div class="fw-medium">User Profile</div>
+                              <div class="text-muted small">Manage your personal details</div>
+                            </div>
+                        </a>
+
+                        <!-- Change Password Item -->
+                        <a href="/settings/change-password" class="list-group-item list-group-item-action border-0 px-3 py-3 d-flex align-items-center">
+                            <div class="d-flex align-items-center justify-content-center bg-light p-2 me-3">
+                                <i class="fa-solid fa-key text-danger"></i>
+                            </div>
+                            <div>
+                              <div class="fw-medium">Password</div>
+                              <div class="text-muted small">Change your password</div>
+                            </div>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
