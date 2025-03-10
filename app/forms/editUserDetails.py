@@ -6,7 +6,7 @@ from app.models import Role
 from app.utils.validators import validate_password
 
 class EditUserDetails(FlaskForm):
-    display_name = StringField("Display Name", validators=[Optional(), Length(min=4, max=12)])
+    display_name = StringField("Display Name", validators=[Optional(), Length(min=3, max=12)])
     email = StringField("Email", validators=[DataRequired(), Email()])
     submit = SubmitField("Save Changes")
 
