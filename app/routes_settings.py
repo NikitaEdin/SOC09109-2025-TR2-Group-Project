@@ -8,13 +8,13 @@ from app.forms.editUserDetails import ChangePassword, EditUserDetails
 @app.route("/settings")
 @login_required
 def settings():
-    return render_template('/settings/settings.html', title='Settings', user=current_user)
+    return render_template('/settings/settings.html', title='Settings', user=current_user,  footer=False)
 
 # User's profile page
 @app.route("/settings/profile")
 @login_required
 def profile():
-    return render_template('/settings/user_profile.html', title='My Profile', user=current_user)
+    return render_template('/settings/user_profile.html', title='My Profile', user=current_user,  footer=False)
 
 # Edit user's details page
 @app.route("/settings/profile/edit-profile", methods=["GET", "POST"])
@@ -36,7 +36,7 @@ def edit_profile():
     form.display_name.data = current_user.displayname
     form.email.data = current_user.email
 
-    return render_template("settings/edit_details.html", form=form, title='Edit Details', user=current_user)
+    return render_template("settings/edit_details.html", form=form, title='Edit Details', user=current_user,  footer=False)
 
 
 # Change Password page
@@ -58,4 +58,4 @@ def change_password():
             flash("Your password has been changed successfully!", "success")
             return redirect(url_for("settings"))
 
-    return render_template('/settings/change_password.html', form=form, title='Change Password', user=current_user)
+    return render_template('/settings/change_password.html', form=form, title='Change Password', user=current_user,  footer=False)
