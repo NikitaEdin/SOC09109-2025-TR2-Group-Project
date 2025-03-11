@@ -4,18 +4,6 @@ from app.AuditLogger import AuditLogger
 from app.models import User
 from app.forms.loginForm import LoginForm
 from flask_login import login_user, current_user, logout_user
-from functools import wraps
-
-# checks to ensure the current user is an admin when applied to a route
-def requires_admin(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        if not current_user.is_authenticated or current_user.role_id != 1:
-            flash("You do not have permission to view this page", "danger")
-            return redirect(url_for('home', title='Home'))
-        return f(*args, **kwargs)
-    return decorated
-
 
 @app.route('/login',  methods=['GET', 'POST'])
 def login():

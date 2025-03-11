@@ -5,7 +5,6 @@ from sqlalchemy.orm.attributes import flag_modified
 from app.forms.crewCallSheetForm import CrewCallSheetForm
 from app.forms.jsons.viabilityStudyTemplate import ViabilityStudyTemplate
 from app.models import Project
-from app.routes_auth import requires_admin
 
 from datetime import datetime
 
@@ -20,7 +19,6 @@ def is_valid_date(date_str):
 
 @app.route("/project/<int:project_id>/viability-study", methods=["GET", "POST"])
 @login_required
-@requires_admin
 def viability_study(project_id):
     project = Project.query.get_or_404(project_id)
     form_data = project.viabilityStudy    
