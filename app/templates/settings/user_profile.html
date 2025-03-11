@@ -1,0 +1,47 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% block main_content %}
+    <div class="">
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        <!--  any messages? -->
+            {% if messages %}
+                <!-- loop messages -->
+                {% for category, message in messages %}
+                    <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                        {{ message}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class=" align-items-center justify-content-between">
+                <div class="card-header bg-white">
+                    <h2 class="card-title"><i class="fa-solid fa-user-circle"></i> My profile</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">Manage your account details</h6>
+               </div>
+
+                <div class="card-body">
+                    <p><strong><i class="fa-solid fa-user"></i> Username:</strong> {{ user.username }}</p>
+                    <p><strong><i class="fa-solid fa-envelope"></i> Email:</strong> {{ user.email }}</p>
+                    <p><strong><i class="fa-solid fa-id-card"></i> Role:</strong> {{ user.role.title }}</p>
+                    <p><strong> User ID:</strong> {{ user.id }}</p>    
+                    <p><strong>User Display Name 
+                        <i class="fa-solid fa-circle-info" data-bs-toggle="tooltip" data-bs-placement="bottom" title="A display name will be shown instead of username" ></i></strong>
+                        :
+                        {{ user.displayname if user.displayname else "No display name yet" }}</p>
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('settings') }}" class="btn btn-outline-secondary"><i class="fa-solid fa-arrow-left"></i> Back to Settings</a>
+                        <a href="{{ url_for('edit_profile') }}" class="btn btn-primary"><i class="fa-solid fa-edit"></i> Edit Details</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
