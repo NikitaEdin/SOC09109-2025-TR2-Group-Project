@@ -81,6 +81,7 @@ def new_project_details():
             title=form.title.data,
             description=form.description.data,
             dateOfFlight=form.dateOfFlight.data,
+            projectPurposeID=form.projectPurposeID.data,
             lastEdited=datetime.now(timezone.utc),
             created_at=datetime.now(timezone.utc),
             # JSON forms

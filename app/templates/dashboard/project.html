@@ -35,8 +35,8 @@
 
                         <h6>Created: {{project.created_at.strftime('%B %d, %Y')}} <span class="text-muted">({{ created_at_humanized }})</span></h6>
                         <h6>Edited: {{project.lastEdited.strftime('%B %d, %Y')}} <span class="text-muted">({{ last_edited_humanized }})</span></h6>
-                        <h6 class="mt-3">Date of Flight: {{project.dateOfFlight.strftime('%B %d, %Y')}} <span class="text-muted">({{ date_status }})</span></h6>
-                        
+                        <h6>Date of Flight: {{project.dateOfFlight.strftime('%B %d, %Y')}} <span class="text-muted">({{ date_status }})</span></h6>
+                        <h6>Project Purpose: {{project.get_project_purpose().title}} ({{project.get_project_purpose().code}})</h6>
                         <h6 class="mt-3 text-muted">Description:</h6>
                         <p>{{project.description}}</p>
                     </div>

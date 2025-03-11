@@ -2,7 +2,7 @@ import os
 import secrets
 from dotenv import load_dotenv
 from app import app, db
-from app.models import User, Role, Drone
+from app.models import ProjectPurpose, User, Role, Drone
 
 # Generate default roles
 GEN_ROLES = True
@@ -62,6 +62,14 @@ def create_database():
                     db.session.add(regular_user)
                     db.session.commit()
                     print("Users added.")
+
+                    # Generate Project Purpose
+                    db.session.add(ProjectPurpose(title='Practice', code='P'))
+                    db.session.add(ProjectPurpose(title='Training', code='T'))
+                    db.session.add(ProjectPurpose(title='Research', code='R'))
+                    db.session.add(ProjectPurpose(title='Other', code='F'))
+                    db.session.commit()
+                    print("Proj-Purpose added.")
 
             if GEN_DRONES:
                 if not Drone.query.first(): # checks if drones exist
