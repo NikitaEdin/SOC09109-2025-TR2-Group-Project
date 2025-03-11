@@ -39,17 +39,23 @@ Checklist template for auto-generated forms
                     {% endfor %}
                     </tr>
                 </thead>
-            <tbody>
-            <!-- Loop through all sections of JSON -->
-            {% for section in form_data.form.sections %}
-            <tr>
-                <!-- Render field -->
-                {% for field in section.fields %}
-                    <td> {{ macros.render_field(field, errors) }} </td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-            </tbody>
+                <tbody>
+                    {% set num_fields = form_data.form.sections[0].fields | length %} 
+                
+                    {% for i in range(num_fields) %} 
+                    <tr>
+                        {% for section in form_data.form.sections %}
+                            <td>
+                                {% if i < section.fields | length %}
+                                    {{ macros.render_field(section.fields[i], errors) }}
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
         </table>
 
             <!-- Submit/Save button -->
