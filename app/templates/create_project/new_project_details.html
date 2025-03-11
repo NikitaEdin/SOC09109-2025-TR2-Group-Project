@@ -24,6 +24,7 @@
     <form method="POST">
         {{ form.hidden_tag() }}
 
+        <!-- Title -->
         <div class="mb-3">
             {{ form.title.label(class="form-label") }}
             {{ form.title(class="form-control") }}
@@ -32,6 +33,7 @@
             {% endfor %}
         </div>
 
+        <!-- Description -->
         <div class="mb-3">
             {{ form.description.label(class="form-label") }}
             {{ form.description(class="form-control", rows=4) }}
@@ -40,6 +42,7 @@
             {% endfor %}
         </div>
 
+        <!-- Date of Fligt -->
         <div class="mb-3">
             {{ form.dateOfFlight.label(class="form-label") }}
             {{ form.dateOfFlight(class="form-control", type="date") }}
@@ -47,6 +50,17 @@
                 <div class="text-danger">{{ error }}</div>
             {% endfor %}
         </div>
+
+        <!-- Project Purpose -->
+        <div class="mb-3">
+            {{ form.projectPurposeID.label(class="form-label") }} <i class="fa-solid fa-circle-info" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Project purpose can not be changed after creation." ></i>
+            {{ form.projectPurposeID(class="form-select") }}
+            {% for error in form.projectPurposeID.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+            
+        </div>
+        
 
         <button type="submit" class="btn btn-success">Create Project</button>
     </form>

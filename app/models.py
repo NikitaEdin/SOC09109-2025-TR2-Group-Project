@@ -85,6 +85,10 @@ class Project(db.Model):
     # Project type
     projectType = db.Column(db.String(50), nullable=False) 
 
+    # Project Purpose
+    projectPurposeID = db.Column(db.Integer, db.ForeignKey('project_purpose.id'), nullable=False, default=1)
+    projectPurpose = db.relationship('ProjectPurpose', backref='projects')
+
     # Project details
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=False)
@@ -122,6 +126,19 @@ class Project(db.Model):
     def update_checklist(self, checklist):
         self.checklist = checklist
         db.session.commit()
+
+    # Get Project purpose
+    def get_project_purpose(self):
+        return self.projectPurpose
+    
+    # Set Project Purpose by ID
+    def set_project_purpose(self, new_purpose_id):
+        purpose = ProjectPurpose.query.get(new_purpose_id)
+        if purpose:
+            self.projectPurposeID = new_purpose_id
+            db.session.commit()
+        else:
+            raise ValueError("Invalid ProjectPurpose ID")
   
 
 class AuditLog(db.Model):
@@ -149,3 +166,8 @@ class Drone(db.Model):
     release_date = db.Column(db.String(50), nullable=True) 
 
 
+###### Project Purpose ######
+class ProjectPurpose(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(16), nullable=False)
+    code = db.Column(db.String(1), nullable=False)
