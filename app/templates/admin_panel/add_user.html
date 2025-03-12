@@ -1,0 +1,38 @@
+{% extends "/admin_panel/admin_base.html" %}
+{% set footer=False %}
+{% set use_container=False %}
+
+{% block main_content %}
+<div class="mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            {% include 'shared/flash-message.html' %}
+
+            <h1 class="mb-4 fs-2">Create New User</h1>
+
+            <form method="POST">
+                {{ form.hidden_tag() }}
+
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                </div>
+
+                <div class="mb-3">
+                    <label for="role_id" class="form-label">Role</label>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create User</button>
+                <a href="#" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

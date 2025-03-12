@@ -7,8 +7,10 @@
 
     {% include 'shared/flash-message.html' %}
 
+<div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="mb-4 fs-2"></i> All Users</h1>
-
+    <a href="#" class="btn btn-success">+ Add User</a>
+</div>
 
     <div class="list-group">
       {% if users %}
@@ -32,6 +34,7 @@
                   <!-- Edit Action -->
                   <div class="col d-flex justify-content-end">
                      <a href="{{ url_for('edit_user', user_id=user.id) }}" class="btn btn-primary">Edit</a>
+                     <button type="submit" class="btn btn-danger ms-3">Delete</button>
                   </div>
               </div>
           </div>
@@ -40,9 +43,6 @@
           <p>No users found.</p>
       {% endif %}
   </div>
-  
-
-
 </div>
 
 {% endblock %}

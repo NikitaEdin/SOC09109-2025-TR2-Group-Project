@@ -40,6 +40,7 @@ def view_users():
     users = User.query.all()
     return render_template("admin_panel/view_users.html", users=users, title='Users',)
 
+
 @app.route("/admin/users/edit/<int:user_id>", methods=["GET", "POST"])
 @admin_required
 def edit_user(user_id):
