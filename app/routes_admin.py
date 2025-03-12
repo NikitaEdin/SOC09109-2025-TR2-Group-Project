@@ -68,6 +68,16 @@ def edit_user(user_id):
     # Pre-fill form fields for the user being edited
     return render_template("admin_panel/edit_user.html", form=form, user=user, title="Edit User")
 
+@app.route("/admin/users/delete/<int:user_id>", methods=["POST"])
+@admin_required
+def delete_user(user_id):
+    user = User.query.get_or_404(user_id)
+    # Will add code to ensure admin can't be deleted
+    db.session.delete(user)
+    db.session.commit()
+    flash("User deleted successfully", "success")
+
+    return redirect(url_for("view_users"))
 
 @app.route("/admin/projects")
 @admin_required
