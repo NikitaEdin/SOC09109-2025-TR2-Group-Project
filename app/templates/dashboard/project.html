@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <h6>Author: {{project.author.username}}</h6>
-
+                        <h6>Flight Code: {{project.flightCode}}</h6>
                         <h6>Created: {{project.created_at.strftime('%B %d, %Y')}} <span class="text-muted">({{ created_at_humanized }})</span></h6>
                         <h6>Edited: {{project.lastEdited.strftime('%B %d, %Y')}} <span class="text-muted">({{ last_edited_humanized }})</span></h6>
                         <h6>Date of Flight: {{project.dateOfFlight.strftime('%B %d, %Y')}} <span class="text-muted">({{ date_status }})</span></h6>

@@ -94,7 +94,7 @@ class Project(db.Model):
     description = db.Column(db.Text, nullable=False)
     dateOfFlight = db.Column(db.Date,  nullable=False)
     
-    flightCode = db.Column(db.String(50), nullable=True ) # nullable for now.
+    flightCode = db.Column(db.String(10), nullable=False)
     pilotID = db.Column(db.Integer, nullable=True) # can be linked to User model later
     lastEdited = db.Column(db.DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
@@ -139,6 +139,20 @@ class Project(db.Model):
             db.session.commit()
         else:
             raise ValueError("Invalid ProjectPurpose ID")
+        
+    # Generate new flightcode based on given project purpose ID
+    @staticmethod
+    def get_new_flightCode(projectPurposeID):
+        purpose = ProjectPurpose.query.get(projectPurposeID)
+        if not purpose:
+            return "UNKNOWN"
+
+        # Count projects of the same purpose
+        count = Project.query.filter_by(projectPurposeID=projectPurposeID).count()
+        purpose_code = purpose.code
+
+        # Generate new flight-code
+        return f"{purpose_code}{count + 1}"
   
 
 class AuditLog(db.Model):
