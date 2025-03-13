@@ -23,6 +23,11 @@ def viability_study(project_id):
     project = Project.query.get_or_404(project_id)
     form_data = project.viabilityStudy    
     errors = {}  # validation errors
+
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
     
     if request.method == 'POST':
         # Loop through each section
@@ -65,6 +70,11 @@ def viability_study(project_id):
 def export_viability_study(project_id):
     project = Project.query.get_or_404(project_id)
 
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+
     return render_template("/forms/export.html", form_data=project.viabilityStudy, title="Viability Study")
 
 @app.route('/project/<int:project_id>/site-evaluation', methods=['GET', 'POST'])
@@ -73,6 +83,12 @@ def site_evaluation(project_id):
     project = Project.query.get_or_404(project_id)
     form_data = project.siteEvaluation    
     errors = {}  # validation errors
+
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+
     if request.method == 'POST':
         # Loop through each section
         for section in form_data[0]['form']['sections']:
@@ -110,6 +126,11 @@ def site_evaluation(project_id):
 def export_site_evaluation(project_id):
     project = Project.query.get_or_404(project_id)
 
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+
     return render_template("/forms/export.html", form_data=project.siteEvaluation, title="Site Evaluation")
 
 
@@ -120,6 +141,14 @@ def site_evaluation_template():
 @app.route('/project/<int:project_id>/crew_call_sheet', methods=['GET', 'POST'])
 @login_required
 def crew_call_sheet(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+
+
     form = CrewCallSheetForm()
 
     # save & submit handler
@@ -136,53 +165,123 @@ def crew_call_sheet(project_id):
 @app.route("/project/<int:project_id>/post-flight")
 @login_required
 def post_flight(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+
+
     return render_template('forms/post_flight.html', title='Post-Flight Actions')
 
 # Risk Analysis Form
-# template missing ###################################################################
 @app.route("/project/<int:project_id>/risk-analysis")
 @login_required
 def risk_analysis(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+
     return render_template('forms/risk_analysis/risk_analysis_list.html', title=' Risk Analysis Form')
 
 # Risk Analysis Form - Add Risk Route
 @app.route("/project/<int:project_id>/risk-analysis/add")
 @login_required
 def add_risk_analysis(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+
+
     return render_template('forms/risk_analysis/add_risk.html', title='Add Risk Analysis Form')
 
 # Loading List Route
 @app.route("/project/<int:project_id>/loading-list")
 @login_required
 def loading_list(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+
+
     return render_template('forms/loading/loading_list.html', title='Loading List', project_id=project_id)
 
 # Loading List CREW Form Route
 @app.route("/project/<int:project_id>/loading-list/crew")
 @login_required
 def loading_list_crew(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+
+
     return render_template('forms/loading/crew.html', title='Loading List - Crew', project_id=project_id)
 
 # Loading List EQUIPMENT Form Route
 @app.route("/project/<int:project_id>/loading-list/equipment")
 @login_required
 def loading_list_equipment(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+
+
     return render_template('forms/loading/equipment.html', title='Loading List - Equipment', project_id=project_id)
 
 # Loading List MAINTENANCE KIT Form Route
 @app.route("/project/<int:project_id>/loading-list/maintenance-kit")
 @login_required
 def loading_list_maintenance_kit(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+
+
     return render_template('forms/loading/maintenance_kit.html', title='Loading List - Maintenance Kit', project_id=project_id)
 
 # Loading List SAFETY KIT Form Route
 @app.route("/project/<int:project_id>/loading-list/safety-kit")
 @login_required
 def loading_list_safety_kit(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+
+
     return render_template('forms/loading/safety_kit.html', title='Loading List - Safety Kit', project_id=project_id)
 
 # Loading List GROUND EQUIPMENT Form Route
 @app.route("/project/<int:project_id>/loading-list/ground-equipment")
 @login_required
 def loading_list_ground_equip(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+
+
     return render_template('forms/loading/ground_equipment.html', title='Loading List - Ground Equipment', project_id=project_id)

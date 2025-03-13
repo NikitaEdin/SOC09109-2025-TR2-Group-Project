@@ -17,7 +17,7 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 # logs out user for inactivity
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
 
-# resets timer on each request made
+# resets inactivity timer on each request made
 @app.before_request
 def before_request():
     session.permanent = True

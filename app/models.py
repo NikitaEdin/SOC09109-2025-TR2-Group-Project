@@ -112,9 +112,12 @@ class Project(db.Model):
     def is_owner(self, user):
         return self.authorID == user.id
 
-    # Returns the User obj fro the project's author
+    # Returns the User obj from the project's author
     def get_author(self):
         return self.author
+
+    def can_access(self):
+        return self.authorID == current_user.id or current_user.is_admin()
 
     def __repr__(self):
         return f'<Project {self.title} by {self.author.username}>'
