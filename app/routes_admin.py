@@ -72,7 +72,13 @@ def edit_user(user_id):
 @admin_required
 def delete_user(user_id):
     user = User.query.get_or_404(user_id)
-    # Will add code to ensure admin can't be deleted
+
+    if user.is_admin():
+        admin_count = User.query.filter(User.role_id == user.role_id).count()
+        if admin_count == 1:
+            flash("Cannot delete the only admin", "danger")
+            return redirect(url_for("view_users"))
+
     db.session.delete(user)
     db.session.commit()
     flash("User deleted successfully", "success")
