@@ -29,7 +29,7 @@ Checklist template for auto-generated forms
             <hr>
 
         <form method="POST">
-            <table class="table table-bordered  custom-form-table">
+            <table class="table table-bordered  custom-form-table" id="table">
                 <thead class="table-light">
                     <tr>
                     {% for section in form_data.form.sections %}
@@ -69,4 +69,26 @@ Checklist template for auto-generated forms
             </div>
         </form>
     </div>
+    
+    <script>
+    function addRow() {
+        let table = document.getElementById("table").getElementsByTagName('tbody')[0];
+        let lastRow = table.rows[table.rows.length - 1]; // Get the last row
+        let newRow = lastRow.cloneNode(true); // Clone the last row
+
+        // Clear input values in the cloned row
+        let inputs = newRow.querySelectorAll("input, select, textarea");
+        inputs.forEach(input => {
+            if (input.type == "checkbox"){
+                input.checked = false;
+            }
+            else{
+                input.value = ""; 
+            }
+        });
+        
+        table.appendChild(newRow); // Append the new row to the table
+    }
+</script>
+    
 {% endif %}
