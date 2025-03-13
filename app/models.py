@@ -85,12 +85,16 @@ class Project(db.Model):
     # Project type
     projectType = db.Column(db.String(50), nullable=False) 
 
+    # Project Purpose
+    projectPurposeID = db.Column(db.Integer, db.ForeignKey('project_purpose.id'), nullable=False, default=1)
+    projectPurpose = db.relationship('ProjectPurpose', backref='projects')
+
     # Project details
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=False)
     dateOfFlight = db.Column(db.Date,  nullable=False)
     
-    flightCode = db.Column(db.String(50), nullable=True ) # nullable for now.
+    flightCode = db.Column(db.String(10), nullable=False)
     pilotID = db.Column(db.Integer, nullable=True) # can be linked to User model later
     lastEdited = db.Column(db.DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
@@ -122,6 +126,33 @@ class Project(db.Model):
     def update_checklist(self, checklist):
         self.checklist = checklist
         db.session.commit()
+
+    # Get Project purpose
+    def get_project_purpose(self):
+        return self.projectPurpose
+    
+    # Set Project Purpose by ID
+    def set_project_purpose(self, new_purpose_id):
+        purpose = ProjectPurpose.query.get(new_purpose_id)
+        if purpose:
+            self.projectPurposeID = new_purpose_id
+            db.session.commit()
+        else:
+            raise ValueError("Invalid ProjectPurpose ID")
+        
+    # Generate new flightcode based on given project purpose ID
+    @staticmethod
+    def get_new_flightCode(projectPurposeID):
+        purpose = ProjectPurpose.query.get(projectPurposeID)
+        if not purpose:
+            return "UNKNOWN"
+
+        # Count projects of the same purpose
+        count = Project.query.filter_by(projectPurposeID=projectPurposeID).count()
+        purpose_code = purpose.code
+
+        # Generate new flight-code
+        return f"{purpose_code}{count + 1}"
   
 
 class AuditLog(db.Model):
@@ -149,3 +180,8 @@ class Drone(db.Model):
     release_date = db.Column(db.String(50), nullable=True) 
 
 
+###### Project Purpose ######
+class ProjectPurpose(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(16), nullable=False)
+    code = db.Column(db.String(1), nullable=False)
