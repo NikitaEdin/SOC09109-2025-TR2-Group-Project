@@ -238,23 +238,24 @@ def loading_list_crew(project_id):
     
     if request.method == 'POST':
 
-        for section in form_data[0]['form']['sections']:
-            # Loop through all fields
-            try:
-                for field in section['fields']:
-                    field_id = field['id']  
-                    field_value = request.form.get(field_id)
+        row_count = len(request.form) / 5
+        
+        for i in range (1, row_count +1):
+            for section in form_data[0]['form']['sections']:
+                    # Loop through all fields
+                    for field in section['fields']:
+                        field_id = field['id'].replace("1",str(i)) 
+                        field_value = request.form.get(field_id)
 
-                    # Any field validations go here, before it's assigned
-                    if field_id not in errors:
-                        field['value'] = field_value
+                        # Any field validations go here, before it's assigned
+                        if field_id not in errors:
+                            field['value'] = field_value
+                        
+                        # Handle checkboxes 
+                        if field['type'] == 'checkbox':  
+                            field['value'] = request.form.get(field_id) == "on"  # True if checked
                 
-                    # Handle checkboxes 
-                    if field['type'] == 'checkbox':  
-                        field['value'] = request.form.get(field_id) == "on"  # True if checked
-            except:
-                pass 
-               
+        
         # Any errors? don't commit the changes
         if errors:
             return render_template('/forms/loading/crew_list_json.html', project=project, form_data=form_data, errors=errors)

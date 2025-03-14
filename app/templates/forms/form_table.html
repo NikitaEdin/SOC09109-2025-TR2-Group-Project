@@ -83,7 +83,7 @@ Checklist template for auto-generated forms
 
             if (input.id) {
             let oldID = input.id;
-            let newId = oldID.replace(/crewid(\d+)-/, `crewid${rowCount}-`); 
+            let newId = oldID.replace(/(\d+)$/, rowCount);
             input.id = newId;
         }
 
