@@ -7,33 +7,33 @@ LoadingListCrewListTemplate = [
       {
         "header": "Crew Name",
         "fields": [
-          {"id": "crewid1-name", "name": "", "value": "", "type": "text", "required": True}
+          {"id": "name1", "name": "", "value": "", "type": "text", "required": True}
 
         ]
       },
       {
         "header": "Role",
         "fields": [
-          {"id": "crewid1-role", "name": "", "value": "", "type": "text", "required": True}
+          {"id": "role1", "name": "", "value": "", "type": "text", "required": True}
         ]
       },
       {
         "header": "Contact Number",
         "fields": [
-          {"id": "crewid1-num", "name": "", "value": "", "type": "text", "required": True}
+          {"id": "num1", "name": "", "value": "", "type": "text", "required": True}
         ]
       },
         {
         "header": "Email",
         "fields": [
-          {"id": "crewid1-email", "name": "", "value": "", "type": "text", "required": True}
+          {"id": "email1", "name": "", "value": "", "type": "text", "required": True}
  
         ]
       },
           {
         "header": "Called",
         "fields": [
-          {"id": "crewid1-check", "name": "", "value": "", "type": "checkbox", "required": True}
+          {"id": "check1", "name": "", "value": "", "type": "checkbox", "required": True}
 
         ]
       }

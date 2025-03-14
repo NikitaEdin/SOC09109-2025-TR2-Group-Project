@@ -73,12 +73,20 @@ Checklist template for auto-generated forms
     <script>
     function addRow() {
         let table = document.getElementById("table").getElementsByTagName('tbody')[0];
+        let rowCount = table.rows.length +1; // Row Index
         let lastRow = table.rows[table.rows.length - 1]; // Get the last row
         let newRow = lastRow.cloneNode(true); // Clone the last row
 
         // Clear input values in the cloned row
         let inputs = newRow.querySelectorAll("input, select, textarea");
         inputs.forEach(input => {
+
+            if (input.id) {
+            let oldID = input.id;
+            let newId = oldID.replace(/crewid(\d+)-/, `crewid${rowCount}-`); 
+            input.id = newId;
+        }
+
             if (input.type == "checkbox"){
                 input.checked = false;
             }
