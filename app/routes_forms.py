@@ -1,3 +1,5 @@
+from re import match
+
 from flask_login import login_required
 from app import app, db
 from flask import flash, json, redirect, render_template, request, url_for
@@ -36,8 +38,8 @@ def viability_study(project_id):
                 if field_id == 'flightcode':
                     if not field_value:
                         errors[field_id] = "Flight code is required."
-                    elif not field_value.isnumeric():  # Must be numeric
-                        errors[field_id] = "Flight code must be numeric."
+                    elif not match(r"[A-z][0-9]+", field_value):  # Must follow the pattern of a letter followed by numbers
+                        errors[field_id] = "Flight code must follow the format A123."
 
               
 
@@ -82,6 +84,12 @@ def site_evaluation(project_id):
                     field_id = field['id']  
                     field_value = request.form.get(field_id)
 
+                    if field_id == 'flightcode':
+                        if not field_value:
+                            errors[field_id] = "Flight code is required."
+                        elif not match(r"[A-z][0-9]+", field_value):  # Must follow the pattern of a letter followed by numbers
+                            errors[field_id] = "Flight code must follow the format A123."
+
                     # Any field validations go here, before it's assigned
                     if field_id not in errors:
                         field['value'] = field_value
@@ -91,7 +99,7 @@ def site_evaluation(project_id):
 
         # Any errors? don't commit the changes
         if errors:
-            return render_template('/forms/site-evaluation.html', project=project, form_data=form_data, errors=errors)
+            return render_template('/forms/site_evaluation.html', project=project, form_data=form_data, errors=errors)
 
         # No errors, save changes
         project.siteEvaluation = form_data
