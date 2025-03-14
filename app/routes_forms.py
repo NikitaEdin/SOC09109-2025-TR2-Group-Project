@@ -237,10 +237,12 @@ def loading_list_crew(project_id):
     errors = {}  # validation errors
     
     if request.method == 'POST':
+        
 
-        row_count = len(request.form) / 5
+        row_count = len(request.form) // 5
         
         for i in range (1, row_count +1):
+        
             for section in form_data[0]['form']['sections']:
                     # Loop through all fields
                     for field in section['fields']:
