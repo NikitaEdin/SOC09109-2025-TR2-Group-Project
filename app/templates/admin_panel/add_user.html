@@ -8,29 +8,37 @@
         <div class="card-body">
             {% include 'shared/flash-message.html' %}
 
-            <h1 class="mb-4 fs-2">Create New User</h1>
+            <h1 class="mb-4 fs-2">Add New User</h1>
 
             <form method="POST">
                 {{ form.hidden_tag() }}
 
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
+                    {{ form.username(class="form-control") }}
                 </div>
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
+                    {{ form.email(class="form-control") }}
                 </div>
 
                 <div class="mb-3">
                     <label for="role_id" class="form-label">Role</label>
+                    {{ form.role_id(class="form-control") }}
                 </div>
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
+                    {{ form.password(class="form-control") }}
+                </div>
+                <div class="mb-3">
+                    <label for="confirm_password" class="form-label">Confirm Password</label>
+                    {{ form.confirm_password(class="form-control") }}
                 </div>
 
                 <button type="submit" class="btn btn-primary">Create User</button>
-                <a href="#" class="btn btn-secondary">Cancel</a>
+                <a href="{{ url_for('view_users') }}" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
     </div>

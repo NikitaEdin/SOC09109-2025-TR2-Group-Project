@@ -2,6 +2,7 @@ from flask import render_template, redirect, request, url_for, flash
 from sqlalchemy import func
 from app import app, db
 from app.decorators import admin_required
+from app.forms.addUserForm import addUserForm
 from app.forms.editUserDetails import EditUserForm
 from app.models import AuditLog, Drone, User, Role, Project
 
@@ -67,6 +68,28 @@ def edit_user(user_id):
 
     # Pre-fill form fields for the user being edited
     return render_template("admin_panel/edit_user.html", form=form, user=user, title="Edit User")
+
+
+@app.route("/admin/users/add", methods=["GET", "POST"])
+@admin_required
+def add_user():
+    form = addUserForm()
+
+    if form.validate_on_submit():
+        new_user = User(
+            username=form.username.data,
+            email=form.email.data,
+            role_id=form.role_id.data
+        )
+        new_user.set_password(form.password.data)
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash("User added successfully", "success")
+        return redirect(url_for("view_users"))
+
+    return render_template("admin_panel/add_user.html", form=form, title="Add User")
+
 
 @app.route("/admin/users/delete/<int:user_id>", methods=["POST"])
 @admin_required
