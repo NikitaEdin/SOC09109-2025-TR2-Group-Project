@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% import "forms/form_macros.html" as macros %}
+
+{% block content %}
+
+    {% set form_data=project.groundEquipment[0] %}
+    {% include "forms/form_table.html" %}
+
+
+{% endblock %}
+
+
+<!-- 
+
+{% if not form_data or form_data|length <= 0 %}
+    <div class="container text-center mt-5">
+        <h5>Oh no! Something went wrong with the form.</h5>
+        <p>Try to recreate the project, or contact the web administrator.</p>
+        <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary">Go Back</a>
+    </div>
+{% else %}
+    <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
+        <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3 card">
+            <div class="text-center">
+                <p class="fs-1 mb-0">{{ form_data.title }}</p>
+                <p class="fs-3 fw-light">{{ form_data.header }}</p>
+            </div>
+
+
+            
+            {{ macros.render_field(form_data.form.sections[0].fields[0], errors) }}
+            <p>Make sure it's numeric!</p>
+
+          
+
+         
+
+            <div class="row justify-content-center">
+                <div class="col-6 mt-5">
+                    <button type="submit" class="btn btn-primary w-100">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endif %}
+ -->

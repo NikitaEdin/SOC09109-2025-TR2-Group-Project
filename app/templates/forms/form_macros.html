@@ -26,6 +26,17 @@
              {% endif %}
                {% if field.required %}required{% endif %}> 
 
+    <!-- Checkbox -->
+    {% elif field.type == 'checkbox' %}
+    <div class="text-center">
+        <input type="checkbox" class=" checkbox-item {% if field.id in errors %}is-invalid{% endif %}" 
+        id="{{ field.id }}" name="{{ field.id }}"
+              {% if field.value %}checked{% endif %} 
+               {% if field.required %}required{% endif %}>
+
+     </div>
+  
+
     <!-- Text -->
     {% else %}
         <input type="text" class="form-control mb-3 {% if field.id in errors %}is-invalid{% endif %}" 

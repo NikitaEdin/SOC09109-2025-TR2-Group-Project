@@ -1,0 +1,102 @@
+<!-------------------
+Checklist template for auto-generated forms
+ ------------------->
+
+<!-- Display error if empty or missing form_data -->
+{% if not form_data or form_data|length <= 0 %}
+    <div class="container text-center mt-5">
+        <h5>Oh no! Something went wrong with the form.</h5>
+        <p>Try to recreate the project, or contact the web administrator.</p>
+        <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary">Go Back</a>
+    </div>
+{% else %}
+
+<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="w-75 text-start">
+        <a href="{{ url_for('loading_list', project_id=project.id) }}" class="btn btn-primary my-3">
+            ← Back to Loading List
+        </a>
+    </div>
+    <div class="rounded border border-danger-subtle p-3 w-75 my-3 card">
+        <div class="card-body">
+            <div class="text-center m-3">
+                <h2><strong>{{ form_data.title }}</strong></h2>
+            </div>
+            
+            <h3 class="text-center fw-light fs-4 pb-2">
+                {{ form_data.header }}
+            </h3>
+            <hr>
+
+        <form method="POST">
+            <table class="table table-bordered  custom-form-table" id="table">
+                <thead class="table-light">
+                    <tr>
+                    {% for section in form_data.form.sections %}
+                    {% if section.header %}
+                        <th>{{section.header}}</th>
+                    {% endif %}
+                    {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set num_fields = form_data.form.sections[0].fields | length %} 
+                
+                    {% for i in range(num_fields) %} 
+                    <tr>
+                        {% for section in form_data.form.sections %}
+                            <td>
+                                {% if i < section.fields | length %}
+                                    {{ macros.render_field(section.fields[i], errors) }}
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+
+            <!-- Submit/Save button -->
+            <div class="row justify-content-center">
+                <div class="text-center mb-3">
+                    <button type="button" class="btn btn-primary" onclick="addRow()">Add More Items</button>
+                </div>
+                <div class="col-6 mt-5">
+                    <button type="submit" class="btn btn-primary w-100">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+    function addRow() {
+        let table = document.getElementById("table").getElementsByTagName('tbody')[0];
+        let rowCount = table.rows.length +1; // Row Index
+        let lastRow = table.rows[table.rows.length - 1]; // Get the last row
+        let newRow = lastRow.cloneNode(true); // Clone the last row
+
+        // Clear input values in the cloned row
+        let inputs = newRow.querySelectorAll("input, select, textarea");
+        inputs.forEach(input => {
+
+            if (input.id) {
+            let oldID = input.id;
+            let newId = oldID.replace(/(\d+)$/, rowCount);
+            input.id = newId;
+        }
+
+            if (input.type == "checkbox"){
+                input.checked = false;
+            }
+            else{
+                input.value = ""; 
+            }
+        });
+        
+        table.appendChild(newRow); // Append the new row to the table
+    }
+</script>
+    
+{% endif %}
