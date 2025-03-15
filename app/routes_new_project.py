@@ -115,8 +115,8 @@ def edit_project(project_id):
     # Fetch project by ID
     project = Project.query.get_or_404(project_id)
 
-    # User is author?
-    if project.author.id != current_user.id:
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
         flash("You are not authorised to edit this project.", "danger")
         return redirect(url_for('dashboard'))
 
@@ -147,8 +147,8 @@ def remove_project(project_id):
     # Query by id
     project = Project.query.get_or_404(project_id)
 
-    # Check ownership
-    if project.authorID != current_user.id:
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
         flash('You do not have permission to remove this project.', 'danger')
         return redirect(url_for('dashboard'))
 

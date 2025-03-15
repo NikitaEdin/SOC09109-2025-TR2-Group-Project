@@ -18,10 +18,10 @@ def dashboard():
     today = date.today()
 
     # Pending projects (future dates)
-    pendingProjects = Project.query.filter(Project.dateOfFlight >= today).order_by(Project.created_at.desc()).limit(3).all()
+    pendingProjects = Project.query.filter_by(authorID=current_user.id).filter(Project.dateOfFlight >= today).order_by(Project.created_at.desc()).limit(3).all()
 
     # Past projects (past dates)
-    pastProjects = Project.query.filter(Project.dateOfFlight < today).order_by(Project.created_at.desc()).limit(3).all()
+    pastProjects = Project.query.filter_by(authorID=current_user.id).filter(Project.dateOfFlight < today).order_by(Project.created_at.desc()).limit(3).all()
 
     
     return render_template('/dashboard/dashboard.html', title='dashboard', use_container=False, footer=False, 
@@ -62,7 +62,7 @@ def project(project_id):
     project = Project.query.get_or_404(project_id)
 
     # Check ownership (admins can view/edit other user projects)
-    if project.authorID != current_user.id and current_user.is_admin() == False:
+    if not project.can_access():
         flash('You do not have permission to view this project.', 'danger')
         return redirect(url_for('dashboard'))
 
