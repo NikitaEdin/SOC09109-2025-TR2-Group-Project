@@ -34,7 +34,6 @@ def form_url(form_name):
     form_urls ={
         "Viability Study" : "viability_study",
         "Site Evaluation" : "site_evaluation",
-        "Risk Analysis" : "risk_analysis",
         "Loading List" : "loading_list",
         "Post-Flight" : "post_flight"
     }
