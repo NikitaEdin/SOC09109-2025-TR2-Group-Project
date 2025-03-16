@@ -216,6 +216,11 @@ def add_risk_analysis(project_id):
 @app.route("/project/<int:project_id>/loading-list")
 def loading_list(project_id):
     project = Project.query.get_or_404(project_id)
+    
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
 
     form_maintenanceKit = project.maintenanceKit  
     form_safetyKit = project.safetyKit
@@ -282,6 +287,12 @@ def loading_list(project_id):
 @login_required
 def loading_list_crew(project_id):
     project = Project.query.get_or_404(project_id)
+    
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+    
     form_data = project.crewList    
     errors = {}  # validation errors
     
@@ -327,6 +338,12 @@ def loading_list_crew(project_id):
 @login_required
 def loading_list_equipment(project_id):
     project = Project.query.get_or_404(project_id)
+    
+     # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+    
     form_data = project.equipment    
     errors = {}  # validation errors
     
@@ -363,6 +380,12 @@ def loading_list_equipment(project_id):
 @login_required
 def loading_list_maintenance_kit(project_id):
     project = Project.query.get_or_404(project_id)
+    
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+    
     form_data = project.maintenanceKit    
     errors = {}  # validation errors
     
@@ -399,6 +422,12 @@ def loading_list_maintenance_kit(project_id):
 @login_required
 def loading_list_safety_kit(project_id):
     project = Project.query.get_or_404(project_id)
+    
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+    
     form_data = project.safetyKit    
     errors = {}  # validation errors
     
@@ -447,6 +476,12 @@ def loading_list_safety_kit(project_id):
 @login_required
 def loading_list_ground_equip(project_id):
     project = Project.query.get_or_404(project_id)
+    
+     # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
+    
     form_data = project.groundEquipment    
     errors = {}  # validation errors
     
