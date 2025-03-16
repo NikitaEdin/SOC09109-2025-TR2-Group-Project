@@ -55,10 +55,14 @@ def create_database():
                     admin_user = User(username='admin', email='admin@example.com', role_id=admin_role.id)
                     admin_user.set_password('adminpass')
 
+                    admin_user2 = User(username='admin2', email='admin2@example.com', role_id=admin_role.id)
+                    admin_user2.set_password('adminpass2')
+
                     regular_user = User(username='user', email='user@example.com', role_id=user_role.id)
                     regular_user.set_password('userpass')
 
                     db.session.add(admin_user)
+                    db.session.add(admin_user2)
                     db.session.add(regular_user)
                     db.session.commit()
                     print("Users added.")

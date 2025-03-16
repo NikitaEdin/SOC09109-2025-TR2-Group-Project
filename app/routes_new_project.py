@@ -1,3 +1,4 @@
+from copy import deepcopy
 from datetime import datetime, timezone
 from app import app, db
 from flask import flash, redirect, render_template, session, url_for
@@ -78,6 +79,40 @@ def new_project_details():
 
         # Get dataOfFlight to correct format
 
+        # prepopulate form
+        users_name = current_user.username
+
+        if current_user.displayname:
+            users_name = current_user.displayname
+
+        flight_code = Project.get_new_flightCode(form.projectPurposeID.data)
+
+        viability_study_value = deepcopy(ViabilityStudyTemplate)
+
+        for template in viability_study_value:
+            for section in template['form']['sections']:
+                for field in section['fields']:
+                    if field['id'] == 'flightcode':
+                        field['value'] = flight_code
+                    elif field['id'] == 'flightdate':
+                        field['value'] = form.dateOfFlight.data.strftime('%Y-%m-%d')
+                    elif field['id'] == 'description':
+                        field['value'] = form.description.data
+                    elif field['id'] == 'preparedby':
+                        field['value'] = users_name
+
+        site_evaluation_value = deepcopy(SiteEvaluationTemplate)
+
+        for template in site_evaluation_value:
+            for section in template['form']['sections']:
+                for field in section['fields']:
+                    if field['id'] == 'flightcode':
+                        field['value'] = flight_code
+                    elif field['id'] == 'dateofflight':
+                        field['value'] = form.dateOfFlight.data.strftime('%Y-%m-%d')
+                    elif field['id'] == 'remotepilot':
+                        field['value'] = users_name
+
         # All valid, create new project
         project = Project(
             authorID=current_user.id,
@@ -90,10 +125,10 @@ def new_project_details():
             projectPurposeID=form.projectPurposeID.data,
             lastEdited=datetime.now(timezone.utc),
             created_at=datetime.now(timezone.utc),
-            flightCode = Project.get_new_flightCode(form.projectPurposeID.data),
+            flightCode = flight_code,
             # JSON forms
-            viabilityStudy = ViabilityStudyTemplate,
-            siteEvaluation = SiteEvaluationTemplate,
+            viabilityStudy = viability_study_value,
+            siteEvaluation = site_evaluation_value,
             postFlight= PostFlightTemplate,
             
             # Loading list
@@ -129,8 +164,8 @@ def edit_project(project_id):
     # Fetch project by ID
     project = Project.query.get_or_404(project_id)
 
-    # User is author?
-    if project.author.id != current_user.id:
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
         flash("You are not authorised to edit this project.", "danger")
         return redirect(url_for('dashboard'))
 
@@ -161,8 +196,8 @@ def remove_project(project_id):
     # Query by id
     project = Project.query.get_or_404(project_id)
 
-    # Check ownership
-    if project.authorID != current_user.id:
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
         flash('You do not have permission to remove this project.', 'danger')
         return redirect(url_for('dashboard'))
 

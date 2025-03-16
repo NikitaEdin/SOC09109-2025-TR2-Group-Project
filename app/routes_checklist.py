@@ -52,8 +52,8 @@ def rural_checklist(project_id):
         flash("Project is not of type Rural.", 'danger')
         return redirect(url_for('project', project_id = project.id))
     
-    # Ensure project is owned by current_user
-    if project.is_owner(current_user) != True:
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
         flash("You are not authorised to access this project.", "danger")
         return redirect(url_for('dashboard'))
      
@@ -114,8 +114,8 @@ def urban_checklist(project_id):
         flash("Project is not of type Urban.", 'danger')
         return redirect(url_for('project', project_id = project.id))
     
-     # Ensure project is owned by current_user
-    if project.is_owner(current_user) != True:
+     # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
         flash("You are not authorised to access this project.", "danger")
         return redirect(url_for('dashboard'))
     
@@ -169,8 +169,8 @@ def urban_checklist(project_id):
 def optional(project_id):
     project = Project.query.get_or_404(project_id)
     
-    # Ensure project is owned by current_user
-    if project.is_owner(current_user) != True:
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
         flash("You are not authorised to access this project.", "danger")
         return redirect(url_for('dashboard'))
 
@@ -247,8 +247,8 @@ def optional(project_id):
 def physical(project_id):
     project = Project.query.get_or_404(project_id)
     
-    # Ensure project is owned by current_user
-    if project.is_owner(current_user) != True:
+    # Ensure project is owned by current_user or user is an admin
+    if not project.can_access():
         flash("You are not authorised to access this project.", "danger")
         return redirect(url_for('dashboard'))
 
