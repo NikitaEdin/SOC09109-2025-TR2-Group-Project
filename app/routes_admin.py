@@ -101,10 +101,22 @@ def delete_user(user_id):
         if admin_count == 1:
             flash("Cannot delete the only admin", "danger")
             return redirect(url_for("view_users"))
+        
+    try:
+        # Delete related audit logs
+        AuditLog.query.filter_by(user_id=user.id).delete()
+        
+        # Delete related projects
+        Project.query.filter_by(authorID=user.id).delete()
 
-    db.session.delete(user)
-    db.session.commit()
-    flash("User deleted successfully", "success")
+        # Delete the user
+        db.session.delete(user)
+        db.session.commit()
+
+        flash("User deleted successfully", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Error deleting user: {str(e)}", "danger")
 
     return redirect(url_for("view_users"))
 
