@@ -31,13 +31,52 @@
                       <p class="mb-0" style="color: var(--text-secondary-colour);">{{ user.role.title }}</p>
                   </div>
   
-                  <!-- Edit Action -->
+                  <!-- Edit Actions (edit and delete) -->
                   <div class="col d-flex justify-content-end">
-                     <a href="{{ url_for('edit_user', user_id=user.id) }}" class="btn btn-primary">Edit</a>
-                       <form method="POST" action="{{ url_for('delete_user', user_id=user.id) }}" onsubmit="return confirm('Are you sure you want to delete this user?');">
-                         <button type="submit" class="btn btn-danger ms-3">Delete</button>
-                       </form>
+                    <a href="{{ url_for('edit_user', user_id=user.id) }}" class="btn btn-primary">Edit</a>
+                    
+                    <button type="button" class="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteUserModal{{ user.id }}">
+                        Delete
+                    </button>
                   </div>
+
+                  <!-- Modal for Confirming User Deletion -->
+                <div class="modal fade" id="deleteUserModal{{ user.id }}" tabindex="-1" aria-labelledby="deleteUserModalLabel{{ user.id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header bg-danger text-white py-2">
+                        <p class="modal-title" id="deleteUserModalLabel{{ user.id }}">
+                            <i class="fas fa-exclamation-triangle me-2"></i> Warning: User Deletion
+                        </p>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                
+                        <!-- Modal Body -->
+                        <div class="modal-body text-center">
+                        <p class="fs-5">
+                            Are you sure you want to delete <strong>{{ user.username }}</strong>? <br> 
+                            <strong>This action is irreversible!</strong>
+                        </p>
+                        </div>
+                
+                        <!-- Modal Footer -->
+                        <div class="modal-footer d-flex justify-content-center">
+                        <!-- Form for Deleting User -->
+                        <form method="POST" action="{{ url_for('delete_user', user_id=user.id) }}">
+                            <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash-alt me-2"></i> Confirm Delete
+                            </button>
+                        </form>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times me-2"></i> Cancel
+                        </button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                
               </div>
           </div>
           {% endfor %}
