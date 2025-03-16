@@ -76,17 +76,27 @@ def add_user():
     form = addUserForm()
 
     if form.validate_on_submit():
+        # Check if username already exists
+        existing_user = User.query.filter_by(username=form.username.data).first()
+        if existing_user:
+            flash("Username already exists. Please choose a different one.", "danger")
+            return render_template("admin_panel/add_user.html", form=form, title="Add User")
+
+
         new_user = User(
             username=form.username.data,
             email=form.email.data,
             role_id=form.role_id.data
         )
         new_user.set_password(form.password.data)
-        db.session.add(new_user)
-        db.session.commit()
-
-        flash("User added successfully", "success")
-        return redirect(url_for("view_users"))
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            flash("User added successfully", "success")
+            return redirect(url_for("view_users"))
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error adding user: {str(e)}", "danger")
 
     return render_template("admin_panel/add_user.html", form=form, title="Add User")
 
