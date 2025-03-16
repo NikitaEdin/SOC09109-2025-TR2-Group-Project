@@ -13,6 +13,8 @@
                     <h2><strong>Loading List</strong></h2>
                 </div>
 
+                <p>Project ID: {{ project_id }}</p>
+
                 <h3 class="text-center fw-light fs-4 pb-2">
                     Ensure all resources are prepared for flight.
                 </h3>
@@ -25,7 +27,7 @@
                         <span>Crew</span>
                         <div class="d-flex gap-2 align-items-center">
                             <span class="badge bg-success rounded-pill">Complete</span>
-                            <a href="{{ url_for('loading_list_crew') }}" class="btn btn-primary btn-sm">Open Form</a>
+                            <a href="{{ url_for('loading_list_crew', project_id=project_id) }}" class="btn btn-primary btn-sm">Open Form</a>
                         </div>
                     </li>
 
@@ -34,7 +36,7 @@
                         <span>Equipment</span>
                         <div class="d-flex gap-2 align-items-center">
                             <span class="badge bg-warning rounded-pill">In Progress</span>
-                            <a href="{{ url_for('loading_list_equipment') }}" class="btn btn-primary btn-sm">Open Form</a>
+                            <a href="{{ url_for('loading_list_equipment', project_id=project_id) }}" class="btn btn-primary btn-sm">Open Form</a>
                         </div>
                     </li>
 
@@ -43,7 +45,7 @@
                         <span>Maintenance Kit</span>
                         <div class="d-flex gap-2 align-items-center">
                             <span class="badge bg-danger rounded-pill">Not Started</span>
-                            <a href="{{ url_for('loading_list_maintenance_kit') }}" class="btn btn-primary btn-sm">Open Form</a>
+                            <a href="{{ url_for('loading_list_maintenance_kit', project_id=project_id) }}" class="btn btn-primary btn-sm">Open Form</a>
                         </div>
                     </li>
 
@@ -52,7 +54,7 @@
                         <span>Safety Kit</span>
                         <div class="d-flex gap-2 align-items-center">
                             <span class="badge bg-danger rounded-pill">Not Started</span>
-                            <a href="{{ url_for('loading_list_safety_kit') }}" class="btn btn-primary btn-sm">Open Form</a>
+                            <a href="{{ url_for('loading_list_safety_kit', project_id=project_id) }}" class="btn btn-primary btn-sm">Open Form</a>
                         </div>
                     </li>
 
@@ -61,7 +63,7 @@
                         <span>Ground Equipment</span>
                         <div class="d-flex gap-2 align-items-center">
                             <span class="badge bg-warning rounded-pill">In Progress</span>
-                            <a href="{{ url_for('loading_list_ground_equip') }}" class="btn btn-primary btn-sm">Open Form</a>
+                            <a href="{{ url_for('loading_list_ground_equip', project_id=project_id) }}" class="btn btn-primary btn-sm">Open Form</a>
                         </div>
                     </li>
                 </ul>

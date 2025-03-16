@@ -5,7 +5,6 @@ from app.models import User
 from app.forms.loginForm import LoginForm
 from flask_login import login_user, current_user, logout_user
 
-
 @app.route('/login',  methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
