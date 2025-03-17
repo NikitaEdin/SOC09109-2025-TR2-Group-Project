@@ -6,7 +6,7 @@ from flask_login import UserMixin, current_user
 from sqlalchemy import func
 import re
 # Import the checklist templates
-from app.forms.checklist_template import checklist_template_physical, checklist_template_optional_checklist, checklist_template_forms_optional, checklist_template_required_rural, checklist_template_required_urban
+from app.forms.checklist_template import checklist_template_optional_checklist, checklist_template_forms_optional, checklist_template_required_rural, checklist_template_required_urban
 
 # Global/static variables
 ADMIN_MIN_POWER = 90
@@ -105,6 +105,7 @@ class Project(db.Model):
     riskAnalysis = db.Column(db.JSON, nullable=True)
     loadingList = db.Column(db.JSON, nullable=True)
     postFlight = db.Column(db.JSON, nullable=True)
+    personalChecklist = db.Column(db.JSON, nullable=True)
 
     author = db.relationship('User', backref='projects')
     
