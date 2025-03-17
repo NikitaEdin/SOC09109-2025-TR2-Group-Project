@@ -10,7 +10,7 @@
                     <div class="text-center mb-4">
                         <!-- Title -->
                         <p class="fs-1 mb-2">Personal Checklist</p>
-                        <p class="fs-5 fw-light">Mandatory Forms</p>
+                        <p class="fs-5 fw-light">Your Personalised Task List</p>
                         <hr>
                         <!-- Button to add new item to checklist -->
                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newItemModal">
@@ -37,7 +37,7 @@
                                             </small>
                                         </div>
                                             <!-- Delete item button -->
-                                            <button type="button" class="btn btn-sm btn-primary ms-2" onclick="deleteItem(this)">X</button>
+                                            <button type="button" class="btn btn-sm btn-primary ms-2" style="min-width: 2.2rem; max-height: 2.2rem;" onclick="deleteItem(this)">X</button>
                                         </div>
                                     </div>
                             {% endfor %}
@@ -124,7 +124,7 @@ function addNewItem() {
                     Last Edited: ${timestamp}
                 </small>
             </div>
-            <button type="button" class="btn btn-sm btn-primary ms-2" onclick="deleteItem(this)">X</button>
+            <button type="button" class="btn btn-sm btn-primary ms-2" style="min-width: 2.2rem; max-height: 2.2rem;" onclick="deleteItem(this)">X</button>
         </div>
     `;
 
