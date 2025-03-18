@@ -29,11 +29,3 @@ checklist_template_required_urban = [
     {"name":"Advanced Flight Permission","description":"Apply for non-standard flight permission if required"}
 ]
 
-# Physical checklist template
-checklist_template_physical = [
-        {"name":"Damage","description":"Check if the drone has damage"},
-        {"name":"Battery","description":"Check if the drone has enough battery for flight"},
-        {"name":"Clothing","description":"Check if the pilot has appropriate clothing or the crew"},
-        {"name":"Site","description":"Is the site safe to you and others"},
-        {"name":"Illness","description":"Are you the pilot fit enough to operate a drone"}
-]
