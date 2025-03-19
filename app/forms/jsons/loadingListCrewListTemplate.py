@@ -1,46 +1,45 @@
 LoadingListCrewListTemplate = [
-{
-  "title": "Loading List - Crew",
-  "header": "Enter all of the crew and their details.",
-  "form": {
-    "sections": [
-      {
-        "header": "Crew Name",
-        "fields": [
-          {"id": "name1", "name": "", "value": "", "type": "text", "required": True}
-
-        ]
-      },
-      {
-        "header": "Role",
-        "fields": [
-          {"id": "role1", "name": "", "value": "", "type": "text", "required": True}
-
-        ]
-      },
-      {
-        "header": "Contact Number",
-        "fields": [
-          {"id": "num1", "name": "", "value": "", "type": "text", "required": True}
-
-        ]
-      },
+    {
+    "title": "Loading List - Crew",
+    "header": "Enter all of the crew and their details.",
+    "form": {
+      "fields": [
         {
-        "header": "Email",
-        "fields": [
-          {"id": "email1", "name": "", "value": "", "type": "text", "required": True}
-          
- 
-        ]
-      },
-          {
-        "header": "Called",
-        "fields": [
-          {"id": "check1", "name": "", "value": "", "type": "checkbox", "required": True}
-
-        ]
-      }
-    ]
+          "name": "crew_name",
+          "label": "Crew Name",
+          "type": "text",
+          "placeholder": "",
+          "required": True
+        },
+        {
+          "name": "role",
+          "label": "Role",
+          "type": "text",
+          "placeholder": "",
+          "required": True
+        },
+        {
+          "name": "contact_number",
+          "label": "Contact Number",
+          "type": "tel",
+          "placeholder": "",
+          "required": False
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "placeholder": "",
+          "required": False
+        },
+        {
+          "name": "called",
+          "label": "Called",
+          "type": "checkbox",
+          "default": False
+        }
+      ]
+    },
+    "user_data": []
   }
-}
 ]

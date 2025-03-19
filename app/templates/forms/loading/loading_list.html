@@ -13,7 +13,7 @@
                     <h2><strong>Loading List</strong></h2>
                 </div>
 
-                <p>Project ID: {{ project_id }}</p>
+                <p>Project ID: {{ project.id }}</p>
 
                 <h3 class="text-center fw-light fs-4 pb-2">
                     Ensure all resources are prepared for flight.
@@ -26,11 +26,13 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center border-danger-subtle">
                         <span>Crew</span>
                         <div class="d-flex gap-2 align-items-center">
-                            {% if form_status.form_crewListStatus %}
-                            <span class="badge bg-success rounded-pill">Complete</span>
-                        {%else%}
-                            <span class="badge bg-danger rounded-pill">Not Started</span>
-                        {% endif %}
+                            {% if form_status.form_crewListStatus == 2 %}
+                                <span class="badge bg-success rounded-pill">Complete</span>
+                            {% elif form_status.form_crewListStatus == 1 %}
+                                <span class="badge bg-warning rounded-pill">In Progress</span>
+                            {% else %}
+                                <span class="badge bg-danger rounded-pill">Not Started</span>
+                            {% endif %}
                             <a href="{{ url_for('loading_list_crew', project_id=project.id) }}" class="btn btn-primary btn-sm">Open Form</a>
                         </div>
                     </li>

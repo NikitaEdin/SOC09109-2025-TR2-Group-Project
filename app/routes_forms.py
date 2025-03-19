@@ -228,51 +228,60 @@ def loading_list(project_id):
     form_groundEquipment = project.groundEquipment
     form_crewList = project.crewList 
     
-    # Loop through each section
-    for section in form_maintenanceKit[0]['form']['sections']:
-         # Loop through all fields
-         for field in section['fields']:
-            if field['value']:
-                form_maintenanceKitStatus = True
-            else:
-                form_maintenanceKitStatus = False
-                
-    # Loop through each section
-    for section in form_safetyKit[0]['form']['sections']:
-         # Loop through all fields
-         for field in section['fields']:
-            if field['value']:
-                form_safetyKitStatus = True
-            else:
-                form_safetyKitStatus = False
-                
-    # Loop through each section
-    for section in form_equipment[0]['form']['sections']:
-         # Loop through all fields
-         for field in section['fields']:
-            if field['value']:
-                form_equipmentStatus = True
-            else:
-                form_equipmentStatus = False
-                
-    # Loop through each section
-    for section in form_groundEquipment[0]['form']['sections']:
-         # Loop through all fields
-         for field in section['fields']:
-            if field['value'] != None and field['value'] == True:
-                form_groundEquipmentStatus = True
-            else:
-                form_groundEquipmentStatus = False
-               
-    # Loop through each section
-    for section in form_crewList[0]['form']['sections']:
-         # Loop through all fields
-         for field in section['fields']:
-            if field['value'] != None and  field['value'] == True:
-                form_crewListStatus = True
-            else:
-                form_crewListStatus = False
-                
+    # By default, assume all are incomplete
+    form_maintenanceKitStatus = False
+    form_safetyKitStatus = False
+    form_equipmentStatus = False
+    form_groundEquipmentStatus = False
+    form_crewListStatus = False
+
+
+    try:
+        # Loop through each section
+        for section in form_maintenanceKit[0]['form']['sections']:
+            # Loop through all fields
+            for field in section['fields']:
+                if field['value']:
+                    form_maintenanceKitStatus = True
+    except:
+        pass
+
+
+
+    try:
+        # Loop through each section
+        for section in form_safetyKit[0]['form']['sections']:
+            # Loop through all fields
+            for field in section['fields']:
+                if field['value']:
+                    form_safetyKitStatus = True
+    except:
+        pass
+
+    try:
+        # Loop through each section
+        for section in form_equipment[0]['form']['sections']:
+            # Loop through all fields
+            for field in section['fields']:
+                if field['value']:
+                    form_equipmentStatus = True
+    except:
+        pass
+
+
+    try:
+        # Loop through each section
+        for section in form_groundEquipment[0]['form']['sections']:
+            # Loop through all fields
+            for field in section['fields']:
+                if field['value'] != None and field['value'] == True:
+                    form_groundEquipmentStatus = True
+    except:
+        pass
+
+
+    form_crewListStatus = calculate_status(project.crewList[0]['user_data'], field_name='called')
+    
     form_status = {
     "form_maintenanceKitStatus": form_maintenanceKitStatus,
     "form_safetyKitStatus": form_safetyKitStatus,
@@ -287,6 +296,7 @@ def loading_list(project_id):
 @login_required
 def loading_list_crew(project_id):
     project = Project.query.get_or_404(project_id)
+
     
     # Ensure project is owned by current_user or user is an admin
     if not project.can_access():
@@ -294,42 +304,42 @@ def loading_list_crew(project_id):
         return redirect(url_for('dashboard'))
     
     form_data = project.crewList    
-    errors = {}  # validation errors
+   
     
     if request.method == 'POST':
         
+        user_data = []
+        crew_names = request.form.getlist('crew_name[]')
+        roles = request.form.getlist('role[]')
+        contact_numbers = request.form.getlist('contact_number[]')
+        emails = request.form.getlist('email[]')
+        called_list = request.form.get('called', '')
+        called_values = called_list.split(',') if called_list else []
 
-        row_count = len(request.form) // 5
-        
-        for i in range (1, row_count +1):
-        
-            for section in form_data[0]['form']['sections']:
-                    # Loop through all fields
-                    for field in section['fields']:
-                        field_id = field['id'].replace("1",str(i)) 
-                        field_value = request.form.get(field_id)
+        for i in range(len(crew_names)):
+            called_value = (i < len(called_values)) and (called_values[i] == "true")
 
-                        # Any field validations go here, before it's assigned
-                        if field_id not in errors:
-                            field['value'] = field_value
-                        
-                        # Handle checkboxes 
-                        if field['type'] == 'checkbox':  
-                            field['value'] = request.form.get(field_id) == "on"  # True if checked
-                
+            # Append valid data to user_data
+            user_data.append({
+                "crew_name": crew_names[i].strip(),
+                "role": roles[i].strip(),
+                "contact_number": contact_numbers[i].strip() if contact_numbers[i] else "",
+                "email": emails[i].strip() if emails[i] else "",
+                "called": called_value
+            })
         
-        # Any errors? don't commit the changes
-        if errors:
-            return render_template('/forms/loading/crew_list_json.html', project=project, form_data=form_data, errors=errors)
 
-        # No errors, save changes
+        
+        form_data[0]["user_data"] = user_data  # Update `user_data` array
         project.crewList = form_data
-        flag_modified(project, "crewList")
+        flag_modified(project, "crewList")  
         db.session.add(project)
         db.session.commit()
 
         flash('Changes saved successfully!', 'success')
-        return redirect(url_for('loading_list', project_id=project.id))
+        # return redirect(url_for('loading_list', project_id=project.id))
+        return render_template("/forms/loading/crew_list_json.html", project=project, form_data=form_data, footer=False, title="Crew List" )
+    
     
     return render_template("/forms/loading/crew_list_json.html", project=project, form_data=form_data, footer=False, title="Crew List" )
 
@@ -518,3 +528,37 @@ def loading_list_ground_equip(project_id):
         return redirect(url_for('loading_list', project_id=project.id))
     
     return render_template("/forms/loading/ground_equipment_json.html", project=project, form_data=form_data, footer=False, title="Ground Equipment" )
+
+
+
+
+
+
+
+
+
+####################### UTILS #######################
+
+# Calculate the status based on the values of given field, in given user_data section of JSON.
+def calculate_status(user_data, field_name='called'):
+    any_true = False
+    all_true = True
+    # Loop through each item
+    for section in user_data:
+        if field_name in section:  
+            if section[field_name] == True:
+                # Found at least one True
+                any_true = True 
+            else:
+                 # Found at least one False
+                all_true = False 
+        else:
+            all_true = False  # Field doesn't exist, treat it as missing
+
+    # 2 Complete, 1 In Progress, 0 Not Started
+    if all_true:
+        return 2  
+    elif any_true:
+        return 1  
+    else:
+        return 0 

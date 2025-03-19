@@ -29,34 +29,49 @@ Checklist template for auto-generated forms
             <hr>
 
         <form method="POST">
-            <table class="table table-bordered  custom-form-table" id="table">
+            <table class="table table-bordered custom-form-table" id="table">
                 <thead class="table-light">
                     <tr>
-                    {% for section in form_data.form.sections %}
-                    {% if section.header %}
-                        <th>{{section.header}}</th>
-                    {% endif %}
+                    <!-- Dynamically render the headers for fields -->
+                    {% for section in form_data.form.fields %}
+                        <th>{{ section.label }}</th> 
                     {% endfor %}
+                    <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {% set num_fields = form_data.form.sections[0].fields | length %} 
                 
-                    {% for i in range(num_fields) %} 
+                <tbody id="tableBody">
+                    {% for user_item in form_data.user_data %}
                     <tr>
-                        {% for section in form_data.form.sections %}
-                            <td>
-                                {% if i < section.fields | length %}
-                                    {{ macros.render_field(section.fields[i], errors) }}
-                                {% else %}
-                                <td></td>
-                                {% endif %}
-                            </td>
+                        {% for field in form_data.form.fields %}
+                        <td>
+                            {% if field.type == 'checkbox' %}
+                            <div class="d-flex justify-content-center align-items-center">
+                                <input type="checkbox"
+                                       name="called[]"
+                                       class="mt-2"
+                                       value="true"
+                                       {% if user_item.called %} checked {% endif %}
+                                       onchange="updateHiddenCalled()" />
+                            </div>
+                            {% else %}
+                            <input type="{{ field.type }}" 
+                                name="{{ field.name }}[]"  
+                                value="{{ user_item[field.name] }}" 
+                                placeholder="{{ field.placeholder }}"  
+                                class="form-control">
+                            {% endif %}
+                        </td>
                         {% endfor %}
+                        <td>
+                            <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
-        </table>
+                
+                
+            </table>
 
             <!-- Submit/Save button -->
             <div class="row justify-content-center">
@@ -69,34 +84,83 @@ Checklist template for auto-generated forms
             </div>
         </form>
     </div>
-    
+
+
     <script>
-    function addRow() {
-        let table = document.getElementById("table").getElementsByTagName('tbody')[0];
-        let rowCount = table.rows.length +1; // Row Index
-        let lastRow = table.rows[table.rows.length - 1]; // Get the last row
-        let newRow = lastRow.cloneNode(true); // Clone the last row
-
-        // Clear input values in the cloned row
-        let inputs = newRow.querySelectorAll("input, select, textarea");
-        inputs.forEach(input => {
-
-            if (input.id) {
-            let oldID = input.id;
-            let newId = oldID.replace(/(\d+)$/, rowCount);
-            input.id = newId;
-        }
-
-            if (input.type == "checkbox"){
-                input.checked = false;
-            }
-            else{
-                input.value = ""; 
-            }
-        });
+        // Initialise fields 
+        <!-- let fields = {{ form_data.form.fields | tojson }} -->
+        let fields = JSON.parse('{{ form_data.form.fields | tojson | safe }}');
         
-        table.appendChild(newRow); // Append the new row to the table
-    }
-</script>
+        // Add new row
+        function addRow() {
+            const tableBody = document.getElementById('tableBody');
+            const newRow = document.createElement('tr');
+            
+            fields.forEach(field => {
+                const newCell = document.createElement('td');
+                let inputField = '';
+        
+                if (field.type === 'checkbox') {
+                    inputField = `<div class="d-flex justify-content-center align-items-center">
+                        <input type="checkbox"
+                               name="called[]" 
+                               value="true"
+                               class="mt-2"
+                               onchange="updateHiddenCalled()" />
+                      </div>`;
+                } else {
+                    inputField = `<input type="${field.type}" name="${field.name}[]" placeholder="${field.placeholder}" class="form-control" />`;
+                }
+        
+                newCell.innerHTML = inputField;
+                newRow.appendChild(newCell);
+            });
+        
+            // Add "Remove" button
+            const removeCell = document.createElement('td');
+            removeCell.innerHTML = `<button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>`;
+            newRow.appendChild(removeCell);
+        
+            // Append the row
+            tableBody.appendChild(newRow);
     
+            // Update the hidden input field
+            updateHiddenCalled();
+        }
+    
+        // Function remove row
+        function removeRow(button) {
+            const row = button.closest('tr');
+            row.remove();
+    
+            // Update the hidden input field
+            updateHiddenCalled();
+        }
+    
+        // Function to update hidden input field with all checkbox states
+        function updateHiddenCalled() {
+            const checkboxes = document.querySelectorAll('input[name="called[]"]');
+            
+            // Collect the boolean values (true/false) for checkboxs
+            const values = Array.from(checkboxes).map(checkbox => checkbox.checked ? "true" : "false");
+    
+            // Find/create hidden input field
+            let hiddenField = document.getElementById('hidden_called');
+            
+            if (!hiddenField) {
+                hiddenField = document.createElement('input');
+                hiddenField.type = 'hidden';
+                hiddenField.id = 'hidden_called';
+                hiddenField.name = 'called'; 
+                document.forms[0].appendChild(hiddenField);
+            }
+    
+            // Update the hidden field value with the comma-separated checkbox states
+            hiddenField.value = values.join(',');
+        }
+    </script>
+    
+    
+    
+
 {% endif %}
