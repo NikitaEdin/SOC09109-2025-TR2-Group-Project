@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Manage Access for <span class="text-primary">{{ project.name }}</span></h2>
+
+    <!-- Search for users -->
+    <div class="mb-3">
+        <input type="text" id="userSearch" class="form-control" placeholder="Search users...">
+        <ul id="searchResults" class="list-group mt-2"></ul>
+    </div>
+
+    <h3 class="mt-4">Users with Access:</h3>
+    <ul class="list-group">
+        {% for user in project.allowed_users %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ user.username }}
+            <button class="btn btn-danger btn-sm remove-user-btn" data-user-id="{{ user.id }}">
+                Remove
+            </button>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<script>
+// Search for users dynamically
+document.getElementById("userSearch").addEventListener("input", function() {
+    let query = this.value;
+    if (query.length < 2) return; // Avoid too many requests
+
+    fetch(`/search_users?query=${query}`)
+        .then(response => response.json())
+        .then(data => {
+            let resultList = document.getElementById("searchResults");
+            resultList.innerHTML = "";
+            data.forEach(user => {
+                let li = document.createElement("li");
+                li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+                li.textContent = user.username;
+
+                let btn = document.createElement("button");
+                btn.textContent = "Add";
+                btn.classList.add("btn", "btn-success", "btn-sm");
+                btn.setAttribute("data-user-id", user.id);
+                btn.addEventListener("click", function() {
+                    modifyAccess(user.id, "add");
+                });
+
+                li.appendChild(btn);
+                resultList.appendChild(li);
+            });
+        });
+});
+
+// Handle Remove User button clicks
+document.querySelectorAll(".remove-user-btn").forEach(button => {
+    button.addEventListener("click", function() {
+        let userId = this.getAttribute("data-user-id");
+        modifyAccess(userId, "remove");
+    });
+});
+
+// Modify user access (Add or Remove)
+function modifyAccess(userId, action) {
+    fetch(`/project/{{ project.id }}/manage_access`, {
+        method: "POST",
+        body: new URLSearchParams({ user_id: userId, action: action }),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    }).then(() => location.reload());
+}
+</script>
+{% endblock %}
