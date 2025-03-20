@@ -8,10 +8,10 @@
     <p class="mt-0 mb-2 small text-muted">{{ field.description | safe}}</p>
     {% endif %}
 
-    <!-- Text Area -->
+    <!-- Text Field -->
     {% if field.type == 'textarea' %}
         <textarea class="form-control mb-3 {% if field.id in errors %}is-invalid{% endif %}" 
-                  id="{{ field.id }}" name="{{ field.name }}[]" rows="3" style="min-height: 5rem; max-height: 16rem;" maxlength="1000"
+                  id="{{ field.id }}" name="{{ field.id }}" rows="3" style="min-height: 5rem; max-height: 16rem;" maxlength="1000"
                   {% if field.tooltip %} 
                     data-bs-toggle="tooltip" data-bs-title="{{field.tooltip}}" data-bs-custom-class="custom-tooltip"
                   {% endif %}
@@ -20,24 +20,16 @@
     <!-- Date -->
     {% elif field.type == 'date' %}
         <input type="date" class="form-control mb-3 {% if field.id in errors %}is-invalid{% endif %}" 
-               id="{{ field.id }}" name="{{ field.name }}[]" value="{{ field.value }}"
+               id="{{ field.id }}" name="{{ field.id }}" value="{{ field.value }}"
                {% if field.tooltip %} 
                data-bs-toggle="tooltip" data-bs-title="{{field.tooltip}}" data-bs-custom-class="custom-tooltip"
              {% endif %}
                {% if field.required %}required{% endif %}> 
 
-    <!-- Checkbox -->
-    {% elif field.type == 'checkbox' %}
-    <div class="text-center">
-        <input type="checkbox" class=" checkbox-item {% if field.id in errors %}is-invalid{% endif %}" 
-        id="{{ field.id }}" name="{{ field.id }}"
-              {% if field.value %}checked{% endif %} 
-               {% if field.required %}required{% endif %}>
-
     <!-- Text -->
     {% else %}
         <input type="text" class="form-control mb-3 {% if field.id in errors %}is-invalid{% endif %}" 
-               id="{{ field.id }}" name="{{ field.name }}[]" value="{{ field.value }}"
+               id="{{ field.id }}" name="{{ field.id }}" value="{{ field.value }}"
                {% if field.tooltip %} 
                data-bs-toggle="tooltip" data-bs-title="{{field.tooltip}}" data-bs-custom-class="custom-tooltip"
              {% endif %}
