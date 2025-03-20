@@ -1,12 +1,12 @@
 from copy import deepcopy
 from datetime import datetime, timezone
 from app import app, db
-from flask import flash, redirect, render_template, session, url_for
+from flask import flash, redirect, render_template, session, url_for, request, jsonify
 from flask_login import current_user, login_required
 
 from app.AuditLogger import AuditLogger
 from app.forms.createProject import EditProject, ProjectLocation, ProjectType, ProjectDetails
-from app.models import Project
+from app.models import Project, User
 
 from app.forms.jsons.viabilityStudyTemplate import ViabilityStudyTemplate
 from app.forms.jsons.siteEvaluationTemplate import SiteEvaluationTemplate
@@ -209,3 +209,37 @@ def remove_project(project_id):
         flash("Project couldn't be removed at this time.", "danger")
         return redirect(url_for('project', project_id=project.id))
 
+
+@app.route('/project/<int:project_id>/manage_access', methods=['GET', 'POST'])
+@login_required
+def manage_access(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    # Ensure only the author can manage access
+    if project.authorID != current_user.id:
+        flash("You do not have permission to manage this project's access.", "danger")
+        return redirect(url_for('dashboard'))
+
+    if request.method == 'POST':
+        user_id = request.form.get('user_id')
+        action = request.form.get('action')
+
+        user = User.query.get(user_id)
+
+        if user:
+            if action == "add" and user not in project.allowed_users:
+                project.allowed_users.append(user)
+                flash(f"User {user.username} added.", "success")
+            elif action == "remove" and user in project.allowed_users:
+                project.allowed_users.remove(user)
+                flash(f"User {user.username} removed.", "warning")
+            db.session.commit()
+
+    return render_template('manage_access.html', project=project)
+
+@app.route('/search_users', methods=['GET'])
+@login_required
+def search_users():
+    query = request.args.get('query')
+    users = User.query.filter(User.username.ilike(f"%{query}%")).all()
+    return jsonify([{'id': user.id, 'username': user.username} for user in users])

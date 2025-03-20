@@ -27,6 +27,10 @@ class User(db.Model, UserMixin):
 
     role = db.relationship('Role', backref=db.backref('users', lazy=True))
 
+    allowed_users = db.relationship(
+        'User', secondary='project_access', backref='accessible_projects'
+    )
+
     # ToString
     def __repr__(self):
         return f"<User {self.username} ({self.role.title})>"
@@ -189,3 +193,10 @@ class ProjectPurpose(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(16), nullable=False)
     code = db.Column(db.String(1), nullable=False)
+
+# Association Table for Many-to-Many Relationship
+project_access = db.Table(
+    'project_access',
+    db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+)
