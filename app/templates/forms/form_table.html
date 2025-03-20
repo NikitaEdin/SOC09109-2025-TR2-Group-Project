@@ -46,14 +46,14 @@ Checklist template for auto-generated forms
                         {% for field in form_data.form.fields %}
                         <td>
                             {% if field.type == 'checkbox' %}
-                            <div class="d-flex justify-content-center align-items-center">
-                                <input type="checkbox"
-                                       name="called[]"
-                                       class="mt-2"
-                                       value="true"
-                                       {% if user_item.called %} checked {% endif %}
-                                       onchange="updateHiddenCalled()" />
-                            </div>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <input type="checkbox"
+                                        name="{{ field.name }}[]"
+                                        class="mt-2"
+                                        value="true"
+                                        {% if user_item[field.name] %} checked {% endif %}
+                                        onchange="updateHiddenField('{{ field.name }}')" />
+                                </div>
                             {% else %}
                             <input type="{{ field.type }}" 
                                 name="{{ field.name }}[]"  
@@ -87,78 +87,79 @@ Checklist template for auto-generated forms
 
 
     <script>
-        // Initialise fields 
-        <!-- let fields = {{ form_data.form.fields | tojson }} -->
+        // Initialize fields
         let fields = JSON.parse('{{ form_data.form.fields | tojson | safe }}');
-        
-        // Add new row
+    
+        // Add a new row to the table
         function addRow() {
             const tableBody = document.getElementById('tableBody');
             const newRow = document.createElement('tr');
-            
+    
             fields.forEach(field => {
                 const newCell = document.createElement('td');
                 let inputField = '';
-        
+    
                 if (field.type === 'checkbox') {
-                    inputField = `<div class="d-flex justify-content-center align-items-center">
-                        <input type="checkbox"
-                               name="called[]" 
-                               value="true"
-                               class="mt-2"
-                               onchange="updateHiddenCalled()" />
-                      </div>`;
+                    inputField = `
+                        <div class="d-flex justify-content-center align-items-center">
+                            <input type="checkbox"
+                                   name="${field.name}[]"
+                                   value="true"
+                                   class="mt-2"
+                                   onchange="updateHiddenField('${field.name}')" />
+                        </div>`;
                 } else {
-                    inputField = `<input type="${field.type}" name="${field.name}[]" placeholder="${field.placeholder}" class="form-control" />`;
+                    inputField = `<input type="${field.type}" 
+                                      name="${field.name}[]" 
+                                      placeholder="${field.placeholder}" 
+                                      class="form-control" />`;
                 }
-        
+    
                 newCell.innerHTML = inputField;
                 newRow.appendChild(newCell);
             });
-        
+    
             // Add "Remove" button
             const removeCell = document.createElement('td');
             removeCell.innerHTML = `<button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>`;
             newRow.appendChild(removeCell);
-        
-            // Append the row
-            tableBody.appendChild(newRow);
     
-            // Update the hidden input field
-            updateHiddenCalled();
+            // Append the new row
+            tableBody.appendChild(newRow);
         }
     
-        // Function remove row
+        // Remove row function
         function removeRow(button) {
             const row = button.closest('tr');
             row.remove();
-    
-            // Update the hidden input field
-            updateHiddenCalled();
+            
+            // Update all hidden fields for checkboxes
+            fields.filter(field => field.type === 'checkbox').forEach(field => updateHiddenField(field.name));
         }
     
-        // Function to update hidden input field with all checkbox states
-        function updateHiddenCalled() {
-            const checkboxes = document.querySelectorAll('input[name="called[]"]');
+        // Update hidden input fields based on checkbox states
+        function updateHiddenField(fieldName) {
+            const checkboxes = document.querySelectorAll(`input[name="${fieldName}[]"]`);
             
-            // Collect the boolean values (true/false) for checkboxs
+            // Collect checked states ("true"/"false")
             const values = Array.from(checkboxes).map(checkbox => checkbox.checked ? "true" : "false");
     
-            // Find/create hidden input field
-            let hiddenField = document.getElementById('hidden_called');
+            // Find/create the corresponding hidden input field
+            let hiddenField = document.getElementById(`hidden_${fieldName}`);
             
             if (!hiddenField) {
                 hiddenField = document.createElement('input');
                 hiddenField.type = 'hidden';
-                hiddenField.id = 'hidden_called';
-                hiddenField.name = 'called'; 
+                hiddenField.id = `hidden_${fieldName}`;
+                hiddenField.name = fieldName;
                 document.forms[0].appendChild(hiddenField);
             }
     
-            // Update the hidden field value with the comma-separated checkbox states
+            // Update the hidden field value
             hiddenField.value = values.join(',');
         }
     </script>
+    
     
     
     

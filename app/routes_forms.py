@@ -225,8 +225,6 @@ def loading_list(project_id):
     form_maintenanceKit = project.maintenanceKit  
     form_safetyKit = project.safetyKit
     form_equipment = project.equipment 
-    form_groundEquipment = project.groundEquipment
-    form_crewList = project.crewList 
     
     # By default, assume all are incomplete
     form_maintenanceKitStatus = False
@@ -269,19 +267,9 @@ def loading_list(project_id):
         pass
 
 
-    try:
-        # Loop through each section
-        for section in form_groundEquipment[0]['form']['sections']:
-            # Loop through all fields
-            for field in section['fields']:
-                if field['value'] != None and field['value'] == True:
-                    form_groundEquipmentStatus = True
-    except:
-        pass
-
-
     form_crewListStatus = calculate_status(project.crewList[0]['user_data'], field_name='called')
-    
+    form_groundEquipmentStatus = calculate_status(project.groundEquipment[0]['user_data'], field_name='check')
+
     form_status = {
     "form_maintenanceKitStatus": form_maintenanceKitStatus,
     "form_safetyKitStatus": form_safetyKitStatus,
@@ -486,51 +474,46 @@ def loading_list_safety_kit(project_id):
 @login_required
 def loading_list_ground_equip(project_id):
     project = Project.query.get_or_404(project_id)
+
     
-     # Ensure project is owned by current_user or user is an admin
+    # Ensure project is owned by current_user or user is an admin
     if not project.can_access():
         flash("You are not authorised to access this project.", "danger")
         return redirect(url_for('dashboard'))
     
     form_data = project.groundEquipment    
-    errors = {}  # validation errors
+   
     
     if request.method == 'POST':
+        
+        user_data = []
+        items = request.form.getlist('item[]')
+        actions = request.form.getlist('action[]')
+        called_list = request.form.get('check', '')
+        called_values = called_list.split(',') if called_list else []
 
-        for section in form_data[0]['form']['sections']:
-            # Loop through all fields
-            try:
-                for field in section['fields']:
-                    field_id = field['id']  
-                    field_value = request.form.get(field_id)
+        print(called_list)
+        for i in range(len(items)):
+            called_value = (i < len(called_values)) and (called_values[i] == "true")
 
-                 # Handle checkboxes first 
-                if field['type'] == 'checkbox':
-                    field['value'] = request.form.get(field_id) == "on"  # True if checked
-                else:
-                    # For other fields 
-                    if field_id not in errors:
-                        field['value'] = field_value #
-            except:
-                pass 
-               
-        # Any errors? don't commit the changes
-        if errors:
-            return render_template('/forms/loading/ground_equipment_json.html', project=project, form_data=form_data, errors=errors)
-
-        # No errors, save changes
+            # Append valid data to user_data
+            user_data.append({
+                "item": items[i].strip(),
+                "action": actions[i].strip(),
+                "check": called_value
+            })
+        
+        form_data[0]["user_data"] = user_data  # Update `user_data` array
         project.groundEquipment = form_data
-        flag_modified(project, "groundEquipment")
+        flag_modified(project, "groundEquipment")  
         db.session.add(project)
         db.session.commit()
 
         flash('Changes saved successfully!', 'success')
-        return redirect(url_for('loading_list', project_id=project.id))
+        return render_template("/forms/loading/ground_equipment_json.html", project=project, form_data=form_data, footer=False, title="Ground Equipment" )
+    
     
     return render_template("/forms/loading/ground_equipment_json.html", project=project, form_data=form_data, footer=False, title="Ground Equipment" )
-
-
-
 
 
 
@@ -541,24 +524,17 @@ def loading_list_ground_equip(project_id):
 
 # Calculate the status based on the values of given field, in given user_data section of JSON.
 def calculate_status(user_data, field_name='called'):
-    any_true = False
-    all_true = True
-    # Loop through each item
-    for section in user_data:
-        if field_name in section:  
-            if section[field_name] == True:
-                # Found at least one True
-                any_true = True 
-            else:
-                 # Found at least one False
-                all_true = False 
-        else:
-            all_true = False  # Field doesn't exist, treat it as missing
-
-    # 2 Complete, 1 In Progress, 0 Not Started
-    if all_true:
-        return 2  
-    elif any_true:
-        return 1  
+    total_items = len(user_data)
+    
+    if total_items == 0:
+        return 0  # No data, "Not Started"
+    
+    true_count = sum(1 for section in user_data if section.get(field_name) is True)
+    print(true_count)
+    print(total_items)
+    if true_count == total_items:
+        return 2  # All True (Complete)
+    elif true_count > 0:
+        return 1  # At least one True (In Progress)
     else:
-        return 0 
+        return 0  # No True values (Not Started)
