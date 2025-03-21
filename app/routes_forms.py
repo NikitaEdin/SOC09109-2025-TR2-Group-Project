@@ -9,7 +9,6 @@ from app.forms.jsons.viabilityStudyTemplate import ViabilityStudyTemplate
 from app.forms.jsons.loadingListSafetyKitTemplate import LoadingListSafetyKitTemplate
 from app.forms.jsons.loadingListMaintenanceKitTemplate import LoadingListMaintenanceKitTemplate
 from app.models import Project
-
 from datetime import datetime
 
 def is_valid_date(date_str):
@@ -19,20 +18,21 @@ def is_valid_date(date_str):
         return True
     except ValueError:
         return False
-
+    
+def security():
+       if not project.can_access():
+        flash("You are not authorised to access this project.", "danger")
+        return redirect(url_for('dashboard'))
 
 @app.route("/project/<int:project_id>/viability-study", methods=["GET", "POST"])
 @login_required
 def viability_study(project_id):
     project = Project.query.get_or_404(project_id)
+    security()
+    
     form_data = project.viabilityStudy    
     errors = {}  # validation errors
 
-    # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
-        flash("You are not authorised to access this project.", "danger")
-        return redirect(url_for('dashboard'))
-    
     if request.method == 'POST':
         # Loop through each section
         for section in form_data[0]['form']['sections']:
@@ -73,11 +73,7 @@ def viability_study(project_id):
 @login_required
 def export_viability_study(project_id):
     project = Project.query.get_or_404(project_id)
-
-    # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
-        flash("You are not authorised to access this project.", "danger")
-        return redirect(url_for('dashboard'))
+    security()
 
     return render_template("/forms/export.html", form_data=project.viabilityStudy, title="Viability Study")
 
@@ -85,13 +81,11 @@ def export_viability_study(project_id):
 @login_required
 def site_evaluation(project_id):
     project = Project.query.get_or_404(project_id)
+    security()
+    
     form_data = project.siteEvaluation    
     errors = {}  # validation errors
 
-    # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
-        flash("You are not authorised to access this project.", "danger")
-        return redirect(url_for('dashboard'))
 
     if request.method == 'POST':
         # Loop through each section
@@ -135,11 +129,7 @@ def site_evaluation(project_id):
 @login_required
 def export_site_evaluation(project_id):
     project = Project.query.get_or_404(project_id)
-
-    # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
-        flash("You are not authorised to access this project.", "danger")
-        return redirect(url_for('dashboard'))
+    security()
 
     return render_template("/forms/export.html", form_data=project.siteEvaluation, title="Site Evaluation")
 
@@ -152,12 +142,7 @@ def site_evaluation_template():
 @login_required
 def crew_call_sheet(project_id):
     project = Project.query.get_or_404(project_id)
-
-    # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
-        flash("You are not authorised to access this project.", "danger")
-        return redirect(url_for('dashboard'))
-
+    security()
 
     form = CrewCallSheetForm()
 
@@ -176,12 +161,7 @@ def crew_call_sheet(project_id):
 @login_required
 def post_flight(project_id):
     project = Project.query.get_or_404(project_id)
-
-    # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
-        flash("You are not authorised to access this project.", "danger")
-        return redirect(url_for('dashboard'))
-
+    security()
 
     return render_template('forms/post_flight.html', title='Post-Flight Actions')
 
@@ -190,11 +170,7 @@ def post_flight(project_id):
 @login_required
 def risk_analysis(project_id):
     project = Project.query.get_or_404(project_id)
-
-    # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
-        flash("You are not authorised to access this project.", "danger")
-        return redirect(url_for('dashboard'))
+    security()
 
     return render_template('forms/risk_analysis/risk_analysis_list.html', title=' Risk Analysis Form')
 
@@ -203,12 +179,7 @@ def risk_analysis(project_id):
 @login_required
 def add_risk_analysis(project_id):
     project = Project.query.get_or_404(project_id)
-
-    # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
-        flash("You are not authorised to access this project.", "danger")
-        return redirect(url_for('dashboard'))
-
+    security()
 
     return render_template('forms/risk_analysis/add_risk.html', title='Add Risk Analysis Form')
 
@@ -216,11 +187,7 @@ def add_risk_analysis(project_id):
 @app.route("/project/<int:project_id>/loading-list")
 def loading_list(project_id):
     project = Project.query.get_or_404(project_id)
-    
-    # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
-        flash("You are not authorised to access this project.", "danger")
-        return redirect(url_for('dashboard'))
+    security()
 
     form_maintenanceKit = project.maintenanceKit  
     form_safetyKit = project.safetyKit
@@ -282,12 +249,7 @@ def loading_list(project_id):
 @login_required
 def loading_list_crew(project_id):
     project = Project.query.get_or_404(project_id)
-
-    
-    # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
-        flash("You are not authorised to access this project.", "danger")
-        return redirect(url_for('dashboard'))
+    security()
     
     form_data = project.crewList    
    
@@ -333,12 +295,8 @@ def loading_list_crew(project_id):
 @app.route("/project/<int:project_id>/loading-list/equipment", methods=["GET", "POST"])
 @login_required
 def loading_list_equipment(project_id):
-    project = Project.query.get_or_404(project_id)
-    
-     # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
-        flash("You are not authorised to access this project.", "danger")
-        return redirect(url_for('dashboard'))
+    project = Project.query.get_or_404(project_id)  
+    security()
     
     form_data = project.equipment    
     errors = {}  # validation errors
@@ -376,11 +334,7 @@ def loading_list_equipment(project_id):
 @login_required
 def loading_list_maintenance_kit(project_id):
     project = Project.query.get_or_404(project_id)
-    
-    # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
-        flash("You are not authorised to access this project.", "danger")
-        return redirect(url_for('dashboard'))
+    security()
     
     form_data = project.maintenanceKit    
     errors = {}  # validation errors
@@ -418,11 +372,7 @@ def loading_list_maintenance_kit(project_id):
 @login_required
 def loading_list_safety_kit(project_id):
     project = Project.query.get_or_404(project_id)
-    
-    # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
-        flash("You are not authorised to access this project.", "danger")
-        return redirect(url_for('dashboard'))
+    security()
     
     form_data = project.safetyKit    
     errors = {}  # validation errors
@@ -466,12 +416,7 @@ def loading_list_safety_kit(project_id):
 @login_required
 def loading_list_ground_equip(project_id):
     project = Project.query.get_or_404(project_id)
-
-    
-    # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
-        flash("You are not authorised to access this project.", "danger")
-        return redirect(url_for('dashboard'))
+    security()
     
     form_data = project.groundEquipment    
    
@@ -506,10 +451,6 @@ def loading_list_ground_equip(project_id):
     
     
     return render_template("/forms/loading/ground_equipment_json.html", project=project, form_data=form_data, footer=False, title="Ground Equipment" )
-
-
-
-
 
 
 ####################### UTILS #######################
