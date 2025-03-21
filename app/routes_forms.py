@@ -244,8 +244,6 @@ def loading_list(project_id):
     except:
         pass
 
-
-
     try:
         # Loop through each section
         for section in form_safetyKit[0]['form']['sections']:
@@ -433,20 +431,14 @@ def loading_list_safety_kit(project_id):
         # Loop through each section
         for section in form_data[0]['form']['sections']:
             # Loop through all fields
-            try:
-                for field in section['fields']:
-                    field_id = field['id']  
-                    field_value = request.form.get(field_id)
-
-                 # Handle checkboxes first 
-                if field['type'] == 'checkbox':
+            for field in section['fields']:
+                field_id = field['id']  
+               
+                # Handle checkboxes 
+                if field['type'] == 'checkbox':  
                     field['value'] = request.form.get(field_id) == "on"  # True if checked
                 else:
-                    # For other fields 
-                    if field_id not in errors:
-                        field['value'] = field_value #
-            except:
-                pass 
+                    field['value'] = False
 
         # Any errors? don't commit the changes
         if errors:
