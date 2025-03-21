@@ -19,7 +19,7 @@ def is_valid_date(date_str):
     except ValueError:
         return False
     
-def security():
+def security(project):
        if not project.can_access():
         flash("You are not authorised to access this project.", "danger")
         return redirect(url_for('dashboard'))
@@ -28,7 +28,7 @@ def security():
 @login_required
 def viability_study(project_id):
     project = Project.query.get_or_404(project_id)
-    security()
+    security(project)
     
     form_data = project.viabilityStudy    
     errors = {}  # validation errors
@@ -73,7 +73,7 @@ def viability_study(project_id):
 @login_required
 def export_viability_study(project_id):
     project = Project.query.get_or_404(project_id)
-    security()
+    security(project)
 
     return render_template("/forms/export.html", form_data=project.viabilityStudy, title="Viability Study")
 
@@ -81,7 +81,7 @@ def export_viability_study(project_id):
 @login_required
 def site_evaluation(project_id):
     project = Project.query.get_or_404(project_id)
-    security()
+    security(project)
     
     form_data = project.siteEvaluation    
     errors = {}  # validation errors
@@ -129,7 +129,7 @@ def site_evaluation(project_id):
 @login_required
 def export_site_evaluation(project_id):
     project = Project.query.get_or_404(project_id)
-    security()
+    security(project)
 
     return render_template("/forms/export.html", form_data=project.siteEvaluation, title="Site Evaluation")
 
@@ -142,7 +142,7 @@ def site_evaluation_template():
 @login_required
 def crew_call_sheet(project_id):
     project = Project.query.get_or_404(project_id)
-    security()
+    security(project)
 
     form = CrewCallSheetForm()
 
@@ -154,14 +154,14 @@ def crew_call_sheet(project_id):
         if form.submit.data and form.validate_on_submit():
             print("Form Submitted")
 
-    return render_template("/forms/crew_call_sheet.html", form=form)
+    return render_template("/forms/crew_call_sheet.html", form=form, project=project)
 
 # Post Flight Actions Form Route
 @app.route("/project/<int:project_id>/post-flight")
 @login_required
 def post_flight(project_id):
     project = Project.query.get_or_404(project_id)
-    security()
+    security(project)
 
     return render_template('forms/post_flight.html', title='Post-Flight Actions')
 
@@ -170,7 +170,7 @@ def post_flight(project_id):
 @login_required
 def risk_analysis(project_id):
     project = Project.query.get_or_404(project_id)
-    security()
+    security(project)
 
     return render_template('forms/risk_analysis/risk_analysis_list.html', title=' Risk Analysis Form')
 
@@ -179,7 +179,7 @@ def risk_analysis(project_id):
 @login_required
 def add_risk_analysis(project_id):
     project = Project.query.get_or_404(project_id)
-    security()
+    security(project)
 
     return render_template('forms/risk_analysis/add_risk.html', title='Add Risk Analysis Form')
 
@@ -187,7 +187,7 @@ def add_risk_analysis(project_id):
 @app.route("/project/<int:project_id>/loading-list")
 def loading_list(project_id):
     project = Project.query.get_or_404(project_id)
-    security()
+    security(project)
 
     form_maintenanceKit = project.maintenanceKit  
     form_safetyKit = project.safetyKit
@@ -249,7 +249,7 @@ def loading_list(project_id):
 @login_required
 def loading_list_crew(project_id):
     project = Project.query.get_or_404(project_id)
-    security()
+    security(project)
     
     form_data = project.crewList    
    
@@ -296,7 +296,7 @@ def loading_list_crew(project_id):
 @login_required
 def loading_list_equipment(project_id):
     project = Project.query.get_or_404(project_id)  
-    security()
+    security(project)
     
     form_data = project.equipment    
     errors = {}  # validation errors
@@ -334,7 +334,7 @@ def loading_list_equipment(project_id):
 @login_required
 def loading_list_maintenance_kit(project_id):
     project = Project.query.get_or_404(project_id)
-    security()
+    security(project)
     
     form_data = project.maintenanceKit    
     errors = {}  # validation errors
@@ -372,7 +372,7 @@ def loading_list_maintenance_kit(project_id):
 @login_required
 def loading_list_safety_kit(project_id):
     project = Project.query.get_or_404(project_id)
-    security()
+    security(project)
     
     form_data = project.safetyKit    
     errors = {}  # validation errors
@@ -416,7 +416,7 @@ def loading_list_safety_kit(project_id):
 @login_required
 def loading_list_ground_equip(project_id):
     project = Project.query.get_or_404(project_id)
-    security()
+    security(project)
     
     form_data = project.groundEquipment    
    
