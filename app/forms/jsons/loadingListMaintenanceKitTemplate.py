@@ -7,11 +7,11 @@ LoadingListMaintenanceKitTemplate = [
       {
         "header": "Maintenance Equipment",
         "fields": [
-          {"id": "props", "name": "Spare props", "value": "", "type": "checkbox", "required": True},
-          {"id": "cables", "name": "Spare cables", "value": "", "type": "checkbox", "required": True},
-          {"id": "allenkeys", "name": "Allen keys", "value": "", "type": "checkbox", "required": True},
-          {"id": "screwdrivers", "name": "Screwdrivers", "value": "", "type": "checkbox", "required": True},
-          {"id": "calibration", "name": "Calibration platform", "value": "", "type": "checkbox", "required": True}
+          {"id": "props", "name": "Spare props", "value": "", "type": "checkbox", "required": False},
+          {"id": "cables", "name": "Spare cables", "value": "", "type": "checkbox", "required": False},
+          {"id": "allenkeys", "name": "Allen keys", "value": "", "type": "checkbox", "required": False},
+          {"id": "screwdrivers", "name": "Screwdrivers", "value": "", "type": "checkbox", "required": False},
+          {"id": "calibration", "name": "Calibration platform", "value": "", "type": "checkbox", "required": False}
         ]
       }
     ]

@@ -1,12 +1,10 @@
 {% extends "base.html" %}
-{% import "forms/form_macros.html" as macros %}
+{% import "forms/form_macros_checklist.html" as macros %}
 
 {% block content %}
 
     {% set form_data=project.safetyKit[0] %}
     {% include "forms/form_checklist.html" %}
-
-
 {% endblock %}
 
 
