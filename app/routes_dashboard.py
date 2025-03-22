@@ -1,6 +1,7 @@
 from datetime import date, datetime
 
 import humanize
+from sqlalchemy import or_
 from app import app
 from flask import flash, redirect, render_template, request, url_for, Response
 from flask_login import current_user, login_required
@@ -18,10 +19,22 @@ def dashboard():
     today = date.today()
 
     # Pending projects (future dates)
-    pendingProjects = Project.query.filter_by(authorID=current_user.id).filter(Project.dateOfFlight >= today).order_by(Project.created_at.desc()).limit(3).all()
+    pendingProjects = Project.query.filter(
+        or_(
+            Project.authorID == current_user.id, 
+            Project.allowed_users.any(id=current_user.id)
+        ),
+        Project.dateOfFlight >= today
+    ).order_by(Project.created_at.desc()).limit(3).all()
 
     # Past projects (past dates)
-    pastProjects = Project.query.filter_by(authorID=current_user.id).filter(Project.dateOfFlight < today).order_by(Project.created_at.desc()).limit(3).all()
+    pastProjects = Project.query.filter(
+        or_(
+            Project.authorID == current_user.id, 
+            Project.allowed_users.any(id=current_user.id)
+        ),
+        Project.dateOfFlight < today
+    ).order_by(Project.created_at.desc()).limit(3).all()
 
     
     return render_template('/dashboard/dashboard.html', title='dashboard', use_container=False, footer=False, 
@@ -36,7 +49,12 @@ def projects():
     per_page = 10
 
     # User projects
-    projects = Project.query.filter_by(authorID=current_user.id).order_by(Project.created_at.desc()).paginate(page=page, per_page=per_page)
+    projects = Project.query.filter(
+        or_(
+            Project.authorID == current_user.id, 
+            Project.allowed_users.any(id=current_user.id)
+        )
+    ).order_by(Project.created_at.desc()).paginate(page=page, per_page=per_page)
     return render_template('/dashboard/projects.html', title='projects',  use_container=False, 
                            projects=projects)
 
