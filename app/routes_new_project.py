@@ -63,7 +63,7 @@ def new_project_details():
 
     if not session.get('longitude') and not session.get('latitude') and not session.get('projectType'):
         flash('Project creation steps were not completed correctly.', 'danger')
-        return redirect(url_for('new_project_location'))
+        return redirect(url_for('new_project_type'))
 
     if form.validate_on_submit():
         session['projectTitle'] = form.title.data
@@ -80,9 +80,9 @@ def new_project_details():
 def new_project_toggles():
     form = ProjectToggles()
 
-    if not session.get('longitude') and not session.get('latitude') and not session.get('projectType'):
+    if not session.get('projectTitle') or not session.get('projectDescription') or not session.get('projectDateOfFlight') or not session.get('projectPurposeID'):
         flash('Project creation steps were not completed correctly.', 'danger')
-        return redirect(url_for('new_project_location'))
+        return redirect(url_for('new_project_details'))
 
 
     if form.validate_on_submit():
