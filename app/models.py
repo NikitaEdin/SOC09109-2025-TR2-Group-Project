@@ -106,6 +106,7 @@ class Project(db.Model):
     loadingList = db.Column(db.JSON, nullable=True)
     postFlight = db.Column(db.JSON, nullable=True)
     personalChecklist = db.Column(db.JSON, nullable=True)
+    toggles = db.Column(db.JSON, nullable=True)
 
     author = db.relationship('User', backref='projects')
     

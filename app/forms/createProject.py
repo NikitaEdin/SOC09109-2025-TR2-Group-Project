@@ -23,13 +23,23 @@ class ProjectDetails(FlaskForm):
     dateOfFlight = DateField('Date of Flight')
     projectPurposeID = SelectField("Project Purpose", coerce=int, validators=[DataRequired()])
 
-    submit = SubmitField('Create Project')
+    submit = SubmitField('Next')
 
     def __init__(self, *args, **kwargs):
         super(ProjectDetails, self).__init__(*args, **kwargs)
         self.projectPurposeID.choices = [(0, "Select Purpose")] + [
             (purpose.id, purpose.title) for purpose in ProjectPurpose.query.all()
     ]
+
+class ProjectToggles(FlaskForm):
+    loadingListRequired = BooleanField('Will we need a loading list?')
+    protectedAreaFlight = BooleanField('Are we planning to fly in a protected area?')
+    notamRequired = BooleanField('Will we need to submit a NOTAM?')
+    leafletDropRequired = BooleanField('Will we need a leaflet drop?')
+    localClubNearby = BooleanField('Is there a local club nearby?')
+    permissionRequired = BooleanField('Do we need to obtain permission?')
+
+    submit = SubmitField('Create Project')
 
 
 
