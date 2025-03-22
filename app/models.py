@@ -27,8 +27,8 @@ class User(db.Model, UserMixin):
 
     role = db.relationship('Role', backref=db.backref('users', lazy=True))
 
-    allowed_users = db.relationship(
-        'User', secondary='project_access', backref='accessible_projects'
+    accessible_projects = db.relationship(
+        'Project', secondary='project_access', back_populates='allowed_users'
     )
 
     # ToString
@@ -112,6 +112,11 @@ class Project(db.Model):
     personalChecklist = db.Column(db.JSON, nullable=True)
 
     author = db.relationship('User', backref='projects')
+
+    allowed_users = db.relationship(
+        'User', secondary='project_access', back_populates='accessible_projects'
+    )
+
     
     # Returns true if given user is the owner of this project
     def is_owner(self, user):
@@ -122,7 +127,7 @@ class Project(db.Model):
         return self.author
 
     def can_access(self):
-        return self.authorID == current_user.id or current_user.is_admin()
+        return self.authorID == current_user.id or current_user.is_admin() or current_user in self.allowed_users
 
     def __repr__(self):
         return f'<Project {self.title} by {self.author.username}>'
@@ -147,7 +152,7 @@ class Project(db.Model):
             db.session.commit()
         else:
             raise ValueError("Invalid ProjectPurpose ID")
-        
+
     # Generate new flightcode based on given project purpose ID
     @staticmethod
     def get_new_flightCode(projectPurposeID):
