@@ -116,6 +116,7 @@ class Project(db.Model):
 
 
     personalChecklist = db.Column(db.JSON, nullable=True)
+    toggles = db.Column(db.JSON, nullable=True)
 
 
     author = db.relationship('User', backref='projects')
