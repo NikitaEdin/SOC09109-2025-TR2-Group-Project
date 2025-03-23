@@ -229,6 +229,7 @@ def loading_list(project_id):
 def loading_list_crew(project_id):
     project = Project.query.get_or_404(project_id)
     security(project)
+    errors = {}  
     
     form_data = project.crewList     
     
@@ -244,12 +245,21 @@ def loading_list_crew(project_id):
 
         for i in range(len(crew_names)):
             called_value = (i < len(called_values)) and (called_values[i] == "true")
-
+            
+            contact_number = contact_numbers[i].strip() if contact_numbers[i] else ""
+            
+            if contact_number and contact_number.isdigit() and len(contact_number) == 11:
+                valid_number = contact_number
+            else:
+                flash("Invalid contact number, it must be 11 digits or be a numeric value.","danger")
+                valid_number = ""
+                errors = "Contact Number Error"
+                
             # Append valid data to user_data
             user_data.append({
                 "crew_name": crew_names[i].strip(),
                 "role": roles[i].strip(),
-                "contact_number": contact_numbers[i].strip() if contact_numbers[i] else "",
+                "contact_number": valid_number,
                 "email": emails[i].strip() if emails[i] else "",
                 "called": called_value
             })
@@ -261,8 +271,12 @@ def loading_list_crew(project_id):
         db.session.add(project)
         db.session.commit()
 
-        flash('Changes saved successfully!', 'success')
-        # return redirect(url_for('loading_list', project_id=project.id))
+        if errors:
+            flash('Error submitting form', 'danger')
+        else:
+            flash('Changes saved successfully!', 'success')
+         
+       
         return render_template("/forms/loading/crew_list_json.html", project=project, form_data=form_data, footer=False, title="Crew List" )
     
     return render_template("/forms/loading/crew_list_json.html", project=project, form_data=form_data, footer=False, title="Crew List" )
