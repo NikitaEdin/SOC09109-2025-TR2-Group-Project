@@ -235,7 +235,7 @@ def manage_access(project_id):
                 flash(f"User {user.username} removed.", "warning")
             db.session.commit()
 
-    return render_template('manage_access.html', project=project)
+    return render_template('dashboard/manage_access.html', project=project)
 
 @app.route('/search_users', methods=['GET'])
 @login_required
