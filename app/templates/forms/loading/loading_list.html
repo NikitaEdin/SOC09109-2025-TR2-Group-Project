@@ -41,8 +41,10 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center border-danger-subtle">
                         <span>Equipment</span>
                         <div class="d-flex gap-2 align-items-center">
-                        {% if form_status.form_equipmentStatus %}
+                        {% if form_status.form_equipmentStatus == 2 %}
                             <span class="badge bg-success rounded-pill">Complete</span>
+                        {% elif form_status.form_equipmentStatus == 1 %}
+                            <span class="badge bg-warning rounded-pill">In Progress</span>
                         {%else%}
                             <span class="badge bg-danger rounded-pill">Not Started</span>
                         {% endif %}
@@ -54,9 +56,11 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center border-danger-subtle">
                         <span>Maintenance Kit</span>
                         <div class="d-flex gap-2 align-items-center">
-                        {% if form_status.form_maintenanceKitStatus %}
+                        {% if form_status.form_maintenanceKitStatus == 2 %}
                             <span class="badge bg-success rounded-pill">Complete</span>
-                        {%else%}
+                        {% elif form_status.form_maintenanceKitStatus == 1 %}
+                            <span class="badge bg-warning rounded-pill">In Progress</span>
+                        {% else %}
                             <span class="badge bg-danger rounded-pill">Not Started</span>
                         {% endif %}
                             <a href="{{ url_for('loading_list_maintenance_kit', project_id=project.id) }}" class="btn btn-primary btn-sm">Open Form</a>
@@ -67,9 +71,11 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center border-danger-subtle">
                         <span>Safety Kit</span>
                         <div class="d-flex gap-2 align-items-center">
-                        {% if form_status.form_safetyKitStatus %}
+                        {% if form_status.form_safetyKitStatus == 2 %}
                             <span class="badge bg-success rounded-pill">Complete</span>
-                        {%else%}
+                        {% elif form_status.form_safetyKitStatus == 1 %}
+                            <span class="badge bg-warning rounded-pill">In Progress</span>
+                        {% else %}
                             <span class="badge bg-danger rounded-pill">Not Started</span>
                         {% endif %}
                             <a href="{{ url_for('loading_list_safety_kit', project_id=project.id) }}" class="btn btn-primary btn-sm">Open Form</a>

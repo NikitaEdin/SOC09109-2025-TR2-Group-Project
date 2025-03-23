@@ -200,40 +200,19 @@ def loading_list(project_id):
     form_groundEquipmentStatus = False
     form_crewListStatus = False
 
-
-    try:
-        # Loop through each section
-        for section in form_maintenanceKit[0]['form']['sections']:
-            # Loop through all fields
-            for field in section['fields']:
-                if field['value']:
-                    form_maintenanceKitStatus = True
-    except:
-        pass
-
-    try:
-        # Loop through each section
-        for section in form_safetyKit[0]['form']['sections']:
-            # Loop through all fields
-            for field in section['fields']:
-                if field['value']:
-                    form_safetyKitStatus = True
-    except:
-        pass
-
-    try:
-        # Loop through each section
-        for section in form_equipment[0]['form']['sections']:
-            # Loop through all fields
-            for field in section['fields']:
-                if field['value']:
-                    form_equipmentStatus = True
-    except:
-        pass
-
-
+    # JavaScript Forms
     form_crewListStatus = calculate_status(project.crewList[0]['user_data'], field_name='called')
     form_groundEquipmentStatus = calculate_status(project.groundEquipment[0]['user_data'], field_name='check')
+    
+    # Checklist forms
+    safetyKit_data = form_safetyKit[0]['form']['sections'][0].get('fields', [])
+    form_safetyKitStatus = calculate_status(safetyKit_data, field_name='value')
+    
+    maintenanceKit_data = form_maintenanceKit[0]['form']['sections'][0].get('fields', [])
+    form_maintenanceKitStatus = calculate_status(maintenanceKit_data, field_name='value')
+    
+    equipment_data = form_equipment[0]['form']['sections'][0].get('fields', [])
+    form_equipmentStatus = calculate_status(equipment_data, field_name='value')
 
     form_status = {
     "form_maintenanceKitStatus": form_maintenanceKitStatus,
@@ -251,8 +230,7 @@ def loading_list_crew(project_id):
     project = Project.query.get_or_404(project_id)
     security(project)
     
-    form_data = project.crewList    
-   
+    form_data = project.crewList     
     
     if request.method == 'POST':
         
@@ -276,7 +254,6 @@ def loading_list_crew(project_id):
                 "called": called_value
             })
         
-
         
         form_data[0]["user_data"] = user_data  # Update `user_data` array
         project.crewList = form_data
@@ -287,7 +264,6 @@ def loading_list_crew(project_id):
         flash('Changes saved successfully!', 'success')
         # return redirect(url_for('loading_list', project_id=project.id))
         return render_template("/forms/loading/crew_list_json.html", project=project, form_data=form_data, footer=False, title="Crew List" )
-    
     
     return render_template("/forms/loading/crew_list_json.html", project=project, form_data=form_data, footer=False, title="Crew List" )
 
@@ -405,12 +381,6 @@ def loading_list_safety_kit(project_id):
     
     return render_template("/forms/loading/safety_kit_json.html", project=project, form_data=form_data, footer=False, title="Safety Kit" )
 
-
-# @app.route("/project/<int:project_id>/loading-list/ground-equipment")
-# def loading_list_ground_equip(project_id):
-#     project = Project.query.get_or_404(project_id)
-#     return render_template('forms/loading/ground_equipment.html', title='Loading List - Ground Equipment', project=project, project_id=project_id, footer=False)
-
 # Loading List GROUND EQUIPMENT JSON Form Route
 @app.route("/project/<int:project_id>/loading-list/ground-equipment", methods=["GET", "POST"])
 @login_required
@@ -448,7 +418,6 @@ def loading_list_ground_equip(project_id):
 
         flash('Changes saved successfully!', 'success')
         return render_template("/forms/loading/ground_equipment_json.html", project=project, form_data=form_data, footer=False, title="Ground Equipment" )
-    
     
     return render_template("/forms/loading/ground_equipment_json.html", project=project, form_data=form_data, footer=False, title="Ground Equipment" )
 
