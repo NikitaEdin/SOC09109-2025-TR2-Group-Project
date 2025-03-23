@@ -294,14 +294,13 @@ def loading_list_equipment(project_id):
         if errors:
             return render_template('/forms/loading/equipment_json.html', project=project, form_data=form_data, errors=errors)
 
-        # No errors, save changes
+        # Save changes
         project.equipment = form_data
         flag_modified(project, "equipment")
         db.session.add(project)
         db.session.commit()
 
         flash('Changes saved successfully!', 'success')
-        return redirect(url_for('loading_list', project_id=project.id))
     
     return render_template("/forms/loading/equipment_json.html", project=project, form_data=form_data, footer=False, title="Equipment" )
 
@@ -339,7 +338,6 @@ def loading_list_maintenance_kit(project_id):
         db.session.commit()
 
         flash('Changes saved successfully!', 'success')
-        return redirect(url_for('loading_list', project_id=project.id))
     
     return render_template("/forms/loading/maintenance_kit_json.html", project=project, form_data=form_data, footer=False, title="Maintenance Kit" )
 
@@ -377,7 +375,6 @@ def loading_list_safety_kit(project_id):
         db.session.commit()
 
         flash('Changes saved successfully!', 'success')
-        return redirect(url_for('loading_list', project_id=project.id))
     
     return render_template("/forms/loading/safety_kit_json.html", project=project, form_data=form_data, footer=False, title="Safety Kit" )
 

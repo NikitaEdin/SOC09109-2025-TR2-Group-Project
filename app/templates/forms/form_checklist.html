@@ -28,6 +28,23 @@ Checklist template for auto-generated forms
             </h3>
             <hr>
 
+            <div class="">
+                <!-- Flash messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    <!--  any messages? -->
+                    {% if messages %}
+                        <!-- loop messages -->
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                                {{ message}}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+            
+                    {% endif %}
+                {% endwith %}
+            </div>
+
         <form method="POST">
             <table class="table table-bordered  custom-form-table">
                 <thead class="table-light">
