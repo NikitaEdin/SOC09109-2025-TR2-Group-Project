@@ -103,10 +103,19 @@ class Project(db.Model):
     viabilityStudy = db.Column(db.JSON, nullable=True)
     siteEvaluation = db.Column(db.JSON, nullable=True)
     riskAnalysis = db.Column(db.JSON, nullable=True)
-    loadingList = db.Column(db.JSON, nullable=True)
+    
+    # Loading List Forms 
+    crewList = db.Column(db.JSON, nullable=True)
+    maintenanceKit = db.Column(db.JSON, nullable=True)
+    safetyKit = db.Column(db.JSON, nullable=True)
+    equipment = db.Column(db.JSON, nullable=True)
+    groundEquipment = db.Column(db.JSON, nullable=True)
+
     postFlight = db.Column(db.JSON, nullable=True)
+
     personalChecklist = db.Column(db.JSON, nullable=True)
     toggles = db.Column(db.JSON, nullable=True)
+
 
     author = db.relationship('User', backref='projects')
     
