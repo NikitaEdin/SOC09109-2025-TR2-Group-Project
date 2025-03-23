@@ -105,15 +105,13 @@ class Project(db.Model):
     riskAnalysis = db.Column(db.JSON, nullable=True)
     
     # Loading List Forms 
-    loadingList = db.Column(db.JSON, nullable=True) # This will save either true or false values if other forms have been completed (its a checklist)
     crewList = db.Column(db.JSON, nullable=True)
-    postFlight = db.Column(db.JSON, nullable=True)
-
     maintenanceKit = db.Column(db.JSON, nullable=True)
     safetyKit = db.Column(db.JSON, nullable=True)
     equipment = db.Column(db.JSON, nullable=True)
     groundEquipment = db.Column(db.JSON, nullable=True)
 
+    postFlight = db.Column(db.JSON, nullable=True)
 
     personalChecklist = db.Column(db.JSON, nullable=True)
     toggles = db.Column(db.JSON, nullable=True)
