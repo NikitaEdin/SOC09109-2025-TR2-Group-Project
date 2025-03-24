@@ -22,6 +22,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     displayname = db.Column(db.String(20))
+    flyer_id = db.Column(db.String(20), unique=True, nullable=True)
+
 
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
 
