@@ -59,8 +59,7 @@ Timeline_data = [
           "text": "Review the loading list"
         },
         {
-          "text": "Prepare and send crew call sheets",
-          "url": "https://bdavison.napier.ac.uk/opsman/documents/Call_sheet_V0.1.docx"
+          "text": "Prepare and send crew call sheets"
         },
         {
           "text": "Configure UAS as needed"
@@ -78,38 +77,40 @@ Timeline_data = [
           "text": "Charge all flight batteries, controllers, and devices"
         },
         {
-            "text": "Customise the site checklist",
-            "url": "https://bdavison.napier.ac.uk/opsman/documents/Site_checklist_V0.1.docx"
+            "text": "Customise the site checklist"
         },
         {
           "text": "Print required flight and UAS documentation"
         },
         {
-            "text": "- Permissions and contacts"
+            "text": "Permissions and contacts",
+            "padding": "4"
         },
         {
-            "text": "- Emergency procedures"
+            "text": "Emergency procedures",
+            "padding": "4"
         },
         {
-            "text": "- Customised loading list"
+            "text": "Customised loading list",
+            "padding": "4"
         },
         {
-            "text": "- Customised site checklist"
+            "text": "Customised site checklist",
+            "padding": "4"
         },
         {
-            "text": "- UAS assembly instructions"
+            "text": "UAS assembly instructions",
+            "padding": "4"
         },
         {
-            "text": "- Crew briefing notes",
-            "url": "https://bdavison.napier.ac.uk/opsman/documents/Crew_briefing_V0.1.docx"
+            "text": "Crew briefing notes",
+            "padding": "4"
         },
         {
-            "text": "Pre-flight checklist",
-            "url": "https://bdavison.napier.ac.uk/opsman/documents/Pre_flight_checklist_V0.1.docx"
+            "text": "Pre-flight checklist"
         },
         {
-            "text": "Post-flight actions checklist",
-            "url": "https://bdavison.napier.ac.uk/opsman/documents/Post_flight_actions_V0.1.docx"
+            "text": "Post-flight actions checklist"
         }
       ]
     },
