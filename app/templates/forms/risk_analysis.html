@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{ form_data.title }}{% endblock %}
+
+{% block content %}
+<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
+    <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3 card">
+        <div class="text-center">
+            <p class="fs-1 mb-0">{{ form_data.title }}</p>
+            <p class="fs-3 fw-light">{{ form_data.header }}</p>
+        </div>
+
+        
+        <div class="section">
+            <h4 class="mt-4">{{ form_data.form.sections[0].header }}</h4>
+            <div class="mb-3">
+                <label for="hazardSelect" class="form-label">Select a Hazard</label>
+                <select class="form-select" id="hazardSelect" name="hazard">
+                    <option value="" selected disabled>Choose a hazard...</option>
+                    {% for hazard in form_data.form.sections[0].dropdown_hazards %}
+                        <option value="{{ hazard.id }}">{{ hazard.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <h4 class="mt-4">{{ form_data.form.sections[1].header }}</h4>
+            <div class="mb-3">
+                <label for="peopleSelect" class="form-label">Select a Person at Risk</label>
+                <select class="form-select" id="personSelect" name="people">
+                    <option value="" selected disabled>Choose a person...</option>
+                    {% for person in form_data.form.sections[1].dropdown_people %}
+                        <option value="{{ person.id }}">{{ person.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+        
+        </div>
+   
+     
+    
+{% endblock %}

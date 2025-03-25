@@ -8,6 +8,7 @@ from app.forms.crewCallSheetForm import CrewCallSheetForm
 from app.forms.jsons.viabilityStudyTemplate import ViabilityStudyTemplate
 from app.forms.jsons.loadingListSafetyKitTemplate import LoadingListSafetyKitTemplate
 from app.forms.jsons.loadingListMaintenanceKitTemplate import LoadingListMaintenanceKitTemplate
+from app.forms.jsons.riskAnalysisTemplate import riskAnalysisTemplate
 from app.models import Project
 from datetime import datetime
 
@@ -172,7 +173,7 @@ def risk_analysis(project_id):
     project = Project.query.get_or_404(project_id)
     security(project)
 
-    return render_template('forms/risk_analysis/risk_analysis_list.html', title=' Risk Analysis Form')
+    return render_template('forms/risk_analysis.html', title=' Risk Analysis Form', form_data = riskAnalysisTemplate[0], footer=False)
 
 # Risk Analysis Form - Add Risk Route
 @app.route("/project/<int:project_id>/risk-analysis/add")
