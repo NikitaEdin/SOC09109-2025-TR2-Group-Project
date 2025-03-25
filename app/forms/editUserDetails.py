@@ -8,6 +8,7 @@ from app.utils.validators import validate_password
 class EditUserDetails(FlaskForm):
     display_name = StringField("Display Name", validators=[Optional(), Length(min=3, max=12)])
     email = StringField("Email", validators=[DataRequired(), Email()])
+    flyer_id = StringField("Flyer ID", validators=[Optional(), Length(min=19, max=19, message="Flyer ID must be exactly 19 characters.")])
     submit = SubmitField("Save Changes")
 
 
@@ -24,6 +25,7 @@ class ChangePassword(FlaskForm):
 class EditUserForm(FlaskForm):
     email = StringField('Email', validators=[Email(), Optional()])
     displayname = StringField('Display Name', validators=[Optional()])
+    flyer_id = StringField("Flyer ID", validators=[Optional(), Length(min=19, max=19, message="Flyer ID must be exactly 19 characters.")])
     role_id = SelectField('Role', coerce=int, validators=[Optional()])
 
     password = PasswordField('New Password', validators=[

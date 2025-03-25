@@ -2,7 +2,7 @@ import os
 import secrets
 from dotenv import load_dotenv
 from app import app, db
-from app.models import User, Role, Drone
+from app.models import ProjectPurpose, User, Role, Drone
 
 # Generate default roles
 GEN_ROLES = True
@@ -55,13 +55,25 @@ def create_database():
                     admin_user = User(username='admin', email='admin@example.com', role_id=admin_role.id)
                     admin_user.set_password('adminpass')
 
+                    admin_user2 = User(username='admin2', email='admin2@example.com', role_id=admin_role.id)
+                    admin_user2.set_password('adminpass2')
+
                     regular_user = User(username='user', email='user@example.com', role_id=user_role.id)
                     regular_user.set_password('userpass')
 
                     db.session.add(admin_user)
+                    db.session.add(admin_user2)
                     db.session.add(regular_user)
                     db.session.commit()
                     print("Users added.")
+
+                    # Generate Project Purpose
+                    db.session.add(ProjectPurpose(title='Practice', code='P'))
+                    db.session.add(ProjectPurpose(title='Training', code='T'))
+                    db.session.add(ProjectPurpose(title='Research', code='R'))
+                    db.session.add(ProjectPurpose(title='Other', code='F'))
+                    db.session.commit()
+                    print("Proj-Purpose added.")
 
             if GEN_DRONES:
                 if not Drone.query.first(): # checks if drones exist
@@ -72,7 +84,7 @@ def create_database():
                         weight='9.2kg',
                         homePage='https://enterprise.dji.com/matrice-30',
                         userGuide='https://dl.djicdn.com/downloads/matrice-30-series/20230922UM/Matrice30_Series_User_Manual_v2.0_EN.pdf',
-                        imageURL='images/drone1.png',
+                        imageURL='Images/drone1.png',
                         best_for='Industrial applications and surveying',
                         release_date='March 21, 2022'
                     )
@@ -82,7 +94,7 @@ def create_database():
                         weight='1.05kg',
                         homePage='https://enterprise.dji.com/mavic-3-enterprise',
                         userGuide='https://dl.djicdn.com/downloads/DJI_Mavic_3_Enterprise/DJI_Mavic_3E_3T_User_Manual_EN.pdf',
-                        imageURL='images/drone2.png',
+                        imageURL='Images/drone2.png',
                         best_for='Professional aerial inspection',
                         release_date='September 27, 2022'
                     )
@@ -92,7 +104,7 @@ def create_database():
                         weight='249g',
                         homePage='https://store.dji.com/uk/product/dji-mini-3-pro',
                         userGuide='https://dl.djicdn.com/downloads/DJI_Mini_3_Pro/UM/20240105/2/DJI_Mini_3_Pro_User_Manual_v1.6_EN.pdf',
-                        imageURL='images/drone3.png',
+                        imageURL='Images/drone3.png',
                         best_for='Travel and casual photography',
                         release_date='May 2023'
                     )

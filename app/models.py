@@ -6,7 +6,7 @@ from flask_login import UserMixin, current_user
 from sqlalchemy import func
 import re
 # Import the checklist templates
-from app.forms.checklist_template import checklist_template_physical, checklist_template_optional_checklist, checklist_template_forms_optional, checklist_template_required_rural, checklist_template_required_urban
+from app.forms.checklist_template import checklist_template_optional_checklist, checklist_template_forms_optional, checklist_template_required_rural, checklist_template_required_urban
 
 # Global/static variables
 ADMIN_MIN_POWER = 90
@@ -22,6 +22,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     displayname = db.Column(db.String(20))
+    flyer_id = db.Column(db.String(20), unique=True, nullable=True)
+
 
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
 
@@ -85,12 +87,16 @@ class Project(db.Model):
     # Project type
     projectType = db.Column(db.String(50), nullable=False) 
 
+    # Project Purpose
+    projectPurposeID = db.Column(db.Integer, db.ForeignKey('project_purpose.id'), nullable=False, default=1)
+    projectPurpose = db.relationship('ProjectPurpose', backref='projects')
+
     # Project details
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=False)
     dateOfFlight = db.Column(db.Date,  nullable=False)
     
-    flightCode = db.Column(db.String(50), nullable=True ) # nullable for now.
+    flightCode = db.Column(db.String(10), nullable=False)
     pilotID = db.Column(db.Integer, nullable=True) # can be linked to User model later
     lastEdited = db.Column(db.DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
@@ -99,8 +105,19 @@ class Project(db.Model):
     viabilityStudy = db.Column(db.JSON, nullable=True)
     siteEvaluation = db.Column(db.JSON, nullable=True)
     riskAnalysis = db.Column(db.JSON, nullable=True)
-    loadingList = db.Column(db.JSON, nullable=True)
+    
+    # Loading List Forms 
+    crewList = db.Column(db.JSON, nullable=True)
+    maintenanceKit = db.Column(db.JSON, nullable=True)
+    safetyKit = db.Column(db.JSON, nullable=True)
+    equipment = db.Column(db.JSON, nullable=True)
+    groundEquipment = db.Column(db.JSON, nullable=True)
+
     postFlight = db.Column(db.JSON, nullable=True)
+
+    personalChecklist = db.Column(db.JSON, nullable=True)
+    toggles = db.Column(db.JSON, nullable=True)
+
 
     author = db.relationship('User', backref='projects')
     
@@ -108,9 +125,12 @@ class Project(db.Model):
     def is_owner(self, user):
         return self.authorID == user.id
 
-    # Returns the User obj fro the project's author
+    # Returns the User obj from the project's author
     def get_author(self):
         return self.author
+
+    def can_access(self):
+        return self.authorID == current_user.id or current_user.is_admin()
 
     def __repr__(self):
         return f'<Project {self.title} by {self.author.username}>'
@@ -122,6 +142,33 @@ class Project(db.Model):
     def update_checklist(self, checklist):
         self.checklist = checklist
         db.session.commit()
+
+    # Get Project purpose
+    def get_project_purpose(self):
+        return self.projectPurpose
+    
+    # Set Project Purpose by ID
+    def set_project_purpose(self, new_purpose_id):
+        purpose = ProjectPurpose.query.get(new_purpose_id)
+        if purpose:
+            self.projectPurposeID = new_purpose_id
+            db.session.commit()
+        else:
+            raise ValueError("Invalid ProjectPurpose ID")
+        
+    # Generate new flightcode based on given project purpose ID
+    @staticmethod
+    def get_new_flightCode(projectPurposeID):
+        purpose = ProjectPurpose.query.get(projectPurposeID)
+        if not purpose:
+            return "UNKNOWN"
+
+        # Count projects of the same purpose
+        count = Project.query.filter_by(projectPurposeID=projectPurposeID).count()
+        purpose_code = purpose.code
+
+        # Generate new flight-code
+        return f"{purpose_code}{count + 1}"
   
 
 class AuditLog(db.Model):
@@ -149,3 +196,8 @@ class Drone(db.Model):
     release_date = db.Column(db.String(50), nullable=True) 
 
 
+###### Project Purpose ######
+class ProjectPurpose(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(16), nullable=False)
+    code = db.Column(db.String(1), nullable=False)

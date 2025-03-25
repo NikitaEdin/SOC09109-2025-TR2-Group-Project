@@ -154,7 +154,7 @@ html, body {
 /* Custom table - using Napier branding secondary colour */
 .custom-form-table thead th {
     background-color: #E5233F ;
-    color: black;
+    color: white;
 }
 
 /* Custom tables - borders on cells */
