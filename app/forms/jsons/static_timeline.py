@@ -84,27 +84,27 @@ Timeline_data = [
         },
         {
             "text": "Permissions and contacts",
-            "padding": "4"
+            "padding": "3"
         },
         {
             "text": "Emergency procedures",
-            "padding": "4"
+            "padding": "3"
         },
         {
             "text": "Customised loading list",
-            "padding": "4"
+            "padding": "3"
         },
         {
             "text": "Customised site checklist",
-            "padding": "4"
+            "padding": "3"
         },
         {
             "text": "UAS assembly instructions",
-            "padding": "4"
+            "padding": "3"
         },
         {
             "text": "Crew briefing notes",
-            "padding": "4"
+            "padding": "3"
         },
         {
             "text": "Pre-flight checklist"
