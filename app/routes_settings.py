@@ -23,8 +23,9 @@ def edit_profile():
     form = EditUserDetails()
 
     if form.validate_on_submit():
-        # CHange details if user inputs
+        # Change details if user inputs
         current_user.displayname = form.display_name.data
+        current_user.flyer_id = form.flyer_id.data
         current_user.email = form.email.data
 
         
@@ -34,6 +35,7 @@ def edit_profile():
 
     # Fill form with user details
     form.display_name.data = current_user.displayname
+    form.flyer_id.data = current_user.flyer_id
     form.email.data = current_user.email
 
     return render_template("settings/edit_details.html", form=form, title='Edit Details', user=current_user,  footer=False)

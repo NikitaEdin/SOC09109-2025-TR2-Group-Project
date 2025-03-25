@@ -55,6 +55,9 @@ def edit_user(user_id):
         if form.displayname.data:
             user.displayname = form.displayname.data
         
+        if form.flyer_id.data:
+            user.flyer_id = form.flyer_id.data
+        
         if form.role_id.data:
             user.role_id = form.role_id.data
 

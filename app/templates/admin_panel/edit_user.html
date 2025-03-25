@@ -32,8 +32,17 @@
                             <div class="text-danger">{{ form.displayname.errors[0] }}</div>
                         {% endif %}
                     </div>
+
+                    <div class="mb-3">
+                        <label for="flyer_id" class="form-label">Flyer Id</label>
+                        {{ form.flyer_id(class="form-control") }}
+                        {% if form.flyer_id.errors %}
+                            <div class="text-danger">{{ form.flyer_id.errors[0] }}</div>
+                        {% endif %}
+                    </div>
                 </div>
 
+                <hr>
                 <!-- Role Section -->
                 <div class="mb-4">
                     <h4 class="mb-3">Role</h4>
@@ -47,11 +56,13 @@
                     </div>
                 </div>
 
+                <hr>
                 <!-- Password Section -->
                 <div class="mb-4">
-                    <span class="mb-3 fs-4">Change Password 
+                    <h4 class="mb-3">
+                        Change Password 
                         <small class="fs-6 text-muted">(Leave blank to keep current)</small>
-                    </span>
+                    </h4>
 
                     <div class="mb-3">
                         <label for="password" class="form-label">New Password</label>
