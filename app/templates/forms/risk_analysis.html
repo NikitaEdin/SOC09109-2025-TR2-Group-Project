@@ -10,7 +10,7 @@
             <p class="fs-3 fw-light">{{ form_data.header }}</p>
         </div>
 
-        
+        <!-- Hazards -->
         <div class="section">
             <h4 class="mt-4">{{ form_data.form.sections[0].header }}</h4>
             <div class="mb-3">
@@ -21,21 +21,58 @@
                         <option value="{{ hazard.id }}">{{ hazard.name }}</option>
                     {% endfor %}
                 </select>
+                <p>{{form_data.form.sections[0].dropdown_hazards.control}}</p>
             </div>
 
-            <h4 class="mt-4">{{ form_data.form.sections[1].header }}</h4>
+            <!-- Thought here javascript here based on the hazard selected it shows the existing control relevant to the hazard -->
+            <input type="hidden" id="selectedHazard" name="selectedHazard" value="">
+
+            <!-- Existing Control -->
+            <div class="mb-3 text-body">
+                <h4 class="mt-4">{{ form_data.form.sections[1].header }}</h4>
+                    {% for item in form_data.form.sections[1].existing_control %}
+                        <!-- <p>{{ item.name }}</p> -->
+                         <p>:D</p>
+                    {% endfor %}
+            </div>
+
+            <!-- Person at risk -->
+            <h4 class="mt-4">{{ form_data.form.sections[2].header }}</h4>
             <div class="mb-3">
                 <label for="peopleSelect" class="form-label">Select a Person at Risk</label>
                 <select class="form-select" id="personSelect" name="people">
                     <option value="" selected disabled>Choose a person...</option>
-                    {% for person in form_data.form.sections[1].dropdown_people %}
+                    {% for person in form_data.form.sections[2].dropdown_people %}
                         <option value="{{ person.id }}">{{ person.name }}</option>
                     {% endfor %}
                 </select>
             </div>
-            
+
+            <!-- Risk -->
+            <h4 class="mt-4">{{ form_data.form.sections[3].header }}</h4>
+            <h4 class=" fs-6 fw-light">Severity</h4>
+            {% for i in range(1,6) %}
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio{{i}}" value="{{i}}">
+                <label class="form-check-label" for="inlineRadio{{i}}">{{i}}</label>
+              </div>
+            {% endfor %}
+           
         
+        <!-- Further Actions -->
+
+        <!-- Residual Risk -->
+     
+
+        <!-- Action Taken By -->
+
+        <!-- Action Taken When -->
+
+        <!-- Completed -->
+
+            
         </div>
+    </form>
    
      
     
