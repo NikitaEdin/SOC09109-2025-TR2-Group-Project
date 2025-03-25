@@ -173,7 +173,7 @@ def risk_analysis(project_id):
     project = Project.query.get_or_404(project_id)
     security(project)
 
-    return render_template('forms/risk_analysis.html', title=' Risk Analysis Form', form_data = riskAnalysisTemplate[0], footer=False)
+    return render_template('forms/risk_analysis.html', title=' Risk Analysis Form', form_data = riskAnalysisTemplate[0],project=project, footer=False)
 
 # Risk Analysis Form - Add Risk Route
 @app.route("/project/<int:project_id>/risk-analysis/add")

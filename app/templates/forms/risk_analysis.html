@@ -53,27 +53,66 @@
             <h4 class=" fs-6 fw-light">Severity</h4>
             {% for i in range(1,6) %}
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio{{i}}" value="{{i}}">
-                <label class="form-check-label" for="inlineRadio{{i}}">{{i}}</label>
+                <input class="form-check-input" type="radio" name="inlineRadioOptionsRiskSeverity" id="inlineRadioRiskSeverity{{i}}" value="{{i}}">
+                <label class="form-check-label" for="inlineRadioRiskSeverity{{i}}">{{i}}</label>
               </div>
             {% endfor %}
+
+            <h4 class=" fs-6 fw-light mt-3">Probability</h4>
+            {% for i in range(1,6) %}
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptionsRiskProbability" id="inlineRadioRiskProbability{{i}}" value="{{i}}">
+                <label class="form-check-label" for="inlineRadioRiskProbability{{i}}">{{i}}</label>
+              </div>
+            {% endfor %}
+            <!-- Calculate the score based on the severity and probality by S*P  -->
+            <h4 class=" fs-6 fw-light mt-4">Risk Score : X</h4>
            
         
         <!-- Further Actions -->
+        <h4 class="mt-4">{{ form_data.form.sections[4].header }}</h4>
+
 
         <!-- Residual Risk -->
+        <h4 class="mt-4">{{ form_data.form.sections[5].header }}</h4>
+        <h4 class=" fs-6 fw-light">Severity</h4>
+        {% for i in range(1,6) %}
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptionsResidualRiskSeverity" id="inlineRadioResidualRiskSeverity{{i}}" value="{{i}}">
+            <label class="form-check-label" for="inlineRadioResidualRiskSeverity{{i}}">{{i}}</label>
+          </div>
+        {% endfor %}
+
+        <h4 class=" fs-6 fw-light mt-3">Probability</h4>
+        {% for i in range(1,6) %}
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptionsResidualRiskProbability" id="inlineRadioResidualRiskProbability{{i}}" value="{{i}}">
+            <label class="form-check-label" for="inlineRadioResidualRiskProbability{{i}}">{{i}}</label>
+          </div>
+        {% endfor %}
+        <!-- Calculate the score based on the severity and probality by S*P  -->
+        <h4 class=" fs-6 fw-light mt-4">Risk Score : X</h4>
+        
      
 
-        <!-- Action Taken By -->
+        <!-- Action Taken By (Could make a drop down of the list of pilots) -->
+        <h4 class="mt-4">{{ form_data.form.sections[6].header }}</h4>
+        <input type="text" class="form-control mb-3" 
+        id="pilot" name="Pilot name" value="">
 
         <!-- Action Taken When -->
+        <h4 class="mt-4">{{ form_data.form.sections[7].header }}</h4>
+        <input type="date" class="form-control mb-3" 
+        id="date" name="Date" value="">
 
         <!-- Completed -->
-
-            
-        </div>
+        <h4 class="mt-4">{{ form_data.form.sections[8].header }}</h4>
+        <input type="checkbox" class="mt-2" id="check" name="check">
     </form>
    
      
-    
+    <div class="container text-center mt-5 mb-2">
+        <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary ms-auto">Back to Project</a>
+        <button class="btn btn-success ms-auto">Save Changes</button>
+    </div>
 {% endblock %}
