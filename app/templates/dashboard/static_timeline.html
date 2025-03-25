@@ -1,0 +1,40 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% block main_content %}
+
+{% include 'shared/flash-message.html' %}
+
+<div class="container mt-4">
+    <h2 class="text-center">Generic Timeline</h2>
+    <p class="text-center mb-4 fs-5">Generic timeline of reminders based on the days left.</p>
+
+    <div class="timeline">
+        {% for section in timeline_data.sections %}
+            <h3 class="fs-2">{{section.title}}</h3>
+            <hr>
+            <h5>{{section[0]}}</h5>
+            <ul class="list-group mb-4">
+                {% for item in section['items'] %}
+                    {% if item.url %}
+                    <li class="list-group-item {{ 'ps-' ~ item.padding if item.padding else 'ps-3' }}">
+                        {{ item.text }}
+                            <a href="{{ item.url }}" target="_blank" class="text-decoration-none">
+                                <i class="fas fa-external-link-alt ms-2"></i>
+                            </a>
+                    </li>
+                    
+                    {% else %}
+                        <li class="list-group-item {{ 'ps-' ~ item.padding if item.padding else 'ps-2' }}">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>{{ item.text }}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
+
+
+
+</div>
+
+{% endblock %}
