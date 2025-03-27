@@ -29,6 +29,12 @@
                             <div>
                                 <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Remove</a>
                                 <a href="{{ url_for('edit_project', project_id=project.id) }}" class="btn btn-outline-danger btn-sm mx-1"><i class="fas fa-edit"></i> Edit</a>
+
+                                {% if project.authorID == current_user.id %}
+                                    <a href="{{ url_for('manage_access', project_id=project.id) }}" class="btn btn-outline-danger btn-sm mx-1">
+                                        <i class="fas fa-user-lock"></i> Manage Access
+                                    </a>
+                                {% endif %}
                             </div>
                         </div>
                         <h6>Author: {{project.author.username}}</h6>

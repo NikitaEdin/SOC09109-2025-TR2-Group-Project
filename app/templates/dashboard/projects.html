@@ -43,7 +43,10 @@
             <div class="row mx-2 my-1">
                 <!-- Title -->
                 <div class="col-3 align-content-center">
-                    <p class="mb-0">{{ project.title }}</p>
+                    {{ project.title }}
+                    {% if project.authorID != current_user.id and current_user in project.allowed_users %}
+                        <span class="badge bg-warning text-dark">Shared</span>
+                    {% endif %}
                 </div>
                 <!-- Type -->
                 <div class="col align-content-center">
