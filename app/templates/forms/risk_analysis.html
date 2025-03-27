@@ -31,8 +31,7 @@
             <div class="mb-3 text-body">
                 <h4 class="mt-4">{{ form_data.form.sections[1].header }}</h4>
                     {% for item in form_data.form.sections[1].existing_control %}
-                        <!-- <p>{{ item.name }}</p> -->
-                         <p>:D</p>
+                        <p>{{ item.name }}</p>
                     {% endfor %}
             </div>
 
@@ -52,21 +51,25 @@
             <h4 class="mt-4">{{ form_data.form.sections[3].header }}</h4>
             <h4 class=" fs-6 fw-light">Severity</h4>
             {% for i in range(1,6) %}
-            <div class="form-check form-check-inline">
+            <div class="form-check form-check-inline" onchange="calculateRiskScore()">
                 <input class="form-check-input" type="radio" name="inlineRadioOptionsRiskSeverity" id="inlineRadioRiskSeverity{{i}}" value="{{i}}">
                 <label class="form-check-label" for="inlineRadioRiskSeverity{{i}}">{{i}}</label>
-              </div>
+            </div>
             {% endfor %}
 
             <h4 class=" fs-6 fw-light mt-3">Probability</h4>
             {% for i in range(1,6) %}
-            <div class="form-check form-check-inline">
+            <div class="form-check form-check-inline" onchange="calculateRiskScore()">
                 <input class="form-check-input" type="radio" name="inlineRadioOptionsRiskProbability" id="inlineRadioRiskProbability{{i}}" value="{{i}}">
                 <label class="form-check-label" for="inlineRadioRiskProbability{{i}}">{{i}}</label>
-              </div>
+            </div>
             {% endfor %}
+
             <!-- Calculate the score based on the severity and probality by S*P  -->
-            <h4 class=" fs-6 fw-light mt-4">Risk Score : X</h4>
+            <div class="form-group">
+                <label for="riskScore">Risk Score</label>
+                <input type="text" class="form-control" id="riskScore" readonly>
+            </div>
            
         
         <!-- Further Actions -->
@@ -77,7 +80,7 @@
         <h4 class="mt-4">{{ form_data.form.sections[5].header }}</h4>
         <h4 class=" fs-6 fw-light">Severity</h4>
         {% for i in range(1,6) %}
-        <div class="form-check form-check-inline">
+        <div class="form-check form-check-inline" onchange="calculateResidualRiskScore()">
             <input class="form-check-input" type="radio" name="inlineRadioOptionsResidualRiskSeverity" id="inlineRadioResidualRiskSeverity{{i}}" value="{{i}}">
             <label class="form-check-label" for="inlineRadioResidualRiskSeverity{{i}}">{{i}}</label>
           </div>
@@ -85,13 +88,17 @@
 
         <h4 class=" fs-6 fw-light mt-3">Probability</h4>
         {% for i in range(1,6) %}
-        <div class="form-check form-check-inline">
+        <div class="form-check form-check-inline" onchange="calculateResidualRiskScore()">
             <input class="form-check-input" type="radio" name="inlineRadioOptionsResidualRiskProbability" id="inlineRadioResidualRiskProbability{{i}}" value="{{i}}">
             <label class="form-check-label" for="inlineRadioResidualRiskProbability{{i}}">{{i}}</label>
           </div>
         {% endfor %}
-        <!-- Calculate the score based on the severity and probality by S*P  -->
-        <h4 class=" fs-6 fw-light mt-4">Risk Score : X</h4>
+
+       <!-- Calculate the score based on the severity and probality by S*P  -->
+            <div class="form-group">
+                <label for="residualRiskScore">Risk Score</label>
+                <input type="text" class="form-control" id="residualRiskScore" readonly>
+            </div>
         
      
 
@@ -108,11 +115,46 @@
         <!-- Completed -->
         <h4 class="mt-4">{{ form_data.form.sections[8].header }}</h4>
         <input type="checkbox" class="mt-2" id="check" name="check">
-    </form>
+    
    
      
     <div class="container text-center mt-5 mb-2">
         <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary ms-auto">Back to Project</a>
-        <button class="btn btn-success ms-auto">Save Changes</button>
+        <button type="submit" class="btn btn-success ms-auto">Save</button>
     </div>
+</form>
+
+<script>
+    function calculateRiskScore() {
+
+        // Get radio Buttons
+        const severity = document.querySelector('input[name="inlineRadioOptionsRiskSeverity"]:checked');
+        const probability = document.querySelector('input[name="inlineRadioOptionsRiskProbability"]:checked');
+
+        // If both of radio buttons are checked perform the risk score calculation
+        if (severity && probability) {
+            const riskScore = parseInt(severity.value) * parseInt(probability.value);
+            document.getElementById('riskScore').value = riskScore;
+        } else {
+            document.getElementById('riskScore').value = "";
+        }
+    }
+
+    function calculateResidualRiskScore() {
+
+        // Get radio Buttons
+        const severity = document.querySelector('input[name="inlineRadioOptionsResidualRiskSeverity"]:checked');
+        const probability = document.querySelector('input[name="inlineRadioOptionsResidualRiskProbability"]:checked');
+
+        // If both of radio buttons are checked perform the risk score calculation
+        if (severity && probability) {
+            const residualRiskScore = parseInt(severity.value) * parseInt(probability.value);
+            document.getElementById('residualRiskScore').value = residualRiskScore;
+        } else {
+            document.getElementById('residualRiskScore').value = "";
+        }
+    }
+
+</script>
+
 {% endblock %}

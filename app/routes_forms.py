@@ -167,11 +167,14 @@ def post_flight(project_id):
     return render_template('forms/post_flight.html', title='Post-Flight Actions')
 
 # Risk Analysis Form
-@app.route("/project/<int:project_id>/risk-analysis")
+@app.route("/project/<int:project_id>/risk-analysis", methods=['GET','POST'])
 @login_required
 def risk_analysis(project_id):
     project = Project.query.get_or_404(project_id)
     security(project)
+    if request.method == 'POST':
+        print("submitted")
+        return render_template('forms/risk_analysis.html', title=' Risk Analysis Form', form_data = riskAnalysisTemplate[0],project=project, footer=False)
 
     return render_template('forms/risk_analysis.html', title=' Risk Analysis Form', form_data = riskAnalysisTemplate[0],project=project, footer=False)
 
