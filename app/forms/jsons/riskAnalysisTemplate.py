@@ -33,20 +33,14 @@ riskAnalysisTemplate = [
       {
         "header": "Existing Control",
         "existing_control":[
-          {"id": "compliance_control", "name": """
-           - All drones/UAVs registered.
-           - The remote pilot must not fly the aircraft in any of the circumstances described below except in accordance with a permission issued by the CAA.
-           - Dont fly near airports or airfields without permission from air traffic control, Observe your drone/UAV at all times  stay 150ft (50m) away from people and property.
-           - Drones/UAVs with surveillance cameras must not be flown within 50 metres of any person unless approval has been permitted, Comply with Operation Manual."""},
+          {"id": "compliance_control", "name": 
+            """All drones/UAVs registered.\n The remote pilot must not fly the aircraft in any of the circumstances described below except in accordance with a permission issued by the CAA.\n Dont fly near airports or airfields without permission from air traffic control, Observe your drone/UAV at all times  stay 150ft (50m) away from people and property.\n Drones/UAVs with surveillance cameras must not be flown within 50 metres of any person unless approval has been permitted, Comply with Operation Manual."""},
           
-          {"id": "competence_control", "name": """
-           - All drone remote pilots need to be registered with the CAA and all drones/UAVs need to have the registration number attached."""},
+          {"id": "competence_control", "name":
+            """All drone remote pilots need to be registered with the CAA and all drones/UAVs need to have the registration number attached."""},
           
-          {"id": "permission_control", "name": """
-           - The pilot will seek permission in advance in line with the University procedure.
-           - Off campus, permission to fly is required from the property owner.
-           - Where required notification to air traffic control.
-           - Approval of location and risk assessment to area must be completed."""},
+          {"id": "permission_control", "name":
+            """The pilot will seek permission in advance in line with the University procedure.\n Off campus, permission to fly is required from the property owner.\n Where required notification to air traffic control.\n Approval of location and risk assessment to area must be completed."""},
           
         ]
       },

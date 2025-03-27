@@ -15,13 +15,13 @@
             <h4 class="mt-4">{{ form_data.form.sections[0].header }}</h4>
             <div class="mb-3">
                 <label for="hazardSelect" class="form-label">Select a Hazard</label>
-                <select class="form-select" id="hazardSelect" name="hazard">
+                <select class="form-select" id="hazardSelect" name="hazard" onchange="updateHiddenField()">
                     <option value="" selected disabled>Choose a hazard...</option>
                     {% for hazard in form_data.form.sections[0].dropdown_hazards %}
-                        <option value="{{ hazard.id }}">{{ hazard.name }}</option>
+                        <option value="{{ hazard.id }}_control">{{ hazard.name }}</option>
                     {% endfor %}
                 </select>
-                <p>{{form_data.form.sections[0].dropdown_hazards.control}}</p>
+
             </div>
 
             <!-- Thought here javascript here based on the hazard selected it shows the existing control relevant to the hazard -->
@@ -30,10 +30,15 @@
             <!-- Existing Control -->
             <div class="mb-3 text-body">
                 <h4 class="mt-4">{{ form_data.form.sections[1].header }}</h4>
+
                     {% for item in form_data.form.sections[1].existing_control %}
-                        <p>{{ item.name }}</p>
+                    <div class="control-item" id="{{item.id}}" style="display: none;">
+                        <label for="existingControl{{item.id}}"></label>
+                        <textarea class="form-control" style="height: 200px;" id="existingControl{{item.id}}" name="existingControl{{item.id}}" readonly>{{ item.name }}</textarea>
+                    </div>
                     {% endfor %}
-            </div>
+                </div>
+            
 
             <!-- Person at risk -->
             <h4 class="mt-4">{{ form_data.form.sections[2].header }}</h4>
@@ -100,7 +105,6 @@
                 <input type="text" class="form-control" id="residualRiskScore" readonly>
             </div>
         
-     
 
         <!-- Action Taken By (Could make a drop down of the list of pilots) -->
         <h4 class="mt-4">{{ form_data.form.sections[6].header }}</h4>
@@ -154,6 +158,29 @@
             document.getElementById('residualRiskScore').value = "";
         }
     }
+
+    // Grabs the value from the hazard selected then compares it against the id and if it matches display the content.
+    function updateHiddenField() {
+        let selectedValue = document.getElementById('hazardSelect').value;
+        document.getElementById('selectedHazard').value = selectedValue; 
+        
+        console.log(selectedValue);
+
+        document.querySelectorAll('.control-item').forEach(item =>{
+            item.style.display = "none";
+        });
+
+        let matchingControl = document.getElementById(selectedValue);
+        if (matchingControl) {
+            matchingControl.style.setProperty('display', 'block', 'important');
+
+        }
+        else{
+            console.log("Nothing found");
+        }
+        
+    }
+    
 
 </script>
 
