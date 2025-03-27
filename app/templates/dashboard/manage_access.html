@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container mt-4">
-    <h2 class="mb-4">Manage Access for <span class="text-primary">{{ project.name }}</span></h2>
+
+{% include 'shared/flash-message.html' %}
+
+<div class="card shadow-sm p-4">
+    <div class="mb-3">
+        <a href="/project/{{ project.id }}" class="btn btn-primary" style="display: inline-block; width: fit-content;">&larr; Back to Project</a>
+    </div>
+
+    <h2 class="mb-4 mt-3">Manage Access for <span class="text-primary">{{ project.name }}</span></h2>
 
     <!-- Search for users -->
     <div class="mb-3">
