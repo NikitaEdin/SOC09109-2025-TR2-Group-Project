@@ -31,16 +31,30 @@
         <h2 class="fs-3">{{ section.header }}</h2>
 
         {% for field in section.fields %}
+
             {% if not field.value or field.value == "" %}
+                {% if field.id == "crewlist" %}
+                    {% if crewList %}
+                        <span class="fw-bold fs-6">{{ field.name }}:</span>
+                        <ul style="list-style-type: none;">
+                            {% for crewMember in crewList %}
+                                <li>
+                                    {{ crewMember.crew_name }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>
+                            <span class="fw-bold fs-6">{{ field.name }}:</span>
+                            <span class="text-danger">N/A</span>
+                        </p>
+                    {% endif %}
+                {% endif %}
+            {% elif field.type == "text" %}
                 <p>
                     <span class="fw-bold fs-6">{{ field.name }}:</span>
-                    <span class="text-danger">N/A</span>
+                    {{ field.value|safe }}
                 </p>
-            {% elif field.type == "text" %}
-               <p>
-                   <span class="fw-bold fs-6">{{ field.name }}:</span>
-                   {{ field.value|safe }}
-               </p>
             {% elif field.type == "textarea" %}
                 <div>
                     <p class="fw-bold fs-6 m-0">{{ field.name }}</p>

@@ -75,7 +75,10 @@ def export_viability_study(project_id):
     project = Project.query.get_or_404(project_id)
     security(project)
 
-    return render_template("/forms/export.html", form_data=project.viabilityStudy, title="Viability Study")
+    crew_list = project.crewList
+    crewList = crew_list[0].get('user_data')
+
+    return render_template("/forms/export.html", form_data=project.viabilityStudy, title="Viability Study", crewList=crewList)
 
 @app.route('/project/<int:project_id>/site-evaluation', methods=['GET', 'POST'])
 @login_required
