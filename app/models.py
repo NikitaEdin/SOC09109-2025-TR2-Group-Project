@@ -22,6 +22,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     displayname = db.Column(db.String(20))
+    flyer_id = db.Column(db.String(20), unique=True, nullable=True)
+
 
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
 
@@ -107,9 +109,19 @@ class Project(db.Model):
     viabilityStudy = db.Column(db.JSON, nullable=True)
     siteEvaluation = db.Column(db.JSON, nullable=True)
     riskAnalysis = db.Column(db.JSON, nullable=True)
-    loadingList = db.Column(db.JSON, nullable=True)
+    
+    # Loading List Forms 
+    crewList = db.Column(db.JSON, nullable=True)
+    maintenanceKit = db.Column(db.JSON, nullable=True)
+    safetyKit = db.Column(db.JSON, nullable=True)
+    equipment = db.Column(db.JSON, nullable=True)
+    groundEquipment = db.Column(db.JSON, nullable=True)
+
     postFlight = db.Column(db.JSON, nullable=True)
+
     personalChecklist = db.Column(db.JSON, nullable=True)
+    toggles = db.Column(db.JSON, nullable=True)
+
 
     author = db.relationship('User', backref='projects')
 

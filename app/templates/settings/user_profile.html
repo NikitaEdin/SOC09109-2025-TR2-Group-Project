@@ -30,6 +30,10 @@
                     <p><strong><i class="fa-solid fa-user"></i> Username:</strong> {{ user.username }}</p>
                     <p><strong><i class="fa-solid fa-envelope"></i> Email:</strong> {{ user.email }}</p>
                     <p><strong><i class="fa-solid fa-id-card"></i> Role:</strong> {{ user.role.title }}</p>
+                    <p><strong><i class="fa-solid fa-plane-up"></i>Flyer ID
+                        <i class="fa-solid fa-circle-info" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Your assigned Flyer ID (only relevant for pilots)." ></i></strong>
+                        :
+                        {{ user.flyer_id if user.flyer_id else "No Flyer ID" }}</p>
                     <p><strong> User ID:</strong> {{ user.id }}</p>    
                     <p><strong>User Display Name 
                         <i class="fa-solid fa-circle-info" data-bs-toggle="tooltip" data-bs-placement="bottom" title="A display name will be shown instead of username" ></i></strong>

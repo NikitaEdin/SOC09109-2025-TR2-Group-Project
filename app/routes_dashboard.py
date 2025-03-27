@@ -6,6 +6,7 @@ from app import app
 from flask import flash, redirect, render_template, request, url_for, Response
 from flask_login import current_user, login_required
 
+from app.forms.jsons.static_timeline import Timeline_data
 from app.models import AuditLog, Project, User, Role
 
 # The main/home page of the dashboard.
@@ -101,3 +102,9 @@ def project(project_id):
     return render_template('/dashboard/project.html', project=project, use_container=False, title=project.title, footer=False,
                            created_at_humanized=created_at_humanized, last_edited_humanized=last_edited_humanized,
                            date_status=date_status)
+
+
+@app.route("/dashboard/timeline")
+@login_required
+def timeline():
+    return render_template('/dashboard/static_timeline.html', title='timeline', footer=False, use_container=False, timeline_data = Timeline_data[0])

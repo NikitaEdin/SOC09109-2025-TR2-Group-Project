@@ -5,11 +5,17 @@ from flask import flash, redirect, render_template, session, url_for, request, j
 from flask_login import current_user, login_required
 
 from app.AuditLogger import AuditLogger
-from app.forms.createProject import EditProject, ProjectLocation, ProjectType, ProjectDetails
+from app.forms.createProject import EditProject, ProjectLocation, ProjectType, ProjectDetails, ProjectToggles
 from app.models import Project, User
 
 from app.forms.jsons.viabilityStudyTemplate import ViabilityStudyTemplate
 from app.forms.jsons.siteEvaluationTemplate import SiteEvaluationTemplate
+from app.forms.jsons.loadingListSafetyKitTemplate import LoadingListSafetyKitTemplate
+from app.forms.jsons.loadingListMaintenanceKitTemplate import LoadingListMaintenanceKitTemplate
+from app.forms.jsons.loadingListEquipmentTemplate import LoadingListEquipmentTemplate
+from app.forms.jsons.postFlightTemplate import PostFlightTemplate
+from app.forms.jsons.loadingListCrewListTemplate import LoadingListCrewListTemplate
+from app.forms.jsons.loadingListGroundEquipmentTemplate import LoadingListGroundEquipmentTemplate
 
 # Step 1: Get location of the project
 @app.route("/create_project/location", methods=['GET','POST'])
@@ -63,13 +69,38 @@ def new_project_details():
 
     if not session.get('longitude') and not session.get('latitude') and not session.get('projectType'):
         flash('Project creation steps were not completed correctly.', 'danger')
-        return redirect(url_for('new_project_location'))
+        return redirect(url_for('new_project_type'))
+
+    if form.validate_on_submit():
+        session['projectTitle'] = form.title.data
+        session['projectDescription'] = form.description.data
+        session['projectDateOfFlight'] = form.dateOfFlight.data.strftime('%Y-%m-%d')
+        session['projectPurposeID'] = form.projectPurposeID.data
+
+        return redirect(url_for('new_project_toggles'))
+
+    return render_template('/create_project/new_project_details.html', form=form, footer=False, title='Almost there...')
+
+@app.route("/create_project/toggles", methods=['GET','POST'])
+@login_required
+def new_project_toggles():
+    form = ProjectToggles()
+
+    if not session.get('projectTitle') or not session.get('projectDescription') or not session.get('projectDateOfFlight') or not session.get('projectPurposeID'):
+        flash('Project creation steps were not completed correctly.', 'danger')
+        return redirect(url_for('new_project_details'))
+
 
     if form.validate_on_submit():
         # Retrieve session data
         longitude = session.get('longitude')
         latitude = session.get('latitude')
         project_type = session.get('projectType')
+
+        title = session.get('projectTitle')
+        description = session.get('projectDescription')
+        date_of_flight = datetime.strptime(session.get('projectDateOfFlight'), '%Y-%m-%d')
+        project_purose_id = session.get('projectPurposeID')
 
         # Get dataOfFlight to correct format
 
@@ -79,7 +110,7 @@ def new_project_details():
         if current_user.displayname:
             users_name = current_user.displayname
 
-        flight_code = Project.get_new_flightCode(form.projectPurposeID.data)
+        flight_code = Project.get_new_flightCode(project_purose_id)
 
         viability_study_value = deepcopy(ViabilityStudyTemplate)
 
@@ -89,9 +120,9 @@ def new_project_details():
                     if field['id'] == 'flightcode':
                         field['value'] = flight_code
                     elif field['id'] == 'flightdate':
-                        field['value'] = form.dateOfFlight.data.strftime('%Y-%m-%d')
+                        field['value'] = date_of_flight.strftime('%Y-%m-%d')
                     elif field['id'] == 'description':
-                        field['value'] = form.description.data
+                        field['value'] = description
                     elif field['id'] == 'preparedby':
                         field['value'] = users_name
 
@@ -103,9 +134,18 @@ def new_project_details():
                     if field['id'] == 'flightcode':
                         field['value'] = flight_code
                     elif field['id'] == 'dateofflight':
-                        field['value'] = form.dateOfFlight.data.strftime('%Y-%m-%d')
+                        field['value'] = date_of_flight.strftime('%Y-%m-%d')
                     elif field['id'] == 'remotepilot':
                         field['value'] = users_name
+
+        togglesJSON = {
+            'loadingListRequired': form.loadingListRequired.data,
+            'protectedAreaFlight': form.protectedAreaFlight.data,
+            'notamRequired': form.notamRequired.data,
+            'leafletDropRequired': form.leafletDropRequired.data,
+            'localClubNearby': form.localClubNearby.data,
+            'permissionRequired': form.permissionRequired.data
+        }
 
         # All valid, create new project
         project = Project(
@@ -113,16 +153,26 @@ def new_project_details():
             longitude=float(longitude),
             latitude=float(latitude),
             projectType=project_type,
-            title=form.title.data,
-            description=form.description.data,
-            dateOfFlight=form.dateOfFlight.data,
-            projectPurposeID=form.projectPurposeID.data,
+            title=title,
+            description=description,
+            dateOfFlight=date_of_flight,
+            projectPurposeID=project_purose_id,
             lastEdited=datetime.now(timezone.utc),
             created_at=datetime.now(timezone.utc),
             flightCode = flight_code,
             # JSON forms
             viabilityStudy = viability_study_value,
-            siteEvaluation = site_evaluation_value
+            siteEvaluation = site_evaluation_value,
+            toggles = togglesJSON,
+           
+            
+            # Loading list
+            postFlight = PostFlightTemplate,
+            safetyKit = LoadingListSafetyKitTemplate,
+            maintenanceKit = LoadingListMaintenanceKitTemplate,
+            equipment = LoadingListEquipmentTemplate,
+            groundEquipment = LoadingListGroundEquipmentTemplate,
+            crewList = LoadingListCrewListTemplate
         )
 
         # Commit new record to db
@@ -141,8 +191,7 @@ def new_project_details():
         flash('Project created successfuly!', 'success')
         return redirect(url_for('dashboard'))
 
-    return render_template('/create_project/new_project_details.html', form=form, footer=False, title='Almost there...')
-
+    return render_template('/create_project/new_project_toggles.html', form=form, footer=False, title='Final steps...')
 
 @app.route("/project/<int:project_id>/edit", methods=["GET", "POST"])
 @login_required

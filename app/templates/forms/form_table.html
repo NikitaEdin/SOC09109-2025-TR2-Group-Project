@@ -1,0 +1,183 @@
+<!-------------------
+Checklist template for auto-generated forms
+ ------------------->
+
+<!-- Display error if empty or missing form_data -->
+{% if not form_data or form_data|length <= 0 %}
+    <div class="container text-center mt-5">
+        <h5>Oh no! Something went wrong with the form.</h5>
+        <p>Try to recreate the project, or contact the web administrator.</p>
+        <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary">Go Back</a>
+    </div>
+{% else %}
+
+<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="w-75 text-start">
+        <a href="{{ url_for('loading_list', project_id=project.id) }}" class="btn btn-primary my-3">
+            ← Back to Loading List
+        </a>
+    </div>
+    <div class="rounded border border-danger-subtle p-3 w-75 my-3 card">
+        <div class="card-body">
+            <div class="text-center m-3">
+                <h2><strong>{{ form_data.title }}</strong></h2>
+            </div>
+            
+            <h3 class="text-center fw-light fs-4 pb-2">
+                {{ form_data.header }}
+            </h3>
+            <hr>
+            <div class="">
+                <!-- Flash messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    <!--  any messages? -->
+                    {% if messages %}
+                        <!-- loop messages -->
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                                {{ message}}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+            
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+        <form method="POST">
+            <table class="table table-bordered custom-form-table" id="table">
+                <thead class="table-light">
+                    <tr>
+                    <!-- Dynamically render the headers for fields -->
+                    {% for section in form_data.form.fields %}
+                        <th>{{ section.label }}</th> 
+                    {% endfor %}
+                    <th>Action</th>
+                    </tr>
+                </thead>
+                
+                <tbody id="tableBody">
+                    {% for user_item in form_data.user_data %}
+                    <tr>
+                        {% for field in form_data.form.fields %}
+                        <td>
+                            {% if field.type == 'checkbox' %}
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <input type="checkbox"
+                                        name="{{ field.name }}[]"
+                                        class="mt-2"
+                                        value="true"
+                                        {% if user_item[field.name] %} checked {% endif %}
+                                        onchange="updateHiddenField('{{ field.name }}')" />
+                                </div>
+                            {% else %}
+                            <input type="{{ field.type }}" 
+                                name="{{ field.name }}[]"  
+                                value="{{ user_item[field.name] }}" 
+                                placeholder="{{ field.placeholder }}"  
+                                class="form-control">
+                            {% endif %}
+                        </td>
+                        {% endfor %}
+                        <td>
+                            <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+                
+            </table>
+
+            <!-- Submit/Save button -->
+            <div class="row justify-content-center">
+                <div class="text-center mb-3">
+                    <button type="button" class="btn btn-primary" onclick="addRow()">Add More Items</button>
+                </div>
+                <div class="col-6 mt-5">
+                    <button type="submit" class="btn btn-primary w-100">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <script>
+        // Initialize fields
+        let fields = JSON.parse('{{ form_data.form.fields | tojson | safe }}');
+    
+        // Add a new row to the table
+        function addRow() {
+            const tableBody = document.getElementById('tableBody');
+            const newRow = document.createElement('tr');
+    
+            fields.forEach(field => {
+                const newCell = document.createElement('td');
+                let inputField = '';
+    
+                if (field.type === 'checkbox') {
+                    inputField = `
+                        <div class="d-flex justify-content-center align-items-center">
+                            <input type="checkbox"
+                                   name="${field.name}[]"
+                                   value="true"
+                                   class="mt-2"
+                                   onchange="updateHiddenField('${field.name}')" />
+                        </div>`;
+                } else {
+                    inputField = `<input type="${field.type}" 
+                                      name="${field.name}[]" 
+                                      placeholder="${field.placeholder}" 
+                                      class="form-control" />`;
+                }
+    
+                newCell.innerHTML = inputField;
+                newRow.appendChild(newCell);
+            });
+    
+            // Add "Remove" button
+            const removeCell = document.createElement('td');
+            removeCell.innerHTML = `<button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>`;
+            newRow.appendChild(removeCell);
+    
+            // Append the new row
+            tableBody.appendChild(newRow);
+        }
+    
+        // Remove row function
+        function removeRow(button) {
+            const row = button.closest('tr');
+            row.remove();
+            
+            // Update all hidden fields for checkboxes
+            fields.filter(field => field.type === 'checkbox').forEach(field => updateHiddenField(field.name));
+        }
+    
+        // Update hidden input fields based on checkbox states
+        function updateHiddenField(fieldName) {
+            const checkboxes = document.querySelectorAll(`input[name="${fieldName}[]"]`);
+            
+            // Collect checked states ("true"/"false")
+            const values = Array.from(checkboxes).map(checkbox => checkbox.checked ? "true" : "false");
+    
+            // Find/create the corresponding hidden input field
+            let hiddenField = document.getElementById(`hidden_${fieldName}`);
+            
+            if (!hiddenField) {
+                hiddenField = document.createElement('input');
+                hiddenField.type = 'hidden';
+                hiddenField.id = `hidden_${fieldName}`;
+                hiddenField.name = fieldName;
+                document.forms[0].appendChild(hiddenField);
+            }
+    
+            // Update the hidden field value
+            hiddenField.value = values.join(',');
+        }
+    </script>
+    
+    
+    
+    
+
+{% endif %}

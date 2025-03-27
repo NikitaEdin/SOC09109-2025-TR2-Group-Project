@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% import "forms/form_macros_checklist.html" as macros %}
+
+{% block content %}
+
+    {% set form_data=project.crewList[0] %}
+    {% include "forms/form_table.html" %}
+
+
+{% endblock %}
