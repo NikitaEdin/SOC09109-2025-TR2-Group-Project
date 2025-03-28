@@ -231,3 +231,12 @@ input[type="checkbox"] {
     height: 0;
     border-top: 1px solid #000;
 }
+
+/* Project page */
+.napier-card-header {
+    background-color: var(--accent-colour); /* Napier red*/
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
