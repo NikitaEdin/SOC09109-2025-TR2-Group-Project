@@ -15,10 +15,10 @@
             <h4 class="mt-4">{{ form_data.form.sections[0].header }}</h4>
             <div class="mb-3">
                 <label for="hazardSelect" class="form-label">Select a Hazard</label>
-                <select class="form-select" id="hazardSelect" name="hazard" onchange="updateHiddenField()">
+                <select class="form-select" id="hazardSelect" name="hazard" onchange="updateHiddenField(); updateHiddenFieldFurtherAction(); ">
                     <option value="" selected disabled>Choose a hazard...</option>
                     {% for hazard in form_data.form.sections[0].dropdown_hazards %}
-                        <option value="{{ hazard.id }}_control">{{ hazard.name }}</option>
+                        <option value="{{ hazard.id }}">{{ hazard.name }}</option>
                     {% endfor %}
                 </select>
 
@@ -54,7 +54,7 @@
 
             <!-- Risk -->
             <h4 class="mt-4">{{ form_data.form.sections[3].header }}</h4>
-            <h4 class=" fs-6 fw-light">Severity</h4>
+            <h4 class=" fs-6 fw-normal">Severity</h4>
             {% for i in range(1,6) %}
             <div class="form-check form-check-inline" onchange="calculateRiskScore()">
                 <input class="form-check-input" type="radio" name="inlineRadioOptionsRiskSeverity" id="inlineRadioRiskSeverity{{i}}" value="{{i}}">
@@ -62,7 +62,7 @@
             </div>
             {% endfor %}
 
-            <h4 class=" fs-6 fw-light mt-3">Probability</h4>
+            <h4 class=" fs-6 fw-normal mt-3">Probability</h4>
             {% for i in range(1,6) %}
             <div class="form-check form-check-inline" onchange="calculateRiskScore()">
                 <input class="form-check-input" type="radio" name="inlineRadioOptionsRiskProbability" id="inlineRadioRiskProbability{{i}}" value="{{i}}">
@@ -78,7 +78,16 @@
            
         
         <!-- Further Actions -->
-        <h4 class="mt-4">{{ form_data.form.sections[4].header }}</h4>
+        <div class="mb-3 text-body">
+            <h4 class="mt-4">{{ form_data.form.sections[4].header }}</h4>
+
+                {% for item in form_data.form.sections[4].further_action %}
+                <div class="action-item" id="{{item.id}}" style="display: none;">
+                    <label for="further_action{{item.id}}"></label>
+                    <textarea class="form-control" style="height: 200px;" id="further_action{{item.id}}" name="further_action{{item.id}}" readonly>{{ item.name }}</textarea>
+                </div>
+                {% endfor %}
+            </div>
 
 
         <!-- Residual Risk -->
@@ -161,15 +170,17 @@
 
     // Grabs the value from the hazard selected then compares it against the id and if it matches display the content.
     function updateHiddenField() {
+        // Get the value from the dropdown then put it into a variable
         let selectedValue = document.getElementById('hazardSelect').value;
+        // Add control at the end to match the ids
+        selectedValue = selectedValue + '_control';
         document.getElementById('selectedHazard').value = selectedValue; 
-        
-        console.log(selectedValue);
 
         document.querySelectorAll('.control-item').forEach(item =>{
             item.style.display = "none";
         });
 
+        // Get the existing control  
         let matchingControl = document.getElementById(selectedValue);
         if (matchingControl) {
             matchingControl.style.setProperty('display', 'block', 'important');
@@ -178,7 +189,28 @@
         else{
             console.log("Nothing found");
         }
-        
+    }
+
+    function updateHiddenFieldFurtherAction() {
+        // Get the value from the dropdown then put it into a variable
+        let selectedValue = document.getElementById('hazardSelect').value;
+        // Add control at the end to match the ids
+        selectedValue = selectedValue + '_further_action';
+        document.getElementById('selectedHazard').value = selectedValue; 
+
+        document.querySelectorAll('.action-item').forEach(item =>{
+            item.style.display = "none";
+        });
+
+        // Get the further action
+        let furtherAction = document.getElementById(selectedValue);
+        if (furtherAction) {
+            furtherAction.style.setProperty('display', 'block', 'important');
+
+        }
+        else{
+            console.log("Nothing found");
+        }
     }
     
 

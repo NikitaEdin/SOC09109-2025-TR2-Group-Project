@@ -88,7 +88,12 @@ riskAnalysisTemplate = [
         "header": "Risk"
       },
       {
-        "header": "Further Actions"
+        "header": "Further Actions",
+        "further_action":[
+           {"id": "compliance_further_action", "name":
+            """Follow all additional rules when applicable to the specific site.\n Never fly while taking medication, prescribed or otherwise that may impair the pilot.\n Comply with drone code. \n The European Aviation Safety Agency have a drone safety video: www.youtube.com/watch?v=5Xs_eVx4nuw"""},
+        ]
+        
       },
       {
         "header": "Residual Risk"
