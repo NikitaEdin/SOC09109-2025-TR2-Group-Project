@@ -11,7 +11,7 @@ riskAnalysisTemplate = [
           {"id": "competence", "name": "Competence", "value":"","required": True},
           {"id": "permission", "name": "Permission", "value":"","required": True},
           {"id": "weather", "name": "Weather","value":"","required": True},
-          {"id": "pederstrians_traffic", "name": "Pedestrians and Traffic","value":"","required": True},
+          {"id": "pedestrians_traffic", "name": "Pedestrians and Traffic","value":"","required": True},
           {"id": "emergency", "name": "Emergency","value":"","required": True},
           {"id": "wildlife_pets", "name": "Wildlife, Livestock, Domestic pets etc","value":"","required": True},
           {"id": "collision_nearmiss", "name": "UAS collision or near miss with other air users","value":"","required": True},
@@ -39,7 +39,7 @@ riskAnalysisTemplate = [
           {"id": "weather_control", "name":
             """Accurate weather forecast checked prior to flight.\n Weather to be monitored at all times during flight with a view to landing should weather deteriorate."""},
            
-          {"id": "pederstrians_traffic_control", "name":
+          {"id": "pedestrians_traffic_control", "name":
             """Tape off exclusion zone where possible.\n At least one spotter is dedicated to supervising access to zone.\n Flying in the middle of the field and away from pedestrians and traffic."""},
            
           {"id": "emergency_control", "name":
@@ -92,6 +92,48 @@ riskAnalysisTemplate = [
         "further_action":[
            {"id": "compliance_further_action", "name":
             """Follow all additional rules when applicable to the specific site.\n Never fly while taking medication, prescribed or otherwise that may impair the pilot.\n Comply with drone code. \n The European Aviation Safety Agency have a drone safety video: www.youtube.com/watch?v=5Xs_eVx4nuw"""},
+           
+          {"id": "competence_further_action", "name":
+           """All remote pilots must have evidence of their competence: Current CAA permission, and examples of other clients they have worked for. """},
+            
+          {"id": "permission_further_action", "name":
+           """Planning, administration and operating checklist to be completed.\n Equipment tested carefully before the flight.\n Remote pilot to have NQE approved training.\n Emergency procedures in place.\n Record and report incident in line with CAP382. """},
+          
+          {"id": "weather_further_action", "name":
+           """Poor visibility or weather condition, no flights permitted. """},
+          
+          {"id": "pedestrians_traffic_further_action", "name":
+           """ P&F/H&S informed.\n Wearing of appropriate Hi-Viz jackets. """},
+          
+          {"id": "emergency_further_action", "name":
+           """Where off-campus consider emergency arrangements.\n P&F/H&S informed.\n Safely land UAS and record/report incidents. """},
+          
+          {"id": "wildlife_pets_further_action", "name":
+           """ Appropriate permissions should be sought from the relevant bodies e.g. Scottish Natural Heritage, National Trust for Scotland, landowners, leaseholders etc. """},
+          
+          {"id": "collision_nearmiss_further_action", "name":
+           """Follow drone code.\n The full regulations can be found at: https://www.caa.co.uk/home/   """},
+          
+          {"id": "maintenance_servicing_further_action", "name":
+           """The batteries will be monitored whilst charging so that they are not overcharged. """},
+          
+          {"id": "crash_building_further_action", "name":
+           """Restriction area set up.\n Consideration where communication is required.\n If the computers link to the quadcopter is lost the hand controller always has the ability to take control and land the drone/UAV. """},
+          
+          {"id": "security_further_action", "name":
+           """Emergency contact number recorded. """},
+          
+          {"id": "insurance_further_action", "name":
+           """Copy of insurance for Drone/UAV use available on request from Finance.\n The building and contents insurance would respond to damage to University owned building and property. """},
+          
+          {"id": "data_protection_further_action", "name":
+           """Respect people’s privacy at all times.\n Send out communication notification when applicable. """},
+          
+          {"id": "ground_hazards_further_action", "name":
+           """If Any further action needs to be taken """},
+          
+          {"id": "other_hazards_further_action", "name":
+           """If any further action needs to be taken """},
         ]
         
       },
