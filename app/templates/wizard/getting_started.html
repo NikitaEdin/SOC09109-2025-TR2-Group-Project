@@ -16,7 +16,7 @@
         </div>
           <img src="{{ url_for('static', filename='Images/DroneCityEdited.jpg') }}" alt="Image of drone flying in the city" class="img-fluid rounded">
             <div class="card-body">
-                <p class="card-text text-center">Projects siutated in developed, built-up areas where police must be informed before flying, and a leaflet drop is often required.</p>
+                <p class="card-text text-center">Projects situated in highly populated, built-up areas where police must be informed before flying, and a leaflet drop is often required.</p>
             </div>
       </div>
 
@@ -31,8 +31,8 @@
             </div>
         </div>
 
-    <div class="row md-6 mt-5 p-4 rounded shadow">
-      <h2 class="text-center fw-bold mb-4">Project Creation Process</h2>
+<h2 class="text-center fw-bold mt-5 mb-2">Project Creation Process</h2>
+ <div class="row md-6 mt-4 p-4 rounded shadow">
         <div class="row">
             <div class="col-md-6">
                 <div class="list-group ">
@@ -63,8 +63,8 @@
         </div>
     </div>
 
- <div class="row md-6 mt-5 p-4 rounded shadow">
-      <h2 class="text-center fw-bold mb-4">Project Purposes</h2>
+<h2 class="text-center fw-bold mt-5 mb-2">Project Purposes</h2>
+ <div class="row md-6 mt-4 p-4 rounded shadow">
         <div class="row">
             <div class="col-md-6">
                 <div class="list-group ">
@@ -89,10 +89,27 @@
         </div>
     </div>
 
+<h2 class="text-center fw-bold mt-5 mb-2">Timeline Information</h2>
+ <div class="row md-6 mt-4 p-4 rounded shadow">
+      <div class="list-group">
+          <div class="list-group-item">
+              <strong>28 Days in Advance:</strong> Preparation begins by ensuring all necessary permissions are obtained.
+        </div>
+        <div class="list-group-item bg-light">
+            <strong>7 Days in Advance:</strong> A week before the flight, you'll focus on the practical details: conducting evaluations, customising the loading list, completing the viability study, finalising risk analysis, and notifying any relevant authorities or communities about your operation.  It's also a good time to monitor the weather and make early adjustments to your plans if needed.
+        </div>
+        <div class="list-group-item">
+            <strong>24 Hours in Advance:</strong> Contact ATC if operating in restricted zones and decide go/no-go based on weather.  Review the loading list, send crew call sheets, update firmware, charge equipment, and finalise preparations. Customise and print key documentation, including emergency procedures and checklists.  Conduct a test flight if necessary, ensuring all equipment and crew coordination are ready for the operation.
+        </div>
+        <div class="list-group-item bg-light">
+            <strong>Day of Flight:</strong> On the day of the flight, log into the operator account and pack equipment using the loading list. Check NOTAMs, complete the site checklist, and decide go/no-go based on conditions. Assemble the UAS, brief the crew, and complete pre-flight checks.  After the mission, perform post-flight actions, disassemble the UAS, and pack all equipment properly.
+        </div>
+      </div>
+ </div>
 
     <div class="d-flex justify-content-center m-3">
         <div class="col-12 col-md-4">
-            <button class="form-control btn btn-danger border border-black px-5">View Past Flights</button>
+            <a href="{{ url_for('timeline') }}" class="form-control btn btn-danger border border-black px-5">View Full Timeline</a>
         </div>
     </div>
 {% endblock %}
