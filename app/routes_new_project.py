@@ -191,6 +191,10 @@ def new_project_toggles():
         flash('Project created successfuly!', 'success')
         return redirect(url_for('dashboard'))
 
+    # Disable items based on type
+    if (session.get('projectType') == 'Rural'):
+        form.leafletDropRequired.render_kw = {'disabled': 'disabled'}
+
     return render_template('/create_project/new_project_toggles.html', form=form, footer=False, title='Final steps...')
 
 @app.route("/project/<int:project_id>/edit", methods=["GET", "POST"])
