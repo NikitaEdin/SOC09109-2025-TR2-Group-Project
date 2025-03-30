@@ -160,8 +160,11 @@ def urban_checklist(project_id):
             None  # Default to None if no match is found
         ),
         "form_url": form_url(item["name"])
-    } for item in checklist_template_required_urban
-}
+        } for item in checklist_template_required_urban
+    }
+
+    if not project.toggles['protectedAreaFlight']:
+        del checks["Advanced Flight Permission"]
     
     return render_template("checklist/urban_checklist.html", checks=checks, project=project, footer=False, title='Required Forms')
 
@@ -190,8 +193,8 @@ def optional(project_id):
             (check["last_edit"] for check in project.checklist if check["name"] == item["name"]),
             None  # Default to None if no match is found
         )
-    } for item in checklist_template_optional_checklist
-}
+        } for item in checklist_template_optional_checklist
+    }
      
     forms={
         item["name"]: {
@@ -208,6 +211,21 @@ def optional(project_id):
         "form_url": form_url(item["name"])
     } for item in checklist_template_forms_optional
     }
+
+    if not project.toggles['loadingListRequired']:
+        del forms["Loading List"]
+
+    if not project.toggles['notamRequired']:
+        del forms["NOTAM"]
+
+    if not project.toggles['permissionRequired']:
+        del forms["Land Permission"]
+
+    if not project.toggles['leafletDropRequired']:
+        del checks["Leaflet Drop"]
+
+    if not project.toggles['localClubNearby']:
+        del checks["Inform Local Air Users"]
     
     # On form submission checks if the checkbox is marked  then puts it into updated checklist
     if request.method == "POST":
@@ -238,9 +256,9 @@ def optional(project_id):
 
 #  This is to tidy up and only pass in only one variable into the template
     content = {
-    "checks": checks,
-    "forms": forms
-}
+        "checks": checks,
+        "forms": forms
+    }
     return render_template("checklist/optional_checklist.html", content=content, project=project, footer=False, title='Optional Forms')
 
 
