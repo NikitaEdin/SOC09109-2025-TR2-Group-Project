@@ -8,6 +8,7 @@ from app.forms.crewCallSheetForm import CrewCallSheetForm
 from app.forms.jsons.viabilityStudyTemplate import ViabilityStudyTemplate
 from app.forms.jsons.loadingListSafetyKitTemplate import LoadingListSafetyKitTemplate
 from app.forms.jsons.loadingListMaintenanceKitTemplate import LoadingListMaintenanceKitTemplate
+from app.forms.jsons.riskAnalysisTemplate import riskAnalysisTemplate
 from app.models import Project
 from datetime import datetime
 
@@ -166,13 +167,16 @@ def post_flight(project_id):
     return render_template('forms/post_flight.html', title='Post-Flight Actions')
 
 # Risk Analysis Form
-@app.route("/project/<int:project_id>/risk-analysis")
+@app.route("/project/<int:project_id>/risk-analysis", methods=['GET','POST'])
 @login_required
 def risk_analysis(project_id):
     project = Project.query.get_or_404(project_id)
     security(project)
+    if request.method == 'POST':
+        print("submitted")
+        return render_template('forms/risk_analysis.html', title=' Risk Analysis Form', form_data = riskAnalysisTemplate[0],project=project, footer=False)
 
-    return render_template('forms/risk_analysis/risk_analysis_list.html', title=' Risk Analysis Form')
+    return render_template('forms/risk_analysis.html', title=' Risk Analysis Form', form_data = riskAnalysisTemplate[0],project=project, footer=False)
 
 # Risk Analysis Form - Add Risk Route
 @app.route("/project/<int:project_id>/risk-analysis/add")

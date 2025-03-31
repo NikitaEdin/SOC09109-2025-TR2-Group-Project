@@ -37,7 +37,8 @@ def form_url(form_name):
         "Viability Study" : "viability_study",
         "Site Evaluation" : "site_evaluation",
         "Loading List" : "loading_list",
-        "Post-Flight" : "post_flight"
+        "Post-Flight" : "post_flight",
+        "Risk Analysis": "risk_analysis"
     }
     return form_urls.get(form_name,"dashboard")
 
