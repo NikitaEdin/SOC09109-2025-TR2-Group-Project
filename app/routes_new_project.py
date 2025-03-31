@@ -322,7 +322,10 @@ def project_files(project_id):
         flash("You are not authorised to edit this project.", "danger")
         return redirect(url_for('dashboard'))
 
-    return render_template('/dashboard/project_files.html', project=project)
+    return render_template('/dashboard/project_files.html', project=project, footer=False,
+        max_file_size=MAX_FILE_SIZE, 
+        allowed_extensions=ALLOWED_EXTENSIONS, 
+        max_files=MAX_FILES_PER_PROJECT)
 
 
 @app.route('/project/<int:project_id>/files/upload', methods=['POST'])
