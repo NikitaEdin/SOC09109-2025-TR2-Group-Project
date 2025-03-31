@@ -217,3 +217,21 @@ project_access = db.Table(
     db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True),
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
 )
+
+class ProjectFile(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    original_filename = db.Column(db.String(255), nullable=False)  # user-friendly name
+    filename = db.Column(db.String(255), nullable=False)  # Unique filename
+    filepath = db.Column(db.String(255), nullable=False)
+    size = db.Column(db.Integer, nullable=False)
+    uploaded_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
+    project = db.relationship('Project', backref=db.backref('files', lazy=True))
+
+    def human_readable_size(self):
+        size = self.size
+        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+            if size < 1024.0:
+                return f"{size:.1f} {unit}"
+            size /= 1024.0
+        return f"{size:.1f} TB"
