@@ -38,3 +38,7 @@ def view_drones():
         return redirect(url_for('home', title='Home'))
 
 
+@app.route("/getting-started")
+def getting_started():
+    return render_template('/info/getting_started.html', title='Getting Started')
+

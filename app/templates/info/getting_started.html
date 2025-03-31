@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Getting Started{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
 
@@ -61,7 +61,10 @@
                 </div>
             </div>
         </div>
-    </div>
+     <div class="d-flex justify-content-center mt-4">
+         <a href="{{ url_for('dashboard') }}" target="_blank" class="btn btn-danger border border-black">Dashboard</a>
+     </div>
+ </div>
 
 <h2 class="text-center fw-bold mt-5 mb-2">Project Purposes</h2>
  <div class="row md-6 mt-4 p-4 rounded shadow">
@@ -105,11 +108,10 @@
             <strong>Day of Flight:</strong> On the day of the flight, log into the operator account and pack equipment using the loading list. Check NOTAMs, complete the site checklist, and decide go/no-go based on conditions. Assemble the UAS, brief the crew, and complete pre-flight checks.  After the mission, perform post-flight actions, disassemble the UAS, and pack all equipment properly.
         </div>
       </div>
- </div>
-
-    <div class="d-flex justify-content-center m-3">
+         <div class="d-flex justify-content-center mt-4">
         <div class="col-12 col-md-4">
-            <a href="{{ url_for('timeline') }}" class="form-control btn btn-danger border border-black px-5">View Full Timeline</a>
+           <a href="{{ url_for('timeline') }}" target="_blank" class="form-control btn btn-danger border border-black px-5">View Full Timeline</a>
         </div>
     </div>
+ </div>
 {% endblock %}
