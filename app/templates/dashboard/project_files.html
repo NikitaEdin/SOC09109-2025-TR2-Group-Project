@@ -8,13 +8,20 @@
         {% include 'shared/flash-message.html' %}
 
         <!-- File Upload Information -->
-        <div class="alert alert-info">
-            <h5 class="mb-1"><i class="fas fa-info-circle"></i> Upload Guidelines</h5>
-            <ul class="mb-0">
-                <li><strong>Max Files:</strong> {{ max_files }} per project</li>
-                <li><strong>Allowed Types:</strong> {{ allowed_extensions | join(', ') }}</li>
-                <li><strong>Max File Size:</strong> {{ (max_file_size / (1024 * 1024)) | int }}MB per file</li>
-            </ul>
+        <div class="mb-3">
+            <button class="btn btn-outline-danger" type="button" data-bs-toggle="collapse" data-bs-target="#uploadGuidelines"
+                aria-expanded="false" aria-controls="uploadGuidelines">
+                <i class="fas fa-info-circle"></i> Upload Guidelines
+            </button>
+            <div class="collapse mt-2" id="uploadGuidelines">
+                <div class="alert alert-info">
+                    <ul class="mb-0">
+                        <li><strong>Max Files:</strong> {{ max_files }} per project</li>
+                        <li><strong>Allowed Types:</strong> {{ allowed_extensions | join(', ') }}</li>
+                        <li><strong>Max File Size:</strong> {{ (max_file_size / (1024 * 1024)) | int }}MB per file</li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         {% if project.files|length < max_files %}
