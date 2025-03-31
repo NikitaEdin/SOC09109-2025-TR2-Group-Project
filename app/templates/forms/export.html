@@ -33,22 +33,27 @@
         {% for field in section.fields %}
 
             {% if not field.value or field.value == "" %}
-                {% if field.id == "crewlist" %}
-                    {% if crewList %}
+                {% if field.id == "allowedUsers" %}
+                    {% if allowedUsers %}
                         <span class="fw-bold fs-6">{{ field.name }}:</span>
-                        <ul style="list-style-type: none;">
-                            {% for crewMember in crewList %}
+
+                        <ul class ="list-unstyled">
+                            <li>
+                                {{ creator.username }}
+                            </li>
+                            {% for user in allowedUsers %}
                                 <li>
-                                    {{ crewMember.crew_name }}
+                                    {{ user.username }}
                                 </li>
                             {% endfor %}
                         </ul>
-                    {% else %}
-                        <p>
-                            <span class="fw-bold fs-6">{{ field.name }}:</span>
-                            <span class="text-danger">N/A</span>
-                        </p>
                     {% endif %}
+
+                {% else %}
+                    <p>
+                        <span class="fw-bold fs-6">{{ field.name }}:</span>
+                        <span class="text-danger">N/A</span>
+                    </p>
                 {% endif %}
             {% elif field.type == "text" %}
                 <p>

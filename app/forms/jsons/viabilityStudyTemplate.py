@@ -10,7 +10,7 @@ ViabilityStudyTemplate = [
           {"id": "flightcode", "name": "Flight Code", "value": "", "type": "text", "required": True},
           {"id": "description", "name": "Description", "value": "", "type": "textarea", "required": True},
           {"id": "flightdate", "name": "Flight Date", "value": "", "type": "date", "required": True},
-          {"id": "crewlist", "name": "Crew", "type": "div"}
+          {"id": "allowedUsers", "name": "Project Members", "type": "div"}
         ]
       },
       {

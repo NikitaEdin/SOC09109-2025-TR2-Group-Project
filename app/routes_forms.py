@@ -75,10 +75,10 @@ def export_viability_study(project_id):
     project = Project.query.get_or_404(project_id)
     security(project)
 
-    crew_list = project.crewList
-    crewList = crew_list[0].get('user_data')
+    creator = project.get_author()
+    allowed_users = project.allowed_users
 
-    return render_template("/forms/export.html", form_data=project.viabilityStudy, title="Viability Study", crewList=crewList)
+    return render_template("/forms/export.html", form_data=project.viabilityStudy, title="Viability Study", creator=creator, allowedUsers=allowed_users)
 
 @app.route('/project/<int:project_id>/site-evaluation', methods=['GET', 'POST'])
 @login_required
@@ -134,7 +134,11 @@ def export_site_evaluation(project_id):
     project = Project.query.get_or_404(project_id)
     security(project)
 
-    return render_template("/forms/export.html", form_data=project.siteEvaluation, title="Site Evaluation")
+    creator = project.get_author()
+    allowed_users = project.allowed_users
+
+
+    return render_template("/forms/export.html", form_data=project.siteEvaluation, title="Site Evaluation", creator=creator, allowedUsers=allowed_users)
 
 
 @app.route('/forms/site-evaluation-template', methods=['GET', 'POST'])
