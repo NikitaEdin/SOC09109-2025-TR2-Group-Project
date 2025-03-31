@@ -11,6 +11,7 @@ SiteEvaluationTemplate = [
           {"id": "dateofflight", "name": "Date of Flight", "value": "", "type": "date", "required": True},
           {"id": "remotepilot", "name": "Remote Pilot", "value": "", "type": "text", "required": True},
           {"id": "datecompleted", "name": "Date Completed", "value": "", "type": "date", "required": True},
+          {"id": "allowedUsers", "name": "Project Members", "type": "div"}
         ]
       },
 
