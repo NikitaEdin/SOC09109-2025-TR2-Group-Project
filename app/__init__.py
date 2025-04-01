@@ -46,3 +46,6 @@ from app import routes_dashboard
 from app import routes_new_project
 from app import routes_checklist
 from app import routes_settings
+from app import routes_errors
+
+routes_errors.error_handlers(app)
