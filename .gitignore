@@ -175,3 +175,6 @@ cython_debug/
 *.iml
 *.ipr
 *.iws
+
+# Server uploads
+/uploads
