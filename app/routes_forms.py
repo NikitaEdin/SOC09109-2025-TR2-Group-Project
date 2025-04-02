@@ -181,28 +181,37 @@ def risk_analysis(project_id):
     security(project)
     
 
-    form_data = project.riskAnalysis
-    
-    print(form_data)
+    form_data = project.riskAnalysis 
+
+    if not project.riskAnalysis:
+        project.riskAnalysis = []
         
     errors = {}
        
     if request.method == 'POST':
+             
+        selected_hazard = request.form.get("hazard")
+        selected_person = request.form.get("people")
+   
         
-        for section in form_data[0]['form']['sections']:
+        for section in form_data['form']['sections']:
             # Loop through all fields
-            for field in section['fields']:     
+            for field in section.get('fields', []):   
                 field_id = field['id']
-                field_value = request.form.get(field_id)
                 
-                # Handle checkboxes 
-                if field_id == 'check':  
-                    field['value'] = request.form.get(field_id) == "on"  # True if checked
+                if field['id'] == selected_hazard:
+                    field['value'] = selected_hazard
+                elif field['id'] == selected_person:
+                    field['value'] = selected_person
                 else:
-                    field['value'] = field_value
-
-            if field_id not in errors:
-                field['value'] = field_value
+                    field_value = request.form.get(field_id)
+                
+                                
+                    # Handle checkboxes 
+                    if request.form.get(field_id) == "on":
+                        field['value'] = True
+                    else:
+                        field['value'] = field_value  
         
         project.riskAnalysis = form_data
         flag_modified(project, "riskAnalysis")
