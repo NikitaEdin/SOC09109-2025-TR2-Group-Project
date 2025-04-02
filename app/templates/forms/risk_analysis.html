@@ -4,20 +4,23 @@
 
 {% block content %}
 <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
+    <pre>{{ form_data | tojson }}</pre>
+
     <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3 card">
         <div class="text-center">
             <p class="fs-1 mb-0">{{ form_data.title }}</p>
             <p class="fs-3 fw-light">{{ form_data.header }}</p>
         </div>
+        
 
         <!-- Hazards -->
         <div class="section">
-            <h4 class="mt-4">{{ form_data.form.sections[0].header }}</h4>
+            <h4 class="mt-4">{{ form_data['form']['sections'][0]['header'] }}</h4>
             <div class="mb-3">
                 <label for="hazardSelect" class="form-label">Select a Hazard</label>
                 <select class="form-select" id="hazardSelect" name="hazard" required onchange="updateHiddenField(); updateHiddenFieldFurtherAction(); ">
                     <option value="" selected disabled>Choose a hazard...</option>
-                    {% for hazard in form_data.form.sections[0].dropdown_hazards %}
+                    {% for hazard in form_data['form']['sections'][0]['fields'] %}
                         <option value="{{ hazard.id }}">{{ hazard.name }}</option>
                     {% endfor %}
                 </select>
@@ -29,9 +32,9 @@
 
             <!-- Existing Control -->
             <div class="mb-3 text-body">
-                <h4 class="mt-4">{{ form_data.form.sections[1].header }}</h4>
+                <h4 class="mt-4">{{ form_data['form']['sections'][1]['header'] }}</h4>
 
-                    {% for item in form_data.form.sections[1].existing_control %}
+                    {% for item in form_data['form']['sections'][1]['fields'] %}
                     <div class="control-item" id="{{item.id}}" style="display: none;">
                         <label for="existingControl{{item.id}}"></label>
                         <textarea class="form-control" style="height: 200px;" id="existingControl{{item.id}}" name="existingControl{{item.id}}"
@@ -45,19 +48,19 @@
             
 
             <!-- Person at risk -->
-            <h4 class="mt-4">{{ form_data.form.sections[2].header }}</h4>
+            <h4 class="mt-4">{{ form_data['form']['sections'][2]['header'] }}</h4>
             <div class="mb-3">
                 <label for="peopleSelect" class="form-label">Select a Person at Risk</label>
                 <select class="form-select" id="personSelect" name="people" required>
                     <option value="" selected disabled>Choose a person...</option>
-                    {% for person in form_data.form.sections[2].dropdown_people %}
+                    {% for person in form_data['form']['sections'][2]['fields'] %}
                         <option value="{{ person.id }}">{{ person.name }}</option>
                     {% endfor %}
                 </select>
             </div>
 
             <!-- Risk -->
-            <h4 class="mt-4">{{ form_data.form.sections[3].header }}</h4>
+            <h4 class="mt-4">{{ form_data['form']['sections'][3]['header'] }}</h4>
             <p class=" fs-6">Severity</p>
             {% for i in range(1,6) %}
             <div class="form-check form-check-inline" onchange="calculateRiskScore()">
@@ -83,9 +86,9 @@
         
         <!-- Further Actions -->
         <div class="mb-3 text-body">
-            <h4 class="mt-4">{{ form_data.form.sections[4].header }}</h4>
+            <h4 class="mt-4">{{ form_data['form']['sections'][4]['header'] }}</h4>
 
-                {% for item in form_data.form.sections[4].further_action %}
+                {% for item in form_data['form']['sections'][4]['fields'] %}
                 <div class="action-item" id="{{item.id}}" style="display: none;">
                     <label for="further_action{{item.id}}"></label>
                     <textarea class="form-control" style="height: 200px;" id="further_action{{item.id}}" name="further_action{{item.id}}" 
@@ -99,7 +102,7 @@
 
 
         <!-- Residual Risk -->
-        <h4 class="mt-4">{{ form_data.form.sections[5].header }}</h4>
+        <h4 class="mt-4">{{ form_data['form']['sections'][5]['header'] }}</h4>
         <p class=" fs-6">Severity</p>
         {% for i in range(1,6) %}
         <div class="form-check form-check-inline" onchange="calculateResidualRiskScore()">
@@ -124,17 +127,17 @@
         
 
         <!-- Action Taken By (Could make a drop down of the list of pilots) -->
-        <h4 class="mt-4">{{ form_data.form.sections[6].header }}</h4>
+        <h4 class="mt-4">{{ form_data['form']['sections'][6]['header'] }}</h4>
         <input type="text" class="form-control mb-3" 
         id="pilot" name="Pilot name"required value="">
 
         <!-- Action Taken When -->
-        <h4 class="mt-4">{{ form_data.form.sections[7].header }}</h4>
+        <h4 class="mt-4">{{ form_data['form']['sections'][7]['header'] }}</h4>
         <input type="date" class="form-control mb-3" 
         id="date" name="Date" required value="">
 
         <!-- Completed -->
-        <h4 class="mt-4">{{ form_data.form.sections[8].header }}</h4>
+        <h4 class="mt-4">{{ form_data['form']['sections'][8]['header'] }}</h4>
         <input type="checkbox" class="mt-2" id="check" name="check" required>
     
    

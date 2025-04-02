@@ -179,11 +179,41 @@ def post_flight(project_id):
 def risk_analysis(project_id):
     project = Project.query.get_or_404(project_id)
     security(project)
-    if request.method == 'POST':
-        print("submitted")
-        return render_template('forms/risk_analysis.html', title=' Risk Analysis Form', form_data = riskAnalysisTemplate[0],project=project, footer=False)
+    
 
-    return render_template('forms/risk_analysis.html', title=' Risk Analysis Form', form_data = riskAnalysisTemplate[0],project=project, footer=False)
+    form_data = project.riskAnalysis
+    
+    print(form_data)
+        
+    errors = {}
+       
+    if request.method == 'POST':
+        
+        for section in form_data[0]['form']['sections']:
+            # Loop through all fields
+            for field in section['fields']:     
+                field_id = field['id']
+                field_value = request.form.get(field_id)
+                
+                # Handle checkboxes 
+                if field_id == 'check':  
+                    field['value'] = request.form.get(field_id) == "on"  # True if checked
+                else:
+                    field['value'] = field_value
+
+            if field_id not in errors:
+                field['value'] = field_value
+        
+        project.riskAnalysis = form_data
+        flag_modified(project, "riskAnalysis")
+        db.session.add(project)
+        db.session.commit()
+        
+        flash('Changes saved successfully!', 'success')
+        return redirect(url_for('project', project_id=project.id))
+                
+
+    return render_template('forms/risk_analysis.html', title=' Risk Analysis Form', form_data = form_data ,project=project, footer=False)
 
 # Risk Analysis Form - Add Risk Route
 @app.route("/project/<int:project_id>/risk-analysis/add")

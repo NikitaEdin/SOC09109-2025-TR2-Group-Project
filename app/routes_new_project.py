@@ -13,6 +13,7 @@ from app.models import Project, ProjectFile, User
 
 from app.forms.jsons.viabilityStudyTemplate import ViabilityStudyTemplate
 from app.forms.jsons.siteEvaluationTemplate import SiteEvaluationTemplate
+from app.forms.jsons.riskAnalysisTemplate import riskAnalysisTemplate
 from app.forms.jsons.loadingListSafetyKitTemplate import LoadingListSafetyKitTemplate
 from app.forms.jsons.loadingListMaintenanceKitTemplate import LoadingListMaintenanceKitTemplate
 from app.forms.jsons.loadingListEquipmentTemplate import LoadingListEquipmentTemplate
@@ -171,6 +172,7 @@ def new_project_toggles():
             # JSON forms
             viabilityStudy = viability_study_value,
             siteEvaluation = site_evaluation_value,
+            riskAnalysis = riskAnalysisTemplate,
             toggles = togglesJSON,
            
             
