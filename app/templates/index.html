@@ -45,7 +45,7 @@
         <!-- Hero Button -->
         <div class="row d-flex justify-content-center">
             <div class="col-md-2 col-12 text-center mb-4">
-                <a href="{{ url_for('dashboard') if current_user.is_authenticated else url_for('login') }}"
+                <a href="{{ url_for('getting_started') if current_user.is_authenticated else url_for('login') }}"
                     class="btn btn-primary w-100">Get Started</a>
             </div>
         </div>
