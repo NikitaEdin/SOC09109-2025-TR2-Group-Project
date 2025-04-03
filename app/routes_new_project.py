@@ -172,7 +172,7 @@ def new_project_toggles():
             # JSON forms
             viabilityStudy = viability_study_value,
             siteEvaluation = site_evaluation_value,
-            riskAnalysis = riskAnalysisTemplate,
+            riskAnalysis = riskAnalysisTemplate[0],
             toggles = togglesJSON,
            
             

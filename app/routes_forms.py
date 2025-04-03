@@ -181,7 +181,7 @@ def risk_analysis(project_id):
     security(project)
     
 
-    form_data = project.riskAnalysis 
+    form_data = project.riskAnalysis
 
     if not project.riskAnalysis:
         project.riskAnalysis = []
@@ -189,7 +189,7 @@ def risk_analysis(project_id):
     errors = {}
        
     if request.method == 'POST':
-             
+        #  Grab the drop-down    
         selected_hazard = request.form.get("hazard")
         selected_person = request.form.get("people")
    
