@@ -1,0 +1,69 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% block main_content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h2>Project Files</h2>
+
+        {% include 'shared/flash-message.html' %}
+
+        <!-- File Upload Information -->
+        <div class="mb-3">
+            <button class="btn btn-outline-danger" type="button" data-bs-toggle="collapse" data-bs-target="#uploadGuidelines"
+                aria-expanded="false" aria-controls="uploadGuidelines">
+                <i class="fas fa-info-circle"></i> Upload Guidelines
+            </button>
+            <div class="collapse mt-2" id="uploadGuidelines">
+                <div class="alert alert-info">
+                    <ul class="mb-0">
+                        <li><strong>Max Files:</strong> {{ max_files }} per project</li>
+                        <li><strong>Allowed Types:</strong> {{ allowed_extensions | join(', ') }}</li>
+                        <li><strong>Max File Size:</strong> {{ (max_file_size / (1024 * 1024)) | int }}MB per file</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {% if project.files|length < max_files %}
+            <form action="{{ url_for('upload_file', project_id=project.id) }}" method="post" enctype="multipart/form-data"
+                class="mb-4">
+                <input type="file" name="file" class="form-control mb-2" required>
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+        {% else %}
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i> You have reached the maximum file limit ({{ max_files }} files). 
+                Please remove existing files if you need to upload new ones.
+            </div>
+        {% endif %}
+
+        <h4>Uploaded Files</h4>
+        <ul class="list-group">
+            {% for file in project.files %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <a href="{{ url_for('download_file', project_id=project.id, file_id=file.id) }}">
+                        {{ file.original_filename }}
+                    </a>
+                    <br>
+                    <small class="text-muted">
+                        Uploaded: {{ file.uploaded_at.strftime('%d %b, %Y - %H:%M') }} | 
+                        Size: {{ file.human_readable_size() }}
+                    </small>
+                </div>
+                <form action="{{ url_for('delete_file', project_id=project.id, file_id=file.id) }}" method="post"
+                    class="d-inline">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </li>
+            {% else %}
+            <p>No files uploaded yet.</p>
+            {% endfor %}
+        </ul>
+
+        <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary my-3">
+            Back to Project
+        </a>
+    </div>
+</div>
+{% endblock %}

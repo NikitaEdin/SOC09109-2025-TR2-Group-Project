@@ -31,16 +31,35 @@
         <h2 class="fs-3">{{ section.header }}</h2>
 
         {% for field in section.fields %}
+
             {% if not field.value or field.value == "" %}
+                {% if field.id == "allowedUsers" %}
+                    {% if allowedUsers %}
+                        <span class="fw-bold fs-6">{{ field.name }}:</span>
+
+                        <ul class ="list-unstyled">
+                            <li>
+                                {{ creator.username }}
+                            </li>
+                            {% for user in allowedUsers %}
+                                <li>
+                                    {{ user.username }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                {% else %}
+                    <p>
+                        <span class="fw-bold fs-6">{{ field.name }}:</span>
+                        <span class="text-danger">N/A</span>
+                    </p>
+                {% endif %}
+            {% elif field.type == "text" %}
                 <p>
                     <span class="fw-bold fs-6">{{ field.name }}:</span>
-                    <span class="text-danger">N/A</span>
+                    {{ field.value|safe }}
                 </p>
-            {% elif field.type == "text" %}
-               <p>
-                   <span class="fw-bold fs-6">{{ field.name }}:</span>
-                   {{ field.value|safe }}
-               </p>
             {% elif field.type == "textarea" %}
                 <div>
                     <p class="fw-bold fs-6 m-0">{{ field.name }}</p>

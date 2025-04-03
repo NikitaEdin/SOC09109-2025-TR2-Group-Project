@@ -1,12 +1,15 @@
 from copy import deepcopy
 from datetime import datetime, timezone
+import uuid
+from werkzeug.utils import secure_filename
+import os
 from app import app, db
-from flask import flash, redirect, render_template, session, url_for
+from flask import flash, redirect, render_template, send_from_directory, session, url_for, request, jsonify
 from flask_login import current_user, login_required
 
 from app.AuditLogger import AuditLogger
 from app.forms.createProject import EditProject, ProjectLocation, ProjectType, ProjectDetails, ProjectToggles
-from app.models import Project
+from app.models import Project, ProjectFile, User
 
 from app.forms.jsons.viabilityStudyTemplate import ViabilityStudyTemplate
 from app.forms.jsons.siteEvaluationTemplate import SiteEvaluationTemplate
@@ -16,6 +19,11 @@ from app.forms.jsons.loadingListEquipmentTemplate import LoadingListEquipmentTem
 from app.forms.jsons.postFlightTemplate import PostFlightTemplate
 from app.forms.jsons.loadingListCrewListTemplate import LoadingListCrewListTemplate
 from app.forms.jsons.loadingListGroundEquipmentTemplate import LoadingListGroundEquipmentTemplate
+
+UPLOAD_FOLDER = 'uploads/'
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
+ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'ppt', 'pptx', 'txt', 'png', 'jpg', 'jpeg'}
+MAX_FILES_PER_PROJECT = 10
 
 # Step 1: Get location of the project
 @app.route("/create_project/location", methods=['GET','POST'])
@@ -191,6 +199,10 @@ def new_project_toggles():
         flash('Project created successfuly!', 'success')
         return redirect(url_for('dashboard'))
 
+    # Disable items based on type
+    if (session.get('projectType') == 'Rural'):
+        form.leafletDropRequired.render_kw = {'disabled': 'disabled'}
+
     return render_template('/create_project/new_project_toggles.html', form=form, footer=False, title='Final steps...')
 
 @app.route("/project/<int:project_id>/edit", methods=["GET", "POST"])
@@ -258,3 +270,168 @@ def remove_project(project_id):
         flash("Project couldn't be removed at this time.", "danger")
         return redirect(url_for('project', project_id=project.id))
 
+
+@app.route('/project/<int:project_id>/manage_access', methods=['GET', 'POST'])
+@login_required
+def manage_access(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    # Ensure only the author can manage access
+    if project.authorID != current_user.id:
+        flash("You do not have permission to manage this project's access.", "danger")
+        return redirect(url_for('dashboard'))
+
+    if request.method == 'POST':
+        user_id = request.form.get('user_id')
+        action = request.form.get('action')
+
+        user = User.query.get(user_id)
+
+        if user:
+            if action == "add" and user not in project.allowed_users:
+                project.allowed_users.append(user)
+                flash(f"User {user.username} added.", "success")
+            elif action == "remove" and user in project.allowed_users:
+                project.allowed_users.remove(user)
+                flash(f"User {user.username} removed.", "warning")
+            db.session.commit()
+
+    return render_template('dashboard/manage_access.html', project=project)
+
+@app.route('/search_users', methods=['GET'])
+@login_required
+def search_users():
+    query = request.args.get('query')
+    users = User.query.filter(User.username.ilike(f"%{query}%")).all()
+    return jsonify([{'id': user.id, 'username': user.username} for user in users])
+
+
+
+############################ PROJECT FILES ############################
+# Helper function to check allowed file types
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/project/<int:project_id>/files', methods=['GET'])
+@login_required
+def project_files(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    # Can access?
+    if not project.can_access():
+        flash("You are not authorised to edit this project.", "danger")
+        return redirect(url_for('dashboard'))
+
+    return render_template('/dashboard/project_files.html', project=project, footer=False,
+        max_file_size=MAX_FILE_SIZE, 
+        allowed_extensions=ALLOWED_EXTENSIONS, 
+        max_files=MAX_FILES_PER_PROJECT)
+
+
+@app.route('/project/<int:project_id>/files/upload', methods=['POST'])
+@login_required
+def upload_file(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    # Can access
+    if not project.can_access():
+        flash("You are not authorised to edit this project.", "danger")
+        return redirect(url_for('dashboard'))
+    
+    # Max number of files per project
+    if len(project.files) >= MAX_FILES_PER_PROJECT:
+        flash(f"Maximum of {MAX_FILES_PER_PROJECT} files allowed.", "danger")
+        return redirect(url_for('project_files', project_id=project_id))
+
+    file = request.files.get('file')
+
+    # No file
+    if not file or file.filename == '':
+        flash("No file selected!", "danger")
+        return redirect(url_for('project_files', project_id=project_id))
+
+    # Allowed file
+    if not allowed_file(file.filename):
+        flash(f"Invalid file type! Allowed types: {', '.join(ALLOWED_EXTENSIONS)}", "danger")
+        return redirect(url_for('project_files', project_id=project_id))
+
+    original_filename = secure_filename(file.filename)
+
+    # Check if file with the same name already exists
+    existing_file = ProjectFile.query.filter_by(project_id=project.id, original_filename=original_filename).first()
+
+    if existing_file:
+        # Delete old file before replacing
+        if os.path.exists(existing_file.filepath):
+            os.remove(existing_file.filepath)
+
+        # Keep same database entry but update filename and path
+        unique_filename = f"{project_id}_{uuid.uuid4().hex}_{original_filename}"
+        filepath = os.path.join(UPLOAD_FOLDER, unique_filename)
+        
+        # Save and update record
+        file.save(filepath)
+
+        existing_file.filename = unique_filename
+        existing_file.filepath = filepath
+        existing_file.size = os.path.getsize(filepath)
+        existing_file.uploaded_at = datetime.utcnow()
+        db.session.commit()
+
+        flash("File replaced successfully!", "success")
+    else:
+        # New file upload (<ProjectID>_<UUID>_<filename>)
+        unique_filename = f"{project_id}_{uuid.uuid4().hex}_{original_filename}"
+        filepath = os.path.join(UPLOAD_FOLDER, unique_filename)
+        
+        # Ensure folder exists and save
+        os.makedirs(UPLOAD_FOLDER, exist_ok=True)  
+        file.save(filepath)
+
+        new_file = ProjectFile(
+            filename=unique_filename,
+            original_filename=original_filename,
+            filepath=filepath,
+            size=os.path.getsize(filepath),
+            project_id=project.id
+        )
+        db.session.add(new_file)
+        db.session.commit()
+
+        flash("File uploaded successfully!", "success")
+
+    return redirect(url_for('project_files', project_id=project_id))
+
+
+@app.route('/project/<int:project_id>/files/<int:file_id>/download')
+@login_required
+def download_file(project_id, file_id):
+    file = ProjectFile.query.get_or_404(file_id)
+
+    # File belongs to project the user has access
+    if not file.project.can_access():
+        flash("You are not authorised to download this file.", "danger")
+        return redirect(url_for('dashboard'))
+
+    directory = os.path.abspath(UPLOAD_FOLDER)
+    return send_from_directory(directory, file.filename, as_attachment=True, download_name=file.original_filename)
+
+
+@app.route('/project/<int:project_id>/files/<int:file_id>/delete', methods=['POST'])
+@login_required
+def delete_file(project_id, file_id):
+    file = ProjectFile.query.get_or_404(file_id)
+
+     # File belongs to project the user has access
+    if not file.project.can_access():
+        flash("You are not authorised to delete this file.", "danger")
+        return redirect(url_for('dashboard'))
+
+    if os.path.exists(file.filepath):
+        os.remove(file.filepath)
+
+    db.session.delete(file)
+    db.session.commit()
+    
+    flash("File deleted successfully!", "success")
+    return redirect(url_for('project_files', project_id=project_id))

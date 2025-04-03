@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+    <div class="text-center m-3">
+        <h1><strong>Get Started</strong></h1>
+        <h3>Different Types of Flights</h3>
+    </div>
+
+ <div class="row d-flex justify-content-center">
+      <div class="card mx-5 my-3 shadow-lg" style="width: 27rem;">
+        <div class="card-header text-center">
+            <h5><strong>Urban</strong></h5>
+        </div>
+          <img src="{{ url_for('static', filename='Images/DroneCityEdited.jpg') }}" alt="Image of drone flying in the city" class="img-fluid rounded">
+            <div class="card-body">
+                <p class="card-text text-center">Projects situated in highly populated, built-up areas where police must be informed before flying, and a leaflet drop is often required.</p>
+            </div>
+      </div>
+
+     <div class="card mx-5 my-3 shadow-lg" style="width: 27rem;">
+         <div class="card-header text-center">
+             <h5><strong>Rural</strong></h5>
+         </div>
+            <img src="{{ url_for('static', filename='Images/DroneRuralEdited.jpg') }}" alt="Image of drone flying in a rural setting" class="img-fluid rounded">
+                <div class="card-body">
+                    <p class="card-text text-center">Projects located in open or remote areas where wildlife restrictions apply, and a loading list is typically necessary.</p>
+                </div>
+            </div>
+        </div>
+
+<h2 class="text-center fw-bold mt-5 mb-2">Project Creation Process</h2>
+ <div class="row md-6 mt-4 p-4 rounded shadow">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="list-group ">
+                    <div class="list-group-item bg-light">
+                        <strong>1) Initiate Project:</strong> Log in, navigate to the dashboard, and click the green "New Project" button.
+                    </div>
+                    <div class="list-group-item ">
+                        <strong>2) Operation Location:</strong> Select the location on the map by clicking on the desired point.
+                    </div>
+                    <div class="list-group-item bg-light">
+                        <strong>3) Project Type:</strong> Select either "Rural" or "Urban," depending on the type of project.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="list-group ">
+                    <div class="list-group-item bg-light">
+                        <strong>4) Project Details:</strong> Enter the details of the project including the title, description, date, and project purpose.
+                    </div>
+                    <div class="list-group-item ">
+                        <strong>5) Project Features:</strong> Select any features relevant to the project by toggling the options.
+                    </div>
+                    <div class="list-group-item bg-light">
+                        <strong>6) Finalise Project:</strong>  View the project in the dashboard, where you can also edit details or manage user access.
+                    </div>
+                </div>
+            </div>
+        </div>
+     <div class="d-flex justify-content-center mt-4">
+         <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Dashboard</a>
+     </div>
+ </div>
+
+<h2 class="text-center fw-bold mt-5 mb-2">Project Purposes</h2>
+ <div class="row md-6 mt-4 p-4 rounded shadow">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="list-group ">
+                    <div class="list-group-item bg-light">
+                        <strong>1) Practice:</strong> Use drones to improve piloting skills and build confidence with the equipment.
+                    </div>
+                    <div class="list-group-item ">
+                        <strong>2) Research:</strong> Use drones to test new ideas or for gathering useful information.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="list-group ">
+                    <div class="list-group-item bg-light">
+                        <strong>3) Training:</strong> Learn how to operate drones and develop skills for different purposes.
+                    </div>
+                    <div class="list-group-item ">
+                        <strong>4) Other:</strong> Adapt drone use for unique needs, allowing room for creativity.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<h2 class="text-center fw-bold mt-5 mb-2">Timeline Information</h2>
+ <div class="row md-6 mt-4 p-4 rounded shadow">
+      <div class="list-group">
+          <div class="list-group-item">
+              <strong>28 Days in Advance:</strong> Preparation begins by ensuring all necessary permissions are obtained.
+        </div>
+        <div class="list-group-item bg-light">
+            <strong>7 Days in Advance:</strong> A week before the flight, you'll focus on the practical details: conducting evaluations, customising the loading list, completing the viability study, finalising risk analysis, and notifying any relevant authorities or communities about your operation.  It's also a good time to monitor the weather and make early adjustments to your plans if needed.
+        </div>
+        <div class="list-group-item">
+            <strong>24 Hours in Advance:</strong> Contact ATC if operating in restricted zones and decide go/no-go based on weather.  Review the loading list, send crew call sheets, update firmware, charge equipment, and finalise preparations. Customise and print key documentation, including emergency procedures and checklists.  Conduct a test flight if necessary, ensuring all equipment and crew coordination are ready for the operation.
+        </div>
+        <div class="list-group-item bg-light">
+            <strong>Day of Flight:</strong> On the day of the flight, log into the operator account and pack equipment using the loading list. Check NOTAMs, complete the site checklist, and decide go/no-go based on conditions. Assemble the UAS, brief the crew, and complete pre-flight checks.  After the mission, perform post-flight actions, disassemble the UAS, and pack all equipment properly.
+        </div>
+      </div>
+         <div class="d-flex justify-content-center mt-4">
+        <div class="col-12 col-md-4">
+           <a href="{{ url_for('timeline') }}" class="form-control btn btn-primary">View Full Timeline</a>
+        </div>
+    </div>
+ </div>
+{% endblock %}

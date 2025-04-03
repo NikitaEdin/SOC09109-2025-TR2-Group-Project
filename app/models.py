@@ -29,6 +29,10 @@ class User(db.Model, UserMixin):
 
     role = db.relationship('Role', backref=db.backref('users', lazy=True))
 
+    accessible_projects = db.relationship(
+        'Project', secondary='project_access', back_populates='allowed_users'
+    )
+
     # ToString
     def __repr__(self):
         return f"<User {self.username} ({self.role.title})>"
@@ -120,6 +124,11 @@ class Project(db.Model):
 
 
     author = db.relationship('User', backref='projects')
+
+    allowed_users = db.relationship(
+        'User', secondary='project_access', back_populates='accessible_projects'
+    )
+
     
     # Returns true if given user is the owner of this project
     def is_owner(self, user):
@@ -130,7 +139,7 @@ class Project(db.Model):
         return self.author
 
     def can_access(self):
-        return self.authorID == current_user.id or current_user.is_admin()
+        return self.authorID == current_user.id or current_user.is_admin() or current_user in self.allowed_users
 
     def __repr__(self):
         return f'<Project {self.title} by {self.author.username}>'
@@ -155,7 +164,7 @@ class Project(db.Model):
             db.session.commit()
         else:
             raise ValueError("Invalid ProjectPurpose ID")
-        
+
     # Generate new flightcode based on given project purpose ID
     @staticmethod
     def get_new_flightCode(projectPurposeID):
@@ -201,3 +210,28 @@ class ProjectPurpose(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(16), nullable=False)
     code = db.Column(db.String(1), nullable=False)
+
+# Association Table for Many-to-Many Relationship
+project_access = db.Table(
+    'project_access',
+    db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+)
+
+class ProjectFile(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    original_filename = db.Column(db.String(255), nullable=False)  # user-friendly name
+    filename = db.Column(db.String(255), nullable=False)  # Unique filename
+    filepath = db.Column(db.String(255), nullable=False)
+    size = db.Column(db.Integer, nullable=False)
+    uploaded_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
+    project = db.relationship('Project', backref=db.backref('files', lazy=True))
+
+    def human_readable_size(self):
+        size = self.size
+        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+            if size < 1024.0:
+                return f"{size:.1f} {unit}"
+            size /= 1024.0
+        return f"{size:.1f} TB"

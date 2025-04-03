@@ -1,8 +1,9 @@
 {% macro render_field(field, errors) %}
 <div class="form-group">
     <!-- Generate based on type -->
-    <label for="{{ field.id }}">{{ field.name|capitalize }}</label>
-
+    {% if field.type != "div" %}
+        <label for="{{ field.id }}">{{ field.name|capitalize }}</label>
+    {% endif %}
     <!-- Description -->
     {% if field.description %}
     <p class="mt-0 mb-2 small text-muted">{{ field.description | safe}}</p>
@@ -24,7 +25,13 @@
                {% if field.tooltip %} 
                data-bs-toggle="tooltip" data-bs-title="{{field.tooltip}}" data-bs-custom-class="custom-tooltip"
              {% endif %}
-               {% if field.required %}required{% endif %}> 
+               {% if field.required %}required{% endif %}>
+
+     <!-- Div -->
+    {% elif field.type == 'div' %}
+        <div  class="mb-3 {% if field.id in errors %}is-invalid{% endif %}"
+               id="{{ field.id }}"
+        ></div>
 
     <!-- Text -->
     {% else %}
