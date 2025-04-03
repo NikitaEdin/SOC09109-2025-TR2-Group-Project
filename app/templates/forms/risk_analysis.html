@@ -55,7 +55,8 @@
                 <select class="form-select" id="personSelect" name="people" required>
                     <option value="" selected disabled>Choose a person...</option>
                     {% for person in form_data.form.sections[2].fields %}
-                        <option id="{{person.id}}" value="{{ person.id }}">{{ person.name }}</option>
+                        <option id="{{person.id}}" value="{{ person.id }}" {% if person.id == person.value %} selected {%endif%}>
+                            {{ person.name }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -81,7 +82,9 @@
             <!-- Calculate the score based on the severity and probality by S*P  -->
             <div class="form-group mt-3">
                 <label for="riskScore">Risk Score</label>
-                <input type="text" class="form-control" id="riskScore" readonly>
+                {% for item in form_data.form.sections[3].fields %}
+                <input type="text" class="form-control" id="{{item.name}}" name="{{item.id}}" value="{{item.value}}" readonly>
+                {% endfor %}
             </div>
            
         
@@ -123,23 +126,31 @@
        <!-- Calculate the score based on the severity and probality by S*P  -->
             <div class="form-group mt-3">
                 <label for="residualRiskScore">Risk Score</label>
-                <input type="text" class="form-control" id="residualRiskScore" readonly>
+                {% for item in form_data.form.sections[5].fields %}
+                <input type="text" class="form-control" id="{{item.id}}" name="{{item.name}}" value="{{item.value}}" readonly>
+                {% endfor %}
             </div>
         
 
         <!-- Action Taken By (Could make a drop down of the list of pilots) -->
         <h4 class="mt-4">{{ form_data.form.sections[6].header }}</h4>
+        {% for item in form_data.form.sections[6].fields %}
         <input type="text" class="form-control mb-3" 
-        id="pilot" name="Pilot name"required value="">
+        id="{{item.id}}" name="{{item.name}}" required value="{{item.value}}" >
+        {% endfor %}
 
         <!-- Action Taken When -->
         <h4 class="mt-4">{{ form_data.form.sections[7].header }}</h4>
+        {% for item in form_data.form.sections[7].fields %}
         <input type="date" class="form-control mb-3" 
-        id="date" name="Date" required value="">
+        id="{{item.id}}" name="{{item.name}}" required value="{{item.value}}">
+        {% endfor %}
 
         <!-- Completed -->
         <h4 class="mt-4">{{ form_data.form.sections[8].header }}</h4>
-        <input type="checkbox" class="mt-2" id="check" name="check" required>
+        {% for item in form_data.form.sections[8].fields %}
+        <input type="checkbox" class="mt-2" id="{{item.id}}" name="{{item.name}}" {% if item.value %}checked{% endif %}>
+        {% endfor %}
     
    
      
@@ -224,6 +235,13 @@
             console.log("Nothing found");
         }
     }
+
+    //  On window loading start the functions 
+    window.onload = function () {
+    updateHiddenField();
+    // calculateRiskScore();
+    // calculateResidualRiskScore();
+};
     
 
 </script>

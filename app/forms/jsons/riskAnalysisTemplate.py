@@ -89,7 +89,10 @@ riskAnalysisTemplate = [
         ]
       },
       {
-        "header": "Risk"
+        "header": "Risk",
+         "fields":[
+            {"id": "riskScore","name":"riskScore","value":0,"required": True}
+        ]
       },
       {
         "header": "Further Actions",
@@ -144,7 +147,7 @@ riskAnalysisTemplate = [
       {
         "header": "Residual Risk",
          "fields":[
-            {"id": "score", "name": "Score based on user input","value":0,"required": True}
+            {"id": "residualRiskScore","name":"residualRiskScore","value":0,"required": True}
         ]
         
       },
@@ -163,7 +166,7 @@ riskAnalysisTemplate = [
       {
         "header": "Completed",
         "fields":[
-          {"id": "check", "name": "Completed", "value": "", "required": True}
+          {"id": "check", "name": "check", "value": "", "required": False}
         ]
       }
     ]

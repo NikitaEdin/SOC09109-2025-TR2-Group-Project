@@ -192,6 +192,7 @@ def risk_analysis(project_id):
         #  Grab the drop-down    
         selected_hazard = request.form.get("hazard")
         selected_person = request.form.get("people")
+
    
         
         for section in form_data['form']['sections']:
@@ -199,19 +200,20 @@ def risk_analysis(project_id):
             for field in section.get('fields', []):   
                 field_id = field['id']
                 
+                # Handle dropdowns
                 if field['id'] == selected_hazard:
                     field['value'] = selected_hazard
                 elif field['id'] == selected_person:
                     field['value'] = selected_person
                 else:
                     field_value = request.form.get(field_id)
-                
-                                
+                            
                     # Handle checkboxes 
                     if request.form.get(field_id) == "on":
                         field['value'] = True
                     else:
                         field['value'] = field_value  
+                        
         
         project.riskAnalysis = form_data
         flag_modified(project, "riskAnalysis")
