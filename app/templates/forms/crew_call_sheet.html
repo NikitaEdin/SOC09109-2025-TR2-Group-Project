@@ -121,8 +121,14 @@
         </div>
 
         <!-- Submit and Save changes -->
-        {{ form.submit(class="form-control btn btn-primary my-3") }}
-        {{ form.saveChanges(class="form-control btn btn-primary") }}
+
+        {% if project.can_edit() %}
+            {{ form.submit(class="form-control btn btn-primary my-3") }}
+            {{ form.saveChanges(class="form-control btn btn-primary") }}
+        {% else %}
+            <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary">Back
+                to Project</a>
+        {% endif %}
     </form>
 
 </div>

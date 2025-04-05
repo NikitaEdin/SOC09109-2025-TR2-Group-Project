@@ -141,7 +141,9 @@
      
     <div class="container text-center mt-5 mb-2">
         <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary ms-auto">Back to Project</a>
-        <button type="submit" class="btn btn-success ms-auto">Save</button>
+        {% if project.can_edit() %}
+            <button type="submit" class="btn btn-success ms-auto">Save</button>
+        {% endif %}
     </div>
 </form>
 

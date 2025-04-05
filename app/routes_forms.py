@@ -171,7 +171,7 @@ def post_flight(project_id):
     project = Project.query.get_or_404(project_id)
     security(project)
 
-    return render_template('forms/post_flight.html', title='Post-Flight Actions')
+    return render_template('forms/post_flight.html', title='Post-Flight Actions', project=project)
 
 # Risk Analysis Form
 @app.route("/project/<int:project_id>/risk-analysis", methods=['GET','POST'])

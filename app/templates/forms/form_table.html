@@ -68,14 +68,21 @@ Checklist template for auto-generated forms
                                         class="mt-2"
                                         value="true"
                                         {% if user_item[field.name] %} checked {% endif %}
-                                        onchange="updateHiddenField('{{ field.name }}')" />
+                                           {% if project.can_edit() %}
+                                           onchange="updateHiddenField('{{ field.name }}')"
+                                           {% else %}
+                                           disabled
+                                           {% endif %}
+                                         />
                                 </div>
                             {% else %}
                             <input type="{{ field.type }}" 
                                 name="{{ field.name }}[]"  
                                 value="{{ user_item[field.name] }}" 
                                 placeholder="{{ field.placeholder }}"  
-                                class="form-control">
+                                class="form-control"
+                                {% if not project.can_edit() %} disabled {% endif %}
+                            >
                             {% endif %}
                         </td>
                         {% endfor %}
@@ -91,17 +98,24 @@ Checklist template for auto-generated forms
 
             <!-- Submit/Save button -->
             <div class="row justify-content-center">
-                <div class="text-center mb-3">
-                    <button type="button" class="btn btn-primary" onclick="addRow()">Add More Items</button>
-                </div>
+                {% if project.can_edit() %}
+                    <div class="text-center mb-3">
+                        <button type="button" class="btn btn-primary" onclick="addRow()">Add More Items</button>
+                    </div>
+                {% endif %}
                 <div class="col-6 mt-5">
-                    <button type="submit" class="btn btn-primary w-100">Save</button>
+                    {% if project.can_edit() %}
+                        <button type="submit" class="btn btn-primary w-100">Save</button>
+                    {% else %}
+                        <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary w-100">Back
+                            to Project</a>
+                    {% endif %}
                 </div>
             </div>
         </form>
     </div>
 
-
+{% if project.can_edit() %}
     <script>
         // Initialize fields
         let fields = JSON.parse('{{ form_data.form.fields | tojson | safe }}');
@@ -175,8 +189,8 @@ Checklist template for auto-generated forms
             hiddenField.value = values.join(',');
         }
     </script>
-    
-    
+
+{% endif %}
     
     
 
