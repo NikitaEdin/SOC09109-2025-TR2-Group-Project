@@ -333,8 +333,8 @@ def project_files(project_id):
 def upload_file(project_id):
     project = Project.query.get_or_404(project_id)
 
-    # Can access
-    if not project.can_access():
+    # Can edit
+    if not project.can_edit():
         flash("You are not authorised to edit this project.", "danger")
         return redirect(url_for('dashboard'))
     
@@ -423,7 +423,7 @@ def delete_file(project_id, file_id):
     file = ProjectFile.query.get_or_404(file_id)
 
      # File belongs to project the user has access
-    if not file.project.can_access():
+    if not file.project.can_edit():
         flash("You are not authorised to delete this file.", "danger")
         return redirect(url_for('dashboard'))
 
