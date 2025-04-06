@@ -89,6 +89,7 @@ def new_project_details():
 
     return render_template('/create_project/new_project_details.html', form=form, footer=False, title='Almost there...')
 
+# Step 4: Set project toggles, what document are not required
 @app.route("/create_project/toggles", methods=['GET','POST'])
 @login_required
 def new_project_toggles():
