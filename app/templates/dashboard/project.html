@@ -68,81 +68,79 @@
             </div>
         </div>
         
-        <!-- Controls -->
-        <div class="mt-4">
-            <div class="row justify-content-center">
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Documents and Checklist</h5>
+<!-- Controls -->
+<div class="mt-4">
+    <div class="row">
+        <div class="col">
+            <!-- Timeline -->
+            {% include "dashboard/timeline.html" %}
+        </div>
+        
+        <!-- Right Column: Checklist and Exports -->
+        <div class="col-sm-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Documents and Checklist</h5>
 
-                            <div class="row">
-                                <!-- Required Documents -->
-                                <div class="col-md-4 mb-3 text-center">
-                                    {% if project.projectType =='Rural' %}
-                                    <a href="{{ url_for('rural_checklist',project_id=project.id) }}" class="btn btn-primary w-100">
-                                        <i class="fas fa-file-alt"></i> Required Documents
-                                      </a>
+                    <!-- Required Documents -->
+                    <div class="mb-3">
+                        {% if project.projectType == 'Rural' %}
+                        <a href="{{ url_for('rural_checklist', project_id=project.id) }}" class="btn btn-primary w-100">
+                            <i class="fas fa-file-alt"></i> Required Documents
+                        </a>
+                        {% elif project.projectType == 'Urban' %}
+                        <a href="{{ url_for('urban_checklist', project_id=project.id) }}" class="btn btn-primary w-100">
+                            <i class="fas fa-file-alt"></i> Required Documents
+                        </a>
+                        {% else %}
+                        <a href="#" class="btn disabled w-100">
+                            <i class="fas fa-file-alt"></i> Required Documents Error
+                        </a>
+                        {% endif %}
+                    </div>
 
-                                    {% elif project.projectType=='Urban'%}
-                                    <a href="{{ url_for('urban_checklist',project_id=project.id) }}" class="btn btn-primary w-100">
-                                        <i class="fas fa-file-alt"></i> Required Documents
-                                      </a>
+                    <!-- Optional Documents -->
+                    <div class="mb-3">
+                        <a href="{{ url_for('optional', project_id=project.id) }}" class="btn btn-primary w-100">
+                            <i class="fas fa-file"></i> Optional Documents
+                        </a>
+                    </div>
 
-                                    {% else %}
-                                    <a href="#" class="btn disabled">
-                                        <i class="fas fa-file-alt"></i> Required Documents Error</a>
-                                    {% endif %}
-                                </div>
+                    <!-- Personal Checklist -->
+                    <div class="mb-3">
+                        <a href="{{ url_for('personal', project_id=project.id) }}" class="btn btn-primary w-100">
+                            <i class="fas fa-check-circle"></i> Personal Checklist
+                        </a>
+                    </div>
 
-                                <!-- Optional Documents -->
-                                <div class="col-md-4 mb-3 text-center">
-                                    <a href="{{ url_for('optional',project_id=project.id) }}" class="btn btn-primary w-100"><i class="fas fa-file"></i> Optional Documents</a>
-                                </div>
+                    <!-- Project Files -->
+                    <div class="mb-3">
+                        <a href="{{ url_for('project_files', project_id=project.id) }}" class="btn btn-primary w-100">
+                            <i class="fas fa-folder-open"></i> Project Files
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-                                <!-- Checklist -->
-                                <div class="col-md-4 mb-3 text-center">
-                                    <a href="{{ url_for('personal',project_id=project.id) }}" class="btn btn-secondary w-100"><i class="fas fa-check-circle"></i> Personal Checklist</a>
-                                </div>
+            <!-- Export Options -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Export Options</h5>
 
-                                <!--  -->
-                                <div class="col-md-4 mb-3 text-center">
-                                    <a href="{{ url_for('project_files', project_id=project.id) }}" class="btn btn-primary w-100"> <i class="fas fa-folder-open"></i> Project Files</a>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="mb-3">
+                        <a href="{{ url_for('export_viability_study', project_id=project.id, auto_open=1) }}" class="btn btn-primary w-100 mb-2">
+                            <i class="fa-solid fa-download"></i> Export Viability Study (PDF)
+                        </a>
+                        <a href="{{ url_for('export_site_evaluation', project_id=project.id, auto_open=1) }}" class="btn btn-primary w-100">
+                            <i class="fa-solid fa-download"></i> Export Site Evaluation (PDF)
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Export Options -->
-        <div class="mt-4">
-            <div class="row justify-content-center">
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Export Options</h5>
-                                <div class="col-md-4 mb-3 text-start pe-md-3">
-                                    <!-- Viability Study -->
-                                    <a class="btn btn-primary w-100 mb-2"
-                                        href="{{ url_for('export_viability_study', project_id=project.id, auto_open=1) }}">
-                                        <i class="fa-solid fa-download"></i> Export Viability Study (PDF)</a>
-                                        
-                                    <!-- Site Evaluation -->
-                                    <a class="btn btn-primary w-100 mb-2"
-                                        href="{{ url_for('export_site_evaluation', project_id=project.id, auto_open=1) }}">
-                                        <i class="fa-solid fa-download"></i> Export Site Evaluation (PDF)</a>
-                                </div>
-                                <!-- TODO: add the rest of the forms we want to export -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        
     </div>
+</div>
+
 
 
     <!-- Prevents ease-in on load, due to map loading in -->
@@ -190,3 +188,4 @@
 
 {% endblock %}
 
+    

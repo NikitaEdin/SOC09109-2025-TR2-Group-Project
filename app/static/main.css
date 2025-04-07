@@ -231,3 +231,76 @@ input[type="checkbox"] {
     height: 0;
     border-top: 1px solid #000;
 }
+
+/* Project page */
+.napier-card-header {
+    background-color: var(--accent-colour); /* Napier red*/
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.napier-accordion-header {
+    background-color: var(--accent-colour)  !important;
+    color: white !important;
+}
+
+/* Flex wrapper inside the button */
+.napier-accordion-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Left-aligned span */
+.napier-accordion-text span:first-child {
+    text-align: left;
+}
+
+/* Right-aligned span */
+.napier-accordion-text span:last-child {
+    text-align: right;
+    margin-left: auto;
+}
+
+/* Accordian arrow colour white */
+.accordion-button::after {
+    filter: brightness(0) invert(1);
+}
+
+/* Bullet points for project timeline items */
+.napier-bullet-list,
+.napier-bullet-sublist {
+    list-style: none;
+    padding-left: 0;
+}
+
+.napier-bullet-list li,
+.napier-bullet-sublist li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.napier-bullet-list li::before {
+    content: "•";
+    color: var(--accent-colour);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    font-size: 2rem;
+    transform: translateY(-50%);
+}
+
+.napier-bullet-sublist li::before {
+    content: "◦"; 
+    color: var(--accent-colour);
+    position: absolute;
+    left: 0;
+    top: 0.72rem;
+    font-size: 2rem;
+    transform: translateY(-50%);
+}
