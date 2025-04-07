@@ -33,21 +33,23 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><input type="text" class="form-control" name="item[]"></td>
-                                <td><input type="text" class="form-control" name="action[]"></td>
-                                <td class="text-center"><input type="checkbox" class="form-check-input" name="check[]"></td>
+                                <td><input type="text" class="form-control" name="item[]" {% if not project.can_edit() %}disabled{% endif %}></td>
+                                <td><input type="text" class="form-control" name="action[]" {% if not project.can_edit() %}disabled{% endif %}></td>
+                                <td class="text-center"><input type="checkbox" class="form-check-input" name="check[]" {% if not project.can_edit() %}disabled{% endif %}></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 
                 <!-- Add More Items Button -->
+                {% if project.can_edit() %}
                 <div class="text-center mb-3">
                     <button type="button" class="btn btn-primary" onclick="addRow()">Add More Items</button>
                 </div>
                 <div class="d-flex justify-content-left mt-4">
                     <button type="button" class="btn btn-success">Save Changes</button>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

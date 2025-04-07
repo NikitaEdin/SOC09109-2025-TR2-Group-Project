@@ -172,8 +172,10 @@
 
             <div class="container text-center mt-5 mb-2">
                 <a href="{{ url_for('list_risk_forms', project_id=project.id) }}" class="btn btn-primary ms-auto">Back to Risk Analysis Forms</a>
-                <button type="submit" class="btn btn-success ms-auto">Save</button>
-            </div>
+                {% if project.can_edit() %}
+            <button type="submit" class="btn btn-success ms-auto">Save</button>
+                {% endif %}
+    </div>
     </form>
 
     <script>
