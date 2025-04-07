@@ -38,7 +38,7 @@
 
     <!-- checkbox -->
     {% elif field.type == 'checkbox' %}
-    <div class="mt-1">
+    <div class="mt-1 ms-2">
         <input type="checkbox" class="checkbox-item {% if field.id in errors %}is-invalid{% endif %} mt-1" 
                 id="{{ field.id }}" name="{{ field.id }}"
                 {% if field.value %} checked {% endif %}
