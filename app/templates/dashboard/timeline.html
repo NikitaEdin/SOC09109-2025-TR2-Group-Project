@@ -1,0 +1,202 @@
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title">Project Timeline</h5>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <!-- 28 days -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed napier-accordion-header justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        <div class="napier-accordion-text me-2">
+                            <span>28 days in advance</span>
+                            <span>Due in <strong><span id="countdown-30"></span></strong></span>
+                        </div>
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <ul class="napier-bullet-list">
+                            <!-- Check if there's no tasks required in 28 days sections -->
+                            {% set has_tasks = false %}
+
+                            {% if toggles.notamRequired %}
+                                <li>Apply for non-standard flight permission.</li>
+                                {% set has_tasks = true %}
+                            {% endif %}
+                    
+                            {% if toggles.leafletDropRequired %}
+                                <li>Prepare leaflets for leaflet drop.</li>
+                                {% set has_tasks = true %}
+                            {% endif %}
+                    
+                            {% if not has_tasks %}
+                                <li>Nothing required at this date, start preparing other documentations.</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7 days -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed napier-accordion-header" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        <div class="napier-accordion-text m-2">
+                            <span>7 days in advance</span>
+                            <span>Due in <strong><span id="countdown-7"></span></strong></span>
+                        </div>
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <ul class="napier-bullet-list">
+                            <li>Complete viability study.</li>
+                            <li>Complete site evaluation.</li>
+                            <li>Complete risk analysis.</li>
+                            {% if toggles.notamRequired %}
+                                <li>Submit NOTAM if appropriate.</li>
+                            {% endif %}
+                            {% if toggles.leafletDropRequired %}
+                                <li>Carry out a leaflet drop and/or a door-to-door advisory campaign.</li>
+                            {% endif %}
+                            {% if project.projectType == 'Urban' %}
+                                <li>Inform police of planned flight.</li>
+                            {% endif %}
+                            {% if toggles.localClubNearby %}
+                                <li>Contact local air club.</li>
+                            {% endif %}
+                            {% if toggles.permissionRequired %}
+                                <li>Obtain permission from relevant landowners of landing and take-off zones.</li>
+                            {% endif %}
+                            <li>Monitor weather of site.</li>
+                            {% if toggles.loadingListRequired %}
+                                <li>Create loading list.</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 24 hours -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThree">
+                    <button class="accordion-button collapsed napier-accordion-header" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                        <div class="napier-accordion-text me-2">
+                            <span>24 hours in advance</span>
+                            <span>Due in <strong><span id="countdown-1"></span></strong></span>
+                        </div>
+                    </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <ul class="napier-bullet-list">
+                            <li>Check that relevant contact numbers are recorded on the site evaluation form.</li>
+                            {% if toggles.protectedAreaFlight %}
+                                <li>Contact ATC if the flight operation is to take place within the flight restriction zone or runway protection zone of a protected aerodrome.</li>
+                            {% endif %}
+                            <li>Make go/no-go decision for the flight based on available weather information.</li>
+                            {% if toggles.loadingListRequired %}
+                                    <li>Review loading list.</li>
+                            {% endif %}
+                            <li>Prepare and send crew call sheets.</li>
+                            <li>Configure UAS if required (e.g. add expansion bays, prepare custom payloads, etc.)</li>
+                            <li>Check UAS firmware is up to date.</li>
+                            <li>Conduct a test flight is necessary.</li>
+                            <li>Check that the operator ID is clearly displayed on the RPA.</li>
+                            <li>Charge flight batteries, controller(s) and mobile device(s).</li>
+                            <li>Customise flight checklist.</li>
+                            <li>Print flight and UAS documentation as required:
+                                <ul class="napier-bullet-sublist">
+                                    <li>Permissions and contacts</li>
+                                    <li>Emergency procedures</li>
+                                    {% if toggles.loadingListRequired %}
+                                        <li>Customised loading list</li>
+                                    {% endif %}
+                                    <li>Customised site checklist</li>
+                                    <li>UAS assembly instructions</li>
+                                    <li>Crew briefing notes</li>
+                                    <li>Pre-flight checklist</li>
+                                    <li>Post-flight actions checklist</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Day of Flight -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingFour">
+                    <button class="accordion-button collapsed napier-accordion-header" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                        <div class="napier-accordion-text me-2">
+                            <span>Day of flight</span>
+                            <span>Due in <strong><span id="countdown-flight"></span></strong></span>
+                        </div>
+                    </button>
+                </h2>
+                <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <ul class="napier-bullet-list">
+                            <li>Ensure relevant account is logged in (e.g. DJI operator).</li>
+                            <li>Pack equipment{% if toggles.loadingListRequired %} using the loading list{% endif %}.</li>
+                            <li>Check for NOTAMs.</li>
+                            <li>Complete site checklist (including a physical tour of the area).</li>
+                            <li>Make go/no-go decision for the flight based on windspeed, weather, presence of uninvolved persons and any unexpected factors.</li>
+                            <li>Assemble the UAS using model-specific checklist.</li> 
+                            <li>Complete crew briefing.</li>
+                            <li>Complete pre-flight checks.</li>
+                            <li>Complete post-flight actions.</li>
+                            <li>Disassemble the UAS using model-specific checklist and pack equipment.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Script to count down days until 30 days, 7days, 24 hours and day of flight -->
+<script>
+    var flightDateStr = "{{ project.dateOfFlight.strftime('%Y-%m-%dT%H:%M:%S') }}"; // includes time
+    var flightDate = new Date(flightDateStr);
+  
+    var countdownTargets = {
+      "countdown-flight": flightDate,
+      "countdown-30": new Date(flightDate.getTime() - 30 * 24 * 60 * 60 * 1000),
+      "countdown-7": new Date(flightDate.getTime() - 7 * 24 * 60 * 60 * 1000),
+      "countdown-1": new Date(flightDate.getTime() - 1 * 24 * 60 * 60 * 1000)
+    };
+  
+    setInterval(function () {
+      var now = new Date().getTime();
+  
+      for (var id in countdownTargets) {
+        var target = countdownTargets[id].getTime();
+        var distance = target - now;
+  
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  
+        var el = document.getElementById(id);
+        if (!el) continue;
+  
+        // Past due
+        if (distance < 0) {
+            el.innerHTML = "Past Due";
+        // Exact time
+        } else if (days === 0 && hours === 0 && minutes === 0) {
+            el.innerHTML = "Now";
+        // Less than an hour - display minutes
+        } else if (days === 0 && hours === 0) {
+            el.innerHTML = minutes + " minutes";
+        // Less than a day - display hours and minutes
+        } else if (days === 0) {
+            el.innerHTML = hours + " hours " + (minutes > 0 ? minutes + " minutes" : "");
+        // More than one day - display days
+        } else {
+            el.innerHTML = days + " days";
+        }
+      }
+    }, 1000);
+</script>
+  

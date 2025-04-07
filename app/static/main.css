@@ -290,13 +290,17 @@ input[type="checkbox"] {
     font-weight: bold;
     position: absolute;
     left: 0;
-    top: 0.2rem;
+    top: 0.5rem;
+    font-size: 2rem;
+    transform: translateY(-50%);
 }
 
 .napier-bullet-sublist li::before {
     content: "◦"; 
-    color: black;
+    color: var(--accent-colour);
     position: absolute;
     left: 0;
-    top: 0.2rem;
+    top: 0.72rem;
+    font-size: 2rem;
+    transform: translateY(-50%);
 }
