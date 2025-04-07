@@ -166,13 +166,18 @@ def crew_call_sheet(project_id):
     return render_template("/forms/crew_call_sheet.html", form=form, project=project)
 
 # Post Flight Actions Form Route
-@app.route("/project/<int:project_id>/post-flight")
+@app.route("/project/<int:project_id>/post-flight", methods=['GET', 'POST'])
 @login_required
 def post_flight(project_id):
     project = Project.query.get_or_404(project_id)
     security(project)
 
-    return render_template('forms/post_flight.html', title='Post-Flight Actions', project=project)
+    # Handle form submit (json from auto-gen form)
+    if handle_json_form_submission(project, "postFlight"):
+        flash('Changes saved successfully!', 'success')
+        return redirect(url_for('project', project_id=project.id))
+             
+    return render_template('forms/post_flight.html', title='Post-Flight Actions', project=project, footer=False)
 
 # Pre-Flight Actions Form Route
 @app.route("/project/<int:project_id>/pre-flight")
@@ -576,3 +581,25 @@ def calculate_status(user_data, field_name='called'):
         return 1  # At least one True (In Progress)
     else:
         return 0  # No True values (Not Started)
+
+
+# Util method to dynamically handle json form submission, and update corresponding attribute and db record
+def handle_json_form_submission(project, form_attr_name):
+    form_data = getattr(project, form_attr_name)
+
+    # Process  request
+    if request.method == 'POST':
+        for section in form_data[0]['form']['sections']:
+            for field in section['fields']:
+                field_id = field['id']
+                field_value = request.form.get(field_id)
+                field['value'] = field_value
+
+        # Save changes
+        setattr(project, form_attr_name, form_data)
+        flag_modified(project, form_attr_name)
+        db.session.add(project)
+        db.session.commit()
+        return True 
+    return False  
+

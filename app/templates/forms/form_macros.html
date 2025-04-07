@@ -1,7 +1,7 @@
 {% macro render_field(field, errors) %}
 <div class="form-group">
     <!-- Generate based on type -->
-    {% if field.type != "div" %}
+    {% if field.type != "div" and field.type != "checkbox" %}
         <label for="{{ field.id }}">{{ field.name|capitalize }}</label>
     {% endif %}
     <!-- Description -->
@@ -35,6 +35,19 @@
         <div  class="mb-3 {% if field.id in errors %}is-invalid{% endif %}"
                id="{{ field.id }}"
         ></div>
+
+    <!-- checkbox -->
+    {% elif field.type == 'checkbox' %}
+    <div class="mt-1 ms-2">
+        <input type="checkbox" class="checkbox-item {% if field.id in errors %}is-invalid{% endif %} mt-1" 
+                id="{{ field.id }}" name="{{ field.id }}"
+                {% if field.value %} checked {% endif %}
+                {% if field.required %}required{% endif %}
+                {% if project is defined and not project.can_edit() %} disabled {% endif %}>
+        <label class="form-check-label ms-2" for="{{ field.id }}">
+            {{ field.name|capitalize }}
+        </label>    
+    </div>    
 
     <!-- Text -->
     {% else %}
