@@ -174,6 +174,14 @@ def post_flight(project_id):
 
     return render_template('forms/post_flight.html', title='Post-Flight Actions', project=project)
 
+# Pre-Flight Actions Form Route
+@app.route("/project/<int:project_id>/pre-flight")
+@login_required
+def pre_flight(project_id):
+    project = Project.query.get_or_404(project_id)
+    security(project)
+
+    return render_template('forms/pre_flight.html', title='Pre-Flight Actions', project=project)
 
 
 def normalise_risk_analysis(project):
