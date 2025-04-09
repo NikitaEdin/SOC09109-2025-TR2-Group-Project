@@ -1,21 +1,29 @@
 {
-    "flight_code": 123,
-    "preparedBy": 923,
-    "preparedDate": "2025-02-05T14:30:00Z",
+    "duringLanding": {
+        "landingpoint": true,
+        "cleardebris": true,
+        "seperationdistance": true,
+        "pilotclear": true,
+        "repliesclear": true,
+        "landsrpa": true,
+        "disarmsrpa": true,
+        "powerdownrpa": true,
+        "aircraftsafe": true
 
-    "landing": {
-        "landRPA": true,
-        "disarmRPA": true
     },
 
     "afterLanding": {
-        "collectEquipment": true,
-        "recordMaintanence": true
+        "disassembleuas": true,
+        "maintenanceactions": true,
+        "recordflight": true,
+        "debriefcrew": true,
+        "collectequipment": true,
+
     },
 
     "reporting": {
-        "reportIncidents": true,
-        "reportAIRPOX": true
+        "reportincidents": true,
+        "reportairprox": true
     }
 
 }
