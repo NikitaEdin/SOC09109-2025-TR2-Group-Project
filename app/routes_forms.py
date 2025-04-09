@@ -143,10 +143,6 @@ def export_site_evaluation(project_id):
     return render_template("/forms/export.html", form_data=project.siteEvaluation, title="Site Evaluation", creator=creator, allowedUsers=allowed_users)
 
 
-@app.route('/forms/site-evaluation-template', methods=['GET', 'POST'])
-def site_evaluation_template():
-    return render_template("/forms/site_evaluation_copy.html")
-
 @app.route('/project/<int:project_id>/crew_call_sheet', methods=['GET', 'POST'])
 @login_required
 def crew_call_sheet(project_id):
