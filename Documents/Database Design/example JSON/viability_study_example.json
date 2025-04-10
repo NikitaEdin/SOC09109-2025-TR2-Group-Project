@@ -12,7 +12,7 @@
           "name": "Flight Code",
           "value": "T4",
           "type": "text",
-          "required": True
+          "required": true
           },
 
           {
@@ -20,7 +20,7 @@
           "name": "Description",
           "value": "Taking a new pilot out of a training flight ",
           "type": "textarea",
-          "required": True
+          "required": true
           },
 
           {
@@ -28,7 +28,7 @@
           "name": "Flight Date",
           "value": "26/04/2025",
           "type": "date",
-          "required": True
+          "required": true
           },
 
           {
@@ -113,7 +113,7 @@
           "name": "Weather Sources",
           "value": "bbc weather",
           "type": "textarea",
-          "description": "Sources:	List the sources used"
+          "description": "Sources: List the sources used"
           }
         ]
       }
