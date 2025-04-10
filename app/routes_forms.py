@@ -5,7 +5,6 @@ from flask_login import login_required
 from app import app, db
 from flask import abort, flash, json, redirect, render_template, request, url_for
 from sqlalchemy.orm.attributes import flag_modified
-from app.forms.crewCallSheetForm import CrewCallSheetForm
 from app.forms.jsons.viabilityStudyTemplate import ViabilityStudyTemplate
 from app.forms.jsons.loadingListSafetyKitTemplate import LoadingListSafetyKitTemplate
 from app.forms.jsons.loadingListMaintenanceKitTemplate import LoadingListMaintenanceKitTemplate
@@ -142,24 +141,6 @@ def export_site_evaluation(project_id):
 
     return render_template("/forms/export.html", form_data=project.siteEvaluation, title="Site Evaluation", creator=creator, allowedUsers=allowed_users)
 
-
-@app.route('/project/<int:project_id>/crew_call_sheet', methods=['GET', 'POST'])
-@login_required
-def crew_call_sheet(project_id):
-    project = Project.query.get_or_404(project_id)
-    security(project)
-
-    form = CrewCallSheetForm()
-
-    # save & submit handler
-    if request.method == "POST":
-        if form.saveChanges.data:
-            print("Form Saved")
-
-        if form.submit.data and form.validate_on_submit():
-            print("Form Submitted")
-
-    return render_template("/forms/crew_call_sheet.html", form=form, project=project)
 
 # Post Flight Actions Form Route
 @app.route("/project/<int:project_id>/post-flight", methods=['GET', 'POST'])

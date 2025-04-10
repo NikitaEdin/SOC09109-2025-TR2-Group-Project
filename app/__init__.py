@@ -40,7 +40,6 @@ login_manager.login_message_category = 'info'
 # Import routes
 from app import routes
 from app import routes_auth
-from app import routes_wizard
 from app import routes_forms
 from app import routes_dashboard
 from app import routes_new_project
