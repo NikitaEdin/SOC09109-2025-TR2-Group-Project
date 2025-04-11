@@ -118,6 +118,7 @@ class Project(db.Model):
     groundEquipment = db.Column(db.JSON, nullable=True)
 
     postFlight = db.Column(db.JSON, nullable=True)
+    preFlight = db.Column(db.JSON, nullable=True)
 
     personalChecklist = db.Column(db.JSON, nullable=True)
     toggles = db.Column(db.JSON, nullable=True)
