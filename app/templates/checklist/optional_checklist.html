@@ -32,8 +32,6 @@
                                 {% if value.value %}
                                 {% if value.title == 'Loading List' %}
                                     <a href="{{ url_for('loading_list',project_id=project.id) }}" class="btn btn-success w-100">Update</a>
-                                {% elif value.title == 'Crew Call Sheets' %}
-                                    <a href="{{ url_for('crew_call_sheet',project_id=project.id) }}" class="btn btn-success w-100">Update</a>
                                 {% elif value.title == 'Post-Flight' %}
                                     <a href="{{ url_for('post_flight',project_id=project.id) }}" class="btn btn-success w-100">Update</a>
                                 {% else %}
@@ -42,8 +40,6 @@
                             {% else %}
                             {% if value.title == 'Loading List' %}
                                     <a href="{{ url_for('loading_list',project_id=project.id) }}" class="btn btn-primary w-100">View</a>
-                            {% elif value.title == 'Crew Call Sheets' %}
-                                    <a href="{{ url_for('crew_call_sheet',project_id=project.id) }}" class="btn btn-primary w-100">View</a>
                             {% elif value.title == 'Post-Flight' %}
                                     <a href="{{ url_for('post_flight',project_id=project.id) }}" class="btn btn-primary w-100">View</a>
                                 {% else %}
