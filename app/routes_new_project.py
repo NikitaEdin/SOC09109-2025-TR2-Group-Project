@@ -18,6 +18,7 @@ from app.forms.jsons.loadingListSafetyKitTemplate import LoadingListSafetyKitTem
 from app.forms.jsons.loadingListMaintenanceKitTemplate import LoadingListMaintenanceKitTemplate
 from app.forms.jsons.loadingListEquipmentTemplate import LoadingListEquipmentTemplate
 from app.forms.jsons.postFlightTemplate import PostFlightTemplate
+from app.forms.jsons.preFlightTemplate import PreFlightTemplate
 from app.forms.jsons.loadingListCrewListTemplate import LoadingListCrewListTemplate
 from app.forms.jsons.loadingListGroundEquipmentTemplate import LoadingListGroundEquipmentTemplate
 
@@ -179,6 +180,7 @@ def new_project_toggles():
             
             # Loading list
             postFlight = PostFlightTemplate,
+            preFlight = PreFlightTemplate,
             safetyKit = LoadingListSafetyKitTemplate,
             maintenanceKit = LoadingListMaintenanceKitTemplate,
             equipment = LoadingListEquipmentTemplate,
