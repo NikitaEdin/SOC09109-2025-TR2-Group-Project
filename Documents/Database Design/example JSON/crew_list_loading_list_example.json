@@ -1,0 +1,60 @@
+[
+    {
+    "title": "Loading List - Crew",
+    "header": "Enter all of the crew and their details.",
+    "form": {
+      "fields": [
+        {
+          "name": "crew_name",
+          "label": "Crew Name",
+          "type": "text",
+          "placeholder": "",
+          "required": true
+        },
+        {
+          "name": "role",
+          "label": "Role",
+          "type": "text",
+          "placeholder": "",
+          "required": true
+        },
+        {
+          "name": "contact_number",
+          "label": "Contact Number",
+          "type": "tel",
+          "placeholder": "",
+          "required": false
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "placeholder": "",
+          "required": false
+        },
+        {
+          "name": "called",
+          "label": "Called",
+          "type": "checkbox",
+          "default": false
+        }
+      ]
+    },
+    "user_data": [
+      {
+            "crew_name": "John Doe",
+            "role": "pilot",
+            "contact_number": "07412345678",
+            "email": "johndoe12@gmail.com",
+            "called": true
+        },
+        {
+            "crew_name": "Jane Doe",
+            "role": "pilot",
+            "contact_number": "07414585965",
+            "email": "janedoe12@gmail.com",
+            "called": false
+        }
+    ]
+  }
+]

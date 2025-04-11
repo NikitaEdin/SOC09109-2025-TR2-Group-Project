@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Loading List - Maintenance Kit",
+    "header": "Ensure all maintenance kit items are checked before proceeding.",
+    "form": {
+      "sections": [
+        {
+          "header": "Maintenance Equipment",
+          "fields": [
+            {
+              "id": "props",
+              "name": "Spare props",
+              "value": true,
+              "type": "checkbox",
+              "required": false
+            },
+            {
+              "id": "cables",
+              "name": "Spare cables",
+              "value": false,
+              "type": "checkbox",
+              "required": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

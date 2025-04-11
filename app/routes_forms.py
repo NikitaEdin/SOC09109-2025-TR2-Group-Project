@@ -157,11 +157,16 @@ def post_flight(project_id):
     return render_template('forms/post_flight.html', title='Post-Flight Actions', project=project, footer=False)
 
 # Pre-Flight Actions Form Route
-@app.route("/project/<int:project_id>/pre-flight")
+@app.route("/project/<int:project_id>/pre-flight", methods=['GET', 'POST'])
 @login_required
 def pre_flight(project_id):
     project = Project.query.get_or_404(project_id)
     security(project)
+
+    # Handle form submit (json from auto-gen form)
+    if handle_json_form_submission(project, "preFlight"):
+        flash('Changes saved successfully!', 'success')
+        return redirect(url_for('project', project_id=project.id))
 
     return render_template('forms/pre_flight.html', title='Pre-Flight Actions', project=project)
 
