@@ -1,0 +1,123 @@
+[
+{
+  "title": "Viability Study",
+  "header": "Analysing risks, requirements, and operational feasibility",
+  "form": {
+    "sections": [
+      {
+        "header": "Flight Information",
+        "fields": [
+          {
+          "id": "flightcode",
+          "name": "Flight Code",
+          "value": "T4",
+          "type": "text",
+          "required": true
+          },
+
+          {
+          "id": "description",
+          "name": "Description",
+          "value": "Taking a new pilot out of a training flight ",
+          "type": "textarea",
+          "required": true
+          },
+
+          {
+          "id": "flightdate",
+          "name": "Flight Date",
+          "value": "26/04/2025",
+          "type": "date",
+          "required": true
+          },
+
+          {
+          "id": "allowedUsers",
+          "name": "Project Members",
+          "type": "div"
+          }
+        ]
+      },
+
+      {
+        "header": "Preparation Information",
+        "fields": [
+          {
+          "id": "preparedby",
+          "name": "Prepared By",
+          "value": "admin",
+          "type": "text"
+          },
+
+          {
+          "id": "prepareddate",
+          "name": "Prepared Date",
+          "value": "16/04/2025",
+          "type": "date"
+          }
+        ]
+      },
+
+      {
+        "header": "Observations",
+        "fields": [
+          {
+          "id": "airspaceclass",
+          "name": "Airspace Class",
+          "value": "G",
+          "type": "text"
+          },
+
+          {
+          "id": "airspaceobservations",
+          "name": "Airspace Observations",
+          "value": "No other flights in proximity",
+          "type": "textarea",
+          "description": "List any factors that need to be taken into account such as the proximity to other aeronautical activities"
+          },
+
+          {
+          "id": "airspacesources",
+          "name": "Airspace Sources",
+          "value": "www.example.com",
+          "type": "textarea",
+          "description" : "List the sources used"
+          },
+
+          {
+          "id": "groundobservations",
+          "name": "Ground Observations",
+          "value": "Nothing to report",
+          "type": "textarea",
+          "description": "List any factors that need to be taken into account such as the proximity to other aeronautical activities"
+          },
+
+          {
+          "id": "groundsources",
+          "name": "Ground Sources",
+          "value": "",
+          "type": "textarea",
+          "description": "List the sources used"
+          },
+
+          {
+          "id": "watherobservations",
+          "name": "Weather Observations",
+          "value": "sunny skies with low wind speeds expected",
+          "type": "textarea",
+          "description": "Describe the expected weather conditions"
+          },
+
+          {
+          "id": "weathersources",
+          "name": "Weather Sources",
+          "value": "bbc weather",
+          "type": "textarea",
+          "description": "Sources: List the sources used"
+          }
+        ]
+      }
+    ]
+  }
+}
+]
