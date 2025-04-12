@@ -113,15 +113,15 @@ Timeline_data = [
 3. Scroll to the project initation for the jsons it should look like this:
 ``` python  
 # JSON forms
-viabilityStudy = viability_study_value,
-siteEvaluation = site_evaluation_value,
-riskAnalysis = riskAnalysisTemplate[0],
-toggles = togglesJSON,
+  viabilityStudy = viability_study_value,
+  siteEvaluation = site_evaluation_value,
+  riskAnalysis = riskAnalysisTemplate[0],
+  toggles = togglesJSON,
 ```
 4. Add the JSON template to the project ```formName = TemplateName[0]```
 5. Navigate to the root of the project to a file called ```models.py``` scroll down to the creating the table project and add your form to the project table for example: 
 ``` python 
-    # JSON fields
+# JSON fields
     viabilityStudy = db.Column(db.JSON, nullable=True)
     siteEvaluation = db.Column(db.JSON, nullable=True)
     riskAnalysis = db.Column(db.JSON, nullable=True)
