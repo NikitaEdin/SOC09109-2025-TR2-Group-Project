@@ -10,6 +10,8 @@ Documentation to explain the use of JSON in the project.
    - [Checkbox inputs](#checkbox-inputs)
    - [Text, Date, Textarea inputs](#text-date-textarea-inputs)
    - [Url Inputs](#url-input)
+3. [Creating new templates](#create-new-templates)
+    - [What to do](#what-to-do)
 4. [Things to Note](#things-to-note)
 
 
@@ -99,6 +101,66 @@ Timeline_data = [
 #### Form using the JSON template above
 ![alt text](images/url.png)
 
+## Create new templates
+### What to do
+#### First Step - Create JSON Template
+1. Create the a JSON template in the directory ```\app\forms\jsons```
+2. Use the one of the structures that fits your need text, checkbox etc.
+
+#### Second Step - Load JSON into the Database
+1. In the root of the project folder go to ```routes_new_project.py```
+2. Import the template you just created ```from app.forms.jsons.TemplateFileName import JSON```
+3. Scroll to the project initation for the jsons it should look like this:
+``` python  
+# JSON forms
+viabilityStudy = viability_study_value,
+siteEvaluation = site_evaluation_value,
+riskAnalysis = riskAnalysisTemplate[0],
+toggles = togglesJSON,
+```
+4. Add the JSON template to the project ```formName = TemplateName[0]```
+
+#### Third Step - Backend
+1. Navigate to the file ```routes_forms.py``` in the project root
+2. Create a route for the form that you are going to create it could look like something like this:
+``` python
+# Loading List EQUIPMENT KIT Form Route (JSON GENERATION)
+@app.route("/project/<int:project_id>/loading-list/equipment", methods=["GET", "POST"])
+@login_required
+def loading_list_equipment(project_id):
+    project = Project.query.get_or_404(project_id)  
+    security(project)
+    
+    form_data = project.equipment    
+    errors = {}  # validation errors
+    
+    if request.method == 'POST':
+        # Loop through each section
+        for section in form_data[0]['form']['sections']:
+            # Loop through all fields
+            for field in section['fields']:
+                field_id = field['id']  
+               
+                # Handle checkboxes 
+                if field['type'] == 'checkbox':  
+                    field['value'] = request.form.get(field_id) == "on"  # True if checked
+                else:
+                    field['value'] = False
+
+        # Any errors? don't commit the changes
+        if errors:
+            return render_template('/forms/loading/equipment_json.html', project=project, form_data=form_data, errors=errors)
+
+        # Save changes
+        project.equipment = form_data
+        flag_modified(project, "equipment")
+        db.session.add(project)
+        db.session.commit()
+
+        flash('Changes saved successfully!', 'success')
+    
+    return render_template("/forms/loading/equipment_json.html", project=project, form_data=form_data, footer=False, title="Equipment" )
+```           
 
 ## Things to note
 > [!NOTE]
