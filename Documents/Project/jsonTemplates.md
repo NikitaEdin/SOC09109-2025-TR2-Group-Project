@@ -119,7 +119,13 @@ riskAnalysis = riskAnalysisTemplate[0],
 toggles = togglesJSON,
 ```
 4. Add the JSON template to the project ```formName = TemplateName[0]```
-
+5. Navigate to the root of the project to a file called ```models.py``` scroll down to the creating the table project and add your form to the project table for example: 
+``` python 
+    # JSON fields
+    viabilityStudy = db.Column(db.JSON, nullable=True)
+    siteEvaluation = db.Column(db.JSON, nullable=True)
+    riskAnalysis = db.Column(db.JSON, nullable=True)
+```
 #### Third Step - Backend
 1. Navigate to the file ```routes_forms.py``` in the project root
 2. Create a route for the form that you are going to create it could look like something like this:
