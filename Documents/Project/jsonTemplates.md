@@ -181,7 +181,7 @@ At the very end of the code is where it submits the user response to the form in
 ## Things to note
 > [!NOTE]
 > The ```riskAnalysisTemplate.py``` uses Javascript to generate readonly text fields based on the selected hazards. <br>
-> These readonly Sections are ```Existing Control```, ```Further Actions```. The JavaScript works by taking the hazard the user has selected the id associated with it and checks if the ids match for the existing control, further actions, with the > value from the hazard selected.<br>
+> These readonly Sections are ```Existing Control```, ```Further Actions```. The JavaScript works by taking the hazard the user has selected the id associated with it and checks if the ids match for the existing control, further actions, with the value from the hazard selected.<br>
 > It does this by removing the prefix from the id for example: If you pick the hazard ```compliance``` the hidden field will grab the hazards value and then the JavaScript will grab the value from the hidden field then check if the hidden field value equals any of the further actions & existing controls by appending the value with the prefix of their ids ```_furtheraction``` or ```_control``` <br>
 > If the ids match then it shows the existing field and further action related to the hazard.
 
