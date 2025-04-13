@@ -24,11 +24,12 @@ Documentation to explain the use of JSON in the project.
 
 ### JSON keys 
 
-- "header" key in the json controls the header.
-- "fields" key is a dictionary that holds all the fields.
-- "id" key is the id that is used for the input id.
-- "name" key is used for the name of the input which gets used in the front-end.
-- "value" key is used for the form to store the value of the form based on user input. 
+- "header" key in the json controls the header for the form.
+- "sections" key is used to hold lists of sections of the form so to have different groupings of a form with different headers and types of fields.
+- "fields" key is a list that holds all the fields relating to form in a specific section.
+- "id" key is used to uniquely identify the field.
+- "name" key is used to display the contents of the field in a user friendly format.
+- "value" key is used for the form to store the value of the form based on user input or default value assigned to the field. 
 - "type" key is to determine the type of form input so for example "checkbox", "text", "date", "textarea". 
 - "required" key is used in the form to determine if its required or not.
 - "description" key is used to describe a form input which is used in the checkbox templates.
@@ -36,7 +37,7 @@ Documentation to explain the use of JSON in the project.
 ## Examples JSON
 ### Checkbox inputs
 
-``` json
+``` py
 LoadingListMaintenanceKitTemplate = [
 {
   "title": "Loading List - Maintenance Kit",
@@ -62,7 +63,7 @@ LoadingListMaintenanceKitTemplate = [
 ![alt text](images/checkbox.png)
 ### Text, Date, Textarea inputs
 
-``` json
+``` py
 ViabilityStudyTemplate = [
 {
   "title": "Viability Study",
@@ -83,7 +84,7 @@ ViabilityStudyTemplate = [
 ![alt text](images/text-date.png)
 
 ### Url input
-``` json
+``` py
 Timeline_data = [
 {
   "sections": [
@@ -111,7 +112,7 @@ Timeline_data = [
 1. In the root of the project folder go to ```routes_new_project.py```
 2. Import the template you just created ```from app.forms.jsons.TemplateFileName import JSON```
 3. Scroll to the project initation for the jsons it should look like this:
-``` python  
+``` py  
 # JSON forms
   viabilityStudy = viability_study_value,
   siteEvaluation = site_evaluation_value,
@@ -120,7 +121,7 @@ Timeline_data = [
 ```
 4. Add the JSON template to the project ```formName = TemplateName[0]```
 5. Navigate to the root of the project to a file called ```models.py``` scroll down to the creating the table project and add your form to the project table for example: 
-``` python 
+``` py 
 # JSON fields
     viabilityStudy = db.Column(db.JSON, nullable=True)
     siteEvaluation = db.Column(db.JSON, nullable=True)
@@ -129,7 +130,7 @@ Timeline_data = [
 #### Third Step - Backend
 1. Navigate to the file ```routes_forms.py``` in the project root
 2. Create a route for the form that you are going to create it could look like something like this:
-``` python
+``` py
 # Loading List EQUIPMENT KIT Form Route (JSON GENERATION)
 @app.route("/project/<int:project_id>/loading-list/equipment", methods=["GET", "POST"])
 @login_required
@@ -173,18 +174,14 @@ On form submission the code will loop through the sections in the JSON and extra
 
 At the very end of the code is where it submits the user response to the form into the database to be stored. Firstly puts the form data into the database then flag it as modified to be tracked and then commits the changes to the project table.
 
-<!--  Add the form generation docs link here -->
-3. More information on the backend and how the form generation can be found here [Form Generation Docs]() 
+
+3. More information on the backend and how the form generation can be found here [Form Generation Docs](formGeneration.md) 
 
 
 ## Things to note
 > [!NOTE]
->  The ```riskAnalysisTemplate.py``` uses Javascript to generate readonly text fields based on the selected hazards. These readonly Sections are ```Existing Control```, ```Further Actions```. The JavaScript works by taking the hazard the user has selected the id associated with it and checks if the ids match for the existing control, further actions, with the value from the hazard selected. It does this by removing the prefix from the id for example: If you pick the hazard ```compliance``` the hidden field will grab the hazards value and then the JavaScript will grab the value from the hidden field then check if the hidden field value equals any of the further actions & existing controls by appending the value with the prefix of their ids ```_furtheraction``` or ```_control``` if the ids match then it shows the existing field and further action related to the hazard.
-
-
-
-
-
-
-
+> The ```riskAnalysisTemplate.py``` uses Javascript to generate readonly text fields based on the selected hazards. 
+> These readonly Sections are ```Existing Control```, ```Further Actions```. The JavaScript works by taking the hazard the user has selected the id associated with it and checks if the ids match for the existing control, further actions, with the > value from the hazard selected.
+> It does this by removing the prefix from the id for example: If you pick the hazard ```compliance``` the hidden field will grab the hazards value and then the JavaScript will grab the value from the hidden field then check if the hidden field value equals any of the further actions & existing controls by appending the value with the prefix of their ids ```_furtheraction``` or ```_control``` 
+> If the ids match then it shows the existing field and further action related to the hazard.
 
