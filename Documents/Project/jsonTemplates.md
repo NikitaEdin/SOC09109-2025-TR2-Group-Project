@@ -167,11 +167,19 @@ def loading_list_equipment(project_id):
     
     return render_template("/forms/loading/equipment_json.html", project=project, form_data=form_data, footer=False, title="Equipment" )
 ```           
+```form_data = project.equipment ``` This code puts the JSON template from the database into a variable to be passed on to the front-end/JINJA.
+
+On form submission the code will loop through the sections in the JSON and extract the keys: ```value, type, id ```. Firstly puts the id into a variable to be used later to grab the value associated with the form ID. Then the code checks if the type is a checkbox and if so if the checkbox is ticked put it into value if not put false into value. 
+
+At the very end of the code is where it submits the user response to the form into the database to be stored. Firstly puts the form data into the database then flag it as modified to be tracked and then commits the changes to the project table.
+
+<!--  Add the form generation docs link here -->
+3. More information on the backend and how the form generation can be found here [Form Generation Docs]() 
+
 
 ## Things to note
 > [!NOTE]
->  The ```riskAnalysisTemplate.py``` uses Javascript to generate readonly text fields based on the selected hazard these readonly Sections are ```Existing Control```, ```Further Actions```. The javascript works by taking the hazard the user has selected the id associated with it and checks if the ids match for the existing control, further actions, hazards. It does this by removing the prefix from the id for example:
-If you pick the hazard ```compliance``` the hidden field will grab the hazards value and then the javascript will grab the value from the hidden field then check if the hidden field value equals any of the further actions & existing controls by appending the value with the prefix of their ids ```_furtheraction``` or ```_control``` if the ids match then it shows the existing field and further action related to the hazard.
+>  The ```riskAnalysisTemplate.py``` uses Javascript to generate readonly text fields based on the selected hazards. These readonly Sections are ```Existing Control```, ```Further Actions```. The JavaScript works by taking the hazard the user has selected the id associated with it and checks if the ids match for the existing control, further actions, with the value from the hazard selected. It does this by removing the prefix from the id for example: If you pick the hazard ```compliance``` the hidden field will grab the hazards value and then the JavaScript will grab the value from the hidden field then check if the hidden field value equals any of the further actions & existing controls by appending the value with the prefix of their ids ```_furtheraction``` or ```_control``` if the ids match then it shows the existing field and further action related to the hazard.
 
 
 
