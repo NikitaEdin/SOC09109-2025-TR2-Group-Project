@@ -50,11 +50,16 @@
              {% for field2 in form_data.form.sections[4].fields %}
                  {{ macros.render_field(field2, errors) }}
              {% endfor %}
- 
+
 
             <div class="row justify-content-center">
                 <div class="col-6 mt-5">
+                    {% if project.can_edit() %}
                     <button type="submit" class="btn btn-primary w-100">Save</button>
+                    {% else %}
+                    <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary w-100">Back
+                        to Project</a>
+                    {% endif %}
                 </div>
             </div>
         </form>

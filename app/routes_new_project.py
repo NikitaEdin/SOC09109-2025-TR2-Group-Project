@@ -13,10 +13,12 @@ from app.models import Project, ProjectFile, User
 
 from app.forms.jsons.viabilityStudyTemplate import ViabilityStudyTemplate
 from app.forms.jsons.siteEvaluationTemplate import SiteEvaluationTemplate
+from app.forms.jsons.riskAnalysisTemplate import riskAnalysisTemplate
 from app.forms.jsons.loadingListSafetyKitTemplate import LoadingListSafetyKitTemplate
 from app.forms.jsons.loadingListMaintenanceKitTemplate import LoadingListMaintenanceKitTemplate
 from app.forms.jsons.loadingListEquipmentTemplate import LoadingListEquipmentTemplate
 from app.forms.jsons.postFlightTemplate import PostFlightTemplate
+from app.forms.jsons.preFlightTemplate import PreFlightTemplate
 from app.forms.jsons.loadingListCrewListTemplate import LoadingListCrewListTemplate
 from app.forms.jsons.loadingListGroundEquipmentTemplate import LoadingListGroundEquipmentTemplate
 
@@ -89,6 +91,7 @@ def new_project_details():
 
     return render_template('/create_project/new_project_details.html', form=form, footer=False, title='Almost there...')
 
+# Step 4: Set project toggles, what document are not required
 @app.route("/create_project/toggles", methods=['GET','POST'])
 @login_required
 def new_project_toggles():
@@ -171,11 +174,13 @@ def new_project_toggles():
             # JSON forms
             viabilityStudy = viability_study_value,
             siteEvaluation = site_evaluation_value,
+            riskAnalysis = riskAnalysisTemplate[0],
             toggles = togglesJSON,
            
             
             # Loading list
             postFlight = PostFlightTemplate,
+            preFlight = PreFlightTemplate,
             safetyKit = LoadingListSafetyKitTemplate,
             maintenanceKit = LoadingListMaintenanceKitTemplate,
             equipment = LoadingListEquipmentTemplate,
@@ -211,8 +216,8 @@ def edit_project(project_id):
     # Fetch project by ID
     project = Project.query.get_or_404(project_id)
 
-    # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
+    # Can edit (original author or admin, NOT shared project)
+    if not project.can_edit():
         flash("You are not authorised to edit this project.", "danger")
         return redirect(url_for('dashboard'))
 
@@ -243,8 +248,8 @@ def remove_project(project_id):
     # Query by id
     project = Project.query.get_or_404(project_id)
 
-    # Ensure project is owned by current_user or user is an admin
-    if not project.can_access():
+    # Can edit (original author or admin, NOT shared project)
+    if not project.can_edit():
         flash('You do not have permission to remove this project.', 'danger')
         return redirect(url_for('dashboard'))
 
@@ -277,7 +282,8 @@ def manage_access(project_id):
     project = Project.query.get_or_404(project_id)
 
     # Ensure only the author can manage access
-    if project.authorID != current_user.id:
+    # Can edit (original author or admin, NOT shared project)
+    if not project.can_edit():
         flash("You do not have permission to manage this project's access.", "danger")
         return redirect(url_for('dashboard'))
 
@@ -333,8 +339,8 @@ def project_files(project_id):
 def upload_file(project_id):
     project = Project.query.get_or_404(project_id)
 
-    # Can access
-    if not project.can_access():
+    # Can edit
+    if not project.can_edit():
         flash("You are not authorised to edit this project.", "danger")
         return redirect(url_for('dashboard'))
     
@@ -423,7 +429,7 @@ def delete_file(project_id, file_id):
     file = ProjectFile.query.get_or_404(file_id)
 
      # File belongs to project the user has access
-    if not file.project.can_access():
+    if not file.project.can_edit():
         flash("You are not authorised to delete this file.", "danger")
         return redirect(url_for('dashboard'))
 

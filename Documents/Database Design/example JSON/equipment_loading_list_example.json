@@ -1,0 +1,74 @@
+[
+  {
+    "title": "Loading List - Equipment",
+    "header": "Check that all equipment required is packed.",
+    "form": {
+      "sections": [
+        {
+          "header": "Camera Equipment",
+          "fields": [
+            {
+              "id": "camerabolt",
+              "name": "Camera Attachment Bolt",
+              "value": true,
+              "type": "checkbox",
+              "required": false
+            },
+            {
+              "id": "cameralanyard",
+              "name": "Camera to Airframe Lanyard",
+              "value": false,
+              "type": "checkbox",
+              "required": false
+            },
+            {
+              "id": "cameraleads",
+              "name": "Camera Connection Leads",
+              "value": true,
+              "type": "checkbox",
+              "required": false
+            }
+          ]
+        },
+        {
+          "header": "Batteries & Chargers",
+          "fields": [
+            {
+              "id": "chargerlead",
+              "name": "Required Charger Leads",
+              "value": false,
+              "type": "checkbox",
+              "required": false
+            },
+            {
+              "id": "batterycharger",
+              "name": "Multi-Function Battery Charger",
+              "value": false,
+              "type": "checkbox",
+              "required": false
+            }
+            ]
+        },
+        {
+          "header": "Other Equipment",
+          "fields": [
+            {
+              "id": "food",
+              "name": "Food (Snacks & Drink)",
+              "value": false,
+              "type": "checkbox",
+              "required": false
+            },
+            {
+              "id": "twoWayRadio",
+              "name": "Two Way Radios",
+              "value": false,
+              "type": "checkbox",
+              "required": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

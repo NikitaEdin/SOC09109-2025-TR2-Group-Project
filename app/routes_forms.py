@@ -1,10 +1,10 @@
+from copy import deepcopy
 from re import match
 
 from flask_login import login_required
 from app import app, db
-from flask import flash, json, redirect, render_template, request, url_for
+from flask import abort, flash, json, redirect, render_template, request, url_for
 from sqlalchemy.orm.attributes import flag_modified
-from app.forms.crewCallSheetForm import CrewCallSheetForm
 from app.forms.jsons.viabilityStudyTemplate import ViabilityStudyTemplate
 from app.forms.jsons.loadingListSafetyKitTemplate import LoadingListSafetyKitTemplate
 from app.forms.jsons.loadingListMaintenanceKitTemplate import LoadingListMaintenanceKitTemplate
@@ -142,57 +142,158 @@ def export_site_evaluation(project_id):
     return render_template("/forms/export.html", form_data=project.siteEvaluation, title="Site Evaluation", creator=creator, allowedUsers=allowed_users)
 
 
-@app.route('/forms/site-evaluation-template', methods=['GET', 'POST'])
-def site_evaluation_template():
-    return render_template("/forms/site_evaluation_copy.html")
-
-@app.route('/project/<int:project_id>/crew_call_sheet', methods=['GET', 'POST'])
-@login_required
-def crew_call_sheet(project_id):
-    project = Project.query.get_or_404(project_id)
-    security(project)
-
-    form = CrewCallSheetForm()
-
-    # save & submit handler
-    if request.method == "POST":
-        if form.saveChanges.data:
-            print("Form Saved")
-
-        if form.submit.data and form.validate_on_submit():
-            print("Form Submitted")
-
-    return render_template("/forms/crew_call_sheet.html", form=form, project=project)
-
 # Post Flight Actions Form Route
-@app.route("/project/<int:project_id>/post-flight")
+@app.route("/project/<int:project_id>/post-flight", methods=['GET', 'POST'])
 @login_required
 def post_flight(project_id):
     project = Project.query.get_or_404(project_id)
     security(project)
 
-    return render_template('forms/post_flight.html', title='Post-Flight Actions')
+    # Handle form submit (json from auto-gen form)
+    if handle_json_form_submission(project, "postFlight"):
+        flash('Changes saved successfully!', 'success')
+        return redirect(url_for('project', project_id=project.id))
+             
+    return render_template('forms/post_flight.html', title='Post-Flight Actions', project=project, footer=False)
+
+# Pre-Flight Actions Form Route
+@app.route("/project/<int:project_id>/pre-flight", methods=['GET', 'POST'])
+@login_required
+def pre_flight(project_id):
+    project = Project.query.get_or_404(project_id)
+    security(project)
+
+    # Handle form submit (json from auto-gen form)
+    if handle_json_form_submission(project, "preFlight"):
+        flash('Changes saved successfully!', 'success')
+        return redirect(url_for('project', project_id=project.id))
+
+    return render_template('forms/pre_flight.html', title='Pre-Flight Actions', project=project)
+
+
+def normalise_risk_analysis(project):
+    if isinstance(project.riskAnalysis, dict):
+        # Convert single form to list format
+        project.riskAnalysis = [project.riskAnalysis]
+        flag_modified(project, "riskAnalysis")
+        db.session.commit()
+
+
+@app.route("/project/<int:project_id>/risk-analysis", methods=["GET"])
+@login_required
+def list_risk_forms(project_id):
+    project = Project.query.get_or_404(project_id)
+    security(project)
+
+    normalise_risk_analysis(project)
+    forms = project.riskAnalysis or []
+
+    # Add the 'type' for each form
+    for form in forms:
+        form_type = "No type found"
+        for section in form['form']['sections']:
+            for field in section['fields']:
+                # Ensure 'value' and 'id' exist and are not None before comparing
+                if field.get('value') == field.get('id'):
+                    form_type = field.get('name', "No name found")
+                    break
+            if form_type != "No type found":
+                break
+        form['type'] = form_type  # Add 'type' to the form dictionary
+    
+    return render_template("forms/risk_dashboard.html", project=project, forms=forms)
+
 
 # Risk Analysis Form
-@app.route("/project/<int:project_id>/risk-analysis", methods=['GET','POST'])
+@app.route("/project/<int:project_id>/risk-analysis/<int:form_index>", methods=["GET", "POST"])
 @login_required
-def risk_analysis(project_id):
-    project = Project.query.get_or_404(project_id)
-    security(project)
-    if request.method == 'POST':
-        print("submitted")
-        return render_template('forms/risk_analysis.html', title=' Risk Analysis Form', form_data = riskAnalysisTemplate[0],project=project, footer=False)
-
-    return render_template('forms/risk_analysis.html', title=' Risk Analysis Form', form_data = riskAnalysisTemplate[0],project=project, footer=False)
-
-# Risk Analysis Form - Add Risk Route
-@app.route("/project/<int:project_id>/risk-analysis/add")
-@login_required
-def add_risk_analysis(project_id):
+def risk_analysis(project_id, form_index):
     project = Project.query.get_or_404(project_id)
     security(project)
 
-    return render_template('forms/risk_analysis/add_risk.html', title='Add Risk Analysis Form')
+    normalise_risk_analysis(project)
+
+    forms = project.riskAnalysis or []
+
+    if form_index >= len(forms):
+        abort(404)
+
+    form_data = forms[form_index]
+
+    if request.method == "POST":
+        selected_hazard = request.form.get("hazard")
+        selected_person = request.form.get("people")
+
+        for section in form_data['form']['sections']:
+            for field in section.get('fields', []):   
+                field_id = field['id']
+                field_value = request.form.get(field_id)
+
+                if field['id'] == selected_hazard:
+                    field['value'] = selected_hazard
+                elif field['id'] == selected_person:
+                    field['value'] = selected_person
+                elif field_value == "on":
+                    field['value'] = True
+                else:
+                    field['value'] = field_value  
+
+        project.riskAnalysis[form_index] = form_data
+        flag_modified(project, "riskAnalysis")
+        db.session.commit()
+
+        flash("Form saved successfully!", "success")
+        return redirect(url_for("list_risk_forms", project_id=project.id, form_index=form_index))
+
+    return render_template('forms/risk_analysis.html', title='Risk Analysis Form',
+                           form_data=form_data, project=project, form_index=form_index)
+
+
+@app.route("/project/<int:project_id>/risk-analysis/new", methods=["POST"])
+@login_required
+def create_risk_form(project_id):
+    project = Project.query.get_or_404(project_id)
+    security(project)
+
+    normalise_risk_analysis(project)
+
+    # deepcopy to ensure it's a fresh copy of the template
+    new_form = deepcopy(riskAnalysisTemplate[0])
+
+    project.riskAnalysis.append(new_form)  # Add new form to project's riskAnalysis list
+    flag_modified(project, "riskAnalysis")
+    db.session.commit()
+
+    # Redirect to newly created form's edit page
+    form_index = len(project.riskAnalysis) - 1  # Index of new form
+    return redirect(url_for("risk_analysis", project_id=project_id, form_index=form_index))
+
+@app.route("/project/<int:project_id>/risk-analysis/<int:form_index>/delete", methods=["POST"])
+@login_required
+def delete_risk_form(project_id, form_index):
+    project = Project.query.get_or_404(project_id)
+    security(project)
+
+    # Check if form is the only one - reject deletion
+    if len(project.riskAnalysis) == 1:
+        flash("You cannot delete the only risk analysis form.", "warning")
+        return redirect(url_for('list_risk_forms', project_id=project.id))
+
+
+    # Normalise risk analysis data to list if it's still in dict format
+    normalise_risk_analysis(project)
+
+    if 0 <= form_index < len(project.riskAnalysis):
+        # Remove form at specified index
+        del project.riskAnalysis[form_index]
+        flag_modified(project, "riskAnalysis")
+        db.session.commit()
+        flash("Form deleted successfully", "success")
+    else:
+        flash("Form not found", "danger")
+
+    return redirect(url_for('list_risk_forms', project_id=project_id))
+
 
 # Loading List Route
 @app.route("/project/<int:project_id>/loading-list")
@@ -462,3 +563,25 @@ def calculate_status(user_data, field_name='called'):
         return 1  # At least one True (In Progress)
     else:
         return 0  # No True values (Not Started)
+
+
+# Util method to dynamically handle json form submission, and update corresponding attribute and db record
+def handle_json_form_submission(project, form_attr_name):
+    form_data = getattr(project, form_attr_name)
+
+    # Process  request
+    if request.method == 'POST':
+        for section in form_data[0]['form']['sections']:
+            for field in section['fields']:
+                field_id = field['id']
+                field_value = request.form.get(field_id)
+                field['value'] = field_value
+
+        # Save changes
+        setattr(project, form_attr_name, form_data)
+        flag_modified(project, form_attr_name)
+        db.session.add(project)
+        db.session.commit()
+        return True 
+    return False  
+

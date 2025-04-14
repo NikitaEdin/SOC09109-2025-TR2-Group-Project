@@ -1,0 +1,132 @@
+[
+  {
+    "title": "Site Evaluation Study",
+    "header": "Site evaluation form",
+    "form": {"sections":
+    [
+      {
+        "header": "Flight Details",
+        "fields": [
+          {
+            "id": "flightcode",
+            "name": "Flight Code",
+            "value": "T1",
+            "type": "text",
+            "required": true
+          },
+          {
+            "id": "dateofflight",
+            "name": "Date of Flight",
+            "value": "2025-04-26",
+            "type": "date",
+            "required": true
+          },
+          {
+            "id": "remotepilot",
+            "name": "Remote Pilot",
+            "value": "admin",
+            "type": "text",
+            "required": true
+          }
+          ]
+      },
+      {
+        "header": "Pre-site Visit",
+        "fields": [
+          {
+            "id": "locationdescription",
+            "name": "Location Description",
+            "value": "Wide open area, no obstructions ",
+            "type": "textarea"
+          },
+          {
+            "id": "sensitivies",
+            "name": "Sensitives",
+            "value": "N/A",
+            "type": "textarea",
+            "description": "This could include schools, cemeteries, government buildings where flying a drone in the vicinity.",
+            "tooltip": "This may help you to decide if it would be worth informing the police via 101."
+          },
+          {
+            "id": "airspace",
+            "name": "Airspace",
+            "value": "No ATC Permission required Class G airspace uncontrolled",
+            "type": "textarea",
+            "description": "Example 1: No ATC Permission required Class G airspace uncontrolled<br>Example 2: No ATC Permission required, ATC Notification if deemed necessary Class D airspace Leeds Bradford CTR \u2013 Surface \u2013 4500ft amsl<br>Example 3 \u2013 ATC Permission required Leeds Bradford Flight restriction zone "
+          }
+        ]
+      },
+      {
+        "header": "Emergency Contact Details",
+        "fields": [
+          {
+          "id": "localpolice",
+            "name": "Local Police",
+            "value": "01383 458745",
+            "type": "textarea",
+            "description": "If you were to log a flight via 101 this is where you could write down the case number for reference if needed"
+          },
+          {
+            "id": "localatc",
+            "name": "Local ATC",
+            "value": "013385 487454",
+            "type": "textarea",
+            "description": "Direct line to ATC is what you will want to obtain if possible.",
+            "tooltip": "This is obtained via the NATS AIS Website > EAIP link > Part 3 > AD2"
+          },
+          {
+            "id": "military",
+            "name": "Military Low flying booking cell",
+            "value": "", "type": "textarea",
+            "description": "0800 515544"
+          }
+        ]
+      },
+      {
+        "header": "Airspace and Environment Diagrams",
+        "fields": [
+          {
+            "id": "airspacenotes",
+            "name": "Airspace Notes",
+            "value": "N/A",
+            "type": "textarea"
+          },
+          {
+            "id": "environmentnotes",
+            "name": "Environment Notes",
+            "value": "N/A",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "header": "Site Survey",
+        "fields": [
+          {
+            "id": "presitevisit",
+            "name": "Pre-site Visit Date",
+            "value": "2025-04-20",
+            "type": "date"
+          },
+          {
+            "id": "obstructions2",
+            "name": "Obstructions",
+            "value": "N/A",
+            "type": "textarea",
+            "description": "Any changes that might need to be considered within the planned flight or updated within the risk assessment",
+            "tooltip": "Masts, Wires, Buildings, Train lines, Trees, Lakes, Rivers etc."
+          },
+          {
+            "id": "people2",
+            "name": "People",
+            "value": "N/A",
+            "type": "textarea",
+            "tooltip": "Cordon requirement, Crowd Control.",
+            "description": "Any changes that might need to be considered within the planned flight or updated within the risk assessment"
+          }
+        ]
+      }
+    ]
+    }
+  }
+]

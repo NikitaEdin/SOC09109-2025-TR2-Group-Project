@@ -1,0 +1,70 @@
+[
+    {
+        "title": "Post-Flight Actions",
+        "header": "Procedures to follow during landing stage",
+        "form":
+        {
+            "sections": [
+                {
+                    "header": "During Landing",
+                    "fields": [
+                        {
+                            "id": "landingpoint",
+                            "name": "No crew within 5m of landing point.",
+                            "value": "on", "type": "checkbox"
+                        },
+                        {
+                            "id": "cleardebris",
+                            "name": "TOLZ free of foreign object and debris.",
+                            "value": null,
+                            "type": "checkbox"
+                        },
+                        {
+                            "id": "seperationdistance",
+                            "name": "Uninvolved persons at required separation distance.",
+                            "value": "on",
+                            "type": "checkbox"
+                        }
+                    ]
+                },
+                {
+                    "header": "After Landing",
+                    "fields": [
+                        {
+                            "id": "disassembleuas",
+                            "name": "Disassemble UAS using model-specific checklist.",
+                            "value": null, "type": "checkbox"
+                        },
+                        {
+                            "id": "maintenanceactions",
+                            "name": "Record any maintenance actions.",
+                            "value": "on", "type": "checkbox"
+                        },
+                        {
+                            "id": "recordflight",
+                            "name": "Manually record flight data if there is any problem uploading.",
+                            "value": null, "type": "checkbox"
+                        }
+                    ]
+                },
+                {
+                    "header": "Reporting",
+                    "fields": [
+                        {
+                            "id": "reportincidents",
+                            "name": "Report any incidents.",
+                            "value": "on",
+                            "type": "checkbox"
+                        },
+                        {
+                            "id": "reportairprox",
+                            "name": "Report any AIRPROX.",
+                            "value": null,
+                            "type": "checkbox"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+]
