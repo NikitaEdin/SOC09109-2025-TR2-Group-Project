@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+<!-- Utilise form macro for auto populating fields -->
+{% import "forms/form_macros.html" as macros %}
+
+{% block content %}
+    <!-- For any errors -->
+    {% include "shared/flash-message.html" %}
+
+    <!-- Pass the used attribute(json) and auto-generate form -->
+    {% set form_data=project.preFlight[0] %}
+    {% include "forms/form_main.html" %}
+       
+{% endblock %}

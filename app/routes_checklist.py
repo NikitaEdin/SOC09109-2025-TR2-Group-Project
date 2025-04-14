@@ -38,7 +38,8 @@ def form_url(form_name):
         "Site Evaluation" : "site_evaluation",
         "Loading List" : "loading_list",
         "Post-Flight" : "post_flight",
-        "Risk Analysis": "risk_analysis"
+        "Pre-Flight" : "pre_flight",
+        "Risk Analysis": "list_risk_forms"
     }
     return form_urls.get(form_name,"dashboard")
 

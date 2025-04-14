@@ -28,11 +28,11 @@ LoadingListEquipmentTemplate = [
       {
         "header": "Other Equipment",
         "fields": [
-          {"id": "reportincidents", "name": "Food (Snacks & Drink)", "value": "", "type": "checkbox", "required": False},
-          {"id": "reportairprox", "name": "Two Way Radios", "value": "", "type": "checkbox", "required": False},
-          {"id": "reportairprox", "name": "Air Navigation Map", "value": "", "type": "checkbox", "required": False},
-          {"id": "reportairprox", "name": "Checklists, Manuals & Logbooks", "value": "", "type": "checkbox", "required": False},
-          {"id": "reportairprox", "name": "Notepad & Pens", "value": "", "type": "checkbox", "required": False}  
+          {"id": "food", "name": "Food (Snacks & Drink)", "value": "", "type": "checkbox", "required": False},
+          {"id": "twoWayRadio", "name": "Two Way Radios", "value": "", "type": "checkbox", "required": False},
+          {"id": "airNavMap", "name": "Air Navigation Map", "value": "", "type": "checkbox", "required": False},
+          {"id": "checkLists", "name": "Checklists, Manuals & Logbooks", "value": "", "type": "checkbox", "required": False},
+          {"id": "notepadPens", "name": "Notepad & Pens", "value": "", "type": "checkbox", "required": False}
         ]
       }
     ]

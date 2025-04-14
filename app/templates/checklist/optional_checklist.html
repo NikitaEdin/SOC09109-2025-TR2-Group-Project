@@ -32,20 +32,20 @@
                                 {% if value.value %}
                                 {% if value.title == 'Loading List' %}
                                     <a href="{{ url_for('loading_list',project_id=project.id) }}" class="btn btn-success w-100">Update</a>
-                                {% elif value.title == 'Crew Call Sheets' %}
-                                    <a href="{{ url_for('crew_call_sheet',project_id=project.id) }}" class="btn btn-success w-100">Update</a>
                                 {% elif value.title == 'Post-Flight' %}
                                     <a href="{{ url_for('post_flight',project_id=project.id) }}" class="btn btn-success w-100">Update</a>
+                                    {% elif value.title == 'Pre-Flight' %}
+                                    <a href="{{ url_for('pre_flight',project_id=project.id) }}" class="btn btn-success w-100">Update</a>
                                 {% else %}
                                 <a href="#" class="btn btn-primary w-100 disabled">View</a>
                                 {% endif %}
                             {% else %}
                             {% if value.title == 'Loading List' %}
                                     <a href="{{ url_for('loading_list',project_id=project.id) }}" class="btn btn-primary w-100">View</a>
-                            {% elif value.title == 'Crew Call Sheets' %}
-                                    <a href="{{ url_for('crew_call_sheet',project_id=project.id) }}" class="btn btn-primary w-100">View</a>
                             {% elif value.title == 'Post-Flight' %}
                                     <a href="{{ url_for('post_flight',project_id=project.id) }}" class="btn btn-primary w-100">View</a>
+                            {% elif value.title == 'Pre-Flight' %}
+                                    <a href="{{ url_for('pre_flight',project_id=project.id) }}" class="btn btn-primary w-100">View</a>
                                 {% else %}
                                     <a href="#" class="btn btn-primary w-100 disabled">View</a>
                             {% endif %}
@@ -89,7 +89,9 @@
     
     <div class="container text-center mt-5 mb-2">
         <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary ms-auto">Back to Project</a>
-        <button class="btn btn-success ms-auto">Save Changes</button>
+        {% if project.can_edit() %}
+            <button class="btn btn-success ms-auto">Save Changes</button>
+        {% endif %}
     </div>
 </form>
 </div>

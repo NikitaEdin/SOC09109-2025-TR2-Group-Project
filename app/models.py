@@ -118,6 +118,7 @@ class Project(db.Model):
     groundEquipment = db.Column(db.JSON, nullable=True)
 
     postFlight = db.Column(db.JSON, nullable=True)
+    preFlight = db.Column(db.JSON, nullable=True)
 
     personalChecklist = db.Column(db.JSON, nullable=True)
     toggles = db.Column(db.JSON, nullable=True)
@@ -140,6 +141,9 @@ class Project(db.Model):
 
     def can_access(self):
         return self.authorID == current_user.id or current_user.is_admin() or current_user in self.allowed_users
+
+    def can_edit(self):
+        return self.authorID == current_user.id or current_user.is_admin()
 
     def __repr__(self):
         return f'<Project {self.title} by {self.author.username}>'

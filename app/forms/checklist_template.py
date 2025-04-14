@@ -9,7 +9,6 @@ checklist_template_optional_checklist = [
 checklist_template_forms_optional = [
     {"name":"Loading List","description":"Customise the loading list to suit the flight operation"},
     {"name":"Land Permission","description":"Obtain permission to land on the landowner’s property"},
-    {"name":"Crew Call Sheets","description":"Items for crew to bring on flight"},
     {"name":"Post-Flight","description":"Form for post flight data"},
     {"name":"Pre-Flight","description":"Form for pre flight data"},
     {"name":"NOTAM","description":"Notice to Airmen will their be any hazards"}

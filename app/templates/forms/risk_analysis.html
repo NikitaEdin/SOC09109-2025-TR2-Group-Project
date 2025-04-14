@@ -4,45 +4,47 @@
 
 {% block content %}
 <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh;">
+
     <form method="POST" class="rounded border border-danger-subtle p-3 w-75 my-3 card">
         <div class="text-center">
             <p class="fs-1 mb-0">{{ form_data.title }}</p>
             <p class="fs-3 fw-light">{{ form_data.header }}</p>
         </div>
 
+
         <!-- Hazards -->
         <div class="section">
             <h4 class="mt-4">{{ form_data.form.sections[0].header }}</h4>
             <div class="mb-3">
                 <label for="hazardSelect" class="form-label">Select a Hazard</label>
-                <select class="form-select" id="hazardSelect" name="hazard" required onchange="updateHiddenField(); updateHiddenFieldFurtherAction(); ">
+                <select class="form-select" id="hazardSelect" name="hazard" required
+                    onchange="updateHiddenField(); updateHiddenFieldFurtherAction(); ">
                     <option value="" selected disabled>Choose a hazard...</option>
-                    {% for hazard in form_data.form.sections[0].dropdown_hazards %}
-                        <option value="{{ hazard.id }}">{{ hazard.name }}</option>
+                    {% for hazard in form_data.form.sections[0].fields %}
+                    <option id="{{hazard.id}}" value="{{ hazard.id }}" {% if hazard.id==hazard.value %} selected
+                        {%endif%}>
+                        {{ hazard.name }}</option>
                     {% endfor %}
                 </select>
-
             </div>
 
-            <!-- Thought here javascript here based on the hazard selected it shows the existing control relevant to the hazard -->
+            <!-- Hidden field which is used to get the selected hazard to be used for the JavaScript-->
             <input type="hidden" id="selectedHazard" name="selectedHazard" value="">
 
             <!-- Existing Control -->
             <div class="mb-3 text-body">
                 <h4 class="mt-4">{{ form_data.form.sections[1].header }}</h4>
 
-                    {% for item in form_data.form.sections[1].existing_control %}
-                    <div class="control-item" id="{{item.id}}" style="display: none;">
-                        <label for="existingControl{{item.id}}"></label>
-                        <textarea class="form-control" style="height: 200px;" id="existingControl{{item.id}}" name="existingControl{{item.id}}"
-                        {% if item.tooltip %} 
-                            data-bs-toggle="tooltip" data-bs-title="{{item.tooltip}}" data-bs-custom-class="custom-tooltip"
-                        {% endif %}
-                        {% if item.required %}required{% endif %} readonly>{{ item.name }}</textarea>
-                    </div>
-                    {% endfor %}
+                {% for item in form_data.form.sections[1].fields %}
+                <div class="control-item" id="{{item.id}}" style="display: none;">
+                    <label for="existingControl{{item.id}}"></label>
+                    <textarea class="form-control" style="height: 200px;" id="existingControl{{item.id}}"
+                        name="existingControl{{item.id}}" {% if item.tooltip %} data-bs-toggle="tooltip"
+                        data-bs-title="{{item.tooltip}}" data-bs-custom-class="custom-tooltip" {% endif %} {% if
+                        item.required %}required{% endif %} readonly>{{ item.name }}</textarea>
                 </div>
-            
+                {% endfor %}
+            </div>
 
             <!-- Person at risk -->
             <h4 class="mt-4">{{ form_data.form.sections[2].header }}</h4>
@@ -50,8 +52,10 @@
                 <label for="peopleSelect" class="form-label">Select a Person at Risk</label>
                 <select class="form-select" id="personSelect" name="people" required>
                     <option value="" selected disabled>Choose a person...</option>
-                    {% for person in form_data.form.sections[2].dropdown_people %}
-                        <option value="{{ person.id }}">{{ person.name }}</option>
+                    {% for person in form_data.form.sections[2].fields %}
+                    <option id="{{person.id}}" value="{{ person.id }}" {% if person.id==person.value %} selected
+                        {%endif%}>
+                        {{ person.name }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -61,7 +65,8 @@
             <p class=" fs-6">Severity</p>
             {% for i in range(1,6) %}
             <div class="form-check form-check-inline" onchange="calculateRiskScore()">
-                <input class="form-check-input" type="radio" name="inlineRadioOptionsRiskSeverity" id="inlineRadioRiskSeverity{{i}}" value="{{i}}">
+                <input class="form-check-input" type="radio" name="inlineRadioOptionsRiskSeverity"
+                    id="inlineRadioRiskSeverity{{i}}" value="{{i}}">
                 <label class="form-check-label" for="inlineRadioRiskSeverity{{i}}">{{i}}</label>
             </div>
             {% endfor %}
@@ -69,7 +74,8 @@
             <p class=" fs-6 mt-3">Probability</p>
             {% for i in range(1,6) %}
             <div class="form-check form-check-inline" onchange="calculateRiskScore()">
-                <input class="form-check-input" type="radio" name="inlineRadioOptionsRiskProbability" id="inlineRadioRiskProbability{{i}}" value="{{i}}">
+                <input class="form-check-input" type="radio" name="inlineRadioOptionsRiskProbability"
+                    id="inlineRadioRiskProbability{{i}}" value="{{i}}">
                 <label class="form-check-label" for="inlineRadioRiskProbability{{i}}">{{i}}</label>
             </div>
             {% endfor %}
@@ -77,151 +83,184 @@
             <!-- Calculate the score based on the severity and probality by S*P  -->
             <div class="form-group mt-3">
                 <label for="riskScore">Risk Score</label>
-                <input type="text" class="form-control" id="riskScore" readonly>
+                {% for item in form_data.form.sections[3].fields %}
+                <input type="text" class="form-control" id="{{item.name}}" name="{{item.id}}" value="{{item.value}}"
+                    readonly>
+                {% endfor %}
             </div>
-           
-        
-        <!-- Further Actions -->
-        <div class="mb-3 text-body">
-            <h4 class="mt-4">{{ form_data.form.sections[4].header }}</h4>
 
-                {% for item in form_data.form.sections[4].further_action %}
+            <!-- Further Actions -->
+            <div class="mb-3 text-body">
+                <h4 class="mt-4">{{ form_data.form.sections[4].header }}</h4>
+                {% for item in form_data.form.sections[4].fields %}
                 <div class="action-item" id="{{item.id}}" style="display: none;">
                     <label for="further_action{{item.id}}"></label>
-                    <textarea class="form-control" style="height: 200px;" id="further_action{{item.id}}" name="further_action{{item.id}}" 
-                    {% if item.tooltip %} 
-                        data-bs-toggle="tooltip" data-bs-title="{{item.tooltip}}" data-bs-custom-class="custom-tooltip"
-                    {% endif %}
-                    {% if item.required %}required{% endif %} readonly>{{ item.name }}</textarea>
+                    <textarea class="form-control" style="height: 200px;" id="further_action{{item.id}}"
+                        name="further_action{{item.id}}" {% if item.tooltip %} data-bs-toggle="tooltip"
+                        data-bs-title="{{item.tooltip}}" data-bs-custom-class="custom-tooltip" {% endif %} {% if
+                        item.required %}required{% endif %} readonly>{{ item.name }}</textarea>
                 </div>
                 {% endfor %}
             </div>
 
 
-        <!-- Residual Risk -->
-        <h4 class="mt-4">{{ form_data.form.sections[5].header }}</h4>
-        <p class=" fs-6">Severity</p>
-        {% for i in range(1,6) %}
-        <div class="form-check form-check-inline" onchange="calculateResidualRiskScore()">
-            <input class="form-check-input" type="radio" name="inlineRadioOptionsResidualRiskSeverity" id="inlineRadioResidualRiskSeverity{{i}}" value="{{i}}">
-            <label class="form-check-label" for="inlineRadioResidualRiskSeverity{{i}}">{{i}}</label>
-          </div>
-        {% endfor %}
+            <!-- Residual Risk -->
+            <h4 class="mt-4">{{ form_data.form.sections[5].header }}</h4>
+            <p class=" fs-6">Severity</p>
+            {% for i in range(1,6) %}
+            <div class="form-check form-check-inline" onchange="calculateResidualRiskScore()">
+                <input class="form-check-input" type="radio" name="inlineRadioOptionsResidualRiskSeverity"
+                    id="inlineRadioResidualRiskSeverity{{i}}" value="{{i}}">
+                <label class="form-check-label" for="inlineRadioResidualRiskSeverity{{i}}">{{i}}</label>
+            </div>
+            {% endfor %}
 
-        <p class=" fs-6 mt-3">Probability</p>
-        {% for i in range(1,6) %}
-        <div class="form-check form-check-inline" onchange="calculateResidualRiskScore()">
-            <input class="form-check-input" type="radio" name="inlineRadioOptionsResidualRiskProbability" id="inlineRadioResidualRiskProbability{{i}}" value="{{i}}">
-            <label class="form-check-label" for="inlineRadioResidualRiskProbability{{i}}">{{i}}</label>
-          </div>
-        {% endfor %}
+            <p class=" fs-6 mt-3">Probability</p>
+            {% for i in range(1,6) %}
+            <div class="form-check form-check-inline" onchange="calculateResidualRiskScore()">
+                <input class="form-check-input" type="radio" name="inlineRadioOptionsResidualRiskProbability"
+                    id="inlineRadioResidualRiskProbability{{i}}" value="{{i}}">
+                <label class="form-check-label" for="inlineRadioResidualRiskProbability{{i}}">{{i}}</label>
+            </div>
+            {% endfor %}
 
-       <!-- Calculate the score based on the severity and probality by S*P  -->
+            <!-- Calculate the score based on the severity and probality by S*P  -->
             <div class="form-group mt-3">
                 <label for="residualRiskScore">Risk Score</label>
-                <input type="text" class="form-control" id="residualRiskScore" readonly>
+                {% for item in form_data.form.sections[5].fields %}
+                <input type="text" class="form-control" id="{{item.id}}" name="{{item.name}}" value="{{item.value}}"
+                    readonly>
+                {% endfor %}
             </div>
-        
 
-        <!-- Action Taken By (Could make a drop down of the list of pilots) -->
-        <h4 class="mt-4">{{ form_data.form.sections[6].header }}</h4>
-        <input type="text" class="form-control mb-3" 
-        id="pilot" name="Pilot name"required value="">
 
-        <!-- Action Taken When -->
-        <h4 class="mt-4">{{ form_data.form.sections[7].header }}</h4>
-        <input type="date" class="form-control mb-3" 
-        id="date" name="Date" required value="">
+            <!-- Action Taken By (Could make a drop down of the list of pilots) -->
+            <div>
+                <h4 class="mt-4">{{ form_data.form.sections[6].header }}</h4>
 
-        <!-- Completed -->
-        <h4 class="mt-4">{{ form_data.form.sections[8].header }}</h4>
-        <input type="checkbox" class="mt-2" id="check" name="check" required>
-    
-   
-     
-    <div class="container text-center mt-5 mb-2">
-        <a href="{{ url_for('project', project_id=project.id) }}" class="btn btn-primary ms-auto">Back to Project</a>
-        <button type="submit" class="btn btn-success ms-auto">Save</button>
+                {% for item in form_data.form.sections[6].fields %}
+                <input type="text" class="form-control mb-3" id="{{item.id}}" name="{{item.name}}" required
+                    value="{{item.value}}">
+                {% endfor %}
+            </div>
+
+            <!-- Action Taken When -->
+            <div>
+                <h4 class="mt-4">{{ form_data.form.sections[7].header }}</h4>
+
+                {% for item in form_data.form.sections[7].fields %}
+                <input type="date" class="form-control mb-3" id="{{item.id}}" name="{{item.name}}" required
+                    value="{{item.value}}">
+                {% endfor %}
+            </div>
+
+            <!-- Completed -->
+            <div>
+                <h4 class="mt-4">{{ form_data.form.sections[8].header }}</h4>
+
+                {% for item in form_data.form.sections[8].fields %}
+                <input type="checkbox" class="mt-2 ms-2 me-3" id="{{item.id}}" name="{{item.name}}" {% if item.value
+                    %}checked{% endif %}>
+                {% if item.value %}
+                    <span class="badge bg-success rounded-pill">Complete</span>
+                {% else %}
+                    <span class="badge bg-danger rounded-pill">Not Completed</span>
+                {% endif %}
+                {% endfor %}
+            </div>
+
+
+            <div class="container text-center mt-5 mb-2">
+                <a href="{{ url_for('list_risk_forms', project_id=project.id) }}" class="btn btn-primary ms-auto">Back to Risk Analysis Forms</a>
+                {% if project.can_edit() %}
+            <button type="submit" class="btn btn-success ms-auto">Save</button>
+                {% endif %}
     </div>
-</form>
+    </form>
 
-<script>
-    function calculateRiskScore() {
+    <script>
+        function calculateRiskScore() {
 
-        // Get radio Buttons
-        const severity = document.querySelector('input[name="inlineRadioOptionsRiskSeverity"]:checked');
-        const probability = document.querySelector('input[name="inlineRadioOptionsRiskProbability"]:checked');
+            // Get radio Buttons
+            const severity = document.querySelector('input[name="inlineRadioOptionsRiskSeverity"]:checked');
+            const probability = document.querySelector('input[name="inlineRadioOptionsRiskProbability"]:checked');
 
-        // If both of radio buttons are checked perform the risk score calculation
-        if (severity && probability) {
-            const riskScore = parseInt(severity.value) * parseInt(probability.value);
-            document.getElementById('riskScore').value = riskScore;
-        } else {
-            document.getElementById('riskScore').value = "";
+            // If both of radio buttons are checked perform the risk score calculation
+            if (severity && probability) {
+                const riskScore = parseInt(severity.value) * parseInt(probability.value);
+                document.getElementById('riskScore').value = riskScore;
+            } else {
+                document.getElementById('riskScore').value = "";
+            }
         }
-    }
 
-    function calculateResidualRiskScore() {
+        function calculateResidualRiskScore() {
 
-        // Get radio Buttons
-        const severity = document.querySelector('input[name="inlineRadioOptionsResidualRiskSeverity"]:checked');
-        const probability = document.querySelector('input[name="inlineRadioOptionsResidualRiskProbability"]:checked');
+            // Get radio Buttons
+            const severity = document.querySelector('input[name="inlineRadioOptionsResidualRiskSeverity"]:checked');
+            const probability = document.querySelector('input[name="inlineRadioOptionsResidualRiskProbability"]:checked');
 
-        // If both of radio buttons are checked perform the risk score calculation
-        if (severity && probability) {
-            const residualRiskScore = parseInt(severity.value) * parseInt(probability.value);
-            document.getElementById('residualRiskScore').value = residualRiskScore;
-        } else {
-            document.getElementById('residualRiskScore').value = "";
+            // If both of radio buttons are checked perform the risk score calculation
+            if (severity && probability) {
+                const residualRiskScore = parseInt(severity.value) * parseInt(probability.value);
+                document.getElementById('residualRiskScore').value = residualRiskScore;
+            } else {
+                document.getElementById('residualRiskScore').value = "";
+            }
         }
-    }
 
-    // Grabs the value from the hazard selected then compares it against the id and if it matches display the content.
-    function updateHiddenField() {
-        // Get the value from the dropdown then put it into a variable
-        let selectedValue = document.getElementById('hazardSelect').value;
-        // Add control at the end to match the ids
-        selectedValue = selectedValue + '_control';
-        document.getElementById('selectedHazard').value = selectedValue; 
+        // Grabs the value from the hazard selected then compares it against the id and if it matches display the content.
+        function updateHiddenField() {
+            // Get the value from the dropdown then put it into a variable
+            let selectedValue = document.getElementById('hazardSelect').value;
+            // Add control at the end to match the ids
+            selectedValue = selectedValue + '_control';
+            document.getElementById('selectedHazard').value = selectedValue;
 
-        document.querySelectorAll('.control-item').forEach(item =>{
-            item.style.display = "none";
-        });
+            document.querySelectorAll('.control-item').forEach(item => {
+                item.style.display = "none";
+            });
 
-        // Get the existing control  
-        let matchingControl = document.getElementById(selectedValue);
-        if (matchingControl) {
-            matchingControl.style.setProperty('display', 'block', 'important');
+            // Get the existing control  
+            let matchingControl = document.getElementById(selectedValue);
+            if (matchingControl) {
+                matchingControl.style.setProperty('display', 'block', 'important');
 
+            }
+            else {
+                console.log("Nothing found");
+            }
         }
-        else{
-            console.log("Nothing found");
+
+        function updateHiddenFieldFurtherAction() {
+            // Get the value from the dropdown then put it into a variable
+            let selectedValue = document.getElementById('hazardSelect').value;
+            // Add control at the end to match the ids
+            selectedValue = selectedValue + '_further_action';
+            document.getElementById('selectedHazard').value = selectedValue;
+
+            document.querySelectorAll('.action-item').forEach(item => {
+                item.style.display = "none";
+            });
+
+            // Get the further action
+            let furtherAction = document.getElementById(selectedValue);
+            if (furtherAction) {
+                furtherAction.style.setProperty('display', 'block', 'important');
+
+            }
+            else {
+                console.log("Nothing found");
+            }
         }
-    }
 
-    function updateHiddenFieldFurtherAction() {
-        // Get the value from the dropdown then put it into a variable
-        let selectedValue = document.getElementById('hazardSelect').value;
-        // Add control at the end to match the ids
-        selectedValue = selectedValue + '_further_action';
-        document.getElementById('selectedHazard').value = selectedValue; 
+        //  On window loading start the functions 
+        window.onload = function () {
+            updateHiddenField();
+            updateHiddenFieldFurtherAction();
+        };
 
-        document.querySelectorAll('.action-item').forEach(item =>{
-            item.style.display = "none";
-        });
 
-        // Get the further action
-        let furtherAction = document.getElementById(selectedValue);
-        if (furtherAction) {
-            furtherAction.style.setProperty('display', 'block', 'important');
+    </script>
 
-        }
-        else{
-            console.log("Nothing found");
-        }
-    }
-    
-
-</script>
-
-{% endblock %}
+    {% endblock %}

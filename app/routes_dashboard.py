@@ -101,7 +101,7 @@ def project(project_id):
 
     return render_template('/dashboard/project.html', project=project, use_container=False, title=project.title, footer=False,
                            created_at_humanized=created_at_humanized, last_edited_humanized=last_edited_humanized,
-                           date_status=date_status)
+                           date_status=date_status, toggles=project.toggles)
 
 
 @app.route("/dashboard/timeline")

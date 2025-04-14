@@ -1,0 +1,36 @@
+[
+  {
+    "title": "Loading List - Safety Kit",
+    "header": "Ensure all safety kit items are checked before proceeding.",
+    "form": {
+      "sections": [
+        {
+          "header": "Fire & Safety Equipment",
+          "fields": [
+            {
+              "id": "firstaid",
+              "name": "First aid kit",
+              "value": true,
+              "type": "checkbox",
+              "required": false
+            },
+            {
+              "id": "fireextinguisher",
+              "name": "Fire extinguisher",
+              "value": false,
+              "type": "checkbox",
+              "required": false
+            },
+            {
+              "id": "ppe",
+              "name": "PPE Clothing",
+              "value": true,
+              "type": "checkbox",
+              "required": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+]
