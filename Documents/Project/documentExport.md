@@ -54,3 +54,11 @@ def export_viability_study(project_id):
 ```
 
 The `form_data` variable should be passed a JSON object that follows the structure outlined in the [JSON templates](./jsonTemplates.md) document.
+
+To finish off the new endpoint, you must add a button to the [project.html](../../app/templates/dashboard/project.html) page. This is done by adding a new anchor button to the 'Export Options' section of the page, at [line 131](../../app/templates/dashboard/project.html#L126-L139). The button markup should look like this:
+
+```html
+<a href="{{ url_for('export_endpoint_name', project_id=project.id, auto_open=1) }}" class="btn btn-primary w-100 mb-2">
+    <i class="fa-solid fa-download"></i> Export Form Name (PDF)
+</a>
+```
