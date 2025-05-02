@@ -38,10 +38,10 @@
                         <div class="d-flex align-items-center ms-auto col-12 col-md-4 col-lg-2">
                             {% if value.value and project.can_edit() %}
                             <a href="{{ url_for(value.form_url, project_id=project.id) }}" 
-                            class="btn btn-success w-100 {% if value.title == 'Risk Analysis' %} disabled {% endif %}">Update</a>
+                            class="btn btn-success w-100 ">Update</a>
                             {% else %}
                             <a href="{{ url_for(value.form_url, project_id=project.id) }}" 
-                            class="btn btn-primary w-100  {% if value.title == 'Risk Analysis' %} disabled {% endif %}">View</a>
+                            class="btn btn-primary w-100 ">View</a>
                             {% endif %}
                         </div>
                     </div>
